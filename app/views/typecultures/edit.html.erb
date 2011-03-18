@@ -1,0 +1,12 @@
+<% title "Types de culture" %>
+
+<%= render :partial => 'list' %>
+
+<br />
+
+<h2>modif de "<%= @typeculture.name %>"</h2>
+<%= render :partial => 'form' %>
+
+<%= link_to 'Retour', typecultures_path %> | 
+<%= link_to 'Nouveau', new_typeculture_path %>
+

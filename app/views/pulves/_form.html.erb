@@ -1,0 +1,101 @@
+<% javascript :defaults, 'delegate' %>
+
+<%= error_messages_for :pulve, :putoparcelle, :putofacture,
+						:header_message => "Problemes lors de l'enregistrement", 
+						:message => "corriger les erreurs suivantes" 
+%>
+<% form_for @pulve do |pulve_form| -%>
+
+<% content_for :jstemplates do -%>
+	<%= "var putoparcelle='#{generate_template(pulve_form, :putoparcelles)}'" %>
+	<%= "var putofacture='#{generate_template(pulve_form, :putofactures)}'" %>
+<% end -%>
+
+<table>
+	<tr>
+		<td><%= pulve_form.label :name, "Nom : " %></td>
+		<td><%= pulve_form.text_field :name %></td>
+	</tr>
+	<tr>
+		<td><%= pulve_form.label :date, "Date : " %></td>
+		<td><%= pulve_form.date_select(:date, :start_year => 2008, :order => [:day, :month, :year]) %></td>
+	</tr>
+	<tr>
+		<td><%= pulve_form.label :user_id, "Prestataire : " %></td>
+		<td><%= pulve_form.collection_select(:user_id, User.find(:all), :id, :name ) %></td>
+	</tr>
+<% if @pulve.cout_ha_passage %>
+	<tr>
+		<td>Cout total : </td>
+		<td><%= @pulve.get_cout_total %></td>
+	</tr>
+<% end %>
+
+</table>
+<br>
+<fieldset>
+  <legend>Passage</legend>
+	<table>
+	<tr>
+		<td><%= pulve_form.label :cout_ha_passage, "Cout du passage : " %></td>
+		<td><%= pulve_form.text_field :cout_ha_passage, :size => 4 %>  euros/Ha</td>
+	</tr>
+	</table>
+</fieldset>
+<br>
+<fieldset>
+  <legend>Produit</legend>
+	<table>
+	<tr>
+		<td><%= pulve_form.label :category_id, "Categorie : " %></td>
+		<td><%= pulve_form.collection_select(:category_id, Category.find_by_type("pulve"), :id, :name ) %></td>
+	</tr>
+	<tr>
+		<td><%= pulve_form.label :prix_littre, "Cout du littre : " %></td>
+		<td><%= pulve_form.text_field :prix_littre, :size => 4 %>  euros/L</td>
+	</tr>
+	<tr>
+		<td><%= pulve_form.label :dosage, "Dosage : " %></td>
+		<td><%= pulve_form.text_field :dosage, :size => 3 %> L/Ha</td>
+	</tr>
+	</table>
+</fieldset>
+<br>
+
+<fieldset>
+  <legend>Parcelles</legend>
+  
+<div id="putoparcelles">
+	<% pulve_form.fields_for :putoparcelles do |putoparcelle_form| %>
+		<% unless pulve_form.object.new_record? %>
+			<%= render :partial => 'putoparcelle', :locals => { :f => putoparcelle_form } %>
+		<% end %>
+	<% end %>
+</div>
+<p>
+<%= link_to 'Ajouter une parcelle', '#putoparcelle', :class => "add_nested_item", :rel => "putoparcelles" %>
+</p>
+</fieldset>
+<br>
+
+<fieldset>
+  <legend>Factures</legend>
+
+<div id="putofactures">
+	<% pulve_form.fields_for :putofactures do |putofacture_form| %>
+		<% unless pulve_form.object.new_record? %>
+			<%= render :partial => 'putofacture', :locals => { :f => putofacture_form } %>
+		<% end %>
+	<% end %>
+</div>
+<p>
+<%= link_to 'Ajouter une facture', '#putofacture', :class => "add_nested_item", :rel => "putofactures" %>
+</p>
+</fieldset>
+<br>
+
+<p>
+<%= pulve_form.submit "Enregistrer" %>
+</p>
+<% end -%>
+

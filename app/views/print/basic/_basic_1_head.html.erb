@@ -1,0 +1,39 @@
+<table class="table_print">
+	<tr align=center>
+		<td id="nom"></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+<% @parcelles.each do |parcelle| %>
+	<th class="<%= odd(@Hparcelles[parcelle.id][:rang]) %>" colspan=2 >
+		<%=h parcelle.id %> - <%=h parcelle.name %>
+	</th>
+<% end %>
+	</tr>	
+	<tr align=center>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+<% @parcelles.each do |parcelle| %>
+		<td colspan=2 class="ha_">
+			<%=h parcelle.surface %> Ha - 
+			<%#=h parcelle.typeculture.name %>
+		</td>
+<% end %>
+	</tr>	
+	<tr>
+		<th id="nom"></th>
+		<th>date</th>
+		<th>pass+prod /ha</th>
+		<th>total/ha</th>
+		<th>total</th>
+<% @parcelles.each do |parcelle| %>
+<% td_class = odd(@Hparcelles[parcelle.id][:rang]) %>
+		<td class="<%= td_class %>">c/ha</td>
+		<td class="<%= td_class %>">Total</td>
+
+<% end %>
+	</tr>	

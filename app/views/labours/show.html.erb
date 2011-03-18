@@ -1,0 +1,58 @@
+<% title "Labour" %>
+
+<table>
+	<tr>
+		<td>Nom : </td>
+		<td><%=h @labour.name %></td>
+	</tr>
+	<tr>
+		<td>Categorie : </td>
+		<td><%=h @labour.category.name %></td>
+	</tr>
+	<tr>
+		<td>Prestataire : </td>
+		<td><%=h @labour.user.name %></td>
+	</tr>
+	<tr>
+		<td>Cout du passage : </td>
+		<td><%=h @labour.cout_ha_passage %> €/Ha</td>
+	</tr>
+	<tr>
+		<td>Cout total : </td>
+		<td><%=h @labour.get_cout_total %> €</td>
+	</tr>
+</table>
+
+<%- if @labour.labtoparcelles.length > 0 -%>
+	<h3>Parcelles (<%= @labour.sum_surfaces %> Ha)</h3>
+
+	<%- @labour.labtoparcelles.each do |labtoparcelle| -%>
+	<h4><%= labtoparcelle.parcelle.typeculture.name %> - 
+		<%= labtoparcelle.parcelle.name %></h4>
+		<p>	
+			[surface : <%= labtoparcelle.parcelle.surface %> ha] x 
+		<!--	[taux : <%= labtoparcelle.value %>] x -->
+			[cout/Ha : <%= @labour.get_cout_ha %>] =
+			<%=h (labtoparcelle.parcelle.surface * @labour.get_cout_ha) %> €
+		<!-- TODO : prise en compte de labtoparcelle.value -->
+		</p>
+	<%- end -%>
+	</ul>
+<%- end -%>
+
+<%- if @labour.labtofactures.length > 0 -%>
+	<h3>Factures</h3>
+	<ul>
+	<%- @labour.labtofactures.each do |labtofacture| -%>
+		<li><%= labtofacture.facture.name %>
+			[<%= labtofacture.facture.cout %> €]
+		 	contribution : <%= labtofacture.value %> €
+	</li>
+	<%- end -%>
+	</ul>
+<%- end -%>
+<p>
+  <%= link_to "Edit", edit_labour_path(@labour) %> |
+  <%= link_to "Destroy", @labour, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", labours_path %>
+</p>

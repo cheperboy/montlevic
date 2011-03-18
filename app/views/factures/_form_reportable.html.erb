@@ -1,0 +1,45 @@
+
+<%= error_messages_for 	:facture,
+						:header_message => "Donnees incompletes ou Incorrectes", 
+						:message => "corriger les erreurs suivantes" 
+%>
+						
+<fieldset>
+	<legend>| 
+	<% unless @facture.new_record? %>
+		<%= link_to "Annuler", facture_url(@facture) %>
+	<% else %>
+		<%= link_to "Annuler", factures_url %>
+	<% end %>
+	 |</legend>
+
+<% form_for @facture, :controller => :factures do |f| -%>
+
+	<table>
+	
+	<% saisons = Saison.find(:all, :order => :name) %>
+	<%= form_tr_select(f, 'Campagne', :saison_id, saisons, :id, :name,  :selected => Application::SAISON) %>
+	
+	<%= form_tr_text(f, 'Nom', :name) %>
+	<%= form_tr_text(f, 'Ref client', :ref_client) %>
+	<%= form_tr_text(f, 'Ref perso', :ref) %>
+	<%= form_tr_date(f, 'Date', :date) %>
+	
+	<% users = User.find(:all, :order => :name) %>
+	<%= form_tr_select(f, 'Prestataire', :user_id, users, :id, :name) %>
+	
+	<% collection = Category.find_by_type("facture") %>
+	<%= form_tr_select(f, 'Categorie', :category_id, collection, :id, :name) %>
+	
+	<%= form_tr_text(f, 'Cout', :cout) %>
+	
+	<%= form_tr_check(f, 'Star', :star) %>
+	<%= form_tr_check(f, 'ADU', :adu) %>
+	
+	<%= form_tr_text_area(f, 'Infos', :desc, :size => "20x5") %>
+
+	</table>
+
+<%= f.submit "Enregistrer" %>
+<% end -%>
+</fieldset>

@@ -1,0 +1,53 @@
+<table>
+  <tr>
+    <td>Zone | </td>
+    <td>surface | </td>
+    <td>Parcelles | </td>
+    <td>surface | </td>
+    <td>total | </td>
+  </tr>
+
+<% @zones.each do |zone| %>
+  <tr>
+    <td><%= link_to zone.name, edit_zone_path(zone) %> | </td>
+    <td><%= zone.surface %> Ha | </td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  	<% parcelles = Parcelle.find_by_zone(zone.id) %>
+	<% if parcelles.size == 1 %>
+		<% parcelles.each do |parcelle| %>
+		  <tr>
+		  	<td></td>
+		    <td></td>
+		    <td><%= parcelle.name %> | </td>
+		    <td><%= parcelle.surface %> Ha | </td>
+		    <%= percent_of_parcelle(zone, parcelle.id, false) %>
+		  </tr>
+		<% end %>
+	<% else %>
+		<% pourcent = 0 %>
+		<% ha = 0 %>
+		<% parcelles.each do |parcelle| %>
+		  <tr>
+		  	<td></td>
+		    <td></td>
+		    <td><%= parcelle.name %> | </td>
+		    <td><%= parcelle.surface %> Ha | </td>
+			<% pourcent += percent_of_parcelle_value(zone, parcelle.id) %>
+			<% ha += parcelle.surface %>
+		    <%= percent_of_parcelle(zone, parcelle.id, true) %>
+		  </tr>
+		<% end %>
+	  <tr>
+	  	<td></td>
+	    <td></td>
+	    <td>Total | </td>
+	    <td><%= ha %> Ha | </td>
+	    <%= td_with_color(pourcent, 100) %>
+	  </tr>
+	<% end %>
+  </tr>
+<% end %>
+</table>

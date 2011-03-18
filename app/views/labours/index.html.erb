@@ -1,0 +1,21 @@
+<h1>Liste des labours</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @labours.each do |labour| %>
+  <tr>
+    <td><%= labour.name %></td>
+    <td><%= labour.category.name %></td>
+    <td><%= labour.user.name %></td>
+    <td><%= link_to 'Details', labour %></td>
+    <td><%= link_to 'Modifier', edit_labour_path(labour) %></td>
+    <td><%= link_to 'Supprimer', labour, :confirm => 'Supprimer le labour ?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New labour', new_labour_path %>

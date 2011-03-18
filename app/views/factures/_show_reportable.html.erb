@@ -1,0 +1,36 @@
+
+<table>
+<tr>
+	<td>Campagne : </td>
+	<td><%= @facture.saison.name %></td>
+</tr>
+<tr>
+	<td>Nom : </td>
+	<td><%= @facture.name %></td>
+</tr>
+<tr>
+	<td>Somme des couts : </td>
+	<td><%= @facture.cout %> euros</td>
+</tr>
+<tr>
+	<td>Ref perso : </td>
+	<td><%= @facture.ref %></td>
+</tr>
+<tr>
+	<td>Categorie : </td>
+	<td><%= @facture.category.name %></td>
+</tr>
+<tr>
+	<td>Comptabilisation : </td>
+	<td><%= @facture.factype.name %></td>
+</tr>
+<tr>
+	<td>Repere : </td>
+	<td>Star : <%= @facture.star %>
+	 	| ADU :<%= @facture.adu %></td>
+</tr>
+<tr>
+	<td>Infos : </td>
+	<td><p><%= @facture.desc %></p></td>
+</tr>
+</table>

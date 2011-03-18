@@ -1,0 +1,21 @@
+<table>
+  <tr>
+    <td>Culture</td>
+    <td>Nom</td>
+    <td>surface</td>
+  </tr>
+
+<% @parcelles.each do |parcelle| %>
+  <tr>
+    <td><%= parcelle.typeculture.name %></td>
+    <td><%= parcelle.name %></td>
+    <td><%= parcelle.surface %></td>
+	
+	<% if admin? %>
+	    <td><%= link_to 'Modifier', edit_parcelle_path(parcelle) %></td>
+	    <td><%= link_to 'Supprimer', parcelle, :confirm => 'Are you sure?', :method => :delete %></td>
+	<% end %>
+  
+  </tr>
+<% end %>
+</table>

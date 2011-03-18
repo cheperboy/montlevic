@@ -1,0 +1,14 @@
+<table>
+  <tr>
+    <td>Nom</td>
+    <td></td>
+    <td></td>
+  </tr>
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.name %></td>
+    <td><%= link_to 'Editer', edit_user_path(user) %></td>
+    <td><%= link_to 'Supprimer', user, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>

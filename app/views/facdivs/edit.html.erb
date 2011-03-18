@@ -1,0 +1,11 @@
+
+<% title "Facture (diverse)" %>
+<%= render :partial => 'factures/show_diverse' %>
+
+<h3>Modif facture diverse</h3>	
+<%= render :partial => "form" %>
+
+<h2>Factures associees</h2>
+<% unless @facture.facdivs.empty? %>
+	<%= render :partial => "factures/list_facdivs" %>
+<% end %>

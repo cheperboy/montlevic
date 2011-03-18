@@ -1,0 +1,18 @@
+<h1>Listing labtoparcelles</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @labtoparcelles.each do |labtoparcelle| %>
+  <tr>
+    <td><%= link_to 'Show', labtoparcelle %></td>
+    <td><%= link_to 'Edit', edit_labtoparcelle_path(labtoparcelle) %></td>
+    <td><%= link_to 'Destroy', labtoparcelle, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New labtoparcelle', new_labtoparcelle_path %>

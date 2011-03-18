@@ -1,0 +1,4 @@
+
+#page.replace_html 'time_div', 'TEST'
+#page.visual_effect :highlight, 'time_div'
+page.reload

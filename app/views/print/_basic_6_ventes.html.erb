@@ -1,0 +1,47 @@
+	<tr>
+		<th id="nom">Ventes</th>
+<% ( @test.Tcols[:ids].length * 2 + 5).times do %>
+		<td></td>
+<% end %>
+	</tr>	
+
+<% unless (@ventes.size == 0) %>
+
+	<% @ventes.each do |vente| %>
+		<% dep = @test.Tventes[vente.id] %>
+	
+		<tr>
+			<td class="left"><b><%= vente.category.name %></b></td>
+			<td class="left"><%= link_popup_vente(dep) %></td>
+			<td><%= vente.date.to_s :dmy %></td>	
+			<td><%= vente.parcelles.length %> p - <%= pretty(dep[:surface_total]) %> ha</td>
+			<td><%= pretty(dep[:ha]) %></td>
+			<td><%= print_popup(pretty(dep[:total]), "@test.Tventes[vente.id][:total]") %></td>
+		
+		<% @test.Tcols[:ids].each do |id| %>
+			<% cout_ha = pretty(dep[id][:ha]) %>
+			<% cout_total = pretty(dep[id][:total]) %>
+			<% td_class = odd(@test.Tcols[id][:rang]) %>
+			<td class="<%= td_class %>"><%=h cout_ha %></td>
+			<td class="<%= td_class %>"><%=h cout_total %></td>
+		<% end %>
+		</tr>
+	<% end %>
+
+	<tr class="total">
+		<td class="left"><b>Total Ventes</b></td>
+		<td></td>	
+		<td></td>	
+		<td></td>
+		<td><%= pretty(@test.Tventes[:ha][:sum]) %></td>
+		<td><%= pretty(@test.Tventes[:total][:sum]) %></td>	
+	<% @test.Tcols[:ids].each do |id| %>
+		<% cout_ha = pretty(@test.Tcols[id][:ventes][:ha][:sum]) %>
+		<% cout_total = pretty(@test.Tcols[id][:ventes][:total][:sum]) %>
+		<% td_class = odd(@test.Tcols[id][:rang]) %>
+		<td class="<%= td_class %>_subtotal"><%=h cout_ha %></td>
+		<td class="<%= td_class %>_subtotal"><%=h cout_total %></td>
+	<% end %>
+	</tr>
+	
+<% end %>

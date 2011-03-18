@@ -1,0 +1,45 @@
+<% unless @elements.count == 0 %>
+	<table>  
+	  <tr>  	
+	    <td>adu | </td>
+	    <td>star | </td>
+	    <td>cat | </td>
+	    <td>date | </td>
+	    <td>cout | </td>
+	    <td class='list-elt-left'>nom | </td>
+	<% if Setting::DETAIL_REF == 1 %>
+	    <td>ref client | </td>
+	    <td>ref | </td>
+	<% end %>
+	<% if Setting::DETAIL_DESC == 1 %>
+	    <td>desc | </td>
+	<% end %>
+	    <td colspan='3'></td>
+	  </tr>
+
+
+	<% @elements.each do |vente| %>
+
+	  <tr class='list-row'>
+	    <td><%= link_to_star(Vente, vente.id, true) %> | </td>
+	    <td><%= link_to_star(Vente, vente.id, false) %> | </td>
+	    <td><%= vente.category.name %> | </td>
+	    <td><%= vente.date %> | </td>
+	    <td><%= vente.value %> € | </td>
+	    <td class='list-elt-left'><%= vente.name %> | </td>
+	<% if Setting::DETAIL_REF == 1 %>
+	    <td><%= shortstring(vente.ref_client) %> | </td>
+	    <td><%= vente.ref %> | </td>
+	<% end %>
+	<% if Setting::DETAIL_DESC == 1 %>
+	    <td><%= shortstring(vente.desc) %> | </td>
+	<% end %>
+	    <td><%= link_to image_tag('img-voir.png'), vente_url(:id => vente) %> | </td>
+	    <td><%= link_to image_tag('img-modif.png'), edit_vente_url(:id => vente) %> | </td>
+    	<td><%= link_to image_tag('img-delete.png'), vente, :confirm => 'Are you sure?', :method => :delete %> | </td>
+
+	  </tr>
+	<% end %>
+</table>
+<% end %>
+<br>

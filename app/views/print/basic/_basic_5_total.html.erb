@@ -1,0 +1,43 @@
+	<tr>
+<% ( @parcelles.length * 2 + 5).times do %>
+		<td></td>
+<% end %>
+	</tr>	
+
+<% for type in @types %>
+<!-- Total "type" (maison, invest, agri) -->
+	<tr id="subtotal" align=left>
+		<td id="nom"><b><%= type.name %></b></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><%= pretty(@Hfactures[:cout_total][type.name]) %></td>	
+	<% @parcelles.each do |parcelle| %>
+		<% cout_ha = pretty(@Hparcelles[parcelle.id][:total][:cout_ha][type.name]) %>
+		<% cout_total = pretty(@Hparcelles[parcelle.id][:total][:cout_total][type.name]) %>
+		<% td_class = odd(@Hparcelles[parcelle.id][:rang]) %>
+			<td class="<%= td_class %>"><%= cout_ha %></td>
+			<td class="<%= td_class %>"><%= cout_total %></td>
+	<% end %>
+	</tr>
+<% end %>
+
+<!-- Total  -->
+	<tr id="subtotal" align=left>
+		<td id="nom"><b>Total : </b></td>
+		<td></td>
+		<td></td>
+		<td><%= pretty(@Hparcelles[:cout_ha]) %></td>
+		<td><%= pretty(@Hparcelles[:cout_total]) %></td>	
+	<% @parcelles.each do |parcelle| %>
+		<% cout_ha = pretty(@Hparcelles[parcelle.id][:total][:cout_ha][:sum]) %>
+		<% cout_total = pretty(@Hparcelles[parcelle.id][:total][:cout_total][:sum]) %>
+		<% td_class = odd(@Hparcelles[parcelle.id][:rang]) %>
+			<td class="<%= td_class %>_subtotal"><%= cout_ha %></td>
+			<td class="<%= td_class %>_subtotal"><%= cout_total %></td>
+	<% end %>
+	</tr>
+	
+	
+</table>
+<br>

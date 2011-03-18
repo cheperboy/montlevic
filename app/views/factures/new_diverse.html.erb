@@ -1,0 +1,41 @@
+<% title "Nouveau divers" %>
+<p>
+	| <%= link_to 'Annuler', {:action => 'diverses'} %> |
+</p>
+<%= error_messages_for 	:facture,
+						:header_message => "Problemes lors de l'enregistrement", 
+						:message => "corriger les erreurs suivantes" 
+%>
+
+<% form_for @facture, :url => 'create_diverse' do |f| -%>
+
+<table>
+<tr>
+	<td><%= f.label :saison_id, "Campagne : " %></td>
+	<td><%= f.collection_select (:saison_id, Saison.find(:all, :order => :name), :id, :name, :selected => Application::SAISON ) %></td>
+</tr>
+<tr>
+	<td><%= f.label :category_id, "Categorie : " %></td>
+	<td><%= f.collection_select (:category_id, Category.find_by_type("diverse"), :id, :name ) %></td>
+</tr>
+<tr>
+	<td><%= f.label :name, "Nom : " %></td>
+	<td><%= f.text_field :name %></td>
+</tr>
+
+<tr>
+	<td>Repere : </td>
+	<td><%= f.label :star, "Star : " %><%= f.check_box :star %>
+	 | <%= f.label :adu, "ADU : " %>
+	<%= f.check_box :adu %></td>
+</tr>
+<tr>
+	<td><%= f.label :desc, "Infos : " %></td>
+	<td><%= f.text_area :desc, :size => "20x5" %></td>
+</tr>
+</table>
+
+<%= f.submit "Enregistrer" %>
+<% end -%>
+
+

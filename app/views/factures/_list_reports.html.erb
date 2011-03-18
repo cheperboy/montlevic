@@ -1,0 +1,28 @@
+<table>  
+<% unless @facture.reports.count == 0 %>
+	<% @facture.reports.each do |report| %>
+	  <tr class='list-row'>
+	    <td><%= link_to_star(Facture, report.id, true) %> | </td>
+	    <td><%= link_to_star(Facture, report.id, false) %> | </td>
+	    <td><%= report.type.to_s %> | </td>
+	    <td><%= report.date %> | </td>
+	    <td class='list-elt-left'><%= report.name %> | </td>
+	    <td><%= report.cout %> € | </td>
+	    <td><%= report.factype.name %> | </td>
+	    <td><%= link_to image_tag('img-voir.png'), facture_url(:id => report) %> | </td>
+	    <td><%= link_to image_tag('img-modif.png'), edit_facture_url(:id => report) %> | </td>
+    	<td><%= link_to image_tag('img-delete.png'), report, :confirm => 'Are you sure?', :method => :delete %> | </td>
+
+	  </tr>
+	<% end %>
+<% end %>
+	  <tr class='list-row'>
+	    <td></td>
+	    <td></td>
+	    <td>Total | </td>
+	    <td></td>
+	    <td></td>
+	    <%= sum_reports_cout(@facture.id) %>
+	    <td></td>
+	  </tr>
+</table>

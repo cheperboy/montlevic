@@ -1,0 +1,21 @@
+<h1>Listing pulves</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @pulves.each do |pulve| %>
+  <tr>
+    <td><%= pulve.name %></td>
+    <td><%= pulve.category.name %></td>
+    <td><%= pulve.user.name %></td>
+    <td><%= link_to 'Details', pulve %></td>
+    <td><%= link_to 'Modifier', edit_pulve_path(pulve) %></td>
+    <td><%= link_to 'Supprimer', pulve, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Nouveau pulve', new_pulve_path %>

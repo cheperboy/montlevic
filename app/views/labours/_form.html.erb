@@ -1,0 +1,90 @@
+<% javascript :defaults, 'delegate' %>
+
+<%= error_messages_for :labour, :labtoparcelle, :labtofacture,
+						:header_message => "Problemes lors de l'enregistrement", 
+						:message => "corriger les erreurs suivantes" 
+%>
+						
+<% form_for @labour do |labour_form| -%>
+
+<% content_for :jstemplates do -%>
+	<%= "var labtoparcelle='#{generate_template(labour_form, :labtoparcelles)}'" %>
+	<%= "var labtofacture='#{generate_template(labour_form, :labtofactures)}'" %>
+<% end -%>
+
+<table>
+	<tr>
+		<td><%= labour_form.label :name, "Nom : " %></td>
+		<td><%= labour_form.text_field :name %></td>
+	</tr>
+	<tr>
+		<td><%= labour_form.label :date, "Date : " %></td>
+		<td><%= labour_form.date_select(:date, :start_year => 2008, :order => [:day, :month, :year]) %></td>
+	</tr>
+	<tr>
+		<td><%= labour_form.label :user_id, "Prestataire : " %></td>
+		<td><%= labour_form.collection_select(:user_id, User.find(:all), :id, :name ) %></td>
+	</tr>
+	
+<% if @labour.cout_ha_passage %>
+	<tr>
+		<td>Cout total : </td>
+		<td><%= @labour.get_cout_total %></td>
+	</tr>
+<% end %>
+</table>
+
+<br>
+<fieldset>
+  <legend>Passage</legend>
+	<table>
+	<tr>
+		<td><%= labour_form.label :category_id, "Categorie : " %></td>
+		<td><%= labour_form.collection_select(:category_id, Category.find_by_type("labour"), :id, :name ) %></td>
+	</tr>
+	<tr>
+		<td><%= labour_form.label :cout_ha_passage, "Cout du passage : " %></td>
+		<td><%= labour_form.text_field :cout_ha_passage, :size => 4 %>  euros/Ha</td>
+	</tr>
+	</table>
+</fieldset>
+<br>
+
+<br>
+<fieldset>
+  <legend>Parcelles</legend>
+  
+<div id="labtoparcelles">
+	<% labour_form.fields_for :labtoparcelles do |labtoparcelle_form| %>
+		<% unless labour_form.object.new_record? %>
+			<%= render :partial => 'labtoparcelle', :locals => { :f => labtoparcelle_form } %>
+		<% end %>
+	<% end %>
+</div>
+<p>
+<%= link_to 'Ajouter une parcelle', '#labtoparcelle', :class => "add_nested_item", :rel => "labtoparcelles" %>
+</p>
+</fieldset>
+<br>
+
+<fieldset>
+  <legend>Factures</legend>
+  
+<div id="labtofactures">
+	<% labour_form.fields_for :labtofactures do |labtofacture_form| %>
+		<% unless labour_form.object.new_record? %>
+			<%= render :partial => 'labtofacture', :locals => { :f => labtofacture_form } %>
+		<% end %>
+	<% end %>
+</div>
+<p>
+<%= link_to 'Ajouter une facture', '#labtofacture', :class => "add_nested_item", :rel => "labtofactures" %>
+</p>
+
+</fieldset>
+<br>
+
+<%= labour_form.submit "Enregistrer" %>
+</p>
+<% end -%>
+

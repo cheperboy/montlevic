@@ -1,0 +1,62 @@
+<% title "Liste des reports par saison" %>
+| <%= link_to 'Nouveau Report', {:controller => :factures, :action=> :new_report} %>
+| <%= link_to 'Retour a la liste des factures', {:controller => :factures} %> |
+
+<% unless @saisons.count == 0 %>
+	<% @saisons.each do |saison| %>
+		<h2><%= saison.name %></h2>
+		<% saison.reportables.each do |reportable| %>
+			<table>
+			  <tr class='list-row'>
+			    <td>Ancre | </td>
+			    <td><%= link_to_star(Facture, reportable.id, true) %> | </td>
+			    <td><%= link_to_star(Facture, reportable.id, false) %> | </td>
+			    <td><%= reportable.type.to_s %> | </td>
+			    <td><%= reportable.date %> | </td>
+			    <td><%= reportable.name %> | </td>
+			    <td><%= reportable.cout %> € | </td>
+			    <td class='list-elt-left'><%= reportable.name %> | </td>
+			    <td><%= reportable.factype.name %> | </td>
+			  </tr>
+			  
+			<% unless reportable.reports.count == 0 %>
+				<% reportable.reports.each do |report| %>
+				  <tr class='list-row'>
+				    <td>--> | </td>
+				    <td><%= link_to_star(Facture, report.id, true) %> | </td>
+				    <td><%= link_to_star(Facture, report.id, false) %> | </td>
+				    <td><%= report.type.to_s %> | </td>
+				    <td><%= report.date %> | </td>
+				    <td><%= report.name %> | </td>
+				    <td><%= report.cout %> € | </td>
+				    <td class='list-elt-left'><%= report.name %> | </td>
+				    <td><%= report.factype.name %> | </td>
+				  </tr>
+				<% end %>
+			<% end %>
+				  <tr class='list-row'>
+				    <td></td>
+				    <td></td>
+				    <td></td>
+				    <td>Total | </td>
+				    <td></td>
+				    <td></td>
+				    <%= sum_reports_cout(reportable.id) %>
+				    <td></td>
+				    <td></td>
+				  </tr>
+				  <tr class='list-row'>
+				    <td></td>
+				    <td></td>
+				    <td></td>
+				    <td></td>
+				    <td></td>
+				    <td></td>
+				    <td></td>
+				    <td></td>
+				    <td></td>
+				  </tr>
+		</table>
+		<% end %>
+	<% end %>
+<% end %>

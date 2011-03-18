@@ -1,0 +1,179 @@
+# This file is auto-generated from the current state of the database. Instead of editing this file, 
+# please use the migrations feature of Active Record to incrementally modify your database, and
+# then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your database schema. If you need
+# to create the application database on another system, you should be using db:schema:load, not running
+# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended to check this file into your version control system.
+
+ActiveRecord::Schema.define(:version => 20100330165713) do
+
+  create_table "categories", :force => true do |t|
+    t.integer  "upcategory_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "charges", :id => false, :force => true do |t|
+    t.integer "toto"
+  end
+
+  create_table "factoparcelles", :force => true do |t|
+    t.integer  "parcelle_id"
+    t.integer  "facture_id"
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "factures", :force => true do |t|
+    t.integer  "saison_id",   :null => false
+    t.integer  "category_id"
+    t.integer  "factype_id"
+    t.date     "date"
+    t.integer  "user_id"
+    t.string   "name"
+    t.float    "cout"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "factypes", :force => true do |t|
+    t.string   "name"
+    t.text     "desc",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "labours", :force => true do |t|
+    t.integer  "saison_id",       :null => false
+    t.integer  "category_id"
+    t.integer  "user_id"
+    t.date     "date"
+    t.string   "name"
+    t.integer  "dosage"
+    t.integer  "prix_littre"
+    t.integer  "cout_ha_passage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "labtofactures", :force => true do |t|
+    t.integer  "facture_id"
+    t.integer  "labour_id"
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "labtoparcelles", :force => true do |t|
+    t.integer  "parcelle_id"
+    t.integer  "labour_id"
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "myusers", :force => true do |t|
+    t.string  "login"
+    t.string  "password"
+    t.integer "admin"
+  end
+
+  create_table "parcelles", :force => true do |t|
+    t.integer  "saison_id",      :null => false
+    t.integer  "typeculture_id", :null => false
+    t.string   "name"
+    t.float    "surface"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pulves", :force => true do |t|
+    t.integer  "saison_id",       :null => false
+    t.integer  "category_id"
+    t.integer  "user_id"
+    t.date     "date"
+    t.string   "name"
+    t.float    "dosage"
+    t.float    "prix_littre"
+    t.float    "cout_ha_passage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "putofactures", :force => true do |t|
+    t.integer  "facture_id"
+    t.integer  "pulve_id"
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "putoparcelles", :force => true do |t|
+    t.integer  "parcelle_id"
+    t.integer  "pulve_id"
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "saisons", :id => false, :force => true do |t|
+    t.integer "id",   :null => false
+    t.string  "name", :null => false
+  end
+
+  add_index "saisons", ["id"], :name => "id"
+
+  create_table "settings", :force => true do |t|
+    t.integer "saison_id"
+    t.integer "current"
+  end
+
+  create_table "typecultures", :id => false, :force => true do |t|
+    t.integer "id",   :null => false
+    t.string  "name", :null => false
+  end
+
+  add_index "typecultures", ["id"], :name => "id"
+
+  create_table "upcategories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ventes", :force => true do |t|
+    t.integer  "category_id"
+    t.integer  "saison_id"
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "zones", :force => true do |t|
+    t.string   "name"
+    t.float    "surface"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "zonetopas", :force => true do |t|
+    t.integer  "parcelle_id"
+    t.integer  "zone_id"
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+end

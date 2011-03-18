@@ -1,0 +1,23 @@
+<% title "Liste des factures" %>
+<%= link_to 'Nouvelle facture', new_facture_path %> | 
+<%= link_to 'Reports', {:controller => :factures, :action=> :reports} %> | 
+<%= link_to 'Nouveau Report', {:controller => :factures, :action=> :new_report} %>
+
+<h2>Reportables</h2>	
+<% @elements = @reportables %>
+<div id='list_facture'>	
+	<%= render :partial => 'list' %>
+</div>
+
+<h2>Reports</h2>	
+<% @elements = @reports %>
+<div id='list_facture'>	
+	<%= render :partial => 'list' %>
+</div>
+
+<h2>Factures</h2>	
+<% @elements = @factures %>
+<div id='list_facture'>	
+	<%= render :partial => 'list' %>
+</div>
+

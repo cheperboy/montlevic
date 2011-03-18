@@ -1,0 +1,26 @@
+
+<fieldset>
+<legend><%= link_to "Annuler", {:controller => 'factures', :action => 'show', :id => @facture.id} %></legend>
+
+
+<%= error_messages_for 	:facture,
+						:header_message => "Problemes lors de l'enregistrement", 
+						:message => "corriger les erreurs suivantes" 
+%>
+						
+<% form_for @facture, :controller => :factures do |f| -%>
+	<table>
+	<% saisons = Saison.find(:all, :order => :name) %>
+	<%= form_tr_select(f, 'Campagne', :saison_id, saisons, :id, :name,  :selected => Application::SAISON) %>
+	<%= form_tr_text(f, 'Nom', :name) %>
+	<%= form_tr_text(f, 'Ref perso', :ref) %>
+	<%= form_tr_date(f, 'Date', :date) %>
+	<%= form_tr_select(f, 'Categorie', :category_id, Category.find_by_type("facture"), :id, :name) %>
+	<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype::TYPES, :id, :name) %>
+	<%= form_tr_check(f, 'Star', :star) %>
+	<%= form_tr_check(f, 'ADU', :adu) %>
+	<%= form_tr_text_area(f, 'Infos', :desc, :size => "20x2") %>
+	</table>
+	<%= f.submit "Enregistrer" %>
+<% end -%>
+</fieldset>

@@ -1,0 +1,12 @@
+<h1>Editing labtoparcelle</h1>
+
+<% form_for(@labtoparcelle) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @labtoparcelle %> |
+<%= link_to 'Back', labtoparcelles_path %>

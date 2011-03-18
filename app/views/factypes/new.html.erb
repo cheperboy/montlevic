@@ -1,0 +1,20 @@
+<h1>New factype</h1>
+
+<% form_for(@factype) do |f| %>
+  <%= f.error_messages %>
+	<p>	
+		<td><%= f.label :name, "type : " %></td>
+		<td><%= f.text_field :name %></td>
+
+  	</p>
+	<p>	
+		<td><%= f.label :display, "Nom : " %></td>
+		<td><%= f.text_field :display %></td>
+
+  	</p>
+  	<p>
+    	<%= f.submit 'Create' %>
+  	</p>
+<% end %>
+
+<%= link_to 'Back', factypes_path %>

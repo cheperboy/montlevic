@@ -1,0 +1,11 @@
+<% title "Prestataires et Clients" %>
+
+<%= render :partial => 'list' %>
+
+<br />
+
+<h2>modif de "<%= @user.name %>"</h2>
+<%= render :partial => 'form' %>
+
+<%= link_to 'Retour', users_path %> | 
+<%= link_to 'Nouveau', new_user_path %>

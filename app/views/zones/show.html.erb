@@ -1,0 +1,13 @@
+<% title "Zone" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @zone.name %>
+</p>
+<p>
+  <strong>Surface:</strong>
+  <%=h @zone.surface %>
+</p>
+
+<%= link_to 'Edit', edit_zone_path(@zone) %> |
+<%= link_to 'Back', zones_path %>

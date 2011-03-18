@@ -1,0 +1,39 @@
+<% title "Nouveau report" %>
+	<% if @reportable %>
+		<p>reportable : <%= @reportable.id.to_s %></p>
+	<% else %>
+		<p>Pas de reportable selectionne</p>
+	<% end %>
+
+<% javascript :defaults, 'delegate' %>
+
+<%= error_messages_for 	:facture,
+						:header_message => "Problemes lors de l'enregistrement", 
+						:message => "corriger les erreurs suivantes" 
+%>
+
+<% form_for @facture, :url => 'create_report' do |f| -%>
+
+<p>Le cout correspond a la valeur aui sera deduite de la facture d'origine</p>
+<p>Attention : Ne pas oublier d'editer les parcelles associees a ce report apres son enregistrement</p>
+	
+<table>
+<% unless @reportable.nil? %>
+	<% @reportables.clear %>	
+	<% @reportables << @reportable %>	
+<% end %>
+<%= form_tr_select(f, "Facture d'origine", :reportable_id, @reportables, :id, :name_reportable) %>
+<%= form_tr_text(f, 'Nom', :name) %>
+<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype::TYPES, :id, :name) %>
+<%= form_tr_text(f, 'Cout', :cout) %>
+<%= form_tr_check(f, 'Star', :star) %>
+<%= form_tr_check(f, 'ADU', :adu) %>
+<%= form_tr_text_area(f, 'Infos', :desc, :size => "20x5") %>
+	
+</table>
+
+<%= f.submit "Enregistrer" %>
+<% end -%>
+
+
+<%= link_to 'Retour', factures_path %>

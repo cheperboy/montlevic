@@ -1,0 +1,52 @@
+<p>
+  | <%= link_to "Modifier", {:controller => 'factures', :action => 'edit', :id => @facture.id} %>
+  | <%= link_to "Retour a la liste des factures", :controller => 'factures', :action => 'index' %> |
+</p>
+
+<table>
+<tr>
+	<td>Campagne : </td>
+	<td><%= @facture.saison.name %></td>
+</tr>
+<tr>
+	<td>Nom : </td>
+	<td><%= @facture.name %></td>
+</tr>
+<tr>
+	<td>Somme des couts : </td>
+	<td><%= @facture.cout %> euros</td>
+</tr>
+<tr>
+	<td>Ref perso : </td>
+	<td><%= @facture.ref %></td>
+</tr>
+<tr>
+	<td>Categorie : </td>
+	<td><%= @facture.category.name %></td>
+</tr>
+<tr>
+	<td>Type de facture : </td>
+	<td><%= @facture.factype.name %></td>
+</tr>
+<tr>
+	<td>Repere : </td>
+	<td>Star : <%= @facture.star %>
+	 	| ADU :<%= @facture.adu %></td>
+</tr>
+<tr>
+	<td>Infos : </td>
+	<td><p><%= @facture.desc %></p></td>
+</tr>
+</table>
+
+<h3>Parcelles</h3>
+	<% if @facture.factoparcelles.empty? %>
+  		<p>Cette facture n'est associee a aucune parcelle.</p>
+  	<% else %>	
+		<ul>
+		<% @facture.factoparcelles.each do |factoparcelle| %>
+			<li><%=h factoparcelle.value %>: <%=h factoparcelle.parcelle.name %></li>
+		<% end %>
+		</ul>
+	<% end %>
+

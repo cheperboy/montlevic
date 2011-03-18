@@ -1,0 +1,48 @@
+<div id="bloc_left">
+
+  
+	<% form_for 'setting', :url => { :controller => "settings", :action => "update_saison" } do |form| %>
+		<strong>saison</strong> <%= form.collection_select('saison_id', Saison.find(:all), :id, :name, :selected => Application::SAISON ) %>
+		<%= hidden_field('from', 'controller', :value => request.path_parameters['controller'])  %>
+		<%= hidden_field('from', 'action', :value => request.path_parameters['action'])  %>
+		<%= form.submit 'choisir' %>
+	<% end %>
+<br>
+  <strong>Affichage</strong>
+  <ul>
+  <%- ['zone', 'parcelle', 'typeculture'].each do |action| -%>	
+    <li><%= link_to action.to_s.pluralize, :controller => "print", :action => action.to_s.pluralize  %></li>
+  <%- end -%>
+    <li><%= link_to "csv", :controller => "print", :action => "csv"  %></li>
+  </ul>
+  <strong>Charges</strong>
+  <ul>
+    <%- [Facture, Labour, Pulve].each do |model| -%>
+    <li>
+      <%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url") %>  
+			<%= link_to "New", eval("new_#{model.name.downcase}_url")  %>
+    </li>
+    <%- end -%>
+  </ul>
+  <strong>Recettes</strong>
+  <ul>
+    <%- [Vente].each do |model| -%>
+    <li>
+      <%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url") %>  
+			<%= link_to "New", eval("new_#{model.name.downcase}_url")  %>
+    </li>
+    <%- end -%>
+  </ul>
+  <strong>Données</strong>
+  <ul>
+    <%- [Zone, Parcelle, Typeculture, Category, Saison, User].each do |model| -%>
+    <li><%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url")  %></li>
+    <%- end -%>
+  </ul>
+  <strong>Admin</strong>
+  <ul>
+    <%- [Verif, Setting, Myuser, Factype, Upcategory].each do |model| -%>
+    <li><%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url")  %></li>
+    <%- end -%>
+  </ul>
+</div>

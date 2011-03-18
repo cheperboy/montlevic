@@ -1,0 +1,49 @@
+<% unless @elements.count == 0 %>
+	<table>  
+	  <tr>  	
+	    <td>adu | </td>
+	    <td>star | </td>
+	    <td>report | </td>
+	    <td>cat | </td>
+	    <td>date | </td>
+	    <td>cout | </td>
+	    <td class='list-elt-left'>nom | </td>
+	<% if Setting::DETAIL_REF == 1 %>
+	    <td>ref client | </td>
+	    <td>ref | </td>
+	<% end %>
+	    <td>factype | </td>
+	<% if Setting::DETAIL_DESC == 1 %>
+	    <td>desc | </td>
+	<% end %>
+	    <td colspan='3'></td>
+	  </tr>
+
+
+	<% @elements.each do |facture| %>
+
+	  <tr class='list-row'>
+	    <td><%= link_to_star(Facture, facture.id, true) %> | </td>
+	    <td><%= link_to_star(Facture, facture.id, false) %> | </td>
+	    <td><%= facture.type.to_s %> | </td>
+	    <td><%= facture.category.name %> | </td>
+	    <td><%= facture.date %> | </td>
+	    <td><%= facture.cout %> € | </td>
+	    <td class='list-elt-left'><%= facture.name %> | </td>
+	<% if Setting::DETAIL_REF == 1 %>
+	    <td><%= shortstring(facture.ref_client) %> | </td>
+	    <td><%= facture.ref %> | </td>
+	<% end %>
+	    <td><%= facture.factype.name %> | </td>
+	<% if Setting::DETAIL_DESC == 1 %>
+	    <td><%= shortstring(facture.desc) %> | </td>
+	<% end %>
+	    <td><%= link_to image_tag('img-voir.png'), facture_url(:id => facture) %> | </td>
+	    <td><%= link_to image_tag('img-modif.png'), edit_facture_url(:id => facture) %> | </td>
+    	<td><%= link_to image_tag('img-delete.png'), facture, :confirm => 'Are you sure?', :method => :delete %> | </td>
+
+	  </tr>
+	<% end %>
+</table>
+<% end %>
+<br>

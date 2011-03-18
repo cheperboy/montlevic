@@ -1,0 +1,9 @@
+<div id="bloc_up">
+
+	<% if logged_in? %>
+		  	saison <strong><%= session[:saison_name] %></strong> | 
+		  	<%= session[:user_login] %> | 
+			<%= link_to 'Logout', session_path, :method => :delete %>
+	<% end %>
+
+</div>

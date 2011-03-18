@@ -1,0 +1,16 @@
+<table>
+  <tr>
+    <td>Nom</td>
+    <td>parcelles</td>
+    <td></td>
+    <td></td>
+  </tr>
+<% @typecultures.each do |typeculture| %>
+  <tr>
+    <td><%= typeculture.name %></td>
+    <td><%= typeculture.parcelles.size %></td>
+    <td><%= link_to 'Editer', edit_typeculture_path(typeculture) %></td>
+    <td><%= link_to 'Supprimer', typeculture, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,70 @@
+	<tr>
+		<th><%= link_to_function "Factures", "$('list_factures').toggle();" %></th>
+<% ( @test.Tcols[:ids].length * 2 + 5).times do %>
+		<td></td>
+<% end %>
+	</tr>	
+
+<% unless (@factures.size == 0) %>
+	<% @factures.each do |facture| %>
+		<% fact = @test.Tfactures[facture.id] %>
+		<% nb_parcelles = facture.parcelles.length %>
+		<% type = facture.class.to_s %>
+		<tr id='list_factures'>
+			<td class="left"><strong><%= type_first_letter(facture) %> - <%= facture.category.name %></strong></td>
+			<td class="left"><%= link_to facture.name, edit_facture_path(facture) %></td>
+			<td><%= facture.date.to_s :dmy %></td>	
+			<td>
+				<%= nb_parcelles %> p - 
+				<%= pretty(fact[:surface_total]) %> ha
+			</td>
+			<td><%= pretty(fact[:ha]) %></td>
+			<td><%= pretty(fact[:total]) %></td>
+	
+	
+		<% @test.Tcols[:ids].each do |id| %>
+			<% cout_ha = pretty(fact[id][:ha]) %>
+			<% cout_total = pretty(fact[id][:total]) %>
+			<% td_class = odd(@test.Tcols[id][:rang]) %>
+			<td class="<%= td_class %>"><%=h cout_ha %></td>
+			<td class="<%= td_class %>"><%=h cout_total %></td>
+		<% end %>
+		</tr>
+	<% end %>
+	
+	<!-- Total Facture "type" (maison, invest, agri) -->
+	<% for type in @types %>
+		<tr id="subtotal" align=left>
+			<td id="nom"><b><%= type.name %></b></td>
+			<td></td>
+			<td></td>
+			<td><%= pretty(@test.Tfactures[:ha][type.name]) %></td>
+			<td><%= pretty(@test.Tfactures[:total][type.name]) %></td>	
+		<% @test.Tcols[:ids].each do |id| %>
+			<% cout_ha = pretty(@test.Tcols[id][:charges][:ha][type.name]) %>
+			<% cout_total = pretty(@test.Tcols[id][:charges][:total][type.name]) %>
+			<% td_class = odd(@test.Tcols[id][:rang]) %>
+				<td class="<%= td_class %>"><%= cout_ha %></td>
+				<td class="<%= td_class %>"><%= cout_total %> </td>
+		<% end %>
+		</tr>
+	<% end %>
+	
+	<!-- Total Facture -->
+	<tr id="subtotal" align=left>
+		<td id="nom">Total Facture:	</td>
+		<td></td>	
+		<td></td>
+		<td><%= pretty(@test.Tfactures[:ha][:sum]) %></td>
+		<td><%= pretty(@test.Tfactures[:total][:sum]) %></td>	
+	<% @test.Tcols[:ids].each do |id| %>
+		<% cout_ha = pretty(@test.Tcols[id][:factures][:ha][:sum]) %>
+		<% cout_total = pretty(@test.Tcols[id][:factures][:total][:sum]) %>
+		<% td_class = odd(@test.Tcols[id][:rang]) %>
+			<td class="<%= td_class %>_subtotal"><%= cout_ha %></td>
+			<td class="<%= td_class %>_subtotal"><%= cout_total %></td>
+	<% end %>
+	</tr>
+<% end %>
+
+	

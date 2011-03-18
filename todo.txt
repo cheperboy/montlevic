@@ -1,0 +1,23 @@
+suppression d'une facdiv
+	effet :
+	facdiv.facture_id = NULL
+	facdiv non supprimee
+
+
+associasion d'un pulve a une facture
+	impossible liste deroulante KO
+
+Verifs
+	- lab/pu avec facture assoc dont la valeur de l'assoc est superieure au cout facture
+	
+CSS
+bug affichage table (manque bordures) depuis ;odif css info popup
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,65 @@
+<% javascript :defaults, 'delegate' %>
+
+<%= error_messages_for :vente, :ventoparcelle %>
+
+<% form_for @vente do |vente_form| -%>
+
+<% content_for :jstemplates do -%>
+	<%= "var ventoparcelle='#{generate_template(vente_form, :ventoparcelles)}'" %>
+<% end -%>
+<table>
+<tr>
+	<td><%= vente_form.label :saison_id, "Campagne : " %></td>
+	<td><%= vente_form.collection_select (:saison_id, Saison.find(:all, :order => :name), :id, :name, :selected => Application::SAISON ) %></td>
+</tr>
+<tr>
+	<td><%= vente_form.label :name, "Nom : " %></td>
+	<td><%= vente_form.text_field :name %></td>
+</tr>
+<tr>
+	<td><%= vente_form.label :ref_client, "Ref client : " %></td>
+	<td><%= vente_form.text_field :ref_client %></td>
+</tr>
+<tr>
+	<td><%= vente_form.label :ref, "Ref perso : " %></td>
+	<td><%= vente_form.text_field :ref %></td>
+</tr>
+<tr>
+	<td><%= vente_form.label :date, "Date : " %></td>
+	<td><%= vente_form.date_select(:date, :start_year => 2008, :order => [:day, :month, :year]) %></td>
+</tr>
+<tr>
+	<td><%= vente_form.label :user_id, "Prestataire : " %></td>
+	<td><%= vente_form.collection_select (:user_id, User.find(:all), :id, :name ) %></td>
+</tr>  
+<tr>
+	<td><%= vente_form.label :category_id, "Categorie : " %></td>
+	<td><%= vente_form.collection_select (:category_id, Category.find_by_type("vente"), :id, :name ) %></td>
+</tr>
+<tr>
+	<td><%= vente_form.label :value, "Valeur : " %></td>
+	<td><%= vente_form.text_field :value, :size => 3 %> euros</td>
+</tr>
+<tr>
+	<td>Repere : </td>
+	<td><%= vente_form.label :star, "Star : " %><%= vente_form.check_box :star %>
+	 | <%= vente_form.label :adu, "ADU : " %><%= vente_form.check_box :adu %></td>
+</tr>
+
+</table>
+
+<div id="ventoparcelles">
+	<% vente_form.fields_for :ventoparcelles do |ventoparcelle_form| %>
+		<% unless vente_form.object.new_record? %>
+			<%= render :partial => 'ventoparcelle', :locals => { :f => ventoparcelle_form } %>
+		<% end %>
+	<% end %>
+</div>
+<p>
+<%= link_to 'Ajouter une parcelle', '#ventoparcelle', :class => "add_nested_item", :rel => "ventoparcelles" %>
+</p>
+
+<%= vente_form.submit "Enregistrer" %>
+</p>
+<% end -%>
+

@@ -1,0 +1,44 @@
+<h1>Verif</h1>
+
+<table class="table_verif">
+  <tr>
+  	<td style=width:2em;></td>
+	<td><b></b></td>
+  	<td style=width:2em;></td>
+  </tr>
+  
+
+<% @test.serie.each do |serie| %>
+	  <tr>
+		<td colspan='3'><b><%= serie.name %></b></td>
+	  </tr>
+	<% serie.tests.each do |test| %>
+	  <tr>
+		<td class='<%= color(test) %>'></td>
+	  	<td><%= test.name %></td>
+		<td class='<%= color(test) %>'><%= test.num.to_s %></td>
+	  </tr>
+		<% if test.result.equal?(false) %>
+			<% test.errors.each do |error| %>
+			  <tr>
+			  	<td></td>
+				<td>--> <%= error.id %> | 
+				<% if error.controller.nil? %>
+					<%= error.name %>
+				<% else %>
+					<%= link_to error.name, :controller => error.controller, :action => 'edit' , :id => error.id  %> | 
+			    	<%= link_to image_tag('img-voir.png'), :controller => error.controller, :action => 'show' , :id => error.id %> | 
+			    	<%= link_to image_tag('img-modif.png'),  :controller => error.controller, :action => 'edit' , :id => error.id %> |
+				<% end %>
+				</td> 
+				<td class='<%= color(test) %>'></td>
+			  </tr>
+			<% end %>
+		<% end %>
+	<% end %>
+<% end %>
+
+</table>
+
+
+<br />

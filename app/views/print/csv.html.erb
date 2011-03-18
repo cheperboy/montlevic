@@ -1,0 +1,19 @@
+<% title "CSV" %>
+<br>
+<% model_array = ['Parcelle' => Parcelle, 'Zone' => Zone] %>
+<% form_for 'print', :url => { :controller => "print", :action => "csv" } do |form| %>
+	<strong>details listes</strong><br> 
+	<% [Labour, Pulve, Facture, Vente].each do |model| %>
+		<% string = model.to_s.pluralize %>
+		<%= string %> : <%= form.check_box string.downcase %>
+	<% end %>
+	
+	<%= form.submit 'OK' %>
+<% end %>
+
+<br><br>
+<%= @csv.csv[:table] %>
+
+
+<br><br> 
+<%= @csv.csv[:html] %>

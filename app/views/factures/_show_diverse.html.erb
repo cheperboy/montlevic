@@ -1,0 +1,15 @@
+<fieldset>
+	<legend>| <%= link_to "Modifier", {:controller => 'factures', :action => 'edit', :id => @facture.id} %> |</legend>
+	<table>
+		<%= tr_text('Campagne', @facture.saison.name) %>
+		<%= tr_text('Nom', @facture.name) %>
+		<%= tr_text('Date', @facture.date) %>
+		<%= tr_text('Somme des couts (euros)', @facture.cout) %>
+		<%= tr_text('Ref perso', @facture.category.name) %>
+		<%= tr_text('Comptabilisation', @facture.factype.name) %>
+		<%= tr_text('Star', @facture.star) %>
+		<%= tr_text('ADU', @facture.adu) %>
+		<%= tr_text('Ref perso', @facture.category.name) %>
+		<%= tr_text('Infos', @facture.desc) %>
+	</table>
+</fieldset>

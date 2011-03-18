@@ -1,0 +1,10 @@
+<% title "Liste des factures diverses" %>
+<%= link_to 'Nouvelle facture', new_facture_path %> | 
+<%= link_to 'Nouveau Divers', {:controller => :factures, :action=> :new_diverse} %>
+<br><br>
+
+<% @elements = @factures %>
+<div id='list_facture'>	
+	<%= render :partial => 'list' %>
+</div>
+

@@ -1,0 +1,15 @@
+<% title "Parcelles" %>
+
+<%= render :partial => 'list' %>
+
+<br />
+
+<h2>modif de "<%= @parcelle.name %>"</h2>
+
+<%= render :partial => 'form' %>
+
+<%= link_to 'Annuler', parcelles_path %> | 
+<%= link_to 'Nouveau', new_parcelle_path %>
+<br />
+<h2>Details</h2>
+<%= render :partial => 'detail' %>

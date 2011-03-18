@@ -1,0 +1,60 @@
+<% title "Pulve" %>
+
+<table>
+	<tr>
+		<td>Nom : </td>
+		<td><%=h @pulve.name %></td>
+	</tr>
+	<tr>
+		<td>Categorie : </td>
+		<td><%=h @pulve.category.name %></td>
+	</tr>
+	<tr>
+		<td>Prestataire : </td>
+		<td><%=h @pulve.user.name %></td>
+	</tr>
+	<tr>
+		<td>Cout du littre : </td>
+		<td><%=h @pulve.prix_littre %> €/Ha</td>
+	</tr>
+	<tr>
+		<td>Cout du passage : </td>
+		<td><%=h @pulve.cout_ha_passage %> €/Ha</td>
+	</tr>
+	<tr>
+		<td>Cout total : </td>
+		<td><%=h @pulve.get_cout_total %> €</td>
+	</tr>
+</table>
+
+
+<%- if @pulve.putoparcelles.length > 0 -%>
+	<h3>Parcelles (<%= @pulve.sum_surfaces %> Ha)</h3>
+	<ul>
+	<%- @pulve.putoparcelles.each do |putoparcelle| -%>
+		<li><%= putoparcelle.parcelle.typeculture.name %> - 
+			<%= putoparcelle.parcelle.name %> 
+			[surface : <%= putoparcelle.parcelle.surface %> ha] x 
+			[cout : <%= @pulve.get_cout_ha %>] =
+			<%=h (putoparcelle.parcelle.surface * @pulve.get_cout_ha) %> €
+		</li>
+	<%- end -%>
+	</ul>
+<%- end -%>
+
+<%- if @pulve.putofactures.length > 0 -%>
+	<h3>Factures</h3>
+	<ul>
+	<%- @pulve.putofactures.each do |putofacture| -%>
+		<li><%= putofacture.facture.name %>
+			[<%= putofacture.facture.cout %> €]
+		 	contribution : <%= putofacture.value %> €
+		</li>
+	<%- end -%>
+	</ul>
+<%- end -%>
+<p>
+  <%= link_to "Edit", edit_pulve_path(@pulve) %> |
+  <%= link_to "Destroy", @pulve, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", pulves_path %>
+</p>

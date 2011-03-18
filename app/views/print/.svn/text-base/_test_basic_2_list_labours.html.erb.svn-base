@@ -1,0 +1,42 @@
+	<tr>
+		<th id="nom">Labours</th>
+<% ( @test.Tcols[:ids].length * 2 + 4).times do %>
+		<td></td>
+<% end %>
+	</tr>	
+
+<% @labours.each do |labour| %>
+	<% dep = @test.Tlabours[labour.id] %>
+
+	<tr align=left>
+		<td><%= labour.parcelles.length %> p - <%= pretty(dep[:surface_total]) %> ha</td>
+		
+		<td><%= link_popup_labour(dep) %> </td>	
+		
+		<td><%= pretty(dep[:cout_ha_passage]) %></td>
+		<td><%= pretty(dep[:cout_ha_total]) %> €/ha</td>
+		<td><%= print_popup(pretty(dep[:cout_total]), "@Tlabours[labour.id][:cout_total]") %></td>
+	
+	<% @test.Tcols[:ids].each do |id| %>
+		<% cout_ha = get_value_or_blank(dep[id], "cout_ha") %>
+		<% cout_total = get_value_or_blank(dep[id], "cout_total") %>
+		<% td_class = odd(@test.Tcols[id][:rang]) %>
+		<td class="<%= td_class %>"><%=h cout_ha %></td>
+		<td class="<%= td_class %>"><%=h cout_total %></td>
+	<% end %>
+	</tr>
+<% end %>
+	<tr id="subtotal" align=left>
+		<td id="nom">Total Labour:	</td>
+		<td></td>	
+		<td></td>
+		<td></td>
+		<td><%= pretty(@test.Tlabours[:cout_total]) %></td>	
+	<% @test.Tcols[:ids].each do |id| %>
+		<% cout_ha = get_value_or_blank(@test.Tcols[id][:labours], "cout_ha") %>
+		<% cout_total = get_value_or_blank(@test.Tcols[id][:labours], "cout_total") %>
+		<% td_class = odd(@test.Tcols[id][:rang]) %>
+		<td class="<%= td_class %>_subtotal"><%=h cout_ha %></td>
+		<td class="<%= td_class %>_subtotal"><%=h cout_total %></td>
+	<% end %>
+	</tr>

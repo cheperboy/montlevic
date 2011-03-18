@@ -1,0 +1,1290 @@
+
+
+Processing VentesController#new (for 127.0.0.1 at 2010-05-09 16:43:51) [GET]
+Rendering template within layouts/application
+Rendering ventes/new
+Completed in 75ms (View: 59, DB: 13) | 200 OK [http://0.0.0.0/ventes/new]
+
+
+Processing VentesController#new (for 127.0.0.1 at 2010-05-09 16:43:56) [GET]
+Rendering template within layouts/application
+Rendering ventes/new
+Completed in 87ms (View: 83, DB: 2) | 200 OK [http://0.0.0.0/ventes/new]
+
+
+Processing VentesController#create (for 127.0.0.1 at 2010-05-09 16:45:08) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "vente"=>{"name"=>"avoir", "date(1i)"=>"2009", "ref_client"=>"15208", "date(2i)"=>"8", "date(3i)"=>"20", "value"=>"813.19", "category_id"=>"11", "user_id"=>"13", "ref"=>"31"}}
+Redirected to http://0.0.0.0:3000/ventes/9
+Completed in 13ms (DB: 5) | 302 Found [http://0.0.0.0/ventes]
+
+
+Processing VentesController#show (for 127.0.0.1 at 2010-05-09 16:45:08) [GET]
+  Parameters: {"id"=>"9"}
+Rendering template within layouts/application
+Rendering ventes/show
+Completed in 19ms (View: 16, DB: 1) | 200 OK [http://0.0.0.0/ventes/9]
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 16:45:12) [GET]
+Rendering template within layouts/application
+Rendering print/zones
+Completed in 350ms (View: 58, DB: 24) | 200 OK [http://0.0.0.0/print/zones]
+
+
+Processing CategoriesController#index (for 127.0.0.1 at 2010-05-09 16:45:41) [GET]
+Rendering template within layouts/application
+Rendering categories/index
+Completed in 49ms (View: 43, DB: 2) | 200 OK [http://0.0.0.0/categories]
+
+
+Processing CategoriesController#new (for 127.0.0.1 at 2010-05-09 16:45:43) [GET]
+Rendering template within layouts/application
+Rendering categories/new
+Completed in 15ms (View: 13, DB: 1) | 200 OK [http://0.0.0.0/categories/new]
+
+
+Processing CategoriesController#create (for 127.0.0.1 at 2010-05-09 16:45:50) [POST]
+  Parameters: {"category"=>{"name"=>"avoir", "upcategory_id"=>"4"}, "commit"=>"Create", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA="}
+Redirected to http://0.0.0.0:3000/categories/12
+Completed in 4ms (DB: 1) | 302 Found [http://0.0.0.0/categories]
+
+
+Processing CategoriesController#show (for 127.0.0.1 at 2010-05-09 16:45:50) [GET]
+  Parameters: {"id"=>"12"}
+Rendering template within layouts/application
+Rendering categories/show
+Completed in 14ms (View: 12, DB: 1) | 200 OK [http://0.0.0.0/categories/12]
+
+
+Processing VentesController#index (for 127.0.0.1 at 2010-05-09 16:45:53) [GET]
+Rendering template within layouts/application
+Rendering ventes/index
+Completed in 102ms (View: 99, DB: 1) | 200 OK [http://0.0.0.0/ventes]
+
+
+Processing VentesController#index (for 127.0.0.1 at 2010-05-09 16:45:58) [GET]
+Rendering template within layouts/application
+Rendering ventes/index
+Completed in 27ms (View: 24, DB: 1) | 200 OK [http://0.0.0.0/ventes]
+
+
+Processing VentesController#edit (for 127.0.0.1 at 2010-05-09 16:46:00) [GET]
+  Parameters: {"id"=>"9"}
+Rendering template within layouts/application
+Rendering ventes/edit
+Completed in 33ms (View: 29, DB: 3) | 200 OK [http://0.0.0.0/ventes/9/edit]
+
+
+Processing VentesController#update (for 127.0.0.1 at 2010-05-09 16:46:36) [PUT]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "id"=>"9", "vente"=>{"name"=>"avoir", "date(1i)"=>"2009", "ref_client"=>"15208", "date(2i)"=>"8", "date(3i)"=>"20", "value"=>"770.80", "category_id"=>"12", "user_id"=>"13", "ref"=>"31"}}
+Redirected to http://0.0.0.0:3000/ventes/9
+Completed in 8ms (DB: 2) | 302 Found [http://0.0.0.0/ventes/9]
+
+
+Processing VentesController#show (for 127.0.0.1 at 2010-05-09 16:46:36) [GET]
+  Parameters: {"id"=>"9"}
+Rendering template within layouts/application
+Rendering ventes/show
+Completed in 17ms (View: 14, DB: 1) | 200 OK [http://0.0.0.0/ventes/9]
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 16:46:39) [GET]
+Rendering template within layouts/application
+Rendering print/zones
+Completed in 323ms (View: 46, DB: 18) | 200 OK [http://0.0.0.0/print/zones]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 16:47:19) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 46ms (View: 38, DB: 4) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 16:48:52) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"28.77", "factype_id"=>"3", "name"=>"telephone", "date(1i)"=>"2009", "ref_client"=>"0142650892 09G1 2Q04", "date(2i)"=>"8", "date(3i)"=>"21", "category_id"=>"5", "user_id"=>"11", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"32"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 78ms (DB: 72) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 16:48:52) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 310ms (View: 291, DB: 16) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 16:51:56) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 108ms (View: 105, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 16:53:40) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"8.95", "factype_id"=>"3", "name"=>"voiture", "date(1i)"=>"2009", "ref_client"=>"55068482", "date(2i)"=>"10", "date(3i)"=>"8", "category_id"=>"5", "user_id"=>"16", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"33"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 2) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 16:53:40) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 319ms (View: 306, DB: 11) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 16:53:45) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 33ms (View: 30, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 16:55:00) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"27.43", "factype_id"=>"3", "name"=>"telephone", "date(1i)"=>"2009", "ref_client"=>"0254483220 09f6 2k04", "date(2i)"=>"8", "date(3i)"=>"5", "category_id"=>"5", "user_id"=>"11", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"34"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 26ms (DB: 20) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 16:55:00) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 321ms (View: 307, DB: 11) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 16:55:08) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 31ms (View: 28, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 16:56:56) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"198", "factype_id"=>"3", "name"=>"beton", "date(1i)"=>"2009", "ref_client"=>"60909065", "date(2i)"=>"9", "date(3i)"=>"30", "category_id"=>"5", "user_id"=>"17", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"35"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 1) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 16:56:56) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 326ms (View: 312, DB: 11) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 16:58:48) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 31ms (View: 28, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:00:50) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"300", "factype_id"=>"3", "name"=>"engrais", "date(1i)"=>"2009", "ref_client"=>"228", "date(2i)"=>"8", "date(3i)"=>"31", "category_id"=>"4", "user_id"=>"3", "adu"=>"0", "star"=>"1", "desc"=>"", "ref"=>"36"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 7ms (DB: 1) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:00:50) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 345ms (View: 331, DB: 12) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:02:30) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 33ms (View: 30, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:04:16) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"2160.52", "factype_id"=>"3", "name"=>"semances", "date(1i)"=>"2009", "ref_client"=>"01 2009 335", "date(2i)"=>"8", "date(3i)"=>"31", "category_id"=>"4", "user_id"=>"3", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"37"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 1) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:04:16) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 346ms (View: 331, DB: 12) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:04:23) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 31ms (View: 28, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:05:38) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"447.13", "factype_id"=>"3", "name"=>"produits phyto", "date(1i)"=>"2009", "ref_client"=>"01 2009 986", "date(2i)"=>"10", "date(3i)"=>"31", "category_id"=>"4", "user_id"=>"3", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"38"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 9ms (DB: 2) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:05:38) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 353ms (View: 337, DB: 12) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:05:41) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 109ms (View: 105, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:07:28) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"208.20", "factype_id"=>"3", "name"=>"stockage", "date(1i)"=>"2009", "ref_client"=>"43", "date(2i)"=>"10", "date(3i)"=>"2", "category_id"=>"4", "user_id"=>"3", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"39"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 2) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:07:28) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 351ms (View: 336, DB: 12) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:07:31) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 32ms (View: 29, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:09:59) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"535.77", "factype_id"=>"3", "name"=>"voiture assurance", "date(1i)"=>"2009", "ref_client"=>"pck 289 577 31146938", "date(2i)"=>"9", "date(3i)"=>"4", "category_id"=>"5", "user_id"=>"6", "adu"=>"0", "star"=>"1", "desc"=>"", "ref"=>"40"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 1) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:09:59) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 368ms (View: 352, DB: 13) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:10:06) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 106ms (View: 103, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:11:08) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"810", "factype_id"=>"3", "name"=>"produits phyto", "date(1i)"=>"2009", "ref_client"=>"01 2009 498", "date(2i)"=>"9", "date(3i)"=>"29", "category_id"=>"4", "user_id"=>"3", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"41"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 1) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:11:08) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 374ms (View: 356, DB: 15) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:11:14) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 32ms (View: 29, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:12:16) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"1027.93", "factype_id"=>"3", "name"=>"stockage", "date(1i)"=>"2009", "ref_client"=>"21", "date(2i)"=>"8", "date(3i)"=>"31", "category_id"=>"4", "user_id"=>"3", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"42"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 1) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:12:16) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 377ms (View: 361, DB: 13) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing PrintController#parcelles (for 127.0.0.1 at 2010-05-09 17:12:19) [GET]
+Rendering template within layouts/application
+Rendering print/parcelles
+Completed in 500ms (View: 139, DB: 16) | 200 OK [http://0.0.0.0/print/parcelles]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:12:59) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 371ms (View: 354, DB: 13) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing PrintController#parcelles (for 127.0.0.1 at 2010-05-09 17:13:13) [GET]
+Rendering template within layouts/application
+Rendering print/parcelles
+Completed in 428ms (View: 62, DB: 16) | 200 OK [http://0.0.0.0/print/parcelles]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:13:40) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 30ms (View: 27, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:13:41) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 461ms (View: 444, DB: 14) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:13:43) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 32ms (View: 29, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:21:39) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"954.85", "factype_id"=>"3", "name"=>"portes lapeyre", "date(1i)"=>"2009", "ref_client"=>"71 09 001214", "date(2i)"=>"11", "date(3i)"=>"5", "category_id"=>"5", "user_id"=>"18", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"43"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 2) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:21:39) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 389ms (View: 373, DB: 13) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:21:55) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 33ms (View: 30, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:22:50) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"342", "factype_id"=>"3", "name"=>"electricite", "date(1i)"=>"2009", "ref_client"=>"33017", "date(2i)"=>"8", "date(3i)"=>"13", "category_id"=>"5", "user_id"=>"17", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"44"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 7ms (DB: 1) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:22:50) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 482ms (View: 455, DB: 24) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing UsersController#index (for 127.0.0.1 at 2010-05-09 17:22:54) [GET]
+Rendering template within layouts/application
+Rendering users/index
+Completed in 84ms (View: 79, DB: 1) | 200 OK [http://0.0.0.0/users]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:23:00) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 379ms (View: 363, DB: 13) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#edit (for 127.0.0.1 at 2010-05-09 17:23:03) [GET]
+  Parameters: {"id"=>"70"}
+Rendering template within layouts/application
+Rendering factures/edit
+Completed in 114ms (View: 110, DB: 3) | 200 OK [http://0.0.0.0/factures/70/edit]
+
+
+Processing FacturesController#update (for 127.0.0.1 at 2010-05-09 17:23:11) [PUT]
+  Parameters: {"debit"=>{"cout"=>"342", "factype_id"=>"3", "name"=>"electricite", "date(1i)"=>"2009", "ref_client"=>"33017", "date(2i)"=>"8", "date(3i)"=>"13", "category_id"=>"5", "user_id"=>"19", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"44"}, "commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "id"=>"70"}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 2) | 302 Found [http://0.0.0.0/factures/70]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:23:11) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 399ms (View: 382, DB: 14) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:23:23) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 31ms (View: 28, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:24:58) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"1300", "factype_id"=>"3", "name"=>"fioul", "date(1i)"=>"2008", "ref_client"=>"26915", "date(2i)"=>"8", "date(3i)"=>"17", "category_id"=>"4", "user_id"=>"4", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"45"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 2) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:24:58) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 485ms (View: 467, DB: 15) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:26:19) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 32ms (View: 29, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:27:18) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"6300", "factype_id"=>"3", "name"=>"engrais", "date(1i)"=>"2009", "ref_client"=>"01 2009 208", "date(2i)"=>"8", "date(3i)"=>"12", "category_id"=>"4", "user_id"=>"3", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"46"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 2) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:27:18) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 407ms (View: 389, DB: 15) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:27:25) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 108ms (View: 105, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:29:57) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"19100", "factype_id"=>"3", "name"=>"voiture achat c4", "date(1i)"=>"2009", "ref_client"=>"20446", "date(2i)"=>"7", "date(3i)"=>"23", "category_id"=>"5", "user_id"=>"8", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"47"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 9ms (DB: 2) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:29:57) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 427ms (View: 408, DB: 16) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing PrintController#parcelles (for 127.0.0.1 at 2010-05-09 17:30:00) [GET]
+Rendering template within layouts/application
+Rendering print/parcelles
+Completed in 466ms (View: 66, DB: 18) | 200 OK [http://0.0.0.0/print/parcelles]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:37:38) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 110ms (View: 107, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:39:01) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"17.82", "factype_id"=>"3", "name"=>"arbre fruitier", "date(1i)"=>"2009", "ref_client"=>"19336", "date(2i)"=>"11", "date(3i)"=>"25", "category_id"=>"5", "user_id"=>"20", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"48"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 9ms (DB: 2) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:39:01) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 435ms (View: 416, DB: 16) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:39:04) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 32ms (View: 29, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 17:40:28) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"2303.20", "factype_id"=>"3", "name"=>"msa", "date(1i)"=>"2009", "ref_client"=>"4787", "date(2i)"=>"10", "date(3i)"=>"26", "category_id"=>"4", "user_id"=>"21", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"49"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 2) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:40:28) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 520ms (View: 501, DB: 16) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 17:40:31) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 31ms (View: 28, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:45:10) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 422ms (View: 403, DB: 15) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#edit (for 127.0.0.1 at 2010-05-09 17:45:14) [GET]
+  Parameters: {"id"=>"75"}
+Rendering template within layouts/application
+Rendering factures/edit
+Completed in 113ms (View: 29, DB: 3) | 200 OK [http://0.0.0.0/factures/75/edit]
+
+
+Processing FacturesController#update (for 127.0.0.1 at 2010-05-09 17:45:22) [PUT]
+  Parameters: {"debit"=>{"cout"=>"3220", "factype_id"=>"3", "name"=>"msa", "date(1i)"=>"2009", "ref_client"=>"4787", "date(2i)"=>"10", "date(3i)"=>"26", "category_id"=>"4", "user_id"=>"21", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"49"}, "commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "id"=>"75"}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 34ms (DB: 27) | 302 Found [http://0.0.0.0/factures/75]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:45:22) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 439ms (View: 419, DB: 17) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 17:46:13) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 507ms (View: 488, DB: 15) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 18:51:16) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 31ms (View: 28, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing VentesController#new (for 127.0.0.1 at 2010-05-09 18:51:55) [GET]
+Rendering template within layouts/application
+Rendering ventes/new
+Completed in 29ms (View: 26, DB: 2) | 200 OK [http://0.0.0.0/ventes/new]
+
+
+Processing VentesController#create (for 127.0.0.1 at 2010-05-09 18:55:30) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "vente"=>{"name"=>"avoir", "date(1i)"=>"2009", "ref_client"=>"2806", "date(2i)"=>"5", "date(3i)"=>"31", "value"=>"32.28", "category_id"=>"12", "user_id"=>"3", "ref"=>"50"}}
+Redirected to http://0.0.0.0:3000/ventes/10
+Completed in 7ms (DB: 1) | 302 Found [http://0.0.0.0/ventes]
+
+
+Processing VentesController#show (for 127.0.0.1 at 2010-05-09 18:55:30) [GET]
+  Parameters: {"id"=>"10"}
+Rendering template within layouts/application
+Rendering ventes/show
+Completed in 19ms (View: 17, DB: 2) | 200 OK [http://0.0.0.0/ventes/10]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 18:57:33) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 501ms (View: 481, DB: 15) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 18:57:35) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 31ms (View: 28, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 19:00:50) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"590.25", "factype_id"=>"3", "name"=>"voiture zx", "date(1i)"=>"2009", "ref_client"=>"6012186", "date(2i)"=>"10", "date(3i)"=>"19", "category_id"=>"5", "user_id"=>"8", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"51"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 9ms (DB: 2) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 19:00:50) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 442ms (View: 423, DB: 16) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 19:02:03) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 109ms (View: 105, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 19:08:35) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"6784", "factype_id"=>"1", "name"=>"moisson, transport", "date(1i)"=>"2009", "ref_client"=>"34", "date(2i)"=>"10", "date(3i)"=>"23", "category_id"=>"4", "user_id"=>"2", "adu"=>"0", "star"=>"0", "desc"=>"moisson :\r\ncolza, tournessol\r\n89Ha x 72euros = 6408euros\r\n\r\nTransport cereales\r\n8 voyages x 47euros = 376euros\r\n", "ref"=>"52"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 1) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 19:08:35) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 452ms (View: 431, DB: 17) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#show (for 127.0.0.1 at 2010-05-09 19:09:33) [GET]
+  Parameters: {"id"=>"77"}
+Rendering template within layouts/application
+Rendering factures/show
+Completed in 17ms (View: 14, DB: 1) | 200 OK [http://0.0.0.0/factures/77]
+
+
+Processing FacturesController#edit (for 127.0.0.1 at 2010-05-09 19:09:36) [GET]
+  Parameters: {"id"=>"77"}
+Rendering template within layouts/application
+Rendering factures/edit
+Completed in 107ms (View: 104, DB: 2) | 200 OK [http://0.0.0.0/factures/77/edit]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 19:09:46) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 437ms (View: 417, DB: 16) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing VentesController#index (for 127.0.0.1 at 2010-05-09 19:11:28) [GET]
+Rendering template within layouts/application
+Rendering ventes/index
+Completed in 29ms (View: 26, DB: 1) | 200 OK [http://0.0.0.0/ventes]
+
+
+Processing VentesController#new (for 127.0.0.1 at 2010-05-09 19:11:32) [GET]
+Rendering template within layouts/application
+Rendering ventes/new
+Completed in 30ms (View: 27, DB: 2) | 200 OK [http://0.0.0.0/ventes/new]
+
+
+Processing VentesController#create (for 127.0.0.1 at 2010-05-09 19:19:14) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "vente"=>{"name"=>"pac", "date(1i)"=>"2009", "ref_client"=>"", "date(2i)"=>"12", "date(3i)"=>"1", "value"=>"42571.74", "category_id"=>"11", "user_id"=>"26", "ref"=>"53"}}
+Redirected to http://0.0.0.0:3000/ventes/11
+Completed in 8ms (DB: 2) | 302 Found [http://0.0.0.0/ventes]
+
+
+Processing VentesController#show (for 127.0.0.1 at 2010-05-09 19:19:14) [GET]
+  Parameters: {"id"=>"11"}
+Rendering template within layouts/application
+Rendering ventes/show
+Completed in 16ms (View: 14, DB: 1) | 200 OK [http://0.0.0.0/ventes/11]
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 19:19:21) [GET]
+
+NoMethodError (undefined method `report?' for #<Debit:0x10372ebc0>):
+  app/models/facture.rb:110:in `sum_reports'
+  app/models/facture.rb:132:in `get_cout_total'
+  app/models/facture.rb:125:in `get_cout_ha'
+  app/models/charge.rb:95:in `get_cout_ha_zone'
+  app/models/charge.rb:72:in `get_cout_ha_col'
+  app/models/print.rb:330:in `run_factures'
+  app/models/print.rb:328:in `each'
+  app/models/print.rb:328:in `run_factures'
+  app/models/print.rb:327:in `each'
+  app/models/print.rb:327:in `run_factures'
+  app/models/print.rb:59:in `calculate'
+  app/controllers/print_controller.rb:58
+  app/controllers/print_controller.rb:57:in `zones'
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing PrintController#parcelles (for 127.0.0.1 at 2010-05-09 19:19:26) [GET]
+
+NoMethodError (undefined method `report?' for #<Debit:0x1036ba8d8>):
+  app/models/facture.rb:110:in `sum_reports'
+  app/models/facture.rb:132:in `get_cout_total'
+  app/models/facture.rb:125:in `get_cout_ha'
+  app/models/charge.rb:79:in `get_cout_ha_parcelle'
+  app/models/charge.rb:71:in `get_cout_ha_col'
+  app/models/print.rb:330:in `run_factures'
+  app/models/print.rb:328:in `run_factures'
+  app/models/print.rb:327:in `each'
+  app/models/print.rb:327:in `run_factures'
+  app/models/print.rb:59:in `calculate'
+  app/controllers/print_controller.rb:39
+  app/controllers/print_controller.rb:38:in `parcelles'
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 19:23:34) [GET]
+
+NoMethodError (undefined method `report?' for #<Debit:0x1037c6b00>):
+  app/models/facture.rb:110:in `sum_reports'
+  app/models/facture.rb:132:in `get_cout_total'
+  app/models/facture.rb:125:in `get_cout_ha'
+  app/models/charge.rb:95:in `get_cout_ha_zone'
+  app/models/charge.rb:72:in `get_cout_ha_col'
+  app/models/print.rb:330:in `run_factures'
+  app/models/print.rb:328:in `each'
+  app/models/print.rb:328:in `run_factures'
+  app/models/print.rb:327:in `each'
+  app/models/print.rb:327:in `run_factures'
+  app/models/print.rb:59:in `calculate'
+  app/controllers/print_controller.rb:58
+  app/controllers/print_controller.rb:57:in `zones'
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 19:25:51) [GET]
+
+NoMethodError (undefined method `report?' for #<Debit:0x1037e7210>):
+  app/models/facture.rb:110:in `sum_reports'
+  app/models/facture.rb:132:in `get_cout_total'
+  app/models/facture.rb:125:in `get_cout_ha'
+  app/models/charge.rb:95:in `get_cout_ha_zone'
+  app/models/charge.rb:72:in `get_cout_ha_col'
+  app/models/print.rb:330:in `run_factures'
+  app/models/print.rb:328:in `each'
+  app/models/print.rb:328:in `run_factures'
+  app/models/print.rb:327:in `each'
+  app/models/print.rb:327:in `run_factures'
+  app/models/print.rb:59:in `calculate'
+  app/controllers/print_controller.rb:58
+  app/controllers/print_controller.rb:57:in `zones'
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 19:26:34) [GET]
+
+NoMethodError (undefined method `report?' for #<Debit:0x10309a1b0>):
+  app/models/facture.rb:110:in `sum_reports'
+  app/models/facture.rb:132:in `get_cout_total'
+  app/models/facture.rb:125:in `get_cout_ha'
+  app/models/charge.rb:95:in `get_cout_ha_zone'
+  app/models/charge.rb:72:in `get_cout_ha_col'
+  app/models/print.rb:330:in `run_factures'
+  app/models/print.rb:328:in `each'
+  app/models/print.rb:328:in `run_factures'
+  app/models/print.rb:327:in `each'
+  app/models/print.rb:327:in `run_factures'
+  app/models/print.rb:59:in `calculate'
+  app/controllers/print_controller.rb:58
+  app/controllers/print_controller.rb:57:in `zones'
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 19:26:40) [GET]
+
+NoMethodError (undefined method `report?' for #<Debit:0x103090340>):
+  app/models/facture.rb:110:in `sum_reports'
+  app/models/facture.rb:132:in `get_cout_total'
+  app/models/facture.rb:125:in `get_cout_ha'
+  app/models/charge.rb:95:in `get_cout_ha_zone'
+  app/models/charge.rb:72:in `get_cout_ha_col'
+  app/models/print.rb:330:in `run_factures'
+  app/models/print.rb:328:in `each'
+  app/models/print.rb:328:in `run_factures'
+  app/models/print.rb:327:in `each'
+  app/models/print.rb:327:in `run_factures'
+  app/models/print.rb:59:in `calculate'
+  app/controllers/print_controller.rb:58
+  app/controllers/print_controller.rb:57:in `zones'
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 19:26:59) [GET]
+
+NoMethodError (undefined method `report?' for #<Debit:0x1030ac888>):
+  app/models/facture.rb:110:in `sum_reports'
+  app/models/facture.rb:132:in `get_cout_total'
+  app/models/facture.rb:125:in `get_cout_ha'
+  app/models/charge.rb:95:in `get_cout_ha_zone'
+  app/models/charge.rb:72:in `get_cout_ha_col'
+  app/models/print.rb:330:in `run_factures'
+  app/models/print.rb:328:in `each'
+  app/models/print.rb:328:in `run_factures'
+  app/models/print.rb:327:in `each'
+  app/models/print.rb:327:in `run_factures'
+  app/models/print.rb:59:in `calculate'
+  app/controllers/print_controller.rb:58
+  app/controllers/print_controller.rb:57:in `zones'
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 19:27:01) [GET]
+
+NoMethodError (undefined method `report?' for #<Debit:0x1030e5d40>):
+  app/models/facture.rb:110:in `sum_reports'
+  app/models/facture.rb:132:in `get_cout_total'
+  app/models/facture.rb:125:in `get_cout_ha'
+  app/models/charge.rb:95:in `get_cout_ha_zone'
+  app/models/charge.rb:72:in `get_cout_ha_col'
+  app/models/print.rb:330:in `run_factures'
+  app/models/print.rb:328:in `each'
+  app/models/print.rb:328:in `run_factures'
+  app/models/print.rb:327:in `each'
+  app/models/print.rb:327:in `run_factures'
+  app/models/print.rb:59:in `calculate'
+  app/controllers/print_controller.rb:58
+  app/controllers/print_controller.rb:57:in `zones'
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 19:27:40) [GET]
+
+NoMethodError (undefined method `report?' for #<Debit:0x1030f0358>):
+  app/models/facture.rb:110:in `sum_reports'
+  app/models/facture.rb:132:in `get_cout_total'
+  app/models/facture.rb:125:in `get_cout_ha'
+  app/models/charge.rb:95:in `get_cout_ha_zone'
+  app/models/charge.rb:72:in `get_cout_ha_col'
+  app/models/print.rb:330:in `run_factures'
+  app/models/print.rb:328:in `each'
+  app/models/print.rb:328:in `run_factures'
+  app/models/print.rb:327:in `each'
+  app/models/print.rb:327:in `run_factures'
+  app/models/print.rb:59:in `calculate'
+  app/controllers/print_controller.rb:58
+  app/controllers/print_controller.rb:57:in `zones'
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 19:27:56) [GET]
+Rendering template within layouts/application
+Rendering print/zones
+Completed in 602ms (View: 164, DB: 43) | 200 OK [http://0.0.0.0/print/zones]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 19:28:00) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 437ms (View: 415, DB: 16) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing PrintController#parcelles (for 127.0.0.1 at 2010-05-09 19:28:02) [GET]
+Rendering template within layouts/application
+Rendering print/parcelles
+Completed in 647ms (View: 90, DB: 24) | 200 OK [http://0.0.0.0/print/parcelles]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 19:28:27) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 433ms (View: 413, DB: 16) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 19:34:32) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 523ms (View: 503, DB: 16) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 19:34:34) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 56ms (View: 49, DB: 5) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 19:36:09) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"4401.5", "factype_id"=>"1", "name"=>"labours, pulves", "date(1i)"=>"2009", "ref_client"=>"37", "date(2i)"=>"12", "date(3i)"=>"15", "category_id"=>"4", "user_id"=>"2", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"54"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 8ms (DB: 2) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 19:36:09) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 547ms (View: 526, DB: 18) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 19:36:35) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 31ms (View: 28, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 19:39:29) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"4668.5", "factype_id"=>"1", "name"=>"pulves, haies", "date(1i)"=>"2009", "ref_client"=>"38", "date(2i)"=>"12", "date(3i)"=>"15", "category_id"=>"4", "user_id"=>"2", "adu"=>"0", "star"=>"0", "desc"=>"broyage horizontal\r\npulve\r\nsemis colza\r\nbroyage haies", "ref"=>"55"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 9ms (DB: 1) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 19:39:29) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 555ms (View: 534, DB: 18) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing PrintController#parcelles (for 127.0.0.1 at 2010-05-09 19:42:44) [GET]
+Rendering template within layouts/application
+Rendering print/parcelles
+Completed in 613ms (View: 155, DB: 21) | 200 OK [http://0.0.0.0/print/parcelles]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 20:49:40) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 32ms (View: 29, DB: 2) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#create (for 127.0.0.1 at 2010-05-09 20:51:08) [POST]
+  Parameters: {"commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "facture"=>{"cout"=>"2264.8", "factype_id"=>"3", "name"=>"factures diverses", "date(1i)"=>"2009", "ref_client"=>"", "date(2i)"=>"1", "date(3i)"=>"1", "category_id"=>"5", "user_id"=>"27", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"60"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 9ms (DB: 2) | 302 Found [http://0.0.0.0/factures]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 20:51:08) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 479ms (View: 452, DB: 24) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#edit (for 127.0.0.1 at 2010-05-09 20:51:14) [GET]
+  Parameters: {"id"=>"80"}
+Rendering template within layouts/application
+Rendering factures/edit
+Completed in 112ms (View: 108, DB: 3) | 200 OK [http://0.0.0.0/factures/80/edit]
+
+
+Processing FacturesController#update (for 127.0.0.1 at 2010-05-09 20:51:22) [PUT]
+  Parameters: {"debit"=>{"cout"=>"2264.8", "factype_id"=>"3", "name"=>"factures diverses", "date(1i)"=>"2009", "ref_client"=>"", "date(2i)"=>"1", "date(3i)"=>"1", "category_id"=>"5", "user_id"=>"27", "adu"=>"0", "star"=>"0", "desc"=>"", "ref"=>"56"}, "commit"=>"Enregistrer", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "id"=>"80"}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 9ms (DB: 2) | 302 Found [http://0.0.0.0/factures/80]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 20:51:22) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 479ms (View: 456, DB: 18) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing PrintController#parcelles (for 127.0.0.1 at 2010-05-09 20:51:25) [GET]
+Rendering template within layouts/application
+Rendering print/parcelles
+Completed in 629ms (View: 78, DB: 22) | 200 OK [http://0.0.0.0/print/parcelles]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 21:03:40) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 563ms (View: 540, DB: 18) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing FacturesController#edit (for 127.0.0.1 at 2010-05-09 21:03:43) [GET]
+  Parameters: {"id"=>"79"}
+Rendering template within layouts/application
+Rendering factures/edit
+Completed in 34ms (View: 30, DB: 3) | 200 OK [http://0.0.0.0/factures/79/edit]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 21:05:36) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 465ms (View: 443, DB: 17) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing SettingsController#update_saison (for 127.0.0.1 at 2010-05-09 21:05:41) [POST]
+  Parameters: {"commit"=>"choisir", "from"=>{"action"=>"index", "controller"=>"factures"}, "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "setting"=>{"saison_id"=>"2"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 88ms (DB: 1) | 302 Found [http://0.0.0.0/settings/update_saison]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 21:05:41) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 477ms (View: 456, DB: 17) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing SettingsController#update_saison (for 127.0.0.1 at 2010-05-09 21:05:46) [POST]
+  Parameters: {"commit"=>"choisir", "from"=>{"action"=>"index", "controller"=>"factures"}, "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "setting"=>{"saison_id"=>"2"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 4ms (DB: 0) | 302 Found [http://0.0.0.0/settings/update_saison]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 21:05:46) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 540ms (View: 519, DB: 17) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing SettingsController#update_saison (for 127.0.0.1 at 2010-05-09 21:05:53) [POST]
+  Parameters: {"commit"=>"choisir", "from"=>{"action"=>"index", "controller"=>"factures"}, "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "setting"=>{"saison_id"=>"2"}}
+Redirected to http://0.0.0.0:3000/factures
+Completed in 3ms (DB: 0) | 302 Found [http://0.0.0.0/settings/update_saison]
+
+
+Processing FacturesController#index (for 127.0.0.1 at 2010-05-09 21:05:53) [GET]
+Rendering template within layouts/application
+Rendering factures/index
+Completed in 549ms (View: 528, DB: 18) | 200 OK [http://0.0.0.0/factures]
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 21:05:56) [GET]
+Rendering template within layouts/application
+Rendering print/zones
+Completed in 511ms (View: 73, DB: 30) | 200 OK [http://0.0.0.0/print/zones]
+
+
+Processing SettingsController#update_saison (for 127.0.0.1 at 2010-05-09 21:05:59) [POST]
+  Parameters: {"commit"=>"choisir", "from"=>{"action"=>"zones", "controller"=>"print"}, "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "setting"=>{"saison_id"=>"2"}}
+Redirected to http://0.0.0.0:3000/print/zones
+Completed in 4ms (DB: 0) | 302 Found [http://0.0.0.0/settings/update_saison]
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 21:06:00) [GET]
+Rendering template within layouts/application
+Rendering print/zones
+Completed in 521ms (View: 73, DB: 33) | 200 OK [http://0.0.0.0/print/zones]
+
+
+Processing SettingsController#update_saison (for 127.0.0.1 at 2010-05-09 21:06:03) [POST]
+  Parameters: {"commit"=>"choisir", "from"=>{"action"=>"zones", "controller"=>"print"}, "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "setting"=>{"saison_id"=>"3"}}
+Redirected to http://0.0.0.0:3000/print/zones
+Completed in 4ms (DB: 1) | 302 Found [http://0.0.0.0/settings/update_saison]
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 21:06:03) [GET]
+Rendering template within layouts/application
+Rendering print/zones
+Completed in 595ms (View: 73, DB: 32) | 200 OK [http://0.0.0.0/print/zones]
+
+
+Processing SettingsController#update_saison (for 127.0.0.1 at 2010-05-09 21:06:07) [POST]
+  Parameters: {"commit"=>"choisir", "from"=>{"action"=>"zones", "controller"=>"print"}, "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "setting"=>{"saison_id"=>"1"}}
+Redirected to http://0.0.0.0:3000/print/zones
+Completed in 4ms (DB: 1) | 302 Found [http://0.0.0.0/settings/update_saison]
+
+
+Processing PrintController#zones (for 127.0.0.1 at 2010-05-09 21:06:07) [GET]
+Rendering template within layouts/application
+Rendering print/zones
+Completed in 597ms (View: 73, DB: 31) | 200 OK [http://0.0.0.0/print/zones]
+
+
+Processing SaisonsController#index (for 127.0.0.1 at 2010-05-09 21:06:55) [GET]
+Rendering template within layouts/application
+Rendering saisons/index
+Completed in 25ms (View: 20, DB: 1) | 200 OK [http://0.0.0.0/saisons]
+
+
+Processing SaisonsController#edit (for 127.0.0.1 at 2010-05-09 21:06:57) [GET]
+  Parameters: {"id"=>"1"}
+Rendering template within layouts/application
+Rendering saisons/edit
+
+ActionView::TemplateError (undefined method `desc' for #<Saison id: 1, name: "2009">) on line #12 of app/views/saisons/edit.html.erb:
+9:   </p>
+10:   <p>
+11:     <%= f.label :desc %><br />
+12:     <%= f.text_area :desc %>
+13:   </p>
+14:   <p>
+15:     <%= f.submit 'Update' %>
+
+    app/views/saisons/edit.html.erb:12
+    app/views/saisons/edit.html.erb:3
+    -e:2:in `load'
+    -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing SaisonsController#index (for 127.0.0.1 at 2010-05-09 21:07:34) [GET]
+Rendering template within layouts/application
+Rendering saisons/index
+Completed in 21ms (View: 20, DB: 1) | 200 OK [http://0.0.0.0/saisons]
+
+
+Processing SaisonsController#edit (for 127.0.0.1 at 2010-05-09 21:07:36) [GET]
+  Parameters: {"id"=>"1"}
+Rendering template within layouts/application
+Rendering saisons/edit
+
+ActionView::TemplateError (undefined method `desc' for #<Saison id: 1, name: "2009">) on line #12 of app/views/saisons/edit.html.erb:
+9:   </p>
+10:   <p>
+11:     <%= f.label :desc %><br />
+12:     <%= f.text_area :desc %>
+13:   </p>
+14:   <p>
+15:     <%= f.submit 'Update' %>
+
+    app/views/saisons/edit.html.erb:12
+    app/views/saisons/edit.html.erb:3
+    -e:2:in `load'
+    -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing SaisonsController#edit (for 127.0.0.1 at 2010-05-09 21:08:25) [GET]
+  Parameters: {"id"=>"1"}
+Rendering template within layouts/application
+Rendering saisons/edit
+Completed in 24ms (View: 20, DB: 1) | 200 OK [http://0.0.0.0/saisons/1/edit]
+
+
+Processing SaisonsController#update (for 127.0.0.1 at 2010-05-09 21:08:34) [PUT]
+  Parameters: {"saison"=>{"name"=>"2009-2010"}, "commit"=>"Update", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "id"=>"1"}
+Redirected to http://0.0.0.0:3000/saisons/1
+Completed in 5ms (DB: 1) | 302 Found [http://0.0.0.0/saisons/1]
+
+
+Processing SaisonsController#show (for 127.0.0.1 at 2010-05-09 21:08:34) [GET]
+  Parameters: {"id"=>"1"}
+Rendering template within layouts/application
+Rendering saisons/show
+
+ActionView::TemplateError (undefined method `desc' for #<Saison id: 1, name: "2009-2010">) on line #8 of app/views/saisons/show.html.erb:
+5: 
+6: <p>
+7:   <b>Desc:</b>
+8:   <%=h @saison.desc %>
+9: </p>
+10: 
+11: 
+
+    app/views/saisons/show.html.erb:8
+    app/controllers/saisons_controller.rb:18:in `show'
+    -e:2:in `load'
+    -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing SaisonsController#index (for 127.0.0.1 at 2010-05-09 21:09:03) [GET]
+Rendering template within layouts/application
+Rendering saisons/index
+Completed in 22ms (View: 20, DB: 1) | 200 OK [http://0.0.0.0/saisons]
+
+
+Processing SaisonsController#edit (for 127.0.0.1 at 2010-05-09 21:09:05) [GET]
+  Parameters: {"id"=>"2"}
+Rendering template within layouts/application
+Rendering saisons/edit
+Completed in 16ms (View: 14, DB: 1) | 200 OK [http://0.0.0.0/saisons/2/edit]
+
+
+Processing SaisonsController#update (for 127.0.0.1 at 2010-05-09 21:09:09) [PUT]
+  Parameters: {"saison"=>{"name"=>"2010-2011"}, "commit"=>"Update", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "id"=>"2"}
+Redirected to http://0.0.0.0:3000/saisons/2
+Completed in 5ms (DB: 1) | 302 Found [http://0.0.0.0/saisons/2]
+
+
+Processing SaisonsController#show (for 127.0.0.1 at 2010-05-09 21:09:09) [GET]
+  Parameters: {"id"=>"2"}
+Rendering template within layouts/application
+Rendering saisons/show
+
+ActionView::TemplateError (undefined method `desc' for #<Saison id: 2, name: "2010-2011">) on line #8 of app/views/saisons/show.html.erb:
+5: 
+6: <p>
+7:   <b>Desc:</b>
+8:   <%=h @saison.desc %>
+9: </p>
+10: 
+11: 
+
+    app/views/saisons/show.html.erb:8
+    app/controllers/saisons_controller.rb:18:in `show'
+    -e:2:in `load'
+    -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing SaisonsController#index (for 127.0.0.1 at 2010-05-09 21:09:14) [GET]
+Rendering template within layouts/application
+Rendering saisons/index
+Completed in 21ms (View: 19, DB: 1) | 200 OK [http://0.0.0.0/saisons]
+
+
+Processing SaisonsController#edit (for 127.0.0.1 at 2010-05-09 21:09:15) [GET]
+  Parameters: {"id"=>"3"}
+Rendering template within layouts/application
+Rendering saisons/edit
+Completed in 17ms (View: 15, DB: 1) | 200 OK [http://0.0.0.0/saisons/3/edit]
+
+
+Processing SaisonsController#update (for 127.0.0.1 at 2010-05-09 21:09:19) [PUT]
+  Parameters: {"saison"=>{"name"=>"2011-2012"}, "commit"=>"Update", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA=", "id"=>"3"}
+Redirected to http://0.0.0.0:3000/saisons/3
+Completed in 4ms (DB: 1) | 302 Found [http://0.0.0.0/saisons/3]
+
+
+Processing SaisonsController#show (for 127.0.0.1 at 2010-05-09 21:09:20) [GET]
+  Parameters: {"id"=>"3"}
+Rendering template within layouts/application
+Rendering saisons/show
+
+ActionView::TemplateError (undefined method `desc' for #<Saison id: 3, name: "2011-2012">) on line #8 of app/views/saisons/show.html.erb:
+5: 
+6: <p>
+7:   <b>Desc:</b>
+8:   <%=h @saison.desc %>
+9: </p>
+10: 
+11: 
+
+    app/views/saisons/show.html.erb:8
+    app/controllers/saisons_controller.rb:18:in `show'
+    -e:2:in `load'
+    -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing SaisonsController#index (for 127.0.0.1 at 2010-05-09 21:09:23) [GET]
+Rendering template within layouts/application
+Rendering saisons/index
+Completed in 21ms (View: 19, DB: 1) | 200 OK [http://0.0.0.0/saisons]
+
+
+Processing SaisonsController#new (for 127.0.0.1 at 2010-05-09 21:09:27) [GET]
+Rendering template within layouts/application
+Rendering saisons/new
+Completed in 16ms (View: 15, DB: 1) | 200 OK [http://0.0.0.0/saisons/new]
+
+
+Processing SaisonsController#create (for 127.0.0.1 at 2010-05-09 21:09:37) [POST]
+  Parameters: {"saison"=>{"name"=>"2008-2009"}, "commit"=>"Create", "authenticity_token"=>"0B1bq2j6uiyeuPlWjjF4vR/G4DPZ1B/k2jpsl+/s2uA="}
+Redirected to http://0.0.0.0:3000/saisons/4
+Completed in 4ms (DB: 0) | 302 Found [http://0.0.0.0/saisons]
+
+
+Processing SaisonsController#show (for 127.0.0.1 at 2010-05-09 21:09:37) [GET]
+  Parameters: {"id"=>"4"}
+Rendering template within layouts/application
+Rendering saisons/show
+
+ActionView::TemplateError (undefined method `desc' for #<Saison id: 4, name: "2008-2009">) on line #8 of app/views/saisons/show.html.erb:
+5: 
+6: <p>
+7:   <b>Desc:</b>
+8:   <%=h @saison.desc %>
+9: </p>
+10: 
+11: 
+
+    app/views/saisons/show.html.erb:8
+    app/controllers/saisons_controller.rb:18:in `show'
+    -e:2:in `load'
+    -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing SaisonsController#index (for 127.0.0.1 at 2010-05-09 21:09:40) [GET]
+Rendering template within layouts/application
+Rendering saisons/index
+Completed in 23ms (View: 21, DB: 1) | 200 OK [http://0.0.0.0/saisons]
+
+
+Processing FacturesController#new (for 127.0.0.1 at 2010-05-09 21:12:00) [GET]
+Rendering template within layouts/application
+Rendering factures/new
+Completed in 73ms (View: 56, DB: 13) | 200 OK [http://0.0.0.0/factures/new]
+
+
+Processing FacturesController#show (for 127.0.0.1 at 2010-05-18 09:07:12) [GET]
+  Parameters: {"id"=>"reports"}
+
+ActiveRecord::RecordNotFound (Couldn't find Facture with ID=reports):
+  app/controllers/factures_controller.rb:118:in `show'
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (not_found)
+
+
+Processing FacturesController#show (for 127.0.0.1 at 2010-05-18 09:07:13) [GET]
+  Parameters: {"id"=>"reports"}
+
+ActiveRecord::RecordNotFound (Couldn't find Facture with ID=reports):
+  app/controllers/factures_controller.rb:118:in `show'
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (not_found)

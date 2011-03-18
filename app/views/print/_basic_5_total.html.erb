@@ -1,0 +1,24 @@
+	<tr>
+<% (@test.Tcols[:ids].length * 2 + 5).times do %>
+		<td></td>
+<% end %>
+	</tr>	
+<% unless (@test.Tcols[:ids].size == 0) %>
+<!-- Total  -->
+	<tr class="total">
+		<td class="left"><b>Total Charges</b></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><%= pretty(@test.Tcols[:charges][:ha]) %></td>
+		<td class="td-total"><%= pretty(@test.Tcols[:charges][:total]) %></td>	
+	<% @test.Tcols[:ids].each do |id| %>
+		<% cout_ha = pretty(@test.Tcols[id][:charges][:ha][:sum]) %>
+		<% cout_total = pretty(@test.Tcols[id][:charges][:total][:sum]) %>
+		<% td_class = odd(@test.Tcols[id][:rang]) %>
+			<td class="<%= td_class %>_subtotal"><%= cout_ha %></td>
+			<td class="<%= td_class %>_subtotal"><%= cout_total %></td>
+	<% end %>
+	</tr>
+<% end %>	
+

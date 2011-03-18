@@ -1,0 +1,41 @@
+
+
+<table>  
+  <tr>  	
+<% (1..Facture::COLS_COUNT).each do |col| %>
+	<% if Facture::COLS_LINK[col] == true %>	
+    <td><%= link_to_head(Facture::COLS_NAME[col], Facture::COLS_DISPLAY_NAME[col]) %> | </td>
+	<% else %>
+    <td><%= Facture::COLS_DISPLAY_NAME[col] %> | </td>
+	<% end %>
+<% end %>
+    <td colspan='3'></td>
+  </tr>
+
+
+<br>
+
+<% unless @elements.count == 0 %>
+	<% @elements.each do |facture| %>
+
+	  <tr class='list-row'>
+	    <td><%= link_to_star(facture.id, true) %> | </td>
+	    <td><%= link_to_star(facture.id, false) %> | </td>
+	    <td><%= facture.category.name %> | </td>
+	    <td><%= facture.date %> | </td>
+	    <td><%= facture.cout %> € | </td>
+	    <td class='list-elt-left'><%= facture.name %> | </td>
+	    <td><%= shortstring(facture.ref_client) %> | </td>
+	    <td><%= facture.ref %> | </td>
+	<% if Setting::DETAIL_DESC == 1 %>
+	    <td><%= facture.factype.name %> | </td>
+	<% end %>
+	    <td><%= shortstring(facture.desc) %> | </td>
+	    <td><%= facture.type.to_s %> | </td>
+	    <td><%= link_to image_tag('img-voir.png'), :controller => "factures", :action => "show", :id => facture %> | </td>
+	    <td><%= link_to image_tag('img-modif.png'), :action => 'edit', :controller => 'factures' %> | </td>
+	    <td><%= link_to image_tag('img-delete.png'), :id => facture.id, :confirm => 'Are you sure?', :method => :delete %> | </td>
+	  </tr>
+	<% end %>
+</table>
+<% end %>

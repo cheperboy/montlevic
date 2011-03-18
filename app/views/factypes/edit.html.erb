@@ -1,0 +1,22 @@
+<h1>Editing factype</h1>
+
+<% form_for(@factype) do |f| %>
+  <%= f.error_messages %>
+	<p>	
+		<td><%= f.label :name, "type : " %></td>
+		<td><%= f.text_field :name %></td>
+
+  	</p>
+	<p>	
+		<td><%= f.label :display, "Nom : " %></td>
+		<td><%= f.text_field :display %></td>
+
+  	</p>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @factype %> |
+<%= link_to 'Back', factypes_path %>

@@ -1,0 +1,40 @@
+<% if @facture.class == Diverse %>
+	
+	<% title "Modif facture (diverse)" %>
+	<p>| <%= link_to "Liste des factures diverses", {:controller => 'factures', :action => 'diverses'} %> |</p>
+	<%= render :partial => 'form_diverse' %>
+	
+	<h2>Factures associees</h2>
+	<p>| <%= link_to "Ajouter une facture associee", new_facture_facdiv_url(@facture) %> |</p>
+	<% @facdivs = @facture.facdivs %>
+	<%= render :partial => 'list_facdivs' %>
+
+<% elsif @facture.class == Reportable %>
+
+	<% title "Modif facture (reportable)" %>
+	<p>Attention, cette facture est reportable, elle ne devrait pas etre modifiee.</p>
+	<%= render :partial => 'form_reportable' %>
+
+	<h2>Reports associes</h2>
+	<p>| <%= link_to "Ajouter un report", {:action => 'new_report', :reportable_id => @facture} %> |</p>
+
+	<%= render :partial => 'list_reports' %>
+
+<% elsif @facture.class == Report %>
+
+	<% title "Modif facture (report)" %>
+	<p>| <%= link_to "Annuler", factures_url %>
+	| <%= link_to "Voir l'ancre et les autres reports", {:action => 'show', :id => @facture.reportable} %> |</p>
+	
+	<%= render :partial => 'form' %>
+	<%= link_to 'Show', @facture %> |
+	<%= link_to 'Back', factures_path %>
+
+<% else %>
+
+	<% title "Modif facture" %>
+	<p>| <%= link_to "Annuler", facture_url(@facture) %>
+	   | <%= link_to "Modifier en Reportable", {:action => 'new_debit_to_reportable', :debit_id => @facture.id} %> |</p>
+	<%= render :partial => 'form' %>
+
+<% end %>

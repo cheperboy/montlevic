@@ -1,0 +1,5 @@
+ <%= render(:partial => "test_basic_1_head") %>
+ <%= render(:partial => "test_basic_2_list_labours") %>
+ <%= render(:partial => "test_basic_3_list_pulves") %>
+ <%= render(:partial => "test_basic_4_list_factures") %>
+ <%= render(:partial => "test_basic_5_total") %>

@@ -1,0 +1,51 @@
+
+<% title "Liste des factures" %>
+
+<table>
+  <tr>  	
+<% (1..Facture::COLS_COUNT).each do |col| %>
+    <td><%= Facture::COLS_DISPLAY_NAME[col] %> | </td>
+<% end %>
+    <td colspan='3'></td>
+  </tr>
+
+  <tr>
+<% (1..Facture::COLS_COUNT).each do |col| %>
+    <td><%= (text_field_tag Facture::COLS_NAME[col], 
+							params['#{Facture::COLS_NAME[col]}'],
+						 	:value => params[Facture::COLS_COUNT[col]], 
+							:size => Facture::COLS_SIZE[col]) 
+		%>| </td>
+<% end %>
+    <td colspan='3'><%= submit_tag "Chercher" %></td>
+  </tr>
+
+<% (1..Facture::COLS_COUNT).each do |col| %>
+	<%= observe_field Facture::COLS_NAME[col],  
+	              :frequency => 2, 
+	              :update => 'list_facture', 
+	              :url => {:action => 'list'},
+	              :with => Facture::COLS_NAME[col] %>
+<% end %>
+</table>
+
+<br />
+<%= link_to 'Nouvelle facture', new_facture_path %>
+<br /><br />
+
+<h2>Reportables</h2>	
+<% @elements = @reportables %>
+<div id='list_facture'>	
+	<%= render :partial => 'list' %>
+</div>
+
+<% @elements = @reports %>
+<div id='list_facture'>	
+	<%= render :partial => 'list' %>
+</div>
+
+<% @elements = @factures %>
+<div id='list_facture'>	
+	<%= render :partial => 'list' %>
+</div>
+

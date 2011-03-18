@@ -1,0 +1,71 @@
+	<tr>
+		<th id="nom">Factures</th>
+<% ( @parcelles.length * 2 + 4).times do %>
+		<td></td>
+<% end %>
+	</tr>	
+
+<% @factures.each do |facture| %>
+	<% fact = @Hfactures[facture.id] %>
+	<% nb_parcelles = facture.parcelles.length %>
+	
+	<tr align=left>
+		<td><%= nb_parcelles %> p - <%= pretty(fact[:surface_total]) %> ha</td>
+		<td>
+			<%= fact[:id] %> - 
+			<%= link_to facture.name, edit_facture_path(facture) %> - 
+			<%= fact[:category] %>
+		</td>	
+	<% if facture.diff? %>	
+		<td><%= pretty(facture.cout) %> - <%= pretty(facture.sum_charges) %> = <%= pretty(fact[:cout_total]) %></td>
+	<% else %>	
+		<td></td>
+	<% end %>	
+		<td><%= pretty(fact[:cout_ha]) %> €/ha</td>
+		<td><%= pretty(fact[:cout_total]) %> €</td>
+	
+	<% @parcelles.each do |parcelle| %>
+		<% cout_ha = get_value_or_blank(fact[parcelle.id], "cout_ha") %>
+		<% cout_total = get_value_or_blank(fact[parcelle.id], "cout_total") %>
+		<% td_class = odd(@Hparcelles[parcelle.id][:rang]) %>
+		<td class="<%= td_class %>"><%=h cout_ha %></td>
+		<td class="<%= td_class %>"><%=h cout_total %></td>
+	<% end %>
+	</tr>
+<% end %>
+
+<!-- Total Facture "type" (maison, invest, agri) -->
+<% for type in @types %>
+	<tr id="subtotal" align=left>
+		<td id="nom"><b><%= type.name %></b></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><%= pretty(@Hfactures[:cout_total][type.name]) %></td>	
+	<% @parcelles.each do |parcelle| %>
+		<% cout_ha = pretty(@Hparcelles[parcelle.id][:total][:cout_ha][type.name]) %>
+		<% cout_total = pretty(@Hparcelles[parcelle.id][:total][:cout_total][type.name]) %>
+		<% td_class = odd(@Hparcelles[parcelle.id][:rang]) %>
+			<td class="<%= td_class %>"><%= cout_ha %></td>
+			<td class="<%= td_class %>"><%= cout_total %> </td>
+	<% end %>
+	</tr>
+<% end %>
+
+<!-- Total Facture -->
+	<tr id="subtotal" align=left>
+		<td id="nom">Total Facture:	</td>
+		<td></td>	
+		<td></td>
+		<td></td>
+		<td><%= pretty(@Hfactures[:cout_total][:sum]) %></td>	
+	<% @parcelles.each do |parcelle| %>
+		<% cout_ha = pretty(@Hparcelles[parcelle.id][:factures][:cout_ha][:sum]) %>
+		<% cout_total = pretty(@Hparcelles[parcelle.id][:factures][:cout_total][:sum]) %>
+		<% td_class = odd(@Hparcelles[parcelle.id][:rang]) %>
+			<td class="<%= td_class %>_subtotal"><%= cout_ha %></td>
+			<td class="<%= td_class %>_subtotal"><%= cout_total %></td>
+	<% end %>
+	</tr>
+
+	

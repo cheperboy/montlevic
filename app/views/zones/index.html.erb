@@ -1,0 +1,13 @@
+<% title "Zones" %>
+
+<%= render :partial => 'list' %>
+
+<br />
+
+<% if (session[:admin] == (true)) %>
+	<%= link_to 'Nouvelle Zone', new_zone_path %>
+<% end %>
+
+<br />
+<h2>Details</h2>
+<%= render :partial => 'detail' %>

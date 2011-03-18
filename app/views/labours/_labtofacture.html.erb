@@ -1,0 +1,11 @@
+<div class="labtofacture">
+  <p>
+    <%= f.label :facture_id, "facture : " %>
+    <%= f.collection_select(:facture_id, Facture.find_by_saison(:all), :id, :name_and_type ) %>
+    
+    <%= f.label :value, "Valeur : " %>
+    <%= f.text_field :value, :size => 3 %>
+	
+    <%= remove_link_unless_new_record(f) -%>
+  </p>
+</div>

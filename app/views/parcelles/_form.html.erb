@@ -1,0 +1,39 @@
+<% javascript :defaults, 'delegate' %>
+
+<%= error_messages_for :parcelle, :zonetopa %>
+
+<% form_for @parcelle do |parcelle_form| -%>
+
+<% content_for :jstemplates do -%>
+	<%= "var zonetopa='#{generate_template(parcelle_form, :zonetopas)}'" %>
+<% end -%>
+
+<p>
+<%= parcelle_form.label :name, "Parcelle:" %>
+<%= parcelle_form.text_field :name %>
+</p>
+<p>
+<%= parcelle_form.label :surface, "Surface" %>
+<%= parcelle_form.text_field :surface %>
+</p>
+
+<p>
+<%= parcelle_form.label :name, "Type de culture:" %>
+<%= parcelle_form.collection_select (:typeculture_id, Typeculture.find(:all), :id, :name ) %>
+</p>
+
+<div id="zonetopas">
+	<% parcelle_form.fields_for :zonetopas do |zonetopa_form| %>
+		<% unless parcelle_form.object.new_record? %>
+			<%= render :partial => 'zonetopa', :locals => { :f => zonetopa_form } %>
+		<% end %>
+	<% end %>
+</div>
+<p>
+<%= link_to 'Ajouter une zone', '#zonetopa', :class => "add_nested_item", :rel => "zonetopas" %>
+</p>
+
+<%= parcelle_form.submit "Enregistrer" %>
+</p>
+<% end -%>
+

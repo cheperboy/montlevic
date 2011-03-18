@@ -1,0 +1,20 @@
+<% javascript :defaults, 'delegate' %>
+
+<%= error_messages_for :zone %>
+
+<% form_for @zone do |zone_form| -%>
+
+<p>
+<%= zone_form.label :name, "Zone" %>
+<%= zone_form.text_field :name %>
+</p>
+<p>
+<%= zone_form.label :surface, "Surface" %>
+<%= zone_form.text_field :surface %>
+</p>
+
+
+<%= zone_form.submit "Enregistrer" %>
+</p>
+<% end -%>
+

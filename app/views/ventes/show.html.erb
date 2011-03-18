@@ -1,0 +1,40 @@
+<% title "Vente" %>
+
+<table>
+	<tr>
+		<td>Nom : </td>
+		<td><%=h @vente.name %></td>
+	</tr>
+	<tr>
+		<td>Categorie : </td>
+		<td><%=h @vente.category.name %></td>
+	</tr>
+	<tr>
+		<td>Prestataire : </td>
+		<td><%=h @vente.user.name %></td>
+	</tr>
+	<tr>
+		<td>Prix total : </td>
+		<td><%=h @vente.get_cout_total %> €</td>
+	</tr>
+</table>
+
+<%- if @vente.ventoparcelles.length > 0 -%>
+	<h3>Parcelles (<%= @vente.sum_surfaces %> Ha)</h3>
+	<ul>
+	<%- @vente.ventoparcelles.each do |ventoparcelle| -%>
+	<li><%= ventoparcelle.parcelle.typeculture.name %> - 
+		<%= ventoparcelle.parcelle.name %>
+			[surface : <%= ventoparcelle.parcelle.surface %> ha] x 
+	<!--	[taux : <%= ventoparcelle.value %>] x -->
+			[cout/Ha : <%= @vente.get_cout_ha %>] =
+			<%=h (ventoparcelle.parcelle.surface * @vente.get_cout_ha) %> €
+	<!-- TODO : prise en compte de ventoparcelle.value -->
+	<%- end -%>
+	</ul>
+<%- end -%>
+<p>
+  <%= link_to "Edit", edit_vente_path(@vente) %> |
+  <%= link_to "Destroy", @vente, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", ventes_path %>
+</p>

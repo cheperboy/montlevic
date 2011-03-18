@@ -1,0 +1,25 @@
+
+<% form_for(@setting) do |f| %>
+  <%= f.error_messages %>
+<table>
+<tr>
+	<td><%= f.label :saison_id, "Saison : " %></td>
+	<td><%= f.collection_select (:saison_id, Saison.find(:all), :id, :name ) %></td>
+</tr>  
+<tr>
+	<td><%= f.label :value_parcelle, "Detail parcelle : " %></td>
+	<td><%= f.check_box ( :value_parcelle) %></td>
+</tr>
+<tr>
+	<td><%= f.label :detail_desc, "Detail description pour l'affichage: " %></td>
+	<td><%= f.check_box (:detail_desc) %></td>
+</tr>  
+<tr>
+	<td><%= f.label :detail_ref, "Detail reference pour l'affichage: " %></td>
+	<td><%= f.check_box (:detail_ref) %></td>
+</tr>  
+</table>
+</p>
+<%= f.submit "Enregistrer" %>
+</p>
+<% end -%>

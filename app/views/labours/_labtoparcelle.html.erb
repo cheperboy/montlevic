@@ -1,0 +1,16 @@
+<div class="labtoparcelle">
+  <p>
+    <%= f.label :parcelle_id, "parcelle : " %>
+    <%= f.collection_select(:parcelle_id, Parcelle.find_for_saison(), :id, :name_and_culture ) %>
+
+<% if Setting::DETAIL_PARCELLE == 1 %>    
+    <%= f.label :value, "Valeur : " %>
+    <%= f.text_field :value, :size => 3 %>
+<% else %>    
+    <%= f.hidden_field :value, :value => 1 %>
+<% end %>    
+
+    <%= remove_link_unless_new_record(f) -%>
+
+  </p>
+</div>

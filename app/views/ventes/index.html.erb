@@ -1,0 +1,11 @@
+<% title "Liste des ventes" %>
+<%= link_to 'Nouvelle vente', new_vente_path %>
+<br /><br />
+
+<% @elements = @ventes %>
+<div id='list_elts'>	
+	<%= render :partial => 'list' %>
+</div>
+
+
+

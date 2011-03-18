@@ -1,0 +1,27 @@
+,,,,,ble,20.0 Ha
+,nom,passage Ha,total/Ha,total,c/Ha,total
+,,,,,,
+Labours,,,,,,
+Total Labours,,,,,,
+,,,,,,
+Pulves,,,,,,
+Total Pulves,,,,,,
+,,,,,,
+Factures,,,,,,
+agri facture 1,2010-05-07,0 p - 20 ha,10,200,10,200
+agri produit,2010-05-07,0 p - 20 ha,5,100,5,100
+,,,,,,
+sous-totals,,,,,,
+agri,,,15,300,15,300
+maison,,,,,,
+invest,,,,,,
+Total Factures,,,15,300,15,300
+,,,,,,
+total charges,,,,,,
+,,,15,300,15,300
+,,,,,,
+Ventes,,,,,,
+Total Ventes,,,,,,
+,,,,,,
+total benefs,,,,,,
+,,,-15,-300,-15,-300

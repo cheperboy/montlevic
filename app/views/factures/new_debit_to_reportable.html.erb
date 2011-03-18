@@ -1,0 +1,52 @@
+<% title "Debit -> Reportable" %>
+
+<% javascript :defaults, 'delegate' %>
+
+<%= error_messages_for 	:facture, :factoparcelle,
+						:header_message => "Problemes lors de l'enregistrement", 
+						:message => "corriger les erreurs suivantes" 
+%>
+						
+<% form_for @facture, :url => 'create_debit_to_reportable' do |facture_form| -%>
+
+<p>La facture sera transformee en Reportable et un Report associe sera cree.<br>
+Les champs suivants (Nom, Cout, etc) concernent le report ainsi cree</p>
+
+<table>
+<tr>
+	<td>Facture d'origine : </td>
+	<% unless @debit.nil? %>
+		<% @debits.clear %>	
+		<% @debits << @debit %>	
+	<% end %>
+	<td><%= collection_select(:debit, :id, @debits, :id, :name_debit ) %></td>
+</tr>
+<tr>
+	<td><%= facture_form.label :name, "Nom : " %></td>
+	<td><%= facture_form.text_field :name %></td>
+</tr>
+<tr>
+	<td><%= facture_form.label :cout, "Cout : " %></td>
+	<td><%= facture_form.text_field :cout, :size => 3 %> euros</td>
+</tr>
+<tr>
+	<td><%= facture_form.label :factype_id, "Type de facture : " %></td>
+	<td><%= facture_form.collection_select (:factype_id, Factype.find(:all), :id, :name ) %></td>
+</tr>
+
+<tr>
+	<td>Repere : </td>
+	<td><%= facture_form.label :star, "Star : " %><%= facture_form.check_box :star %>
+	 | <%= facture_form.label :adu, "ADU : " %>
+	<%= facture_form.check_box :adu %></td>
+</tr>
+<tr>
+	<td><%= facture_form.label :desc, "Infos : " %></td>
+	<td><%= facture_form.text_area :desc, :size => "20x5" %></td>
+</tr>
+</table>
+
+<%= facture_form.submit "Enregistrer" %>
+<% end -%>
+
+<%= link_to 'Retour', factures_path %>

@@ -1,0 +1,27 @@
+<% title "Parcelle" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @parcelle.name %>
+</p>
+<p>
+  <strong>Surface:</strong>
+  <%=h @parcelle.surface %>
+</p>
+<p>
+  <strong>Saison:</strong>
+  <%=h @parcelle.saison.name %>
+</p>
+
+<h3>Zones</h3>
+<ul>
+  <% @parcelle.zonetopas.each do |zonetopa| %>
+    <li><%=h zonetopa.value %>: <%=h zonetopa.zone.name %></li>
+  <% end %>
+</ul>
+
+<p>
+  <%= link_to "Edit", edit_parcelle_path(@parcelle) %> |
+  <%= link_to "Destroy", @parcelle, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", parcelles_path %>
+</p>

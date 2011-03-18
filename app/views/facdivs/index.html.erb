@@ -1,0 +1,21 @@
+<h1>Listing facdivs</h1>
+
+<table>
+  <tr>
+
+  </tr>
+
+<% @facdivs.each do |facdiv| %>
+  <tr>
+    <td><%= facdiv.facture.name %> | </td>
+    <td><%= facdiv.name %> | </td>
+    <td><%= facdiv.cout %> € | </td>
+    <td><%#= link_to 'Edit', edit_facdiv_path(facdiv) %></td>
+    <td><%#= link_to 'Destroy', facdiv, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New facdiv', new_facdiv_path %>

@@ -1,0 +1,45 @@
+<table class="table_print">
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+<% @test.Tcols[:ids].each do |id| %>
+	<td class="<%= odd(@test.Tcols[id][:rang]) %>-head" colspan=2 ><b>
+		<%=h @test.Tcols[id][:name] %>
+	<% if (@test.Tcols[:col_model] == Parcelle) %>
+		<br><%=h Parcelle.find(@test.Tcols[id][:id]).typeculture.name %>
+	<% end %>		
+	</b></td>
+<% end %>
+	</tr>	
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+<% @test.Tcols[:ids].each do |id| %>
+		<td class="<%= odd(@test.Tcols[id][:rang]) %>-head" colspan=2 >
+			<b><%=h @test.Tcols[id][:surface] %> Ha</b>
+			<%#=h parcelle.typeculture.name %>
+		</td>
+<% end %>
+	</tr>	
+	<tr>
+		<td class="left"><b></b></td>
+		<td class="left"><b>nom</b></td>
+		<td class="left"><b>date</b></td>
+		<td class="left"><b>surface</b></td>
+		<td class="left"><b>cout/ha</b></td>
+		<td class="left"><b>total</b></td>
+<% @test.Tcols[:ids].each do |id| %>
+<% td_class = odd(@test.Tcols[id][:rang]) %>
+		<td class="<%= td_class %>">c/ha</td>
+		<td class="<%= td_class %>">Total</td>
+
+<% end %>
+	</tr>	

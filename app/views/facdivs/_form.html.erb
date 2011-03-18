@@ -1,0 +1,23 @@
+<fieldset>
+	<legend>| <%= link_to "Annuler", facture_url(@facture) %> |</legend>
+	
+<%= error_messages_for 	:facdiv,
+						:header_message => "Donnees incompletes ou Incorrectes", 
+						:message => "corriger les erreurs suivantes" 
+%>
+						
+<% form_for @facdiv do |f| -%>
+<%= hidden_field_tag :facture_id, @facture.id.to_s %>
+	<table>
+		<%= form_tr_text(f, 'Nom', :name) %>
+		<%= form_tr_text(f, 'Ref client', :ref_client) %>
+		<%= form_tr_text(f, 'Ref perso', :ref) %>
+		<%= form_tr_select(f, 'Prestataire', :user_id, User.find(:all, :order => :name), :id, :name) %>
+		<%= form_tr_text(f, 'Cout', :cout) %>
+		<%= form_tr_check(f, 'Star', :star) %>
+		<%= form_tr_text_area(f, 'Infos', :desc, :size => "20x2") %>
+	</table>	
+	<p><%= f.submit "Enregistrer" %></p>
+	<% end -%>
+</fieldset>
+
