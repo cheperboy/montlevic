@@ -18,7 +18,7 @@ development:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: montlevic_development
+  database: montlevic_development_2
   pool: 5
   username: root
   password: root
@@ -38,7 +38,7 @@ test:
   socket: /Applications/MAMP/tmp/mysql/mysql.sock
 
 production:
-  adapter: mysql
+  adapter: postgresql
   encoding: utf8
   reconnect: false
   database: montlevic_production

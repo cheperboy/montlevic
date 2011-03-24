@@ -1,2 +1,20 @@
 Use this README file to introduce your application and point to useful places in the API for learning more.
 Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+
+
+Factures
+- Type de Comptabilisation ('Factype')
+'Factype' est un paramètre propre a chaque facture qui détermine la manière dont le cout de cette facture sera pris en compte dans la comptabilité
+3 choix possibles :
+--'total'
+	Ce choix est recommandé lorsque la facture n'est associée a aucun autre type de charge (labour, pulve ou facture).
+	La totalité du cout de la facture est pris en compte dans la comptabilité
+--'diff'
+	Ce choix est recommandé lorsque la facture est associée a un ou plusieurs autres types de charge (labour, pulve ou facture).
+	La totalité du cout de la facture est pris en compte dans la comptabilité mais ce cout est divise entre les sous charges. Le 'cout restant' qui n'est associe a aucune sous-charge sera impute sur la facture (donc reparti sur l'ensemble des parcelles associées a cette facture) 
+exemple: 'Facture_Fioul' vaut 100 euros. elle  
+
+--'null'
+	La facture n'est pas prise en compte dans la comptabilité, elle sera visible mais son cout n'est pas impute
+	Ce choix est recommande lorsque la facture est saisie 'pour rappel' mais que son cout ne doit pas être pris en compte dans la compta.
+
