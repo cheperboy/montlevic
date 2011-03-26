@@ -22,6 +22,21 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer "toto"
   end
 
+  create_table "facdivs", :force => true do |t|
+    t.integer  "facture_id",  :null => false
+    t.integer  "saison_id",   :null => false
+    t.integer  "category_id"
+    t.integer  "star"
+    t.integer  "user_id"
+    t.string   "name"
+    t.float    "cout"
+    t.string   "ref_client"
+    t.integer  "ref"
+    t.string   "desc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "factoparcelles", :force => true do |t|
     t.integer  "parcelle_id"
     t.integer  "facture_id"
@@ -31,19 +46,27 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "factures", :force => true do |t|
-    t.integer  "saison_id",   :null => false
+    t.integer  "saison_id",     :null => false
     t.integer  "category_id"
     t.integer  "factype_id"
+    t.integer  "reportable_id"
+    t.string   "type",          :null => false
+    t.integer  "star"
+    t.integer  "adu"
     t.date     "date"
     t.integer  "user_id"
     t.string   "name"
     t.float    "cout"
+    t.string   "ref_client"
+    t.integer  "ref"
+    t.text     "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "factypes", :force => true do |t|
     t.string   "name"
+    t.string   "display",    :null => false
     t.text     "desc",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -55,9 +78,8 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer  "user_id"
     t.date     "date"
     t.string   "name"
-    t.integer  "dosage"
-    t.integer  "prix_littre"
-    t.integer  "cout_ha_passage"
+    t.float    "cout_ha_passage"
+    t.text     "desc",            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -102,6 +124,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.float    "dosage"
     t.float    "prix_littre"
     t.float    "cout_ha_passage"
+    t.text     "desc",            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -122,16 +145,17 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.datetime "updated_at"
   end
 
-  create_table "saisons", :id => false, :force => true do |t|
+  create_table "saisons", :force => true do |t|
     t.integer "id",   :null => false
     t.string  "name", :null => false
   end
 
-  add_index "saisons", ["id"], :name => "id"
-
   create_table "settings", :force => true do |t|
+    t.integer "id",   :null => false
     t.integer "saison_id"
-    t.integer "current"
+    t.integer "value_parcelle", :limit => 1
+    t.integer "detail_desc",    :limit => 1, :null => false
+    t.integer "detail_ref",     :limit => 1
   end
 
   create_table "typecultures", :id => false, :force => true do |t|
@@ -139,7 +163,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.string  "name", :null => false
   end
 
-  add_index "typecultures", ["id"], :name => "id"
+  #add_index "typecultures", ["id"], :name => "id"
 
   create_table "upcategories", :force => true do |t|
     t.string   "name"
@@ -159,6 +183,26 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.float    "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "date",        :null => false
+    t.integer  "user_id",     :null => false
+    t.string   "name",        :null => false
+    t.integer  "ref"
+    t.string   "ref_client"
+    t.integer  "star"
+    t.integer  "adu"
+  end
+
+  create_table "ventoparcelles", :id => false, :force => true do |t|
+    t.integer "id",          :null => false
+    t.integer "vente_id",    :null => false
+    t.integer "parcelle_id", :null => false
+    t.float   "value",       :null => false
+  end
+
+  add_index "ventoparcelles", ["id"], :name => "id"
+
+  create_table "verifs", :force => true do |t|
+    t.string "name"
   end
 
   create_table "zones", :force => true do |t|

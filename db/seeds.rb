@@ -1,19 +1,20 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
-# Examples:
-#   
-#   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
-#   Major.create(:name => 'Daley', :city => cities.first)
+
 Upcategory.delete_all
 Category.delete_all
 upcategories = Upcategory.create([{ :name => 'facture'}, 
 { :name => 'pulve' }, 
-{ :name => 'labour' }])
+{ :name => 'labour' },
+{ :name => 'vente' },
+{ :name => 'diverse' }])
 
 pulve = Upcategory.find_by_name('pulve')
 facture = Upcategory.find_by_name('facture')
 labour = Upcategory.find_by_name('labour')
+vente = Upcategory.find_by_name('vente')
+diverse = Upcategory.find_by_name('diverse')
 
 categories = Category.create([
 { :name => 'agri', :upcategory => facture}, 
@@ -31,3 +32,7 @@ categories = Category.create([
 { :name => 'essence voiture', :upcategory => diverse },
 { :name => 'bricolage', :upcategory => diverse },
 { :name => 'autres', :upcategory => diverse }])
+
+saison = Saison.create(:name => "Saison-install")
+setting = Setting.create( :saison => saison, :value_parcelle => false, :detail_desc => false, :detail_ref => false)
+myuser = Myuser.create(:login => "mat")
