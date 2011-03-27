@@ -144,7 +144,7 @@ class FacturesController < ApplicationController
     errors = []
     if params[:reportable] == '1'
       @facture = Reportable.new(params[:facture])
-      @facture[:factype_id] = Factype::NULL
+      @facture[:factype_id] = Factype.find_by_name("null").id
     else
       @facture = Debit.new(params[:facture])
     end
@@ -253,7 +253,7 @@ class FacturesController < ApplicationController
     @new_report = Debit.find(params[:debit][:id])
 
     @reportable = Reportable.new(@new_report.attributes.merge({
-                    :factype_id => Factype::NULL,
+                    :factype_id => Factype.find_by_name("null").id,
                     :type => 'Reportable'}))
     
     if @reportable.save

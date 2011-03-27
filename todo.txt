@@ -1,5 +1,4 @@
 DB
-Table Saisons DOIT etre auto-increment
 
 Remplacer Settings.find(1) par Settings.find_first
 

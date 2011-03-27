@@ -46,10 +46,16 @@ typecultures = Typeculture.create([
 
 zone = Zone.create(:name => "zone-install", :surface => 1)
 parcelle = Parcelle.create(
-:name => "parcelle-install", 
-:saison => saison, 
-:typeculture => Typeculture.find(:first), 
-:surface => 1)
+  :name => "parcelle-install", 
+  :saison => saison, 
+  :typeculture => Typeculture.find(:first), 
+  :surface => 1)
 
 zonetopa = Zonetopa.create(:parcelle => parcelle, :zone => zone, :value => 1)
+
+User.create(:name => "Jouve")
+factypes = Factype.create([
+{:name => "diff", :display => "diff", :desc => "test desc"},
+{:name => "total", :display => "total", :desc => "test desc"},
+{:name => "null", :display => "null", :desc => "test desc"}])
 
