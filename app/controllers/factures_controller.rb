@@ -9,7 +9,7 @@ class FacturesController < ApplicationController
     end
 
   end
-  
+   
   def toggle_star
     @facture = Facture.find(params[:id])
     if @facture.star != 1
