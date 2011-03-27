@@ -146,24 +146,19 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "saisons", :force => true do |t|
-    t.integer "id",   :null => false
     t.string  "name", :null => false
   end
 
   create_table "settings", :force => true do |t|
-    t.integer "id",   :null => false
     t.integer "saison_id"
     t.integer "value_parcelle", :limit => 1
     t.integer "detail_desc",    :limit => 1, :null => false
     t.integer "detail_ref",     :limit => 1
   end
 
-  create_table "typecultures", :id => false, :force => true do |t|
-    t.integer "id",   :null => false
+  create_table "typecultures", :force => true do |t|
     t.string  "name", :null => false
   end
-
-  #add_index "typecultures", ["id"], :name => "id"
 
   create_table "upcategories", :force => true do |t|
     t.string   "name"
@@ -192,14 +187,11 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer  "adu"
   end
 
-  create_table "ventoparcelles", :id => false, :force => true do |t|
-    t.integer "id",          :null => false
+  create_table "ventoparcelles", :force => true do |t|
     t.integer "vente_id",    :null => false
     t.integer "parcelle_id", :null => false
     t.float   "value",       :null => false
   end
-
-  add_index "ventoparcelles", ["id"], :name => "id"
 
   create_table "verifs", :force => true do |t|
     t.string "name"

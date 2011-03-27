@@ -28,7 +28,7 @@ categories = Category.create([
 { :name => 'vibro', :upcategory => labour },
 { :name => 'foin', :upcategory => vente },
 { :name => 'PAC', :upcategory => vente },
-{ :name => 'avoir', :upcategory => vente },
+{ :name => 'Avoir', :upcategory => vente },
 { :name => 'essence voiture', :upcategory => diverse },
 { :name => 'bricolage', :upcategory => diverse },
 { :name => 'autres', :upcategory => diverse }])
