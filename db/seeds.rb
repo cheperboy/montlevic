@@ -36,3 +36,20 @@ categories = Category.create([
 saison = Saison.create(:name => "Saison-install")
 setting = Setting.create( :saison => saison, :value_parcelle => false, :detail_desc => false, :detail_ref => false)
 myuser = Myuser.create(:login => "mat")
+
+typecultures = Typeculture.create([
+{:name => "Ble"},
+{:name => "2eme Ble"}, 
+{:name => "Colza"},
+{:name => "RayGrass"},
+{:name => "Jachere"}])
+
+zone = Zone.create(:name => "zone-install", :surface => 1)
+parcelle = Parcelle.create(
+:name => "parcelle-install", 
+:saison => saison, 
+:typeculture => Typeculture.find(:first), 
+:surface => 1)
+
+zonetopa = Zonetopa.create(:parcelle => parcelle, :zone => zone, :value => 1)
+

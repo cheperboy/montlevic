@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "saisons", :force => true do |t|
-    t.string  "name", :null => false
+    t.string "name", :null => false
   end
 
   create_table "settings", :force => true do |t|
@@ -157,7 +157,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "typecultures", :force => true do |t|
-    t.string  "name", :null => false
+    t.string "name", :null => false
   end
 
   create_table "upcategories", :force => true do |t|
