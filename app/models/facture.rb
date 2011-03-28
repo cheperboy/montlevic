@@ -53,7 +53,7 @@ class Facture < Charge
   def self.find_total(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id = ?", 
                                           Application::SAISON,
-                                          Factype::TOTAL],
+                                          Factype.find_by_name('total').id],
                           :order => :category_id}) do
         find(*args)
       end
@@ -62,7 +62,7 @@ class Facture < Charge
   def self.find_diff(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id = ?", 
                                           Application::SAISON,
-                                          Factype::DIFF],
+                                          Factype.find_by_name('diff').id],
                           :order => :category_id}) do
         find(*args)
       end
@@ -72,7 +72,7 @@ class Facture < Charge
   def self.find_null(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id = ?", 
                                           Application::SAISON,
-                                          Factype::NULL],
+                                          Factype.find_by_name('null').id],
                           :order => :category_id}) do
         find(*args)
       end
@@ -82,7 +82,7 @@ class Facture < Charge
   def self.find_not_null(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id != ?", 
                                           Application::SAISON,
-                                          Factype::NULL],
+                                          Factype.find_by_name('null').id],
                           :order => :category_id}) do
         find(*args)
       end
@@ -110,13 +110,13 @@ class Facture < Charge
   end
 
   def comptable_diff?
-    return (self.factype_id == Factype::DIFF)  
+    return (self.factype_id == Factype.find_by_name('diff').id)  
   end
   def comptable_null?
-    return (self.factype_id == Factype::NULL)  
+    return (self.factype_id == Factype.find_by_name('null').id)  
   end
   def comptable_total?
-    return (self.factype_id == Factype::TOTAL)  
+    return (self.factype_id == Factype.find_by_name('total').id)  
   end
   
   #somme les contribition des labour d'une parcelle

@@ -90,7 +90,7 @@ class Verif < ActiveRecord::Base
   def reportable_factype_notnull
     test = init_test('Reportable ayant un mauvais type de comptabilisation (non null)', HIGH)
     Reportable.find(:all).each do |reportable|    
-      unless reportable.factype_id.equal?(Factype::NULL)
+      unless reportable.factype_id.equal?(Factype.find_by_name('null').id)
         test.num += 1
       end
     end
@@ -103,7 +103,7 @@ class Verif < ActiveRecord::Base
   def debit_factype_null_perdu
     test = init_test('Debit (Facture) avec factype NULL mais sans labour ni pulve associes)', LOW)
     Debit.find(:all).each do |facture|    
-      if facture.factype_id.equal?(Factype::NULL) && facture.pulves.empty? && facture.labours.empty?
+      if facture.factype_id.equal?(Factype.find_by_name('null').id) && facture.pulves.empty? && facture.labours.empty?
         test.num += 1
         error = init_error(facture.name, facture.id, 'factures')
         test.errors << error
@@ -116,7 +116,7 @@ class Verif < ActiveRecord::Base
   def report_factype_null
     test = init_test('Report ayant un mauvais type de comptabilisation (null)', LOW)
     Report.find(:all).each do |report|    
-      if report.factype.id.equal?(Factype::NULL)
+      if report.factype.id.equal?(Factype.find_by_name('null').id)
         test.num += 1
       end
     end
