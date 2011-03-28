@@ -53,9 +53,46 @@ parcelle = Parcelle.create(
 
 zonetopa = Zonetopa.create(:parcelle => parcelle, :zone => zone, :value => 1)
 
-User.create(:name => "Jouve")
 factypes = Factype.create([
 {:name => "diff", :display => "diff", :desc => "test desc"},
 {:name => "total", :display => "total", :desc => "test desc"},
 {:name => "null", :display => "null", :desc => "test desc"}])
+
+User.create([
+{:name => "Jouve"},
+{:name => "Trochet"},
+{:name => "Dauger"},
+{:name => "Raffault"},
+{:name => "C le Mobile"},
+{:name => "Credit Agricole Assurances"},
+{:name => "Bastard"},
+{:name => "Daugeron Garage"},
+{:name => "Communaute de communes"},
+{:name => "SIAEP de l'Igneraie"},
+{:name => "France Telecom"},
+{:name => "Dechansiaud"},
+{:name => "Renaud"},
+{:name => "EDF"},
+{:name => "Compta Centre"},
+{:name => "Pneu Europe Service"},
+{:name => "Sodibe"},
+{:name => "Lapeyre"},
+{:name => "Seelec"},
+{:name => "Denormandie Jardinerie"},
+{:name => "MSA"},
+{:name => "Agro-Service"},
+{:name => "CBM"},
+{:name => "Super U"},
+{:name => "DDA"},
+{:name => "PAC"},
+{:name => "Charrier"},
+{:name => "La Poste"},
+{:name => "Brico Depot"},
+{:name => "divers"},
+{:name => "Bricomarche"}
+])
+
+#=============
+
+
 
