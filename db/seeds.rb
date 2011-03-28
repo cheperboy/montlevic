@@ -58,7 +58,7 @@ factypes = Factype.create([
 {:name => "total", :display => "total", :desc => "test desc"},
 {:name => "null", :display => "null", :desc => "test desc"}])
 
-User.create([
+users = User.create([
 {:name => "Jouve"},
 {:name => "Trochet"},
 {:name => "Dauger"},
