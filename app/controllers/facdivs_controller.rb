@@ -52,9 +52,17 @@ class FacdivsController < ApplicationController
 
   def destroy
     @facdiv = @facture.facdivs.find(params[:id])
-    @facture.facdivs.delete(@facdiv)
+    @facdiv.destroy
     @facture.update_cout
     @facture.save!
-    redirect_to(@facture)
+    redirect_to(@facture) 
   end
+#  def destroy
+#    @facdiv = @facture.facdivs.find(params[:id])
+#    @facture.facdivs.delete(@facdiv)
+#    @facture.update_cout
+#    @facture.save!
+#    redirect_to(@facture) 
+#  end
+  
 end

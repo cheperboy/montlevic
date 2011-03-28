@@ -2,13 +2,9 @@ DB
 
 Remplacer Settings.find(1) par Settings.find_first
 
-
-
-suppression d'une facdiv
-	effet :
-	facdiv.facture_id = NULL
-	facdiv non supprimee
-
+prog def:
+test si la valeur de contribution d'un labour est superieure 
+a son cout total => cela engendre des chiffre negatifs.
 
 associasion d'un pulve a une facture
 	impossible liste deroulante KO
