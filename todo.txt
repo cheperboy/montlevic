@@ -16,6 +16,10 @@ CSS
 bug affichage table (manque bordures) depuis ;odif css info popup
 
 
+USER (vs SU)
+acces a Upcategory impossible
+suppression de Category impossible (modif et ajout ok)
+
 
 
 
