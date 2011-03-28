@@ -24,7 +24,7 @@
 <% end %>
 <%= form_tr_select(f, "Facture d'origine", :reportable_id, @reportables, :id, :name_reportable) %>
 <%= form_tr_text(f, 'Nom', :name) %>
-<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype::TYPES, :id, :name) %>
+<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype.find(:all), :id, :name) %>
 <%= form_tr_text(f, 'Cout', :cout) %>
 <%= form_tr_check(f, 'Star', :star) %>
 <%= form_tr_check(f, 'ADU', :adu) %>
