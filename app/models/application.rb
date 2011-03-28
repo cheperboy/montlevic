@@ -3,6 +3,10 @@ class Application < ActiveRecord::Base
   SAISON = Setting.find(1).saison_id
   SAISON_NAME = Setting.find(1).saison.name
 
+  TOTAL = Factype.find_by_name("total").id
+  NULL = Factype.find_by_name("null").id
+  DIFF = Factype.find_by_name("diff").id
+
 #  def factype(object)
 #    unless object.factype.nil?  
 #      id = object.factype_id

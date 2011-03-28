@@ -2,9 +2,10 @@ class Factype < ActiveRecord::Base
   has_many :factures
 
 #Chargement des id des 3 Factype en tant que constantes:
-  TOTAL = Factype.find_by_name("total").id
-  NULL = Factype.find_by_name("null").id
-  DIFF = Factype.find_by_name("diff").id
+  TOTAL = Factype.find_by_name("total").object_id
+  NULL = Factype.find_by_name("null").object_id
+  DIFF = Factype.find_by_name("diff").object_id
+
 
 #  
 #  atype = Struct.new(:id, :name)
