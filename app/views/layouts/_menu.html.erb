@@ -2,7 +2,7 @@
 
   
 	<% form_for 'setting', :url => { :controller => "settings", :action => "update_saison" } do |form| %>
-		<strong>saison</strong> <%= form.collection_select('saison_id', Saison.find(:all), :id, :name, :selected => Application::SAISON ) %>
+		<strong>saison</strong> <%= form.collection_select('saison_id', Saison.find(:all), :id, :name, :selected => session[:saison_id] ) %>
 		<%= hidden_field('from', 'controller', :value => request.path_parameters['controller'])  %>
 		<%= hidden_field('from', 'action', :value => request.path_parameters['action'])  %>
 		<%= form.submit 'choisir' %>

@@ -18,9 +18,14 @@ class SettingsController < ApplicationController
   end
 
   def update_saison
-    @setting = Setting.find(1)
+    @setting = Setting.find(:first)
     respond_to do |format|
       if @setting.update_attributes(params[:setting])
+        @setting.reload
+        # Update Session variable
+        session[:saison_id] = Setting.find(:first).saison.id
+        session[:saison_name] = Setting.find(:first).saison.name
+
         flash[:notice] = 'Saison was successfully updated.'
         format.html { redirect_to(:controller => params[:from][:controller],
                                   :action => params[:from][:action] ) }
