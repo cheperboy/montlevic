@@ -96,7 +96,7 @@ class ChargesController < ApplicationController
 #      flash[:error] = 'Erreur [params[:type] not good!] Appeler Matthieu !'
 #    end
 #    @facture = Debit.new(params[:facture])
-    @facture.saison_id = Application::SAISON
+    @facture.saison_id = session[:saison_id]
     respond_to do |format|
       if @facture.save
         flash[:notice] = 'Enregistrement facture OK.'
@@ -144,9 +144,9 @@ class ChargesController < ApplicationController
 
     search = {:n => 1}
     search = {1 => {}}
-    search = {1 => {:key => 'saison_id', :value => Application::SAISON, :sign => 'LIKE'}}
+    search = {1 => {:key => 'saison_id', :value => session[:saison_id], :sign => 'LIKE'}}
     
-    #conditions = ["saison_id=#{Application::SAISON}"]
+    #conditions = ["saison_id=#{session[:saison_id]}"]
     conditions = ''
     search[:n]
     search.each do |col, opt|

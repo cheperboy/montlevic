@@ -41,7 +41,7 @@ class LaboursController < ApplicationController
   # POST /labours.xml
   def create
     @labour = Labour.new(params[:labour])
-    @labour.saison_id = Application::SAISON
+    @labour.saison_id = session[:saison_id]
 
     respond_to do |format|
       if @labour.save

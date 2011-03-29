@@ -24,7 +24,7 @@ class Parcelle < ActiveRecord::Base
 # ----- Finders -----
 
   def self.find_for_saison()
-    saison = Saison.find(Application::SAISON)
+    saison = Saison.find(session[:saison_id])
     if saison.parcelles.size == 0
       return nil
     end
@@ -33,7 +33,7 @@ class Parcelle < ActiveRecord::Base
 
   def self.find_by_saison(*args)
     with_scope(:find => 
-                {:conditions => ["saison_id = ?", Application::SAISON] }) do
+                {:conditions => ["saison_id = ?", session[:saison_id]] }) do
         find(*args)
       end
   end
@@ -42,7 +42,7 @@ class Parcelle < ActiveRecord::Base
     parcelles = []
     zonetopas = Zonetopa.find(:all, :conditions => ["zone_id = ?", zone_id])
     zonetopas.each do |zonetopa|
-      if zonetopa.parcelle.saison_id == Application::SAISON
+      if zonetopa.parcelle.saison_id == session[:saison_id]
         parcelles << zonetopa.parcelle
       end
     end

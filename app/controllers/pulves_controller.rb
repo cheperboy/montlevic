@@ -41,7 +41,7 @@ class PulvesController < ApplicationController
   # POST /pulves.xml
   def create
     @pulve = Pulve.new(params[:pulve])
-    @pulve.saison_id = Application::SAISON
+    @pulve.saison_id = session[:saison_id]
 
     respond_to do |format|
       if @pulve.save

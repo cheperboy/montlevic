@@ -1,5 +1,4 @@
 dans category, ajouter les images comme dans facture
-finir les admin limitations
 
 DB
 Remplacer Settings.find(1) par Settings.find_first

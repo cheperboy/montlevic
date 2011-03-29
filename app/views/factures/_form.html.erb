@@ -19,7 +19,7 @@
 <% end -%>
 
 <table>
-<%= form_tr_select(f, 'Campagne', :saison_id, Saison.find(:all, :order => :name), :id, :name,  :selected => Application::SAISON) %>
+<%= form_tr_select(f, 'Campagne', :saison_id, Saison.find(:all, :order => :name), :id, :name,  :selected => session[:saison_id]) %>
 <%= form_tr_text(f, 'Nom', :name) %>
 <%= form_tr_text(f, 'Ref client', :ref_client) %>
 <%= form_tr_text(f, 'Ref perso', :ref) %>

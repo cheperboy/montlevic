@@ -44,6 +44,7 @@ typecultures = Typeculture.create([
 {:name => "Jachere"}])
 
 zone = Zone.create(:name => "zone-install", :surface => 1)
+
 parcelle = Parcelle.create(
   :name => "parcelle-install", 
   :saison => saison, 
@@ -98,8 +99,15 @@ myuser = Myuser.create([
 {:login => "thierry", :admin => false}
 ])
 
+#===== TESTING DATA ========
 
-#=============
-
+saison = Saison.create(:name => "Saison 2")
+parcelle = Parcelle.create(
+  :name => "parcelle-2", 
+  :saison => saison, 
+  :typeculture => Typeculture.find(:first), 
+  :surface => 10)
+  
+zonetopa = Zonetopa.create(:parcelle => parcelle, :zone => zone, :value => 10)
 
 
