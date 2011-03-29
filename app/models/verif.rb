@@ -256,6 +256,24 @@ class Verif < ActiveRecord::Base
     return test
   end
 
+  def data_contrib_lab_1
+    test = init_test('labour.labtofacture.value superieure a labour.value ou a facture.cout', HIGH)
+    Labtofacture.find(:all).each do |obj| 
+      if obj.value > obj.labour.cout_total || obj.value > obj.facture.cout
+        test.num += 1
+        facture = ''
+        facture = 'cout facture ' + obj.facture_id.to_s + " superieur a " if obj.facture.nil? 
+        pulve = ''
+        pulve = 'pulve ' + obj.pulve_id.to_s + " n'existe pas" if obj.pulve.nil? 
+        text = 'Labtofacture ' + facture + ' | ' + facture
+        error = init_error(text, obj.id, nil)
+        test.errors << error
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
+  end
+
 
 
 

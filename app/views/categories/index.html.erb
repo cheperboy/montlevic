@@ -1,8 +1,11 @@
-<h1>Listing categories</h1>
+<h1>Listing Categories</h1>
 
 <table>
   <tr>
-    <th>Name</th>
+    <th>Type</th>
+    <th>Categorie</th>
+    <th></th>
+    <th></th>
   </tr>
 
 <% for category in @categories %>
@@ -11,7 +14,7 @@
     <td><%=h category.name %></td>
     <td><%= link_to 'Voir', category %></td>
     <td><%= link_to 'Modifier', edit_category_path(category) %></td>
-	<% if session[:admin] %>
+	<% if admin? %>
     	<td><%= link_to 'Supprimer', category, :confirm => 'Are you sure?', :method => :delete %></td>
 	<% end %>
   </tr>

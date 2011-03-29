@@ -12,8 +12,8 @@
     <%= select("category", "upcategory_id", Upcategory.find(:all).collect{ |c| [ c.name, c.id] }) %>
   </p>
   <p>
-    <%= f.submit "Create" %>
+    <%= f.submit "Creer" %>
   </p>
 <% end %>
 
-<%= link_to 'Back', categories_path %>
+<%= link_to 'Annuler', categories_path %>

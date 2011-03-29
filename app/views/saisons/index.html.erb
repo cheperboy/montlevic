@@ -2,20 +2,20 @@
 
 <table>
   <tr>
-    <th>Name</th>
-    <th>Desc</th>
+    <th>Saison</th>
   </tr>
 
 <% @saisons.each do |saison| %>
   <tr>
     <td><%=h saison.name %></td>
-    <td><%= link_to 'Show', saison %></td>
-    <td><%= link_to 'Edit', edit_saison_path(saison) %></td>
-    <td><%= link_to 'Destroy', saison, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Modifier', edit_saison_path(saison) %></td>
+    <% if admin? %>
+		<td><%= link_to 'Destroy', saison, :confirm => 'Are you sure?', :method => :delete %></td>
+	<% end %>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New saison', new_saison_path %>
+<%= link_to 'Creer une nouvelle saison', new_saison_path %>

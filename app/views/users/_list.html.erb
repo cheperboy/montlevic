@@ -8,7 +8,9 @@
   <tr>
     <td><%= user.name %></td>
     <td><%= link_to 'Editer', edit_user_path(user) %></td>
-    <td><%= link_to 'Supprimer', user, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% if admin? %>
+		<td><%= link_to 'Supprimer', user, :confirm => 'Are you sure?', :method => :delete %></td>
+	<% end %>
   </tr>
 <% end %>
 </table>
