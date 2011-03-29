@@ -9,13 +9,15 @@
   <tr>
     <td><%=h category.upcategory.name %></td>
     <td><%=h category.name %></td>
-    <td><%= link_to 'Show', category %></td>
-    <td><%= link_to 'Edit', edit_category_path(category) %></td>
-    <td><%= link_to 'Destroy', category, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Voir', category %></td>
+    <td><%= link_to 'Modifier', edit_category_path(category) %></td>
+	<% if session[:admin] %>
+    	<td><%= link_to 'Supprimer', category, :confirm => 'Are you sure?', :method => :delete %></td>
+	<% end %>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New category', new_category_path %>
+<%= link_to 'Nouvelle categorie', new_category_path %>

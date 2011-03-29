@@ -74,12 +74,19 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.xml
   def destroy
-    @category = Category.find(params[:id])
-    @category.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(categories_url) }
-      format.xml  { head :ok }
+    if session[:admin]
+      @category = Category.find(params[:id])
+      @category.destroy
+  
+      respond_to do |format|
+        format.html { redirect_to(categories_url) }
+        format.xml  { head :ok }
+      end
+    else
+      respond_to do |format|
+        flash[:error] = 'Admin Only'      
+        format.html { redirect_to(categories_url) }
+      end
     end
   end
 end

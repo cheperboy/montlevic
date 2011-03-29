@@ -92,7 +92,7 @@ users = User.create([
 ])
 
 myuser = Myuser.create([
-{:login => "admin", :admin => true},
+{:login => "admin",:password => "admin", :admin => true},
 {:login => "matthieu", :admin => false},
 {:login => "elisabeth", :admin => false},
 {:login => "thierry", :admin => false}
