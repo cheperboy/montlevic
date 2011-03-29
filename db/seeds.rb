@@ -35,7 +35,6 @@ categories = Category.create([
 
 saison = Saison.create(:name => "Saison-install")
 setting = Setting.create( :saison => saison, :value_parcelle => false, :detail_desc => false, :detail_ref => false)
-myuser = Myuser.create(:login => "mat")
 
 typecultures = Typeculture.create([
 {:name => "Ble"},
@@ -91,6 +90,14 @@ users = User.create([
 {:name => "divers"},
 {:name => "Bricomarche"}
 ])
+
+myuser = Myuser.create([
+{:login => "admin", :admin => true},
+{:login => "matthieu", :admin => false},
+{:login => "elisabeth", :admin => false},
+{:login => "thierry", :admin => false}
+])
+
 
 #=============
 
