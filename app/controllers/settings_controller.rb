@@ -5,8 +5,10 @@ class SettingsController < ApplicationController
 
     respond_to do |format|
       if @setting.update_attributes(params[:setting])
-        session[:saison_id] = Setting.find(1).saison.id
-        session[:saison_name] = Setting.find(1).saison.name
+
+        session[:current_saison_id] = Setting.find(:first).saison_id
+        current_saison_id = Setting.find(:first).saison_id
+
         flash[:notice] = 'Options mises a jour.'
         format.html { redirect_to :action => "edit", :id => Setting.find(:first).id }
         format.xml  { head :ok }
@@ -22,9 +24,11 @@ class SettingsController < ApplicationController
     respond_to do |format|
       if @setting.update_attributes(params[:setting])
         @setting.reload
+        
         # Update Session variable
-        session[:saison_id] = Setting.find(:first).saison.id
-        session[:saison_name] = Setting.find(:first).saison.name
+#        current_saison_id = Setting.find(:first).saison.id
+#        session[:saison_name] = Setting.find(:first).saison.name
+        session[:current_saison_id] = Setting.find(:first).saison_id
 
         flash[:notice] = 'Saison was successfully updated.'
         format.html { redirect_to(:controller => params[:from][:controller],

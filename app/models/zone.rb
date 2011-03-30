@@ -32,7 +32,7 @@ class Zone < ActiveRecord::Base
   end
 
   def find_parcelles()
-    Parcelle.find(:all, :conditions => [:saison_id => session[:saison_id]])
+    Parcelle.find(:all, :conditions => [:saison_id => Application::SAISON])
   end
   
   def self.find_by_parcelle(parcelle_id)

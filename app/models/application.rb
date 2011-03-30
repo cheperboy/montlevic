@@ -1,8 +1,9 @@
 class Application < ActiveRecord::Base
+
+  
   
   SAISON = Setting.find(1).saison_id
-  SAISON_NAME = Setting.find(1).saison.name
-
+#  SAISON_NAME = Setting.find(1).saison.name
 
 #  def factype(object)
 #    unless object.factype.nil?  
@@ -17,9 +18,5 @@ class Application < ActiveRecord::Base
 #      end
 #    end
 #  end
-
-  
-  
   
 end
-

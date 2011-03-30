@@ -66,7 +66,7 @@ class VentesController < ApplicationController
   # POST /ventes.xml
   def create
     @vente = Vente.new(params[:vente])
-    @vente.saison_id = session[:saison_id]
+    @vente.saison_id = current_saison_id
     respond_to do |format|
       if @vente.save
         flash[:notice] = 'Vente was successfully created.'

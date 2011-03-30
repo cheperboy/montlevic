@@ -38,7 +38,7 @@ class ParcellesController < ApplicationController
   def create
     @parcelles = Parcelle.find_by_saison(:all)
     @parcelle = Parcelle.new(params[:parcelle])
-    @parcelle.saison_id = session[:saison_id]
+    @parcelle.saison_id = current_saison_id
     respond_to do |format|
       if @parcelle.save
         flash[:notice] = 'Parcelle was successfully created.'

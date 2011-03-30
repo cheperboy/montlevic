@@ -18,7 +18,7 @@
 	<table>
 	
 	<% saisons = Saison.find(:all, :order => :name) %>
-	<%= form_tr_select(f, 'Campagne', :saison_id, saisons, :id, :name,  :selected => session[:saison_id]) %>
+	<%= form_tr_select(f, 'Campagne', :saison_id, saisons, :id, :name,  :selected => current_saison_id) %>
 	
 	<%= form_tr_text(f, 'Nom', :name) %>
 	<%= form_tr_text(f, 'Ref client', :ref_client) %>

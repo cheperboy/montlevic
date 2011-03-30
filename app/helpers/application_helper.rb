@@ -134,6 +134,10 @@ module ApplicationHelper
     return out
   end
 
+#  def my_saison
+#    session[:current_saison_id] || Setting.find(:first).saison_id
+#  end
+  
   def admin?
     session[:admin] == (true)
   end

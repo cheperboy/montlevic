@@ -10,7 +10,7 @@
 <table>
 <tr>
 	<td><%= vente_form.label :saison_id, "Campagne : " %></td>
-	<td><%= vente_form.collection_select (:saison_id, Saison.find(:all, :order => :name), :id, :name, :selected => session[:saison_id] ) %></td>
+	<td><%= vente_form.collection_select (:saison_id, Saison.find(:all, :order => :name), :id, :name, :selected => current_saison_id) %></td>
 </tr>
 <tr>
 	<td><%= vente_form.label :name, "Nom : " %></td>

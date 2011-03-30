@@ -43,8 +43,8 @@ class Facture < Charge
   # ----- Finders -----
   
   def self.find_by_saison(*args)
-    with_scope(:find => { :conditions => ["saison_id = ?", 
-                                          session[:saison_id]],
+
+    with_scope(:find => { :conditions => ["saison_id = ?", Application::SAISON],
                           :order => :category_id}) do
         find(*args)
       end
@@ -52,7 +52,7 @@ class Facture < Charge
   
   def self.find_total(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id = ?", 
-                                          session[:saison_id],
+                                          Application::SAISON,
                                           Factype.find_by_name('total').id],
                           :order => :category_id}) do
         find(*args)
@@ -61,7 +61,7 @@ class Facture < Charge
   
   def self.find_diff(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id = ?", 
-                                          session[:saison_id],
+                                          Application::SAISON,
                                           Factype.find_by_name('diff').id],
                           :order => :category_id}) do
         find(*args)
@@ -71,7 +71,7 @@ class Facture < Charge
   #old find_papier
   def self.find_null(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id = ?", 
-                                          session[:saison_id],
+                                          Application::SAISON,
                                           Factype.find_by_name('null').id],
                           :order => :category_id}) do
         find(*args)
@@ -81,7 +81,7 @@ class Facture < Charge
   #old find_not_papier
   def self.find_not_null(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id != ?", 
-                                          session[:saison_id],
+                                          Application::SAISON,
                                           Factype.find_by_name('null').id],
                           :order => :category_id}) do
         find(*args)

@@ -10,8 +10,8 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       session[:admin] = user.admin?
       session[:user_login] = user.login
-      session[:saison_id] = Setting.find(:first).saison.id
-      session[:saison_name] = Setting.find(:first).saison.name
+      current_saison_id = Setting.find(:first).saison.id
+      session[:current_saison_id] = Setting.find(:first).saison.id
       flash[:notice] = "Bonjour #{user.login}!"
       redirect_to parcelles_path
     else

@@ -3,6 +3,7 @@
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
+  helper_method :current_saison_id
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -24,4 +25,12 @@ class ApplicationController < ActionController::Base
     return session[:user_id].nil?
   end
     
+  def current_saison_id=(saison)
+    current_saison_id = Setting.find(:first).saison_id
+  end
+  
+  def current_saison_id
+    @current_saison_id ||= Setting.find(:first).saison_id
+  end
+
 end

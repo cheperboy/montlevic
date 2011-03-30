@@ -40,9 +40,9 @@ class FacturesController < ApplicationController
 
     search = {:n => 1}
     search = {1 => {}}
-    search = {1 => {:key => 'saison_id', :value => session[:saison_id], :sign => 'LIKE'}}
+    search = {1 => {:key => 'saison_id', :value => current_saison_id, :sign => 'LIKE'}}
     
-    #conditions = ["saison_id=#{session[:saison_id]}"]
+    #conditions = ["saison_id=#{current_saison_id}"]
     conditions = ''
     search[:n]
     search.each do |col, opt|

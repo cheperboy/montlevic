@@ -9,7 +9,7 @@ class Setting < ActiveRecord::Base
   belongs_to :saison
     
   def self.load
-    session[:saison_id] = Setting.find(:first).saison
+    @current_saison_id = Setting.find(:first).saison
   end
 
 end
