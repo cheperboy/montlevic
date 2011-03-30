@@ -1,7 +1,7 @@
 class Verif < ActiveRecord::Base
   
   attr_accessor :serie,
-                :factures, :factypes, :structure, :others
+                :factures, :factypes, :structure, :data, :others
 
   LOW = 0
   HIGH = 1
@@ -34,6 +34,7 @@ class Verif < ActiveRecord::Base
     self.factures = Serie.new('Tests factures', [])
     self.factypes = Serie.new('Tests factypes', [])
     self.structure = Serie.new('Tests structure', [])
+    self.data = Serie.new('Tests data', [])
     self.others = Serie.new('Autres tests', [])
   end
 
@@ -41,6 +42,7 @@ class Verif < ActiveRecord::Base
     self.serie << factures
     self.serie << factypes
     self.serie << structure
+    self.serie << data
     self.serie << others
   end
 
@@ -60,6 +62,10 @@ class Verif < ActiveRecord::Base
     structure.tests << putoparcelle_deleted_ids
     structure.tests << labtofacture_deleted_ids
     structure.tests << putofacture_deleted_ids
+
+    data.tests << data_contrib_lab
+    data.tests << data_contrib_pu
+    
   end
 
   def reportable_sans_report
@@ -256,23 +262,51 @@ class Verif < ActiveRecord::Base
     return test
   end
 
-  def data_contrib_lab_1
-    test = init_test('labour.labtofacture.value superieure a labour.value ou a facture.cout', HIGH)
+  def data_contrib_lab
+    test = init_test('labour.labtofacture.value superieure a labour.cout_total ou a facture.cout', HIGH)
     Labtofacture.find(:all).each do |obj| 
-      if obj.value > obj.labour.cout_total || obj.value > obj.facture.cout
+      if obj.value > obj.labour.get_cout_total || obj.value > obj.facture.cout
         test.num += 1
-        facture = ''
-        facture = 'cout facture ' + obj.facture_id.to_s + " superieur a " if obj.facture.nil? 
-        pulve = ''
-        pulve = 'pulve ' + obj.pulve_id.to_s + " n'existe pas" if obj.pulve.nil? 
-        text = 'Labtofacture ' + facture + ' | ' + facture
-        error = init_error(text, obj.id, nil)
+        text = 'labour ' + obj.labour.name.to_s + ' (' + obj.labour.get_cout_total.to_s + ' euros) ' 
+        text += 'contribution a la facture ' + obj.facture.name.to_s + ' (' + obj.value.to_s + ' euros)' 
+        error = init_error(text, obj.labour.id, 'labours')
         test.errors << error
       end
     end
     test.result = (test.num == 0)    
     return test
   end
+
+  def data_contrib_pu
+    test = init_test('pulve.putofacture.value superieure a pulve.cout_total ou a facture.cout', HIGH)
+    Putofacture.find(:all).each do |obj| 
+      if obj.value > obj.pulve.get_cout_total || obj.value > obj.facture.cout
+        test.num += 1
+        text = 'pulve ' + obj.pulve.name.to_s + ' (' + obj.pulve.get_cout_total.to_s + ' euros) ' 
+        text += 'contribution a la facture ' + obj.facture.name.to_s + ' (' + obj.value.to_s + ' euros)' 
+        error = init_error(text, obj.pulve.id, 'pulves')
+        test.errors << error
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
+  end
+
+  def data_contrib_vente
+    test = init_test('vente.ventoparcelle.value superieure a vente.value', HIGH)
+    Ventoparcelle.find(:all).each do |obj| 
+      if obj.value > obj.vente.value
+        test.num += 1
+        text = 'vente ' + obj.vente.name.to_s + ' (' + obj.vente.value.to_s + ' euros) ' 
+        text += 'contribution a la parcelle ' + obj.parcelle.name.to_s + ' (' + obj.value.to_s + ' euros)' 
+        error = init_error(text, obj.vente.id, 'ventes')
+        test.errors << error
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
+  end
+
 
 
 

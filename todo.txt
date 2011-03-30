@@ -1,4 +1,3 @@
-dans category, ajouter les images comme dans facture
 
 DB
 Remplacer Settings.find(1) par Settings.find_first
@@ -16,6 +15,7 @@ Verifs
 CSS
 bug affichage table (manque bordures) depuis ;odif css info popup
 
+nouvelle vente: la choix des parcelle ne se limite pas a la saison courante
 
 USER (vs SU)
 acces a Upcategory impossible
@@ -25,6 +25,12 @@ suppression de Category impossible (modif et ajout ok)
 Seed
 donnees de test
 
+= modifs mineures / vues
+- dans labour/view et labour/edit, ajouter le vrai cout total sans deduction des contribution ainsi que le cout-contributions
 
+- dans category, ajouter les images comme dans facture
+
+= INFO/MUL
+- La valeur d'une vente est repartie equitablement sur l'ensemble des parcelles auxquelles elle est associee (proportionnellement a la surface de chaque parcelle)
 
 
