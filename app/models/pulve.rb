@@ -51,6 +51,11 @@ class Pulve < Charge
     return (self.sum_surfaces * self.get_cout_ha)
   end
 
+  # retourne le cout total de cette charge 
+  def get_cout_total_sans_reduc
+    return (self.sum_surfaces * self.cout_ha_passage)
+  end
+  
   
 #  def get_cout_ha_parcelle_with_rate(parcelle)
 #    cout_ha_parcelle = 0

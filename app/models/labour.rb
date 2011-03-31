@@ -35,7 +35,8 @@ class Labour < Charge
     return (self.get_cout_total / self.sum_surfaces)
   end
 
-  # retourne le cout total de cette charge
+  # retourne le cout total de cette charge 
+  # moins les contribution des factures associees
   def get_cout_total
     deduction = 0
     cout = self.sum_surfaces * self.cout_ha_passage
@@ -47,6 +48,7 @@ class Labour < Charge
     return (cout - deduction)
   end
   
+  # retourne le cout total de cette charge 
   def get_cout_total_sans_reduc
     return (self.sum_surfaces * self.cout_ha_passage)
   end

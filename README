@@ -1,7 +1,16 @@
 == TODO
+BUG
+1- repartition des contribution.
+2- le test "labour.labtofacture.value superieure a labour.cout_total ou a facture.cout" est faux car il se base sur la methode Labour.get_cout_total qui se base elle-meme sur la valeur de contribution a la facture..
+
+
 = Database
 - Remplacer Settings.find(1) par Settings.find_first
 
+Controller
+empecher la suppression de facture lorsq'une assoc existe avec cette facture. 
+
+Vue
 prog def:
 test si la valeur de contribution d'un labour est superieure 
 a son cout total => cela engendre des chiffre negatifs.
@@ -27,10 +36,21 @@ donnees de test
 
 = modifs mineures / vues
 - dans labour/view et labour/edit, ajouter le vrai cout total sans deduction des contribution ainsi que le cout-contributions
+- Factures : faire une vue montrant toutes les associations d'une facture (et des autre types d'elements, labour, pu, vente...))
 
 - dans category, ajouter les images comme dans facture
 
 = INFO/MUL
 - La valeur d'une vente est repartie equitablement sur l'ensemble des parcelles auxquelles elle est associee (proportionnellement a la surface de chaque parcelle)
+
+
+WIKI
+=Association Facture-Labour (idem pour facture-Pulve)
+Le but de ce type d'association est de reporter sur le poste Pulve (exemple : un passage de traitement round-up) le cout depense lors de l'achat des produits utilises pour ce traitement.
+exemple 
+- 1 passage Pulve sur une parcelle : 100 euros
+- 1 facture de produits d'une valeure totale de 1000 euros
+- on associe le Pulve a cette Facture en indiquant comme valeur de contribution 100 euros.
+-> resultat le Pulve coute toujours 100 dans la compta mais la facture de produit n'est plus comptabilisee qu'a hauteur de 900.
 
 

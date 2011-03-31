@@ -91,8 +91,9 @@ module PrintHelper
         out += '<br><b>'+facture.pulves.length.to_s+' Pulves : </b><ul>'
         for putofacture in facture.putofactures
           out += '<li>'+  putofacture.pulve.name + ' (' + 
-                          putofacture.value.to_s + '/' + 
-                          putofacture.pulve.get_cout_total_sans_reduc.to_s + ')</li>'
+                          putofacture.value.to_s + '€/' + 
+#DONE 29/03/2011 get_cout_total_sans_reduc n'existait pas pour Pulve, methode ajoutee
+                          putofacture.pulve.get_cout_total_sans_reduc.to_s + '€)</li>'
         end
         out += '</ul>'
       else
