@@ -1,0 +1,7 @@
+<% if @facture.sum_charges > @facture.cout %>
+	<h3>Erreurs de donnes</h3>
+	<p>
+	La somme des charges associees a cette facture est superieure a son cout.<br>
+	Les valeurs de contribution doivent etre modifiees.
+	</p>
+<% end %>	

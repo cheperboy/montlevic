@@ -1,0 +1,10 @@
+<h3>Parcelles</h3>
+<% if @facture.factoparcelles.empty? %>
+		<p>Cette facture n'est associee a aucune parcelle.</p>
+	<% else %>	
+	<ul>
+	<% @facture.factoparcelles.each do |factoparcelle| %>
+		<li><%=h factoparcelle.value %>: <%=h factoparcelle.parcelle.name %></li>
+	<% end %>
+	</ul>
+<% end %>
