@@ -41,108 +41,13 @@
 </table>
 
 <!-- Parcelles associees -->
-
-<h3>Parcelles</h3>
-<% if @facture.factoparcelles.empty? %>
-		<p>Cette facture n'est associee a aucune parcelle.</p>
-	<% else %>	
-	<ul>
-	<% @facture.factoparcelles.each do |factoparcelle| %>
-		<li><%=h factoparcelle.value %>: <%=h factoparcelle.parcelle.name %></li>
-	<% end %>
-	</ul>
-<% end %>
+<%= render :partial => 'show_detail_parcelles' %>
 
 <!-- affichage des charges associees -->
-
-<h3>Associations</h3>
-<% unless @facture.charges? %>
-		<p>Cette facture n'est associee a aucune charge de type Labour ou Pulve.</p>
-	<% else %>	
-<table>
-
-	<% if (@facture.labours.count > 0) %>
-	  <tr>
-	    <td><b>Labour | </b></td>
-	    <td><b>date | </b></td>
-	    <td><b>cout | </b></td>
-	    <td><b>contribution | </b></td>
-	  </tr>
-		<% @facture.labtofactures.each do |labtofacture| %>
-		  <tr>
-		    <td><%= link_to labtofacture.labour.name, edit_labour_path(labtofacture.labour) %> | </td>
-		    <td><%=h labtofacture.labour.date %> | </td>
-		    <td><%=h labtofacture.labour.get_cout_total %> | </td>
-		    <td><%=h labtofacture.value %> | </td>
-		  </tr>
-		<% end %>
-	  <tr>
-	    <td> | </td>
-	    <td> | </td>
-	    <td>somme :</td>
-	    <td><%=h @facture.sum_labours %> | </td>
-	  </tr>
-	<% end %>
-	
-	<% if (@facture.pulves.count > 0) %>
-	  <tr>
-	    <td><b>Pulve | </b></td>
-	    <td><b>date | </b></td>
-	    <td><b>cout | </b></td>
-	    <td><b>contribution | </b></td>
-	  </tr>
-		<% @facture.putofactures.each do |putofacture| %>
-		  <tr>
-		    <td><%= link_to putofacture.pulve.name, edit_pulve_path(putofacture.pulve) %> | </td>
-		    <td><%=h putofacture.pulve.date %> | </td>
-		    <td><%=h putofacture.pulve.get_cout_total %> | </td>
-		    <td><%=h putofacture.value %> | </td>
-		  </tr>
-		<% end %>
-	  <tr>
-	    <td> | </td>
-	    <td> | </td>
-	    <td>somme :</td>
-	    <td><%=h @facture.sum_pulves %> | </td>
-	  </tr>
-	<% end %>
-
-  <tr>
-    <td> | </td>
-    <td> | </td>
-    <td><b>total :</b></td>
-    <td><b><%=h @facture.sum_charges %> | </b></td>
-  </tr>	
-</table>
-<% end %>
+<%= render :partial => 'show_detail_assoc' %>
 
 <!-- Warnings -->
-
-<% if @facture.sum_charges > @facture.cout %>
-	<h3>Erreurs de donnes</h3>
-	<p>
-	La somme des charges associees a cette facture est superieure a son cout.<br>
-	Les valeurs de contribution doivent etre modifiees.
-	</p>
-<% end %>	
+<%= render :partial => 'show_detail_warning' %>
 
 <!-- Comptabilisation -->
-<% if @facture.comptable_diff?  %>
-<h3>Comptabilisation : "diff"</h3>
-<p>La valeur effectivement prise en compte dans la comptabilisation<br>
-correspond au cout de la facture moins la sommes des charges qui lui sont associees</p>
-	<table>
-		  <tr>
-		    <td>Cout facture : </td>
-		    <td><b><%= @facture.cout %> €</b></td>
-		  </tr>
-		  <tr>
-		    <td>Valeur des charges associees : </td>
-		    <td><b>- <%= @facture.sum_charges %> €</b></td>
-		  </tr>
-		  <tr>
-		    <td>Valeur comptable de la facture : </td>
-		    <td><b>= <%= @facture.cout - @facture.sum_charges %> €</b></td>
-		  </tr>
-	</table>
-<% end %>	
+<%= render :partial => 'show_detail_comptab' %>

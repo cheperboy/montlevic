@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   create_table "myusers", :force => true do |t|
     t.string  "login"
     t.string  "password"
-    t.integer "admin"
+    t.integer "admin", :limit => 1
   end
 
   create_table "parcelles", :force => true do |t|

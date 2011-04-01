@@ -34,3 +34,16 @@
 	<td><p><%= @facture.desc %></p></td>
 </tr>
 </table>
+
+
+<!-- Parcelles associees -->
+<%= render :partial => 'show_detail_parcelles' %>
+
+<!-- affichage des charges associees -->
+<%= render :partial => 'show_detail_assoc' %>
+
+<!-- Warnings -->
+<%= render :partial => 'show_detail_warning' %>
+
+<!-- Comptabilisation -->
+<%= render :partial => 'show_detail_comptab' %>
