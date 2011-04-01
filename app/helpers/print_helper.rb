@@ -81,7 +81,7 @@ module PrintHelper
         for labtofacture in facture.labtofactures
           out += '<li>'+  labtofacture.labour.name + ' (' + 
                           labtofacture.value.to_s + '/' + 
-                          labtofacture.labour.get_cout_total_sans_reduc.to_s + ')</li>'
+                          labtofacture.labour.get_cout_total.to_s + ')</li>'
         end
         out += '</ul>'
       else
@@ -93,7 +93,7 @@ module PrintHelper
           out += '<li>'+  putofacture.pulve.name + ' (' + 
                           putofacture.value.to_s + '€/' + 
 #DONE 29/03/2011 get_cout_total_sans_reduc n'existait pas pour Pulve, methode ajoutee
-                          putofacture.pulve.get_cout_total_sans_reduc.to_s + '€)</li>'
+                          putofacture.pulve.get_cout_total.to_s + '€)</li>'
         end
         out += '</ul>'
       else
@@ -128,9 +128,9 @@ module PrintHelper
           <table class="table_popup">
             ' + tr_text("Id", labour.id) + '
             ' + tr_text("Categorie", labour.category.name) + '
-            ' + tr_text("Cout Ha", labour.get_cout_ha_sans_reduc, 'e/Ha') + '
+            ' + tr_text("Cout Ha", labour.get_cout_ha, 'e/Ha') + '
             ' + tr_text("Surface", labour.sum_surfaces, 'Ha') + '
-            ' + tr_text("Cout", labour.get_cout_total_sans_reduc, 'e') +'
+            ' + tr_text("Cout", labour.get_cout_total, 'e') +'
           </table> '
 
       if labour.factures_assoc?
@@ -144,8 +144,8 @@ module PrintHelper
 
         out += '
           <table class="table_popup">
-            ' + tr_text("Cout Ha Reduit", labour.get_cout_ha, 'e/Ha') + '
-            ' + tr_text("Cout Reduit", labour.get_cout_total, 'e') +'
+            ' + tr_text("Cout Ha", labour.get_cout_ha, 'e/Ha') + '
+            ' + tr_text("Cout Total", labour.get_cout_total, 'e') +'
           </table> '
       else
         out += '<br>Pas de factures associee.<br>'

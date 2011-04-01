@@ -263,7 +263,7 @@ class Verif < ActiveRecord::Base
   end
 
   def data_contrib_lab
-    test = init_test('labour.labtofacture.value superieure a labour.cout_total ou a facture.cout', HIGH)
+    test = init_test('labour.labtofacture.value superieure a labour.get_cout_total ou a facture.cout', HIGH)
     Labtofacture.find(:all).each do |obj| 
       if obj.value > obj.labour.get_cout_total || obj.value > obj.facture.cout
         test.num += 1

@@ -291,6 +291,7 @@ class Print < ActiveRecord::Base
  
       @Tlabours[labour.id][:parcelles_size] = @Tlabours[labour.id][:parcelles].length      
       @Tlabours[labour.id][:ha] = labour.get_cout_ha
+#DONE 01/04/2011 correction erreur contrib. (cf branch "contrib")
       @Tlabours[labour.id][:total] = labour.get_cout_total
       @Tlabours[labour.id][:surface_total] = labour.sum_surfaces
       #total labour
