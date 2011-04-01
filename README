@@ -1,9 +1,6 @@
+€
 == TODO
-BUG
-1- repartition des contribution.
-2- le test "labour.labtofacture.value superieure a labour.cout_total ou a facture.cout" est faux 
-	car il se base sur la methode Labour.get_cout_total qui se base elle-meme sur la valeur de contribution a la facture..
-
+= BUG
 
 = Database
 - Remplacer Settings.find(1) par Settings.find_first
