@@ -1,7 +1,9 @@
 class Typeculture < ActiveRecord::Base
 
   has_many :parcelles
-
+  
+  validates_presence_of :name
+  
   def self.find_for_saison()
     typeculture_ids = []
     typecultures = []

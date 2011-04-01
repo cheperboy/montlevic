@@ -23,7 +23,7 @@ class Facture < Charge
   belongs_to :saison
   
   accepts_nested_attributes_for :factoparcelles, :allow_destroy => true
-  
+
   # ----- Validations -----
   def validate
     errors.add("Nom", "Ne doit pas etre vide") unless name != ''
@@ -34,11 +34,11 @@ class Facture < Charge
 
   validates_numericality_of :cout, :message => "n'est pas un nombre"
 
-  #validates_presence_of :name
-  #validates_presence_of :category
-  #validates_presence_of :user
-  #validates_associated :factoparcelles
-  #validates_presence_of :cout
+  validates_presence_of :name
+  validates_presence_of :category
+  validates_presence_of :user
+  validates_associated :factoparcelles
+  validates_presence_of :cout
 
   # ----- Finders -----
   

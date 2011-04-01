@@ -12,6 +12,9 @@ class Parcelle < ActiveRecord::Base
   has_many :putoparcelles
   has_many :pulves, :through => :putoparcelles
 
+  has_many :ventoparcelles
+  has_many :ventes, :through => :ventoparcelles
+
   has_many :factoparcelles
   has_many :factures, :through => :factoparcelles
 
@@ -19,6 +22,7 @@ class Parcelle < ActiveRecord::Base
 
   validates_presence_of :name
   validates_presence_of :surface
+  validates_numericality_of :surface, :message => "n'est pas un nombre"
   validates_associated :zonetopas
 
 # ----- Finders -----

@@ -16,9 +16,10 @@ class Labour < Charge
   validates_presence_of :name
   validates_presence_of :category
   validates_presence_of :user
+  validates_presence_of :cout_ha_passage
+  validates_numericality_of :cout_ha_passage, :message => "n'est pas un nombre"
   validates_associated :labtoparcelles
   validates_associated :labtofactures
-  validates_numericality_of :cout_ha_passage, :message => "n'est pas un nombre"
 
 # ----- Methodes -----
 

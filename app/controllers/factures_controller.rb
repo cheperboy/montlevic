@@ -296,18 +296,30 @@ class FacturesController < ApplicationController
 
   def destroy
     @facture = Facture.find(params[:id])
-    if @facture.class == Reportable && @facture.reports.count != 0
-      flash[:error] = 'Facture Reportable avec reports : Non Supprimee'
+
+    #Ne pas supprimer une facture Reportable avec des reports
+    if (@facture.class == Reportable && (@facture.charges? || @facture.reports.count != 0))
+      flash[:error] = 'Facture Reportable avec reports ou associations : Non Supprimee'
+
+    #Ne pas supprimer une facture Diverse comportant des fiches
     elsif @facture.class == Diverse && @facture.facdivs.count != 0
       flash[:error] = 'Facture Diverse avec facdivs : Non Supprimee'
-    else
-      @facture.destroy
-      flash[:notice] = 'Facture Supprimee'
-    end
+
+    #Ne pas supprimer une facture Report comportant des associations
+    elsif (@facture.class == Report && @facture.charges?)
+      flash[:error] = 'Facture Report avec associations : Non Supprimee'
+
+    #Ne pas supprimer une facture Debit comportant des associations
+     elsif @facture.class == Debit && @facture.charges?
+        flash[:error] = 'Facture avec association (Vente, Labour ou Pulve) : Non Supprimee'
+
+     else
+        @facture.destroy
+        flash[:notice] = 'Facture Supprimee'
+      end
 
     respond_to do |format|
       if @facture.class.equal?(Report)
-        flash[:notice] = 'Suppression du Report "' + @facture.name + '" OK.'
         format.html { redirect_to(facture_url(@facture.reportable)) }
       else
         format.html { redirect_to(factures_url) }

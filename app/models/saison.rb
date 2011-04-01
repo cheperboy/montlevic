@@ -1,10 +1,12 @@
 class Saison < ActiveRecord::Base
 
-    has_many :parcelles
-    has_many :labours
-    has_many :pulves
-    has_many :factures
-    has_many :reportables
+  validates_presence_of :name
 
-    has_one :setting    
+  has_many :parcelles
+  has_many :labours
+  has_many :pulves
+  has_many :factures
+  has_many :reportables
+
+  has_one :setting    
 end

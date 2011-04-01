@@ -75,11 +75,18 @@ class UpcategoriesController < ApplicationController
   # DELETE /upcategories/1.xml
   def destroy
     @upcategory = Upcategory.find(params[:id])
-    @upcategory.destroy
 
     respond_to do |format|
-      format.html { redirect_to(upcategories_url) }
-      format.xml  { head :ok }
+      if @upcategory.categories.nil?
+        @upcategory.destroy
+        flash[:notice] = 'Upcategory supprimee'
+        format.html { redirect_to(upcategories_url) }
+        format.xml  { head :ok }
+      else
+        flash[:error] = 'Upcategory non supprimee car des categories sont associees'
+        format.html { redirect_to(upcategories_url) }
+        format.xml  { head :ok }
+      end
     end
   end
 end

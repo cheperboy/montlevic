@@ -1,24 +1,19 @@
 €
 == TODO
+
+=Structure
+determiner si on doit pouvoir interragir avec une autre saison que lq saison courrante (Reportable, Vente, ?)
+
 = BUG
 
 = Database
-- Remplacer Settings.find(1) par Settings.find_first
 
-Controller
-empecher la suppression de facture lorsq'une assoc existe avec cette facture. 
+= Controller
 
 Vue
-prog def:
-test si la valeur de contribution d'un labour est superieure 
-a son cout total => cela engendre des chiffre negatifs.
+- affichage facture/view a dupliquer pour les Reports et Reportables
+- reproduire aussi pour Labour, Pulve et Vente (pour voir leur factures associees)
 
-associasion d'un pulve a une facture
-	impossible liste deroulante KO
-
-Verifs
-	- lab/pu avec facture assoc dont la valeur de l'assoc est superieure au cout facture
-	
 CSS
 bug affichage table (manque bordures) depuis ;odif css info popup
 

@@ -1,6 +1,10 @@
 class Facdiv < ActiveRecord::Base
   belongs_to :facture
-  
+
+  validates_presence_of :name
+  validates_presence_of :cout
+  validates_numericality_of :cout, :message => "n'est pas un nombre"
+
   # ----- Validations -----
   def validate
     errors.add("Nom", "Ne doit pas etre vide") unless name != ''

@@ -41,7 +41,7 @@ class ParcellesController < ApplicationController
     @parcelle.saison_id = current_saison_id
     respond_to do |format|
       if @parcelle.save
-        flash[:notice] = 'Parcelle was successfully created.'
+        flash[:notice] = 'Parcelle enregistree'
         format.html { redirect_to(@parcelle) }
         format.xml  { render :xml => @parcelle, :status => :created, :location => @parcelle }
       else
@@ -56,7 +56,7 @@ class ParcellesController < ApplicationController
     @parcelle = Parcelle.find(params[:id])
     respond_to do |format|
       if @parcelle.update_attributes(params[:parcelle])
-        flash[:notice] = 'Parcelle was successfully updated.'
+        flash[:notice] = 'Parcelle mise a jour'
         format.html { redirect_to(@parcelle) }
         format.xml  { head :ok }
       else
@@ -68,8 +68,15 @@ class ParcellesController < ApplicationController
 
   def destroy
     @parcelle = Parcelle.find(params[:id])
-    @parcelle.destroy
-
+    if (@parcelle.ventoparcelles || 
+        @parcelle.putoparcelles ||
+        @parcelle.factoparcelles ||
+        @parcelle.labtoparcelles)
+      flash[:error] = 'Parcelle non supprimee car associations (Vente, Facture, Labour, Pulve).'
+    else
+      @parcelle.destroy
+      flash[:notice] = 'Parcelle supprimee.'
+    end
     respond_to do |format|
       format.html { redirect_to(parcelles_url) }
       format.xml  { head :ok }

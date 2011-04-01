@@ -130,17 +130,17 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "putofactures", :force => true do |t|
-    t.integer  "facture_id"
-    t.integer  "pulve_id"
-    t.integer  "value"
+    t.integer  "facture_id",  :null => false
+    t.integer  "pulve_id",    :null => false
+    t.integer  "value",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "putoparcelles", :force => true do |t|
-    t.integer  "parcelle_id"
-    t.integer  "pulve_id"
-    t.float    "value"
+    t.integer  "parcelle_id", :null => false
+    t.integer  "pulve_id",    :null => false
+    t.float    "value",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "settings", :force => true do |t|
-    t.integer "saison_id"
+    t.integer "saison_id",      :null => false
     t.integer "value_parcelle", :limit => 1
     t.integer "detail_desc",    :limit => 1, :null => false
     t.integer "detail_ref",     :limit => 1
@@ -161,23 +161,21 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "upcategories", :force => true do |t|
-    t.string   "name"
+    t.string   "name",        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "name"
+    t.string   "name",        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "ventes", :force => true do |t|
-    t.integer  "category_id"
-    t.integer  "saison_id"
-    t.float    "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "category_id", :null => false
+    t.integer  "saison_id",   :null => false
+    t.float    "value",       :null => false
     t.date     "date",        :null => false
     t.integer  "user_id",     :null => false
     t.string   "name",        :null => false
@@ -185,6 +183,8 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.string   "ref_client"
     t.integer  "star"
     t.integer  "adu"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "ventoparcelles", :force => true do |t|
@@ -198,16 +198,16 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "zones", :force => true do |t|
-    t.string   "name"
-    t.float    "surface"
+    t.string   "name",      :null => false
+    t.float    "surface",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "zonetopas", :force => true do |t|
-    t.integer  "parcelle_id"
-    t.integer  "zone_id"
-    t.float    "value"
+    t.integer  "parcelle_id",   :null => false
+    t.integer  "zone_id",       :null => false
+    t.float    "value",         :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
