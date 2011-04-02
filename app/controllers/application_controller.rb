@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
     
   def current_saison_id=(saison)
-    current_saison_id = Setting.find(:first).saison_id
+    @current_saison_id = Setting.find(:first).saison_id
   end
   
   def current_saison_id

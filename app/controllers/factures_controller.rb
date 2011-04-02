@@ -34,58 +34,6 @@ class FacturesController < ApplicationController
     end
   end
 
-  def list
-    space = ' '
-    order = params[:order] unless params[:order].nil?
-
-    search = {:n => 1}
-    search = {1 => {}}
-    search = {1 => {:key => 'saison_id', :value => current_saison_id, :sign => 'LIKE'}}
-    
-    #conditions = ["saison_id=#{current_saison_id}"]
-    conditions = ''
-    search[:n]
-    search.each do |col, opt|
-      condition += opt[:key] + space + opt[:sign] + space + '?, '         
-    end
-    search.each do |col, opt|
-      condition += opt[:key] + space + opt[:sign] + space + '?, '         
-    end
-    
-    @elements = Facture.find(:all, :order => order, :conditions => conditions)
-    
-    unless params[:name].nil?
-      conditions = ["name LIKE %#{params[:name]}%"]
-      @f = @f.find( :conditions => conditions)
-    end
-    
-    unless params[:ref].nil?
-#      conditions = ["name LIKE ?", "%#{params[:name]}%"]
-    end
-    @elements = @f
-    
-#    (1..Facture::COLS_COUNT).each do |col|
-#      colonne = Facture::COLS_NAME[col]
-##      unless Facture::COLS_LINK[col] == 'false'
-#       
-#       logger.debug '-> COLONNE=' + col.to_s
-#       logger.debug '-> COLNAME=' + colonne.to_s
-#       unless col == 10
-#        unless params[colonne.to_sym].nil?
-#          logger.debug 'COLONNE=' + col.to_s
-#          conditions += ["#{colonne} LIKE ?", "%#{params[colonne.to_sym]}%"]
-#        end
-#      end
-#    end
-    
-    #@elements = Facture.find(:all, :order => order, :conditions => conditions)
-    if request.xml_http_request?
-      render :partial => "list", :layout => false
-    else
-      render :partial => "list", :layout => false
-    end
-  end
-  
   def index
     @factures = Facture.find_by_saison(:all, :order => 'ref DESC')
     respond_to do |format|
