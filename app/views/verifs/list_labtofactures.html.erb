@@ -1,0 +1,30 @@
+<%= render :partial => 'menu_verif' %>
+
+<% unless @labtofactures.count == 0 %>
+	<table>
+	  <tr>  	
+	    <td colspan='1'>Labour</td>
+	    <td colspan='2'>Facture</td>
+	  </tr>
+	  <tr>  	
+	    <td>Labour | </td>
+	    <td>Facture | </td>
+	    <td>Value | </td>
+	    <td colspan='2'></td>
+	  </tr>
+
+	<% @labtofactures.each do |obj| %>
+<% lab_invalid = (obj.labour.nil?)%>
+<% fact_invalid = (obj.facture.nil?)%>
+
+	  <tr class='list-row'>
+	    <td><%= obj.labour_id %> | </td>
+	    <td><%= obj.facture_id %> | </td>
+	    <td><%= obj.value.to_s %> | </td>
+	    <td><%= link_to image_tag('img-voir.png'), labour_url(:id => obj.labour_id) %> | </td>
+	    <td><%= link_to image_tag('img-modif.png'), edit_labour_url(:id => obj.labour_id) %> | </td>
+	    <td><%= link_to image_tag('img-modif.png'), edit_labour_url(:id => obj.labour_id) %> | </td>
+	  </tr>
+	<% end %>
+</table>
+<% end %>
