@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :verifs
+  map.resources :verifs, :collection => {   :list_labtofactures => :get }
 
   map.resource :session
   
