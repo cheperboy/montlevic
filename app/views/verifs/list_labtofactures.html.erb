@@ -18,12 +18,16 @@
 <% fact_invalid = (obj.facture.nil?)%>
 
 	  <tr class='list-row'>
-	    <td><%= obj.labour_id %> | </td>
+	    <td><%= obj.id %> | </td>
+	    <td><%= obj.labour_id %> (<%= lab_invalid %>)| </td>
 	    <td><%= obj.facture_id %> | </td>
 	    <td><%= obj.value.to_s %> | </td>
 	    <td><%= link_to image_tag('img-voir.png'), labour_url(:id => obj.labour_id) %> | </td>
 	    <td><%= link_to image_tag('img-modif.png'), edit_labour_url(:id => obj.labour_id) %> | </td>
-	    <td><%= link_to image_tag('img-modif.png'), edit_labour_url(:id => obj.labour_id) %> | </td>
+	    <td><%= link_to image_tag('img-delete.png'), {
+										:controller => :verifs, 
+									 	:action =>:delete_labtofacture ,
+									 	:id => obj } %> | </td>
 	  </tr>
 	<% end %>
 </table>

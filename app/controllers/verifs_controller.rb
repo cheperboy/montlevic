@@ -16,9 +16,21 @@ class VerifsController < ApplicationController
   end
   
   def delete_labtofacture
-    @labtofacture = Labtofacture.find(:labour)  
+    labtofacture = Labtofacture.find(params[:id])  
+
+    if session[:admin]
+      if labtofacture.labour.nil? || labtofacture.facture.nil?
+        labtofacture.destroy
+        flash[:notice] = 'Labtofacture will be deleted'   
+      else
+        flash[:error] = 'no need to delete this labtofacture'
+      end
+    else
+      flash[:error] = 'not deleted, Admin only!'
+    end        
+        
     respond_to do |format|
-      format.html
+        format.html { redirect_to :action => "list_labtofactures" }
     end
   end
   

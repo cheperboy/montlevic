@@ -103,11 +103,50 @@ myuser = Myuser.create([
 
 saison = Saison.create(:name => "Saison 2")
 parcelle = Parcelle.create(
-  :name => "parcelle-2", 
   :saison => saison, 
+  :name => "parcelle-2", 
   :typeculture => Typeculture.find(:first), 
   :surface => 10)
   
 zonetopa = Zonetopa.create(:parcelle => parcelle, :zone => zone, :value => 10)
 
+factureA = Debit.create(:name => 'Debit 1', 
+                          :cout => 1000, 
+                          :user => User.find(:first),
+                          :factype => Factype.find_by_name("diff"),
+                          :saison => saison,
+                          :date => '2011-01-01',
+                          :desc => "from seeds",
+                          :category => Category.find_by_name('agri'))
 
+factureB = Debit.create(:name => 'Debit 2', 
+                          :cout => 1000, 
+                          :user => User.find(:first),
+                          :factype => Factype.find_by_name("diff"),
+                          :saison => saison,
+                          :date => '2011-01-01',
+                          :desc => "from seeds",
+                          :category => Category.find_by_name('agri'))
+
+labourA = Labour.create(  :name => 'Labour 1', 
+                          :cout_ha_passage => 10, 
+                          :user => User.find(:first),
+                          :saison => saison,
+                          :date => '2011-01-01',
+                          :desc => "from seeds",
+                          :category => Category.find_by_name('covercrop'))
+
+labourB = Labour.create(  :name => 'Labour 2', 
+                          :cout_ha_passage => 10, 
+                          :user => User.find(:first),
+                          :saison => saison,
+                          :date => '2011-01-01',
+                          :desc => "from seeds",
+                          :category => Category.find_by_name('covercrop'))
+
+Labtofacture.create(  :facture_id => factureA.id,
+                      :labour_id => labourA.id,
+                      :value => 10)
+                      
+                      
+                      
