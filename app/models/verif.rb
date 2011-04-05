@@ -265,13 +265,15 @@ class Verif < ActiveRecord::Base
   def data_contrib_lab
     test = init_test('labour.labtofacture.value superieure a labour.get_cout_total ou a facture.cout', HIGH)
     Labtofacture.find(:all).each do |obj| 
-      if obj.facture #test por eviter le bug si facture_id invalide
-        if obj.value > obj.labour.get_cout_total || obj.value > obj.facture.cout
-          test.num += 1
-          text = 'labour ' + obj.labour.name.to_s + ' (' + obj.labour.get_cout_total.to_s + ' euros) ' 
-          text += 'contribution a la facture ' + obj.facture.name.to_s + ' (' + obj.value.to_s + ' euros)' 
-          error = init_error(text, obj.labour.id, 'labours')
-          test.errors << error
+      if obj.labour #test por eviter le bug si labour_id invalide
+        if obj.facture #test por eviter le bug si facture_id invalide
+          if obj.value > obj.labour.get_cout_total || obj.value > obj.facture.cout
+            test.num += 1
+            text = 'labour ' + obj.labour.name.to_s + ' (' + obj.labour.get_cout_total.to_s + ' euros) ' 
+            text += 'contribution a la facture ' + obj.facture.name.to_s + ' (' + obj.value.to_s + ' euros)' 
+            error = init_error(text, obj.labour.id, 'labours')
+            test.errors << error
+          end
         end
       end
     end

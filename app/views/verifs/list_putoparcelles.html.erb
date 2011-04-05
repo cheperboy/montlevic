@@ -1,0 +1,52 @@
+<%= render :partial => 'menu_verif' %>
+
+<% unless @putoparcelles.count == 0 %>
+	<table>
+	  <tr>  	
+	    <td>Id | </td>
+	    <td>Pulve | </td>
+	    <td>Parcelle | </td>
+	    <td>Value | </td>
+	    <td colspan='3'></td>
+	  </tr>
+
+	<% @putoparcelles.each do |obj| %>
+	  <% pu_invalid = (obj.pulve.nil?) %>
+	  <% parcelle_invalid = (obj.parcelle.nil?) %>
+
+	  <tr class='list-row'>
+	    <td>
+	    	<% if pu_invalid || parcelle_invalid %>
+				<%= image_tag('img-nok.png') %> 
+			<% else %>
+				<%= image_tag('img-ok.png') %>
+			<% end %>
+			<%= obj.id %> | 
+		</td>
+
+	    <td>
+	    	<% if pu_invalid %>
+				<%= obj.pulve_id %> | 
+			<% else %>
+				<%= link_to obj.pulve_id, pulve_url(:id => obj.pulve_id) %> |
+			<% end %>
+		</td>
+
+	    <td>
+	    	<% if parcelle_invalid %>
+				<%= obj.parcelle_id %> | 
+			<% else %>
+				<%= link_to obj.parcelle_id, parcelle_url(:id => obj.parcelle_id) %> |
+			<% end %>
+		</td>
+	    <td><%= obj.value.to_s %> | </td>
+	    <td><%= link_to image_tag('img-modif.png'), edit_pulve_url(:id => obj.pulve_id) %> | </td>
+	    <td><%= link_to image_tag('img-delete.png'), {
+										:controller => :verifs, 
+									 	:action =>:delete_putoparcelle,
+									 	:id => obj } %> | 
+		</td>
+	  </tr>
+	<% end %>
+</table>
+<% end %>

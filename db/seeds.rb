@@ -23,7 +23,6 @@ categories = Category.create([
 { :name => 'fongicide', :upcategory => pulve },
 { :name => 'herbicide', :upcategory => pulve },
 { :name => 'glyphosate', :upcategory => pulve },
-{ :name => 'test', :upcategory => pulve },
 { :name => 'covercrop', :upcategory => labour },
 { :name => 'vibro', :upcategory => labour },
 { :name => 'foin', :upcategory => vente },
@@ -148,5 +147,37 @@ Labtofacture.create(  :facture_id => factureA.id,
                       :labour_id => labourA.id,
                       :value => 10)
                       
+Labtofacture.create(  :facture_id => factureB.id,
+                      :labour_id => labourB.id,
+                      :value => 11)
+
+pulveA = Pulve.create(  :name => 'Pulve 1', 
+                        :dosage => 1,
+                        :prix_littre => 1,
+                        :cout_ha_passage => 10,
+                        :user => User.find(:first),
+                        :saison => saison,
+                        :date => '2011-01-01',
+                        :desc => "from seeds",
+                        :category => Category.find_by_name('herbicide'))
+
+pulveB = Pulve.create(  :name => 'Pulve 2', 
+                        :dosage => 1,
+                        :prix_littre => 1,
+                        :cout_ha_passage => 10,
+                        :user => User.find(:first),
+                        :saison => saison,
+                        :date => '2011-01-01',
+                        :desc => "from seeds",
+                        :category => Category.find_by_name('glyphosate'))
+
+Putofacture.create(  :facture_id => factureA.id,
+                     :pulve_id => pulveA.id,
+                     :value => 12)
                       
+Putofacture.create(  :facture_id => factureB.id,
+                     :pulve_id => pulveB.id,
+                     :value => 13)
+                      
+
                       

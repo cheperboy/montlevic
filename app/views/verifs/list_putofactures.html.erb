@@ -1,22 +1,22 @@
 <%= render :partial => 'menu_verif' %>
 
-<% unless @labtofactures.count == 0 %>
+<% unless @putofactures.count == 0 %>
 	<table>
 	  <tr>  	
 	    <td>Id | </td>
-	    <td>Labour | </td>
+	    <td>Pulve | </td>
 	    <td>Facture | </td>
 	    <td>Value | </td>
 	    <td colspan='3'></td>
 	  </tr>
 
-	<% @labtofactures.each do |obj| %>
-<% lab_invalid = (obj.labour.nil?) %>
+	<% @putofactures.each do |obj| %>
+<% pu_invalid = (obj.pulve.nil?) %>
 <% fact_invalid = (obj.facture.nil?) %>
 
 	  <tr class='list-row'>
 	    <td>
-	    	<% if lab_invalid || fact_invalid %>
+	    	<% if pu_invalid || fact_invalid %>
 				<%= image_tag('img-nok.png') %> 
 			<% else %>
 				<%= image_tag('img-ok.png') %>
@@ -25,10 +25,10 @@
 		</td>
 
 	    <td>
-	    	<% if lab_invalid %>
-				<%= obj.labour_id %> | 
+	    	<% if pu_invalid %>
+				<%= obj.pulve_id %> | 
 			<% else %>
-				<%= link_to obj.labour_id, labour_url(:id => obj.labour_id) %> |
+				<%= link_to obj.pulve_id, pulve_url(:id => obj.pulve_id) %> |
 			<% end %>
 		</td>
 
@@ -40,10 +40,10 @@
 			<% end %>
 		</td>
 	    <td><%= obj.value.to_s %> | </td>
-	    <td><%= link_to image_tag('img-modif.png'), edit_labour_url(:id => obj.labour_id) %> | </td>
+	    <td><%= link_to image_tag('img-modif.png'), edit_pulve_url(:id => obj.pulve_id) %> | </td>
 	    <td><%= link_to image_tag('img-delete.png'), {
 										:controller => :verifs, 
-									 	:action =>:delete_labtofacture ,
+									 	:action =>:delete_putofacture ,
 									 	:id => obj } %> | 
 		</td>
 	  </tr>

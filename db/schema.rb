@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.float    "dosage"
     t.float    "prix_littre"
     t.float    "cout_ha_passage"
+    t.float    "cout"
     t.text     "desc",            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
