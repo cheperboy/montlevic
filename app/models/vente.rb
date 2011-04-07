@@ -14,9 +14,7 @@ class Vente < Charge
   validates_presence_of :user
   validates_presence_of :prix
   validates_numericality_of :prix, :message => "n'est pas un nombre"
-
   validates_associated :ventoparcelles
-
 
   def get_cout_ha
     return (self.get_cout_total / self.sum_surfaces)  
@@ -27,5 +25,15 @@ class Vente < Charge
     return (self.prix)
   end
 
+  def get_cout_ha_parcelle(parcelle)
+    cout_ha_parcelle = 0
+    if (all_parcelles?)
+      cout_ha_parcelle = self.get_cout_ha
+    elsif (self.parcelles.include?(parcelle))
+      ventoparcelle = self.ventoparcelles.find(:parcelle_id => parcelle.id)
+      cout_ha_parcelle = self.ventoparcelles.value / parcelle.surface
+    end
+    return cout_ha_parcelle
+  end
 
 end

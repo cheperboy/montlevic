@@ -27,7 +27,7 @@
 		<%= ventoparcelle.parcelle.name %>
 			[surface : <%= ventoparcelle.parcelle.surface %> ha] x 
 	<!--	[taux : <%= ventoparcelle.value %>] x -->
-			[cout/Ha : <%= @vente.get_cout_ha %>] =
+			[prix/Ha : <%= @vente.get_cout_ha %>] =
 			<%=h (ventoparcelle.parcelle.surface * @vente.get_cout_ha) %> €
 	<!-- TODO : prise en compte de ventoparcelle.value -->
 	<%- end -%>
