@@ -12,8 +12,8 @@ class Vente < Charge
   validates_presence_of :name
   validates_presence_of :category
   validates_presence_of :user
-  validates_presence_of :value
-  validates_numericality_of :value, :message => "n'est pas un nombre"
+  validates_presence_of :prix
+  validates_numericality_of :prix, :message => "n'est pas un nombre"
 
   validates_associated :ventoparcelles
 
@@ -24,7 +24,7 @@ class Vente < Charge
   
   # retourne le prix total de cette vente
   def get_cout_total
-    return (self.value)
+    return (self.prix)
   end
 
 

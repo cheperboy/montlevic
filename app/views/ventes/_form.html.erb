@@ -37,8 +37,8 @@
 	<td><%= vente_form.collection_select (:category_id, Category.find_by_type("vente"), :id, :name ) %></td>
 </tr>
 <tr>
-	<td><%= vente_form.label :value, "Valeur : " %></td>
-	<td><%= vente_form.text_field :value, :size => 3 %> euros</td>
+	<td><%= vente_form.label :prix, "Valeur : " %></td>
+	<td><%= vente_form.text_field :prix, :size => 3 %> euros</td>
 </tr>
 <tr>
 	<td>Repere : </td>

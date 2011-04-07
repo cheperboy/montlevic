@@ -2,10 +2,6 @@ class Ventoparcelle < ActiveRecord::Base
 
   belongs_to :parcelle
   belongs_to :vente
-  
-  validates_presence_of :value
-  validates_presence_of :vente_id
-  validates_presence_of :parcelle_id
 
   validates_presence_of :value
   validates_numericality_of :value, :message => "n'est pas un nombre"

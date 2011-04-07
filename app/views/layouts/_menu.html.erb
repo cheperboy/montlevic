@@ -43,7 +43,7 @@
   <% if session[:admin] %>
 	  <strong>Admin</strong>
 	  <ul>
-	    <%- [Verif, Setting, Myuser, Factype, Upcategory].each do |model| -%>
+	    <%- [Verif, Setting, Myuser].each do |model| -%>
 	    <li><%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url")  %></li>
 	    <%- end -%>
 	  </ul>

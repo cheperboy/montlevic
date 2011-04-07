@@ -1,10 +1,10 @@
 <div class="ventoparcelle">
   <p>
     <%= f.label :parcelle_id, "parcelle : " %>
-    <%= f.collection_select (:parcelle_id, Parcelle.find(:all), :id, :name_and_culture ) %>
+    <%= f.collection_select (:parcelle_id, Parcelle.find_by_saison(:all), :id, :name_and_culture ) %>
     
     <%= f.label :value, "Value: " %>
-    <%= f.text_field :value, :size => 3 %>
+    <%= f.text_field :value, :size => 4 %>
     <%= remove_link_unless_new_record(f) -%>
   </p>
 </div>

@@ -8,9 +8,6 @@
 <% for upcategory in @upcategories %>
   <tr>
     <td><%=h upcategory.name %></td>
-    <td><%= link_to 'Voir', upcategory %></td>
-    <td><%= link_to 'Modifier', edit_upcategory_path(upcategory) %></td>
-    <td><%= link_to 'Supprimer', upcategory, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

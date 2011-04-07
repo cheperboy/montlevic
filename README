@@ -1,6 +1,5 @@
 €
 == TODO
-- ajouter un champ Pulve.cout
 - ajouter une class "MyLog" qui exploite logger.info("#{Time.now} Destroyed Weblog ID ##{@weblog.id}!")
 - ajouter zonetopas dans verif
 
@@ -22,7 +21,7 @@ Vue
 - reproduire aussi pour Labour, Pulve et Vente (pour voir leur factures associees)
 
 CSS
-bug affichage table (manque bordures) depuis ;odif css info popup
+bug affichage table (manque bordures) depuis modif css info popup
 
 nouvelle vente: la choix des parcelle ne se limite pas a la saison courante
 
