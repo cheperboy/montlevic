@@ -53,15 +53,15 @@
 	</tr>
 	<tr>
 		<td><%= pulve_form.label :prix_littre, "Cout du littre : " %></td>
-		<td><%= pulve_form.text_field :prix_littre, :size => 4 %>  euros/L</td>
+		<td><%= pulve_form.text_field :prix_littre, :size => 4 %>  €/L</td>
 	</tr>
 	<tr>
 		<td><%= pulve_form.label :dosage, "Dosage : " %></td>
-		<td><%= pulve_form.text_field :dosage, :size => 3 %> L/Ha</td>
+		<td><%= pulve_form.text_field :dosage, :size => 4 %> L/Ha</td>
 	</tr>
 	<tr>
-		<td><%= pulve_form.label :cout, "Cout : " %></td>
-		<td><%= pulve_form.text_field :cout, :size => 3 %> euros</td>
+		<td><%= pulve_form.label :cout_fixe, "Cout : " %></td>
+		<td><%= pulve_form.text_field :cout_fixe, :size => 4 %> €</td>
 	</tr>
 	</table>
 </fieldset>

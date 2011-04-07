@@ -23,7 +23,7 @@ class Pulve < Charge
   validates_presence_of :dosage
   validates_presence_of :prix_littre
   validates_presence_of :cout_ha_passage
-  validates_presence_of :cout
+  validates_presence_of :cout_fixe
   
   validates_associated :putoparcelles
   validates_associated :putofactures
@@ -31,7 +31,7 @@ class Pulve < Charge
   validates_numericality_of :dosage, :message => "n'est pas un nombre"
   validates_numericality_of :prix_littre, :message => "n'est pas un nombre"
   validates_numericality_of :cout_ha_passage, :message => "n'est pas un nombre"
-  validates_numericality_of :cout, :message => "n'est pas un nombre"
+  validates_numericality_of :cout_fixe, :message => "n'est pas un nombre"
 
 # ----- Methodes -----
   
@@ -43,19 +43,18 @@ class Pulve < Charge
     self.cout_ha_passage
   end
 
-  #TODO remplacer cout par cout_mo
-  def get_cout_mo_ha
-    return (self.cout / self.surfaces)
+  def get_cout_ha_fixe
+    return (self.cout_fixe / self.surfaces)
   end
 
   # retourne le cout a l'ha
   def get_cout_ha
-    return (self.cout_ha_passage + self.get_cout_ha_produit)
+    return (self.cout_ha_passage + self.get_cout_ha_produit + (self.cout_fixe / self.sum_surfaces))
   end
   
   # retourne le cout total de cette charge
   def get_cout_total
-    return ((self.sum_surfaces * self.get_cout_ha) + self.cout)
+    return (self.sum_surfaces * self.get_cout_ha)
   end
 
   # retourne le cout total de cette charge 

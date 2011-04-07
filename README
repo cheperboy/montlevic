@@ -2,6 +2,7 @@
 == TODO
 - ajouter un champ Pulve.cout
 - ajouter une class "MyLog" qui exploite logger.info("#{Time.now} Destroyed Weblog ID ##{@weblog.id}!")
+- ajouter zonetopas dans verif
 
 =Verif
 Incoherence de saison (labtofacture, putofactures,...)
@@ -12,6 +13,7 @@ Incoherence category/upcat exist or not..
 2- creation d'une facture diverse = choix de la saison (pourquoi?)
 
 = BUG
+Suppression d'une parcelle impossible
 = Database
 = Controller
 

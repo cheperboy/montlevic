@@ -66,20 +66,20 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
 
   create_table "factypes", :force => true do |t|
     t.string   "name"
-    t.string   "display",    :null => false
-    t.text     "desc",       :null => false
+    t.string   "display"
+    t.text     "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "labours", :force => true do |t|
     t.integer  "saison_id",       :null => false
-    t.integer  "category_id"
-    t.integer  "user_id"
-    t.date     "date"
-    t.string   "name"
+    t.integer  "category_id",     :null => false
+    t.integer  "user_id",         :null => false
+    t.date     "date",            :null => false
+    t.string   "name",            :null => false
     t.float    "cout_ha_passage"
-    t.text     "desc",            :null => false
+    t.text     "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -109,23 +109,23 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   create_table "parcelles", :force => true do |t|
     t.integer  "saison_id",      :null => false
     t.integer  "typeculture_id", :null => false
-    t.string   "name"
+    t.string   "name",           :null => false
     t.float    "surface"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "pulves", :force => true do |t|
-    t.integer  "saison_id",       :null => false
-    t.integer  "category_id"
-    t.integer  "user_id"
-    t.date     "date"
-    t.string   "name"
+    t.integer  "saison_id",        :null => false
+    t.integer  "category_id",      :null => false
+    t.integer  "user_id",          :null => false
+    t.date     "date",             :null => false
+    t.string   "name",             :null => false
     t.float    "dosage"
     t.float    "prix_littre"
     t.float    "cout_ha_passage"
-    t.float    "cout"
-    t.text     "desc",            :null => false
+    t.float    "cout_fixe"
+    t.text     "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -153,7 +153,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   create_table "settings", :force => true do |t|
     t.integer "saison_id",      :null => false
     t.integer "value_parcelle", :limit => 1
-    t.integer "detail_desc",    :limit => 1, :null => false
+    t.integer "detail_desc",    :limit => 1
     t.integer "detail_ref",     :limit => 1
   end
 

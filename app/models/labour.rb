@@ -23,15 +23,6 @@ class Labour < Charge
 
 # ----- Methodes -----
 
-
-  def factures_assoc?
-    if self.factures.count.equal?(0)
-      return false
-    else 
-      return true
-    end
-  end
-
   def get_cout_ha_avec_reduc
     return (self.get_cout_total_avec_reduc / self.sum_surfaces)
   end

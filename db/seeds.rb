@@ -42,15 +42,15 @@ typecultures = Typeculture.create([
 {:name => "RayGrass"},
 {:name => "Jachere"}])
 
-zone = Zone.create(:name => "zone-install", :surface => 1)
+zone = Zone.create(:name => "zone-install", :surface => 10)
 
 parcelle = Parcelle.create(
   :name => "parcelle-install", 
   :saison => saison, 
   :typeculture => Typeculture.find(:first), 
-  :surface => 1)
+  :surface => 10)
 
-zonetopa = Zonetopa.create(:parcelle => parcelle, :zone => zone, :value => 1)
+zonetopa = Zonetopa.create(:parcelle => parcelle, :zone => zone, :value => 10)
 
 factypes = Factype.create([
 {:name => "diff", :display => "diff", :desc => "test desc"},
@@ -100,12 +100,11 @@ myuser = Myuser.create([
 
 #===== TESTING DATA ========
 
-saison = Saison.create(:name => "Saison 2")
-parcelle = Parcelle.create(
-  :saison => saison, 
-  :name => "parcelle-2", 
-  :typeculture => Typeculture.find(:first), 
-  :surface => 10)
+#parcelle = Parcelle.create(
+#  :saison => saison, 
+#  :name => "parcelle-2", 
+#  :typeculture => Typeculture.find(:first), 
+#  :surface => 10)
   
 zonetopa = Zonetopa.create(:parcelle => parcelle, :zone => zone, :value => 10)
 
@@ -127,35 +126,35 @@ factureB = Debit.create(:name => 'Debit 2',
                           :desc => "from seeds",
                           :category => Category.find_by_name('agri'))
 
-labourA = Labour.create(  :name => 'Labour 1', 
-                          :cout_ha_passage => 10, 
-                          :user => User.find(:first),
-                          :saison => saison,
-                          :date => '2011-01-01',
-                          :desc => "from seeds",
-                          :category => Category.find_by_name('covercrop'))
-
-labourB = Labour.create(  :name => 'Labour 2', 
-                          :cout_ha_passage => 10, 
-                          :user => User.find(:first),
-                          :saison => saison,
-                          :date => '2011-01-01',
-                          :desc => "from seeds",
-                          :category => Category.find_by_name('covercrop'))
-
-Labtofacture.create(  :facture_id => factureA.id,
-                      :labour_id => labourA.id,
-                      :value => 10)
-                      
-Labtofacture.create(  :facture_id => factureB.id,
-                      :labour_id => labourB.id,
-                      :value => 11)
+#labourA = Labour.create(  :name => 'Labour 1', 
+#                          :cout_ha_passage => 10, 
+#                          :user => User.find(:first),
+#                          :saison => saison,
+#                          :date => '2011-01-01',
+#                          :desc => "from seeds",
+#                          :category => Category.find_by_name('covercrop'))
+#
+#labourB = Labour.create(  :name => 'Labour 2', 
+#                          :cout_ha_passage => 10, 
+#                          :user => User.find(:first),
+#                          :saison => saison,
+#                          :date => '2011-01-01',
+#                          :desc => "from seeds",
+#                          :category => Category.find_by_name('covercrop'))
+#
+#Labtofacture.create(  :facture_id => factureA.id,
+#                      :labour_id => labourA.id,
+#                      :value => 10)
+#                      
+#Labtofacture.create(  :facture_id => factureB.id,
+#                      :labour_id => labourB.id,
+#                      :value => 11)
 
 pulveA = Pulve.create(  :name => 'Pulve 1', 
-                        :dosage => 1,
-                        :prix_littre => 1,
-                        :cout_ha_passage => 10,
-                        :cout => 0,
+                        :dosage => 0,
+                        :prix_littre => 0,
+                        :cout_ha_passage => 1,
+                        :cout_fixe => 0,
                         :user => User.find(:first),
                         :saison => saison,
                         :date => '2011-01-01',
@@ -163,10 +162,10 @@ pulveA = Pulve.create(  :name => 'Pulve 1',
                         :category => Category.find_by_name('herbicide'))
 
 pulveB = Pulve.create(  :name => 'Pulve 2', 
-                        :dosage => 1,
-                        :prix_littre => 1,
-                        :cout_ha_passage => 10,
-                        :cout => 0,
+                        :dosage => 0,
+                        :prix_littre => 0,
+                        :cout_ha_passage => 0,
+                        :cout_fixe => 10,
                         :user => User.find(:first),
                         :saison => saison,
                         :date => '2011-01-01',
@@ -175,11 +174,11 @@ pulveB = Pulve.create(  :name => 'Pulve 2',
 
 Putofacture.create(  :facture_id => factureA.id,
                      :pulve_id => pulveA.id,
-                     :value => 12)
+                     :value => 0)
                       
 Putofacture.create(  :facture_id => factureB.id,
                      :pulve_id => pulveB.id,
-                     :value => 13)
+                     :value => 0)
                       
 
                       

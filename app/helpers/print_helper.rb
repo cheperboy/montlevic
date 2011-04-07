@@ -34,7 +34,7 @@ module PrintHelper
             ' + tr_text("Id", facture.id) + '
             ' + tr_text("Categorie", facture.category.name) + '
             ' + tr_text("Surface", facture.sum_surfaces, 'Ha') + '
-            ' + tr_text("Cout", facture.get_cout_total_sans_reduc, 'e')
+            ' + tr_text("Cout", facture.get_cout_total_sans_reduc, '€')
       if facture.charges? || facture.class.equal?(Reportable)
         out += '
             ' + tr_text("Cout Comptable", facture.get_cout_total, euros + '/Ha')
@@ -127,9 +127,9 @@ module PrintHelper
           <table class="table_popup">
             ' + tr_text("Id", labour.id) + '
             ' + tr_text("Categorie", labour.category.name) + '
-            ' + tr_text("Cout Ha", labour.get_cout_ha, 'e/Ha') + '
+            ' + tr_text("Cout Ha", labour.get_cout_ha, '€/Ha') + '
             ' + tr_text("Surface", labour.sum_surfaces, 'Ha') + '
-            ' + tr_text("Cout", labour.get_cout_total, 'e') +'
+            ' + tr_text("Cout", labour.get_cout_total, '€') +'
           </table> '
 
       if labour.factures_assoc?
@@ -140,12 +140,6 @@ module PrintHelper
                           labtofacture.facture.cout.to_s + ')</li>'
         end
         out += '</ul>'
-
-        out += '
-          <table class="table_popup">
-            ' + tr_text("Cout Ha", labour.get_cout_ha, 'e/Ha') + '
-            ' + tr_text("Cout Total", labour.get_cout_total, 'e') +'
-          </table> '
       else
         out += '<br>Pas de factures associee.<br>'
       end
@@ -173,18 +167,46 @@ module PrintHelper
       out = '<a href=" '+ edit_pulve_path(pulve) +'" class="tip">'+ pulve.name 
 
   #affichage popup
-      out += '<span>id : '+ pulve.id.to_s
-      out += '<br>nom : '+ pulve.name 
-      out += '<br>categorie : '+ pulve.category.name 
-      
-      #nombre et enumeration des parcelle de la pulve
-      out += '<br>'+pulve.parcelles.length.to_s+' parcelles : <ul>'
+      out += '
+   <span>        
+    <fieldset class="popup">
+      <legend class="popup"><b>Pulve :: '+ pulve.name + '</b></legend>'
+
+      out += '
+          <table class="table_popup">
+            ' + tr_text("Id", pulve.id) + '
+            ' + tr_text("Categorie", pulve.category.name) + '
+            ' + tr_text("Surface", pulve.sum_surfaces, 'Ha') + '
+            ' + tr_text("Cout Ha", pulve.get_cout_ha, '€/Ha') + '
+            ' + tr_text("Cout Total", pulve.get_cout_total, '€') +'
+            ' + tr_text("Dosage", pulve.dosage, 'L/Ha') +'
+            ' + tr_text("Pix littre", pulve.prix_littre, '€/L') +'
+            ' + tr_text("Cout Passage", pulve.cout_ha_passage, '€/Ha') +'
+            ' + tr_text("Cout Fixe", pulve.cout_fixe, '€') +'
+          </table> '
+          
+      if pulve.factures_assoc?
+        out += '<br><b>'+pulve.factures.length.to_s+' Factures : </b><ul>'
+        for putofactures in pulve.putofactures
+          out += '<li>'+  putofactures.facture.name + ' (' + 
+                          putofactures.value.to_s + '/' + 
+                          putofactures.facture.cout.to_s + ')</li>'
+        end
+        out += '</ul>'
+      else
+        out += '<br>Pas de factures associee.<br>'
+      end
+          
+      #nombre et enumeration des parcelles du labour
+      out += '<br><b>'+pulve.parcelles.length.to_s+' parcelles : </b><ul>'
       for parcelle in pulve.parcelles
-        out += '<li>'+parcelle.name+'</li>'
+        out += '<li>'+parcelle.name + ' (' + parcelle.surface.to_s + 'ha)</li>'
       end
       out += '</ul>'
-      
-      out += '</span></a>'
+      out += '
+      </fieldset>
+    </span>
+  </a>'
     end
     return out
   end

@@ -68,10 +68,10 @@ class ParcellesController < ApplicationController
 
   def destroy
     @parcelle = Parcelle.find(params[:id])
-    if (@parcelle.ventoparcelles || 
-        @parcelle.putoparcelles ||
-        @parcelle.factoparcelles ||
-        @parcelle.labtoparcelles)
+    if (@parcelle.ventoparcelles.count != 0 || 
+        @parcelle.putoparcelles != 0 ||
+        @parcelle.factoparcelles != 0 ||
+        @parcelle.labtoparcelles != 0 )
       flash[:error] = 'Parcelle non supprimee car associations (Vente, Facture, Labour, Pulve).'
     else
       @parcelle.destroy
