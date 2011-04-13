@@ -5,7 +5,7 @@
 <% end %>
 	</tr>
 
-<% unless (@labours.size == 0) %>
+<% if (@labours.size > 0) %>
 	<% @labours.each do |labour| %>
 		<% dep = @test.Tlabours[labour.id] %>
 					 

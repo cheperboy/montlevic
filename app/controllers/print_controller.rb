@@ -28,17 +28,22 @@ class PrintController < ApplicationController
   end
 
   def parcelles
+#    WORKING : dans la vue gerer 2 cas 
+#    1- @labour est du type [] et @labours.size >> 0
+#    2- @labour est du type Labour
+#    3- @labour == nil
     @saison = Saison.find(session[:current_saison_id])
     @labours = @saison.labours
-    @pulves = @saison.pulves
-    @factures = Facture.find_by_saison(:all, :order => "category_id")
-    @ventes = Vente.find_by_saison(:all, :order => "category_id")
+    @pulves = @saison.pulves.find(:first)
+    @factures = @saison.factures.find(:first, :order => :cout)
+    @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
 
-    @test = Print.new
     respond_to do |format|
-      unless @test.calculate(Parcelle).nil?
-        format.html
+      @test = Print.new(Parcelle)
+      unless @test.nil?
+        @test.calculate
+        format.html    
       else
         @display = 0
         flash[:error] = "l'affichage par parcelles n'est pas possible pour cette saison"

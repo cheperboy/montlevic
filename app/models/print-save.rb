@@ -8,22 +8,9 @@ class Print < ActiveRecord::Base
   #Pxxx variables par Parcelle
   attr_accessor :Tcols, :Tfactures, :Tlabours, :Tpulves, :Tventes, :Tbenefs,
                 :val,
-                :csv, :csv_html, :display, :info_debug,
-                :saison, :labours, :pulves, :factures, :ventes, :types_facture, :col_model, :cols
+                :csv, :csv_html, :display, :info_debug
 
-  def initialize(col_model)
-    unless col_model.find_for_saison().nil?    
-      @col_model = col_model
-      @cols = col_model.find_for_saison()
-      @saison = Saison.find(Setting.find(:first).saison_id)
-      @labours = @saison.labours
-      @pulves = @saison.pulves
-      @factures = @saison.factures
-      @ventes = @saison.ventes
-      @types_facture = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
-    else
-      return nil
-    end
+  def initialize
   end
   
   def set_alias
@@ -36,20 +23,38 @@ class Print < ActiveRecord::Base
     self.val[:cols] = self.Tcols
   end
   
-  def calculate
-    init_cols
-    init_factures
-    init_pulves
-    init_labours
-    init_ventes
+  def calculate(col_model)
+    unless col_model.find_for_saison().nil?
+      
+      @saison = Saison.find(Setting.find(:first).saison_id)
+      @labours = @saison.labours
+      @pulves = @saison.pulves
+      @factures = Facture.find_by_saison(:all, :order => "category_id")
+      @ventes = Vente.find_by_saison(:all, :order => "category_id")
+      @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
+#      @labours = Labour.find_by_saison(:all)
+#      @pulves = Pulve.find_by_saison(:all)
+#      @factures = Facture.find_by_saison(:all, :order => "category_id")
+#      @ventes = Vente.find_by_saison(:all, :order => "category_id")
+#      @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
+      
+      init_cols(col_model)
+      init_cols(col_model)
+#      init_factures(col_model)
+      init_pulves(col_model)
+      init_labours(col_model)
+      init_ventes(col_model)
 
-    run_labours
-    run_pulves
-    run_factures
-    run_ventes
-    run_totaux
-    
-    set_alias()
+      run_labours(col_model)
+      run_pulves(col_model)
+      run_factures(col_model)
+      run_ventes(col_model)
+      run_totaux(col_model)
+      
+      set_alias()
+    else
+      return nil
+    end
   end
  
   def init_display
@@ -57,15 +62,17 @@ class Print < ActiveRecord::Base
     self.display[:labours] = -1
   end
   
-  def init_cols
-    unless @cols.nil?
+  def init_cols(col_model)
+    cols = col_model.find_for_saison()
+
+    unless cols.nil?
       types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
       rang = 0
       
     #Init Hparcelles 
       self.Tcols = {}
       self.Tcols[:ids] = []
-      self.Tcols[:col_model] = @col_model
+      self.Tcols[:col_model] = col_model
       self.Tcols[:charges] = {} 
       self.Tcols[:benef] = {}  
       self.Tcols[:charges][:total] = 0   # derniere case somme de toutes les charges de chaque colonnes
@@ -75,8 +82,8 @@ class Print < ActiveRecord::Base
       self.Tcols[:vente_total] = 0  # derniere case somme de TOUTES les ventes
       self.Tcols[:vente_ha] = 0     # derniere case somme de TOUTES les ventes ha
       
-      for col in @cols
-        self.Tcols[:length] = @cols.length
+      for col in cols
+        self.Tcols[:length] = cols.length
         self.Tcols[:ids] << col.id
 
         self.Tcols[col.id] = {}
@@ -129,43 +136,48 @@ class Print < ActiveRecord::Base
           self.Tcols[col.id][:benef][:ha][type.name] = 0
         end
       end
-    end    
+    end
+    
+    
   end
 
-  def init_factures
-    rang = 0
+  def init_factures(col_model)
+    cols = col_model.find_for_saison()
+    #@factures = Facture.find_by_saison(:all, :order => "category_id")
+    #@types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
+    rang = 0    
     
     @Tfactures = Hash.new()
     @Tfactures[:total] = Hash.new()
     @Tfactures[:ha] = Hash.new()
     
-    unless @factures.nil?
-      for facture in @factures
-        @Tfactures[facture.id] = {:parcelles => {}, :id => facture.id, :name => facture.name, :cout => facture.cout}
-        #for parcelle in facture.parcelles
-        for col in @cols
-          hcols = {:name => col.name, :surface => col.surface }  
-          @Tfactures[facture.id][:parcelles].store(col.id, hcols)
-          @Tfactures[facture.id][col.id] = {:ha => 0, :total => 0 , :cout_sans_charges => 0 }
-  
-          @Tfactures[facture.id][:total] = 0 
-          @Tfactures[facture.id][:ha] = 0 
-          @Tfactures[:total][:sum] = 0 
-          @Tfactures[:ha][:sum] = 0 
-          
-          for type in @types_facture
-            @Tfactures[:total][type.name] = 0 
-            @Tfactures[:ha][type.name] = 0 
-          end
+    for facture in @factures
+      @Tfactures[facture.id] = {:parcelles => {}, :id => facture.id, :name => facture.name, :cout => facture.cout }
+      #for parcelle in facture.parcelles
+      for col in cols
+        hcols = {:name => col.name, :surface => col.surface }  
+        @Tfactures[facture.id][:parcelles].store(col.id, hcols)
+        @Tfactures[facture.id][col.id] = {:ha => 0, :total => 0 , :cout_sans_charges => 0 }
+
+        @Tfactures[facture.id][:total] = 0 
+        @Tfactures[facture.id][:ha] = 0 
+        @Tfactures[:total][:sum] = 0 
+        @Tfactures[:ha][:sum] = 0 
+        
+        for type in @types
+          @Tfactures[:total][type.name] = 0 
+          @Tfactures[:ha][type.name] = 0 
         end
       end
     end
   end
   
-  def init_benefs
+  def init_benefs(col_model)
+    cols = col_model.find_for_saison()
+    @ventes = Vente.find_by_saison(:all, :order => "category_id")
     @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('vente'))
     rang = 0    
-
+    
     @Tventes = Hash.new()
     @Tventes[:total] = Hash.new()
     @Tventes[:ha] = Hash.new()
@@ -173,7 +185,7 @@ class Print < ActiveRecord::Base
     for vente in @ventes
       @Tventes[vente.id] = {:parcelles => {}, :id => vente.id, :name => vente.name, :cout => vente.value }
       #for parcelle in facture.parcelles
-      for col in @cols
+      for col in cols
         hcols = {:name => col.name, :surface => col.surface }  
         @Tventes[vente.id][:parcelles].store(col.id, hcols)
         @Tventes[vente.id][col.id] = {:ha => 0, :total => 0 , :cout_sans_charges => 0 }
@@ -191,15 +203,19 @@ class Print < ActiveRecord::Base
     end
   end
   
-  def init_ventes
+  def init_ventes(col_model)
+  #Init Hlabours 
+    cols = col_model.find_for_saison()
+    ventes = Vente.find_by_saison(:all)
+    
     @Tventes = Hash.new()
     @Tventes[:total] = Hash.new()
     @Tventes[:ha] = Hash.new()
     @Tventes[:total][:sum] = 0
     @Tventes[:ha][:sum] = 0
-    for vente in @ventes
+    for vente in ventes
       @Tventes[vente.id] = {:parcelles => {}, :id => vente.id, :name => vente.name, :total => 0, :ha => 0 }
-      for col in @cols
+      for col in cols
         hcols = {:name => col.name, :surface => col.surface }
         @Tventes[vente.id][:parcelles].store(col.id, hcols)
         @Tventes[vente.id][col.id] = {:ha => 0, :total => 0 }
@@ -207,15 +223,19 @@ class Print < ActiveRecord::Base
     end
   end
   
-  def init_labours
+  def init_labours(col_model)
+  #Init Hlabours 
+    cols = col_model.find_for_saison()
+    labours = Labour.find_by_saison(:all)
+    
     @Tlabours = Hash.new()
     @Tlabours[:total] = Hash.new()
     @Tlabours[:ha] = Hash.new()
     @Tlabours[:total][:sum] = 0
     @Tlabours[:ha][:sum] = 0
-    for labour in @labours
+    for labour in labours
       @Tlabours[labour.id] = {:parcelles => {}, :id => labour.id, :name => labour.name, :total => 0, :ha_passage => labour.cout_ha_passage}
-      for col in @cols
+      for col in cols
         hcols = {:name => col.name, :surface => col.surface }  
         @Tlabours[labour.id][:parcelles].store(col.id, hcols)
         @Tlabours[labour.id][col.id] = {:ha => 0, :total => 0 }
@@ -223,7 +243,11 @@ class Print < ActiveRecord::Base
     end
   end
 
-  def init_pulves
+  def init_pulves(col_model)
+  #Init Hpulve 
+    cols = col_model.find_for_saison()
+#    @pulves = Pulve.find_by_saison(:all)
+    
     @Tpulves = Hash.new()
     @Tpulves[:total] = Hash.new()
     @Tpulves[:ha] = Hash.new()
@@ -235,7 +259,7 @@ class Print < ActiveRecord::Base
                             :name => pulve.name, 
                             :total => 0, 
                             :ha_passage => pulve.cout_ha_passage}
-      for col in @cols
+      for col in cols
         hcols = {:name => col.name, :surface => col.surface }  
         @Tpulves[pulve.id][:parcelles].store(col.id, hcols)
         @Tpulves[pulve.id][col.id] = {:ha => 0, :total => 0 }
@@ -243,9 +267,12 @@ class Print < ActiveRecord::Base
     end
   end
 
-  def run_labours
+  def run_labours(col_model)
+    cols = col_model.find_for_saison()
+#    @labours = Labour.find_by_saison(:all)
+  #LABOUR
     for labour in @labours
-      for col in @cols
+      for col in cols
         #valeur ha et total pour chaque col affecté a la labour
         cout_ha = labour.get_cout_ha_col(col)
         cout_total = labour.get_cout_total_col(col)
@@ -264,9 +291,10 @@ class Print < ActiveRecord::Base
     end
   end
 
-  def run_pulves
+  def run_pulves(col_model)
+    cols = col_model.find_for_saison()
     for pulve in @pulves
-      for col in @cols
+      for col in cols
         #valeur ha et total pour chaque col affecté a la pulve
         cout_ha = pulve.get_cout_ha_col(col)
         cout_total = pulve.get_cout_total_col(col)
@@ -286,9 +314,10 @@ class Print < ActiveRecord::Base
     end
   end
 
-  def run_factures
+  def run_factures(col_model)
+    cols = col_model.find_for_saison()
     for facture in @factures
-      for col in @cols
+      for col in cols
         #valeur ha et total pour chaque col
         cout_ha = facture.get_cout_ha_col(col)
         cout_total = facture.get_cout_total_col(col)
@@ -311,7 +340,7 @@ class Print < ActiveRecord::Base
       @Tfactures[:ha][:sum] += total_ha
       
       #totaux par types de factures
-      for type in @types_facture
+      for type in @types
         if (@Tfactures[facture.id][:category].to_s == type.name)
           @Tfactures[:total][type.name] += total
           @Tfactures[:ha][type.name] += total_ha
@@ -320,9 +349,10 @@ class Print < ActiveRecord::Base
     end
   end
 
-  def run_ventes
+  def run_ventes(col_model)
+    cols = col_model.find_for_saison()
     for vente in @ventes
-      for col in @cols
+      for col in cols
         #valeur ha et total pour chaque col affecté a la vente
         cout_ha = vente.get_cout_ha_col(col)
         cout_total = vente.get_cout_total_col(col)
@@ -340,10 +370,12 @@ class Print < ActiveRecord::Base
     end
   end
 
-  def run_totaux    
+  def run_totaux(col_model)
+    cols = col_model.find_for_saison()
+    
     #TOTAUX PAR PARCELLES
     for labour in @labours
-      for col in @cols
+      for col in cols
         cout_ha = @Tlabours[labour.id][col.id][:ha]
         cout_total = @Tlabours[labour.id][col.id][:total]
       
@@ -362,7 +394,7 @@ class Print < ActiveRecord::Base
     end
     
     for pulve in @pulves
-      for col in @cols
+      for col in cols
         cout_ha = @Tpulves[pulve.id][col.id][:ha]
         cout_total = @Tpulves[pulve.id][col.id][:total]
       
@@ -381,7 +413,7 @@ class Print < ActiveRecord::Base
     end
     
     for facture in @factures
-      for col in @cols
+      for col in cols
         cout_ha = @Tfactures[facture.id][col.id][:ha]
         cout_total = @Tfactures[facture.id][col.id][:total]
 
@@ -398,7 +430,7 @@ class Print < ActiveRecord::Base
         @Tcols[col.id][:benef][:total][:sum] -= cout_total
 
 
-        for type in @types_facture
+        for type in @types
           if (@Tfactures[facture.id][:category].to_s == type.name)
             @Tcols[col.id][:charges][:ha][type.name] += cout_ha
             @Tcols[col.id][:charges][:total][type.name] += cout_total
@@ -408,7 +440,7 @@ class Print < ActiveRecord::Base
     end
 
     for vente in @ventes
-      for col in @cols
+      for col in cols
         cout_ha = @Tventes[vente.id][col.id][:ha]
         cout_total = @Tventes[vente.id][col.id][:total]
         
@@ -436,7 +468,7 @@ class Print < ActiveRecord::Base
     @Tcols[:vente_ha] = total_vente_ha
     @Tcols[:benef][:ha] = total_vente_ha - total_charge_ha
     
-    for col in @cols
+    for col in cols
       @Tcols[:charges][:total] += @Tcols[col.id][:charges][:total][:sum]
       #@Tcols[:charges][:ha] += @Tcols[col.id][:charges][:ha][:sum]
 

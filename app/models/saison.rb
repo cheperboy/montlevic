@@ -6,6 +6,7 @@ class Saison < ActiveRecord::Base
   has_many :labours
   has_many :pulves
   has_many :factures
+  has_many :ventes
   has_many :reportables
 
   has_one :setting    
