@@ -41,11 +41,18 @@ class Print < ActiveRecord::Base
   
   def calculate(col_model)
     unless col_model.find_for_saison().nil?
-      @labours = Labour.find_by_saison(:all)
-      @pulves = Pulve.find_by_saison(:all)
+      
+      @saison = Saison.find(Setting.find(:first).saison_id)
+      @labours = @saison.labours
+      @pulves = @saison.pulves
       @factures = Facture.find_by_saison(:all, :order => "category_id")
       @ventes = Vente.find_by_saison(:all, :order => "category_id")
       @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
+#      @labours = Labour.find_by_saison(:all)
+#      @pulves = Pulve.find_by_saison(:all)
+#      @factures = Facture.find_by_saison(:all, :order => "category_id")
+#      @ventes = Vente.find_by_saison(:all, :order => "category_id")
+#      @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
       
       init_cols(col_model)
       init_cols(col_model)
@@ -278,7 +285,7 @@ class Print < ActiveRecord::Base
 
   def run_labours(col_model)
     cols = col_model.find_for_saison()
-    @labours = Labour.find_by_saison(:all)
+#    @labours = Labour.find_by_saison(:all)
   #LABOUR
     for labour in @labours
       for col in cols

@@ -28,8 +28,9 @@ class PrintController < ApplicationController
   end
 
   def parcelles
-    @labours = Labour.find_by_saison(:all)
-    @pulves = Pulve.find_by_saison(:all)
+    @saison = Saison.find(session[:current_saison_id])
+    @labours = @saison.labours
+    @pulves = @saison.pulves
     @factures = Facture.find_by_saison(:all, :order => "category_id")
     @ventes = Vente.find_by_saison(:all, :order => "category_id")
     @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))

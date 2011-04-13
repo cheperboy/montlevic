@@ -41,16 +41,36 @@ typecultures = Typeculture.create([
 {:name => "Colza"},
 {:name => "RayGrass"},
 {:name => "Jachere"}])
+typeculture = Typeculture.find(:first)
 
-zone = Zone.create(:name => "zone-install", :surface => 10)
+zones = Zone.create([
+{:name => "Mitant", :surface => 5.09},
+{:name => "Bons Pains", :surface => 14.01},
+{:name => "La Rue", :surface => 46.55},
+{:name => "Reserve", :surface => 2.55},
+{:name => "Vallees", :surface => 13.68},
+{:name => "Guiberons", :surface => 3.0},
+{:name => "Taillis", :surface => 19.32},
+{:name => "Brandes", :surface => 2.97},
+{:name => "Feuillets", :surface => 16.05},
+{:name => "Lavernier", :surface => 0.75},
+{:name => "Varennes", :surface => 15.86},
+{:name => "Patureaux", :surface => 8.87},
+{:name => "Prairies", :surface => 13.26},
+{:name => "Le Bourg-1", :surface => 0.52},
+{:name => "Le Bourg-2", :surface => 1.35}])
 
-parcelle = Parcelle.create(
-  :name => "parcelle-install", 
-  :saison => saison, 
-  :typeculture => Typeculture.find(:first), 
-  :surface => 10)
+for zone in zones
+  parcelle = Parcelle.create( :name => zone.name, 
+                              :saison => saison, 
+                              :typeculture => typeculture, 
+                              :surface => zone.surface)
+  zonetopa = Zonetopa.create(:parcelle => parcelle, :zone => zone, :value => zone.surface)
+end
 
-zonetopa = Zonetopa.create(:parcelle => parcelle, :zone => zone, :value => 10)
+zonetopa = Zonetopa.find(:first)
+parcelle = Parcelle.find(:first)
+zone = Zone.find(:first)
 
 factypes = Factype.create([
 {:name => "diff", :display => "diff", :desc => "test desc"},
@@ -99,14 +119,6 @@ myuser = Myuser.create([
 ])
 
 #===== TESTING DATA ========
-
-#parcelle = Parcelle.create(
-#  :saison => saison, 
-#  :name => "parcelle-2", 
-#  :typeculture => Typeculture.find(:first), 
-#  :surface => 10)
-  
-zonetopa = Zonetopa.create(:parcelle => parcelle, :zone => zone, :value => 10)
 
 factureA = Debit.create(:name => 'Debit 1', 
                           :cout => 1000, 

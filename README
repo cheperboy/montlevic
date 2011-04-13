@@ -1,3 +1,23 @@
+
+= EN COURS
+1- Vente.rb get_cout_ha_parcelle
+2- ParcellesController.delete -> ok mais remettre printController normal.
+->classer les charges en fonction du type, pour l'affichage 
+- ex facture Reportable puis ses Reports) 
+- ex Pules en fonction du user_id
+- facture par ordre de prix croissant
+
+
+saison.charges
+= saison.pulves + saison.labours
+
+
+Rake Notes :
+#WORKING
+#OPTIMIZE: ...
+#TODO:...
+#FIXME
+
 €
 == TODO
 - ajouter une class "MyLog" qui exploite logger.info("#{Time.now} Destroyed Weblog ID ##{@weblog.id}!")

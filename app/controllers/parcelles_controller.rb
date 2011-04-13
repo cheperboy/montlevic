@@ -68,17 +68,14 @@ class ParcellesController < ApplicationController
 
   def destroy
     @parcelle = Parcelle.find(params[:id])
-    if (@parcelle.ventoparcelles.count != 0)
-      logger.debug('Parcelle #{@parcelle.id} - #{@parcelle.name} ventoparcelles.count != #{@parcelle.ventoparcelles.count}')
-#      || 
-      
-#        @parcelle.putoparcelles != 0 ||
-#        @parcelle.factoparcelles != 0 ||
-#        @parcelle.labtoparcelles != 0 
-
-      flash[:error] = 'Parcelle non supprimee car associations (Vente).'
+    if (@parcelle.ventoparcelles.count > 0 || 
+        @parcelle.putoparcelles.count > 0 || 
+        @parcelle.factoparcelles.count > 0 || 
+        @parcelle.labtoparcelles.count > 0)
+        flash[:error] = 'Parcelle non supprimee car associations (Pulves, Labours, ...)'
+#        flash[:error] = '(Vente). Parcelle - ' + @parcelle.name + ' ventoparcelles.count = ' + @parcelle.ventoparcelles.count.to_s
     else
-      logger.debug('Parcelle #{@parcelle.id} - #{@parcelle.name} ventoparcelles.count == 0')
+#      logger.debug('(Vente). Parcelle - ' + @parcelle.name + ' ventoparcelles.count = ' + @parcelle.ventoparcelles.count.to_s)
       @parcelle.destroy
       flash[:notice] = 'Parcelle supprimee.'
     end

@@ -65,6 +65,7 @@ class Verif < ActiveRecord::Base
 
     data.tests << data_contrib_lab
     data.tests << data_contrib_pu
+
     
   end
 
