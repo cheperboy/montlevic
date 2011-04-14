@@ -1,6 +1,6 @@
 	<tr>
 		<th id="nom">Benefices</th>
-<% ( @test.Tcols[:ids].length * 2 + 5).times do %>
+<% ( @colonnes.length * 2 + 5).times do %>
 		<td></td>
 <% end %>
 	</tr>
@@ -11,10 +11,10 @@
 		<td></td>
 		<td><%= pretty(@test.Tcols[:benef][:ha]) %></td>
 		<td><%= pretty(@test.Tcols[:benef][:total]) %></td>	
-	<% @test.Tcols[:ids].each do |id| %>
-		<% cout_ha = pretty(@test.Tcols[id][:benef][:ha][:sum]) %>
-		<% cout_total = pretty(@test.Tcols[id][:benef][:total][:sum]) %>
-		<% td_class = odd(@test.Tcols[id][:rang]) %>
+	<% @colonnes.each do |colonne| %>
+		<% cout_ha = pretty(@test.Tcols[colonne.id][:benef][:ha][:sum]) %>
+		<% cout_total = pretty(@test.Tcols[colonne.id][:benef][:total][:sum]) %>
+		<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
 		<td class="<%= td_class %>_subtotal"><%=h cout_ha %></td>
 		<td class="<%= td_class %>_subtotal"><%=h cout_total %></td>
 	<% end %>

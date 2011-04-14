@@ -41,7 +41,25 @@ class Facture < Charge
   validates_presence_of :cout
 
   # ----- Finders -----
-  
+  #test 14 avril 2011
+#FIXME finir cette methode!
+  def self.find_with_order()
+    saison = Saison.find(Setting.find(:first).saison_id)
+    all_factures = saison.factures.find(:all, :order => :cout)
+    ordered = []
+    for facture in all_factures
+      if facture.class == Reportable
+        order << facture
+        all_factures.delete(facture)
+      end
+    end
+    
+    with_scope(:find => { :conditions => ["saison_id = ?", Setting.find(:first).saison_id],
+                          :order => :category_id}) do
+        find(*args)
+      end
+  end
+
   def self.find_by_saison(*args)
 
     with_scope(:find => { :conditions => ["saison_id = ?", Setting.find(:first).saison_id],

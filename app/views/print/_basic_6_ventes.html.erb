@@ -1,6 +1,6 @@
 	<tr>
 		<th id="nom">Ventes</th>
-<% ( @test.Tcols[:ids].length * 2 + 5).times do %>
+<% ( @colonnes.length * 2 + 5).times do %>
 		<td></td>
 <% end %>
 	</tr>	
@@ -18,10 +18,10 @@
 			<td><%= pretty(dep[:ha]) %></td>
 			<td><%= print_popup(pretty(dep[:total]), "@test.Tventes[vente.id][:total]") %></td>
 		
-		<% @test.Tcols[:ids].each do |id| %>
-			<% cout_ha = pretty(dep[id][:ha]) %>
-			<% cout_total = pretty(dep[id][:total]) %>
-			<% td_class = odd(@test.Tcols[id][:rang]) %>
+		<% @colonnes.each do |colonne| %>
+			<% cout_ha = pretty(dep[colonne.id][:ha]) %>
+			<% cout_total = pretty(dep[colonne.id][:total]) %>
+			<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
 			<td class="<%= td_class %>"><%=h cout_ha %></td>
 			<td class="<%= td_class %>"><%=h cout_total %></td>
 		<% end %>
@@ -35,10 +35,10 @@
 		<td></td>
 		<td><%= pretty(@test.Tventes[:ha][:sum]) %></td>
 		<td><%= pretty(@test.Tventes[:total][:sum]) %></td>	
-	<% @test.Tcols[:ids].each do |id| %>
-		<% cout_ha = pretty(@test.Tcols[id][:ventes][:ha][:sum]) %>
-		<% cout_total = pretty(@test.Tcols[id][:ventes][:total][:sum]) %>
-		<% td_class = odd(@test.Tcols[id][:rang]) %>
+	<% @colonnes.each do |colonne| %>
+		<% cout_ha = pretty(@test.Tcols[colonne.id][:ventes][:ha][:sum]) %>
+		<% cout_total = pretty(@test.Tcols[colonne.id][:ventes][:total][:sum]) %>
+		<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
 		<td class="<%= td_class %>_subtotal"><%=h cout_ha %></td>
 		<td class="<%= td_class %>_subtotal"><%=h cout_total %></td>
 	<% end %>

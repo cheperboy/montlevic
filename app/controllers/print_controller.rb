@@ -28,14 +28,11 @@ class PrintController < ApplicationController
   end
 
   def parcelles
-#    WORKING : dans la vue gerer 2 cas 
-#    1- @labour est du type [] et @labours.size >> 0
-#    2- @labour est du type Labour
-#    3- @labour == nil
     @saison = Saison.find(session[:current_saison_id])
+    @colonnes = @saison.parcelles
     @labours = @saison.labours
-    @pulves = @saison.pulves.find(:first)
-    @factures = @saison.factures.find(:first, :order => :cout)
+    @pulves = @saison.pulves
+    @factures = @saison.factures.find(:all, :order => :cout)
     @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
 
@@ -53,37 +50,44 @@ class PrintController < ApplicationController
   end  
   
   def zones
-    @labours = Labour.find_by_saison(:all)
-    @pulves = Pulve.find_by_saison(:all)
-    @factures = Facture.find_by_saison(:all, :order => "category_id")
-    @ventes = Vente.find_by_saison(:all, :order => "category_id")
+    @saison = Saison.find(session[:current_saison_id])
+    @colonnes = Zone.all
+    @labours = @saison.labours
+    @pulves = @saison.pulves
+    @factures = @saison.factures.find(:all, :order => :cout)
+    @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
 
-    @test = Print.new
     respond_to do |format|
-      unless @test.calculate(Zone).nil?
-        format.html
+      @test = Print.new(Zone)
+      unless @test.nil?
+        @test.calculate
+        format.html    
       else
         @display = 0
-        flash[:error] = "l'affichage par zones n'est pas possible pour cette saison"
-        format.html 
+        flash[:error] = "l'affichage par zone n'est pas possible pour cette saison"
+        format.html
       end
     end    
   end  
   
   def typecultures
-    @labours = Labour.find_by_saison(:all)
-    @pulves = Pulve.find_by_saison(:all)
-    @factures = Facture.find_by_saison(:all, :order => "category_id")
-    @ventes = Vente.find_by_saison(:all, :order => "category_id")
+    @saison = Saison.find(session[:current_saison_id])
+    @colonnes = Typeculture.find_for_saison()
+    @labours = @saison.labours
+    @pulves = @saison.pulves
+    @factures = @saison.factures.find(:all, :order => :cout)
+    @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
-    @test = Print.new
+
     respond_to do |format|
-      unless @test.calculate(Typeculture).nil?
-        format.html
+      @test = Print.new(Typeculture)
+      unless @test.nil?
+        @test.calculate
+        format.html    
       else
         @display = 0
-        flash[:error] = "l'affichage par type de culture n'est pas possible"
+        flash[:error] = "l'affichage par type de culture n'est pas possible pour cette saison"
         format.html
       end
     end    

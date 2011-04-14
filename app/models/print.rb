@@ -61,7 +61,7 @@ class Print < ActiveRecord::Base
     unless @cols.nil?
       types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
       rang = 0
-      
+
     #Init Hparcelles 
       self.Tcols = {}
       self.Tcols[:ids] = []

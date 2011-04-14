@@ -1,11 +1,11 @@
 	<tr>
 		<th><%= link_to_function "Labours", "$('list_labours').toggle();" %></th>
-<% ( @test.Tcols[:ids].length * 2 + 5).times do %>
+<% ( @colonnes.length * 2 + 5).times do %>
 		<td></td>
 <% end %>
 	</tr>
 
-<% if (@labours.size > 0) %>
+<% unless (((@labours.class == Array) && @labours.size == 0) || (@labours.nil?)) %>
 	<% @labours.each do |labour| %>
 		<% dep = @test.Tlabours[labour.id] %>
 					 
@@ -23,12 +23,12 @@
 				<%= pretty(dep[:surface_total]) %> ha
 			</td>
 			<td><%= pretty(dep[:ha]) %></td>
-			<td><%= print_popup(pretty(dep[:total]), "@Tlabours[labour.id][:total]") %></td>
+			<td><%= print_popup(pretty(dep[:total]), "@test.Tlabours[labour.id][:total]") %></td>
 		
-		<% @test.Tcols[:ids].each do |id| %>
-			<% cout_ha = pretty(dep[id][:ha]) %>
-			<% cout_total = pretty(dep[id][:total]) %>
-			<% td_class = odd(@test.Tcols[id][:rang]) %>
+		<% @colonnes.each do |colonne| %>
+			<% cout_ha = pretty(dep[colonne.id][:ha]) %>
+			<% cout_total = pretty(dep[colonne.id][:total]) %>
+			<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
 			<td class="<%= td_class %>"><%=h cout_ha %></td>
 			<td class="<%= td_class %>"><%=h cout_total %></td>
 		<% end %>
@@ -36,16 +36,16 @@
 	<% end %>
 
 	<tr class="total">
-		<td></td>	
 		<td id="nom">Total Labour:	</td>
+		<td></td>	
 		<td></td>	
 		<td></td>
 		<td><%= pretty(@test.Tlabours[:ha][:sum]) %></td>
 		<td><%= pretty(@test.Tlabours[:total][:sum]) %></td>	
-	<% @test.Tcols[:ids].each do |id| %>
-		<% cout_ha = pretty(@test.Tcols[id][:labours][:ha][:sum]) %>
-		<% cout_total = pretty(@test.Tcols[id][:labours][:total][:sum]) %>
-		<% td_class = odd(@test.Tcols[id][:rang]) %>
+	<% @colonnes.each do |colonne| %>
+		<% cout_ha = pretty(@test.Tcols[colonne.id][:labours][:ha][:sum]) %>
+		<% cout_total = pretty(@test.Tcols[colonne.id][:labours][:total][:sum]) %>
+		<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
 		<td class="<%= td_class %>_subtotal"><%=h cout_ha %></td>
 		<td class="<%= td_class %>_subtotal"><%=h cout_total %></td>
 	<% end %>
