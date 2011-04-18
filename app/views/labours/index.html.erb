@@ -1,5 +1,11 @@
 <h1>Liste des labours</h1>
+<% headers = [['id', 'id'], ['name', 'nom'], ['category', 'category']] %>	
+<% elements = @labours %>
+<%= draw_table(headers, elements) %>
 
+<br>
+<br>
+		
 <table>
   <tr>
   </tr>
@@ -19,3 +25,4 @@
 <br />
 
 <%= link_to 'New labour', new_labour_path %>
+

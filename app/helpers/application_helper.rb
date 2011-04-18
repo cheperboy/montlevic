@@ -5,6 +5,34 @@ module ApplicationHelper
     return '€'
   end
   
+  def draw_table(headers, elements)
+    out = ''
+    size = headers.count
+    out += '<table class="table_verif">'
+    #Head
+    out += '<tr>'
+    headers.each do |key, value|
+      out += '<td>' + key.to_s + ' => ' + value.to_s + '</td>'    
+    end
+    
+    #Elements
+    elements.each do |element|
+      out += '<tr>'    
+      headers.each do |key, value|
+        out += '<td>'
+        unless element.send(key.to_sym).class == 'category'
+          out += element.send(key.to_sym).to_s
+        else
+          out += element.send(key.to_sym).name.to_s
+        end
+        out += '</td>'
+      end
+      out += '</tr>'    
+    end
+    
+    out += '</table>'
+  end  
+  
   def tr_text(key, value, unit=nil)
     out = ''
     out += '<tr><td class="td-left">'

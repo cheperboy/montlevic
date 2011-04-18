@@ -16,5 +16,5 @@ config.action_controller.perform_caching             = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
-#mat: Logger outputted in the console
-config.log_level = :error
+# mat: Logger outputted in the console
+# config.log_level = :error

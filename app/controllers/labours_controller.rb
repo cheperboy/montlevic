@@ -3,7 +3,13 @@ class LaboursController < ApplicationController
   # GET /labours.xml
   def index
     @labours = Labour.find_by_saison(:all)
-
+    # @lab_elements = []
+    # @labours.each do |labour|
+    #   @lab_elements << labour
+    # end  
+    # @lab_elements.each do |labour|
+    #   labour.toto = 1
+    # end  
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @labours }
