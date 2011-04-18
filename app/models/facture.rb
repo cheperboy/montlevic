@@ -46,18 +46,27 @@ class Facture < Charge
   def self.find_with_order()
     saison = Saison.find(Setting.find(:first).saison_id)
     all_factures = saison.factures.find(:all, :order => :cout)
-    ordered = []
-    for facture in all_factures
-      if facture.class == Reportable
-        order << facture
-        all_factures.delete(facture)
+    order= []
+    reportable_todo = true
+    report_todo = true
+    while ((all_factures.size > 0) && (reportable_todo = true))
+      for facture in all_factures
+        if ((facture.class == Reportable))    
+          reportable = facture
+          order << reportable
+          all_factures.delete(reportable)
+          if reportable.reports.size > 0
+            for report in all_factures
+              if ((report.class == Report) && (report.reportable_id == reportable.id))
+                order << report
+                all_factures.delete(report)
+              end
+            end
+          end
+        end
       end
     end
-    
-    with_scope(:find => { :conditions => ["saison_id = ?", Setting.find(:first).saison_id],
-                          :order => :category_id}) do
-        find(*args)
-      end
+    return order
   end
 
   def self.find_by_saison(*args)

@@ -12,6 +12,7 @@
     <td><%= parcelle.surface %></td>
 	
 	<% if admin? %>
+	    <td><%= link_to 'Voir', parcelle %></td>
 	    <td><%= link_to 'Modifier', edit_parcelle_path(parcelle) %></td>
 	    <td><%= link_to 'Supprimer', parcelle, :confirm => 'Are you sure?', :method => :delete %></td>
 	<% end %>

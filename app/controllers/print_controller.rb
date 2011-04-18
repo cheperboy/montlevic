@@ -32,7 +32,7 @@ class PrintController < ApplicationController
     @colonnes = @saison.parcelles
     @labours = @saison.labours
     @pulves = @saison.pulves
-    @factures = @saison.factures.find(:all, :order => :cout)
+    @factures = @saison.factures
     @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
 
