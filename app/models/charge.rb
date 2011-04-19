@@ -14,6 +14,24 @@ class Charge < ActiveRecord::Base
     return true
   end
 
+
+  # ----- Getters -----
+
+  def print_date
+    unless self.date.nil? || self.date.blank?
+      out = "#{self.date.day}/#{self.date.month}/#{self.date.year}"
+      return out
+    end
+  end
+
+  def category_name
+    self.category.name
+  end
+
+  def user_name
+    self.user.name
+  end
+
   # METHODES partagées par toutes les dépenses, factures, pulve, ...
 
   def self.find_by_saison(*args)

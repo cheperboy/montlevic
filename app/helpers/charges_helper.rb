@@ -26,13 +26,13 @@ module ChargesHelper
     end
   end
 
-  def OLD_display_adu(id)
-    star = Facture.find(id).adu
-    if (star == 1)
-      return image_tag('star-green.jpg')
-    else
-      return image_tag('star-white2.jpg')
-    end
-  end
+  # def OLD_display_adu(id)
+  #   star = Facture.find(id).adu
+  #   if (star == 1)
+  #     return image_tag('star-green.jpg')
+  #   else
+  #     return image_tag('star-white2.jpg')
+  #   end
+  # end
 
 end

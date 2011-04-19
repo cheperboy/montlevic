@@ -1,23 +1,37 @@
 class Application < ActiveRecord::Base
 
-  
-  
   SAISON = Setting.find(1).saison_id
-#  SAISON_NAME = Setting.find(1).saison.name
 
-#  def factype(object)
-#    unless object.factype.nil?  
-#      id = object.factype_id
-#    end
-#  end
-#  
-#  def factype_name(object)
-#    for type in Factype::TYPES
-#      if type_id == object.id
-#        return type.name
-#      end
-#    end
-#  end
+  LABOUR_HEAD = [
+  	['id', 'id', ''], 
+  	['category_name', 'categorie', ''], 
+  	['user_name', 'Presta', ''], 
+  	['name', 'nom', ''], 
+  	['cout_ha_passage', 'Cout Ha', '€/Ha'], 
+  	['print_date', 'date', '']]
+  
+  PULVE_HEAD = [
+  	['id', 'id', ''], 
+  	['category_name', 'categorie', ''], 
+  	['user_name', 'Presta', ''], 
+  	['name', 'nom', ''], 
+  	['cout_ha_passage', 'Cout Ha', '€/Ha'], 
+  	['print_date', 'date', '']]
+
+  FACTURE_HEAD = [
+  	['star', 'star', ''], 
+  	['adu', 'adu', ''], 
+  	['id', 'id', ''], 
+  	['category_name', 'cat', ''], 
+  	['print_factype', 'compta', ''], 
+  	['type', 'type', ''], 
+  	['user_name', 'Presta', ''], 
+  	['name', 'nom', ''], 
+  	['cout', 'Cout', '€'], 
+    # ['ref_client', 'Ref Client, '€'], 
+    # ['ref', 'Ref', '€'], 
+  	['print_date', 'date', '']]
+
   
   # Used in Print.rb
   def get_value_or_blank(var, value)

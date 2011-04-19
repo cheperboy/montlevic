@@ -192,5 +192,13 @@ Putofacture.create(  :facture_id => factureB.id,
                      :pulve_id => pulveB.id,
                      :value => 0)
                       
-
-                      
+for i in 1..30
+  Labour .create( :name => 'Labour '+i.to_s, 
+                  :cout_ha_passage => i+2,
+                  :user => User.find(:first),
+                  :saison => saison,
+                  :date => '2011-01-01',
+                  :desc => "from seeds",
+                  :category => Category.find_by_name('covercrop'))
+end
+                   

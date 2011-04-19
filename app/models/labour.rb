@@ -21,11 +21,17 @@ class Labour < Charge
   validates_associated :labtoparcelles
   validates_associated :labtofactures
 
+
+# ----- Getters -----
+
+
+
 # ----- Methodes -----
 
   def get_cout_ha_avec_reduc
     return (self.get_cout_total_avec_reduc / self.sum_surfaces)
   end
+
 #FIXME avec reduc ok?
   # retourne le cout total de cette charge 
   # moins les contribution des factures associees

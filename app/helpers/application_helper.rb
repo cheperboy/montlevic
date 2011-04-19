@@ -1,38 +1,120 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  HEADER_KEY = 0
+  HEADER_VALUE = 1
+  HEADER_UNIT = 3
+
 
   def euros
     return '€'
   end
   
-  def draw_table(headers, elements)
+  def draw_table(headers, elements, print_stars=false)
+    # if print_stars == true
+    #   do ... end
+    # end
+
     out = ''
-    size = headers.count
-    out += '<table class="table_verif">'
+    head_size = headers.count
+    link_size = 3    
+    out += '<table class="table_list">'
     #Head
     out += '<tr>'
     headers.each do |key, value|
-      out += '<td>' + key.to_s + ' => ' + value.to_s + '</td>'    
+      out += '<td><b>'+ value.to_s.capitalize + '</b></td>'    
     end
+    out += "<td colspan='#{link_size.to_s}'></td>"
     
     #Elements
     elements.each do |element|
-      out += '<tr>'    
-      headers.each do |key, value|
-        out += '<td>'
-        unless element.send(key.to_sym).class == 'category'
-          out += element.send(key.to_sym).to_s
-        else
-          out += element.send(key.to_sym).name.to_s
-        end
-        out += '</td>'
+      # determination de la class du model pour les liens show/edit/delete
+      element_class = element.class.to_s.downcase
+      if (element_class == "debit" ||
+          element_class == "diverse" ||
+          element_class == "reportable")
+          element_class = "facture"  
       end
+      # Premier tr de l'element  
+      out += "<tr class='list-row'>"
+      headers.each do |header|
+        value = element.send(header[HEADER_KEY])
+        #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)
+        if header[0].eql?("star")
+          out += "<td>"
+          out += link_to_star(element.class, element.id, false)
+          out += "</td>"
+        elsif header[0].eql?("adu")
+            out += "<td>"
+            out += link_to_star(element.class, element.id, true)
+            out += "</td>"
+        else  
+          #class css du td : align_right ou align_left
+          td_class = "list-elt-right"
+          if    value.class == String then td_class = "list-elt-left"
+            elsif value.class.eql?(Float) then td_class = "list-elt-right"
+            elsif value.class.eql?(Fixnum) then td_class = "list-elt-right"
+          end
+          out += "<td class='#{td_class}'>"
+          out += "#{element.send(header[0].to_sym).to_s} #{header[2]}"
+          out += '</td>'
+        end
+      end
+      
+      #Liens
+      url = element_class.pluralize
+      id = element.id
+      out += '<td>'+ link_to_show(element_class, element.id) +'</td>'
+      out += '<td>'+ link_to_edit(element_class, element.id) +'</td>'
+      out += '<td>'+ link_to_delete(element_class, element.id) +'</td>'
       out += '</tr>'    
     end
-    
     out += '</table>'
   end  
   
+  def link_to_star(model, id, adu)
+    element = model.find(id)
+    if (adu == true)
+      link_to_remote  display_adu(element.adu), 
+                      :url => { :action => "toggle_adu", :id => element.id } 
+                      #, :update => 'list_facture'
+
+    else
+      link_to_remote  display_star(element.star), 
+                      :url => { :action => "toggle_star", :id => element.id }
+    end
+  end
+
+  def display_star(star)
+    if (star == 1)
+      return image_tag('star-yellow.jpg')
+    else
+      return image_tag('star-white2.jpg')
+    end
+  end
+
+  def display_adu(adu)
+    if (adu == 1)
+      return image_tag('star-green.jpg')
+    else
+      return image_tag('star-white2.jpg')
+    end
+  end
+
+  def link_to_show(modele, id)
+    url = modele.to_s.downcase.pluralize + '/' + id.to_s
+    return (link_to image_tag('img-voir.png'), url)
+  end
+
+  def link_to_edit(modele, id)
+    url = modele.to_s.downcase.pluralize + '/' + id.to_s + '/edit'
+    return (link_to image_tag('img-modif.png'), url)
+  end
+
+  def link_to_delete(modele, id)
+    url = modele.to_s.downcase.pluralize + '/' + id.to_s
+    return (link_to image_tag('img-delete.png'), url, :confirm => 'Are you sure?', :method => :delete)
+  end
+  	
   def tr_text(key, value, unit=nil)
     out = ''
     out += '<tr><td class="td-left">'
@@ -119,35 +201,6 @@ module ApplicationHelper
     out += check_box_tag col 
     out += '</td></tr>'
     return out
-  end
-
-  def link_to_star(model, id, adu)
-    element = model.find(id)
-    if (adu == true)
-      link_to_remote  display_adu(element.adu), 
-                      :url => { :action => "toggle_adu", :id => element.id } 
-                      #, :update => 'list_facture'
-
-    else
-      link_to_remote  display_star(element.star), 
-                      :url => { :action => "toggle_star", :id => element.id }
-    end
-  end
-
-  def display_star(star)
-    if (star == 1)
-      return image_tag('star-yellow.jpg')
-    else
-      return image_tag('star-white2.jpg')
-    end
-  end
-
-  def display_adu(adu)
-    if (adu == 1)
-      return image_tag('star-green.jpg')
-    else
-      return image_tag('star-white2.jpg')
-    end
   end
 
   def observe_fields(fields, frequency, update, url_action)

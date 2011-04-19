@@ -1,4 +1,10 @@
 <% unless @elements.count == 0 %>
+
+<%= draw_table(Application::FACTURE_HEAD, @elements, print_stars=true) %>
+
+<br>
+<br>
+		
 	<table>  
 	  <tr>  	
 	    <td>adu | </td>

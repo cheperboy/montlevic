@@ -117,6 +117,10 @@ class Facture < Charge
 
   # ----- Methodes -----
   
+  def print_factype
+    self.factype.name
+  end
+
   def toggle_star
     self.star = 2
     self.save

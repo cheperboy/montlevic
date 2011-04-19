@@ -1,28 +1,11 @@
 <h1>Liste des labours</h1>
-<% headers = [['id', 'id'], ['name', 'nom'], ['category', 'category']] %>	
-<% elements = @labours %>
-<%= draw_table(headers, elements) %>
 
-<br>
-<br>
-		
-<table>
-  <tr>
-  </tr>
+| <%= link_to 'Nouveau', new_labour_path %> |
 
-<% @labours.each do |labour| %>
-  <tr>
-    <td><%= labour.name %></td>
-    <td><%= labour.category.name %></td>
-    <td><%= labour.user.name %></td>
-    <td><%= link_to 'Details', labour %></td>
-    <td><%= link_to 'Modifier', edit_labour_path(labour) %></td>
-    <td><%= link_to 'Supprimer', labour, :confirm => 'Supprimer le labour ?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<br /><br />
 
-<br />
+<%= draw_table(Application::LABOUR_HEAD, @labours, print_stars=true) %>
 
-<%= link_to 'New labour', new_labour_path %>
+
+
 

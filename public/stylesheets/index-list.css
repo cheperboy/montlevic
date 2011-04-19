@@ -1,3 +1,15 @@
-tr.list-row:hover { background-color: #eecfa1; }
+.table_list tr { 
+ border-width:1px;
+ border-style:solid; 
+ border-color:grey;
+ }
 
-td.list-elt-left { text-align:right; }
+.table_list { border-collapse:collapse }
+
+.table_list tr.list-row:hover { background-color: #eecfa1; }
+
+.table_list td { padding-left: 0.5em; }
+.table_list td { padding-right: 0.5em; }
+
+.table_list td.list-elt-left { text-align:left; }
+.table_list td.list-elt-left { text-align:right; }
