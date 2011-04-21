@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
 
   create_table "factures", :force => true do |t|
     t.integer  "saison_id",     :null => false
+    t.integer  "libelle_id"
     t.integer  "category_id"
     t.integer  "factype_id"
     t.integer  "reportable_id"
@@ -214,6 +215,13 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer  "parcelle_id",   :null => false
     t.integer  "zone_id",       :null => false
     t.float    "value",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "libelles", :force => true do |t|
+    t.string    "name",         :null => false
+    t.string    "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

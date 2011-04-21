@@ -1,6 +1,7 @@
 class Category < ActiveRecord::Base
   
   belongs_to :upcategory
+  # TODO "has_many :depenses" doit etre supprime?
   has_many :depenses
   
   def self.find_by_type(type)

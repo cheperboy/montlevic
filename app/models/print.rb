@@ -153,7 +153,7 @@ class Print < ActiveRecord::Base
           @Tfactures[:total][:sum] = 0 
           @Tfactures[:ha][:sum] = 0 
           
-          for type in @types_facture
+          for type in FACTURE_TYPES
             @Tfactures[:total][type.name] = 0 
             @Tfactures[:ha][type.name] = 0 
           end

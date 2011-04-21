@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :libelles
+
   map.resources :verifs, :collection => { :list_labtofactures => :get,
                                           :delete_labtofacture => :any,
                                           :list_putofactures => :get,
