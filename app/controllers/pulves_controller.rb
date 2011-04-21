@@ -83,4 +83,27 @@ class PulvesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  def toggle_star
+    @obj = Pulve.find(params[:id])
+    if @obj.star != 1
+       @obj.star = 1
+    else
+      @obj.star = 0
+    end
+    if @obj.save
+      render(:layout => false)
+    end
+  end  
+  
+  def toggle_adu
+    @obj = Pulve.find(params[:id])
+    if @obj.adu != 1
+       @obj.adu = 1
+    else
+      @obj.adu = 0
+    end
+    if @obj.save
+      render(:layout => false)
+    end
+  end  
 end

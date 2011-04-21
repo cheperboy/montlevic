@@ -3,6 +3,8 @@ class Application < ActiveRecord::Base
   SAISON = Setting.find(1).saison_id
 
   LABOUR_HEAD = [
+  	['star', 'star', ''], 
+  	['adu', 'adu', ''], 
   	['id', 'id', ''], 
   	['category_name', 'categorie', ''], 
   	['user_name', 'Presta', ''], 
@@ -11,6 +13,8 @@ class Application < ActiveRecord::Base
   	['print_date', 'date', '']]
   
   PULVE_HEAD = [
+  	['star', 'star', ''], 
+  	['adu', 'adu', ''], 
   	['id', 'id', ''], 
   	['category_name', 'categorie', ''], 
   	['user_name', 'Presta', ''], 

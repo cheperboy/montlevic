@@ -62,8 +62,8 @@ fieldset.popup  { background-color: white;}
  border-color: white;
 } 
 
-td.td-right { text-align: left; }
-td.td-left { text-align: right; }
+td.td-right { text-align: right; }
+td.td-left { text-align: left; }
 
 a.tip { 
 	position: relative; 

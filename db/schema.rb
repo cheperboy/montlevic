@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer  "saison_id",   :null => false
     t.integer  "category_id"
     t.integer  "star"
+    t.integer  "adu"
     t.integer  "user_id"
     t.string   "name"
     t.float    "cout"
@@ -80,6 +81,8 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.string   "name",            :null => false
     t.float    "cout_ha_passage"
     t.text     "desc"
+    t.integer  "star",            :limit => 1
+    t.integer  "adu",             :limit => 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -125,6 +128,8 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.float    "prix_littre"
     t.float    "cout_ha_passage"
     t.float    "cout_fixe"
+    t.integer  "star"
+    t.integer  "adu"
     t.text     "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
