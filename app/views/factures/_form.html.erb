@@ -25,8 +25,8 @@
 <%= form_tr_text(f, 'Ref perso', :ref) %>
 <%= form_tr_date(f, 'Date', :date) %>
 <%= form_tr_select(f, 'Prestataire', :user_id, User.find(:all, :order => :name), :id, :name) %>
+<%= form_tr_select(f, 'Classement', :factcat_id, Factcat.find(:all, :order => :name), :id, :name) %>
 <%= form_tr_select(f, 'Categorie', :category_id, Category.find_by_type("facture"), :id, :name) %>
-<%= form_tr_select(f, 'Libelle', :libelle_id, Libelle.find(:all), :id, :name) %>
 <%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype.find(:all, :order => :name), :id, :name) %>
 <%= form_tr_text(f, 'Cout', :cout) %>
 <%= form_tr_check(f, 'Star', :star) %>

@@ -1,14 +1,15 @@
 /* Begin : Table list */
 
-.table_print { border-collapse:collapse }
+/*.table_print { border-collapse:collapse }*/
 
 .table_print td, th, tr { 
  border-width:1px;
  border-style:solid; 
  border-color:grey;
+width: 25em; 
  }
 
-.table_print tr:hover { background-color: #eee; }
+.table_print tr:hover { background-color: #eee; width: 25em; }
 .table_print tr.subtotal { color: green; }
 .table_print tr.total { color: red; }
 .table_print td.td-total { font-weight:700; }
@@ -16,11 +17,12 @@
 
 .table_print td, tr{ text-align: right; }
 
-.table_print th.left{ text-align: left; }
-.table_print td.left{ text-align: left; }
+.table_print th.left{ text-align: left; width: 25em;}
+.table_print td.left{ text-align: left; width: 25em;}
+.table_print td.date{ width: 25em; }
 
-.table_print td.even { background-color: #FFFACD; }
-.table_print td.even-head { background-color: #FFFACD; text-align:left; }
+.table_print td.even { background-color: #FFFACD; width: 25em; }
+.table_print td.even-head { background-color: #FFFACD; text-align:left; width: 25em; }
 .table_print td.even_subtotal { background-color: #eecfa1; }
 
 .table_print td.odd { background-color: #e0eee0; }

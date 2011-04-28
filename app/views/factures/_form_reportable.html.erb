@@ -30,7 +30,6 @@
 	
 	<% collection = Category.find_by_type("facture") %>
 	<%= form_tr_select(f, 'Categorie', :category_id, collection, :id, :name) %>
-	<%= form_tr_select(f, 'Libelle', :libelle_id, Libelle.find(:all), :id, :name) %>
 	
 	<%= form_tr_text(f, 'Cout', :cout) %>
 	

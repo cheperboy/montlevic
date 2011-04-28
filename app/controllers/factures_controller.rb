@@ -123,11 +123,8 @@ class FacturesController < ApplicationController
 
   def create_diverse
     errors = []
-    user = User.find_by_name('divers')
     params[:facture][:cout] = 0
     @facture = Diverse.new(params[:facture])
-    @facture.factype_id = Factype.find_by_name('total').id
-    @facture.user_id = user
        
     respond_to do |format|
       if @facture.save

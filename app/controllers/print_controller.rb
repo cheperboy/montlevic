@@ -10,7 +10,7 @@ class PrintController < ApplicationController
     @pulves = Pulve.find_by_saison(:all)
     @factures = Facture.find_by_saison(:all, :order => "category_id")
     @ventes = Vente.find_by_saison(:all, :order => "category_id")
-    @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
+    @types = Factcat.all
 
     @csv = Print.new
     @csv.init_display
@@ -34,7 +34,7 @@ class PrintController < ApplicationController
     @pulves = @saison.pulves
     @factures = @saison.factures
     @ventes = @saison.ventes.find(:all, :order => "category_id")
-    @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
+    @types = Factcat.all
 
     respond_to do |format|
       @test = Print.new(Parcelle)
@@ -56,7 +56,7 @@ class PrintController < ApplicationController
     @pulves = @saison.pulves
     @factures = @saison.factures.find(:all, :order => :cout)
     @ventes = @saison.ventes.find(:all, :order => "category_id")
-    @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
+    @types = Factcat.all
 
     respond_to do |format|
       @test = Print.new(Zone)
@@ -78,7 +78,7 @@ class PrintController < ApplicationController
     @pulves = @saison.pulves
     @factures = @saison.factures.find(:all, :order => :cout)
     @ventes = @saison.ventes.find(:all, :order => "category_id")
-    @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
+    @types = Factcat.all
 
     respond_to do |format|
       @test = Print.new(Typeculture)

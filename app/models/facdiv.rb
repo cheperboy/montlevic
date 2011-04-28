@@ -1,5 +1,6 @@
 class Facdiv < ActiveRecord::Base
   belongs_to :facture
+  belongs_to :user
 
   validates_presence_of :name
   validates_presence_of :cout

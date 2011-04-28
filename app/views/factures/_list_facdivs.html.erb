@@ -3,6 +3,8 @@
 <% @facture.facdivs.each do |facdiv| %>
   <tr>
     <td><%= facdiv.facture.name %> | </td>
+    <td><%= facdiv.date %> | </td>
+    <td><%= facdiv.user.name %> | </td>
     <td><%= facdiv.name %> | </td>
     <td><%= facdiv.cout %> € | </td>
 

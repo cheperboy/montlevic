@@ -6,10 +6,12 @@ class Facture < Charge
   COLS_LINK =         {1 => true,   2 => true,   3=>true,          4=>true,   5=>true,   6=>true,   7=>true,         8=>true,  9=>true,         10=>false,  11=>true}
   COLS_COUNT = 11
 
-  FACTURE_TYPE_AGRI = 1
-  FACTURE_TYPE_MAISON = 2
-  FACTURE_TYPE_INVESTISSEMENT = 3
-  FACTURE_TYPES = [FACTURE_TYPE_AGRI, FACTURE_TYPE_MAISON, FACTURE_TYPE_INVESTISSEMENT]
+  # FACTURE_TYPE_AGRI = 0
+  # FACTURE_TYPE_MAISON = 1
+  # FACTURE_TYPE_INVESTISSEMENT = 2
+  # FACTURE_TYPES =       [FACTURE_TYPE_AGRI, FACTURE_TYPE_MAISON, FACTURE_TYPE_INVESTISSEMENT]
+  # FACTURE_TYPES_NAME =  ['Agricol', 'FACTURE_TYPE_MAISON', 'FACTURE_TYPE_INVESTISSEMENT']
+  # 
   
   has_many :facdivs
 
@@ -22,8 +24,8 @@ class Facture < Charge
   has_many :parcelles, :through => :factoparcelles
   has_many :factoparcelles, :dependent => :destroy
 
-  belongs_to :libelle
   belongs_to :category
+  belongs_to :factcat
   belongs_to :factype
   belongs_to :user
   belongs_to :saison
@@ -142,6 +144,10 @@ class Facture < Charge
                           name
   end
     
+  def factcat_name
+    self.factcat.name
+  end
+
   def charges?
     return((self.labours.count > 0) || (self.pulves.count > 0))
   end

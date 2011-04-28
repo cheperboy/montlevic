@@ -32,7 +32,7 @@ class PrintsaveController < ApplicationController
     @pulves = Pulve.find_by_saison(:all)
     @factures = Facture.find_by_saison(:all, :order => "category_id")
     @ventes = Vente.find_by_saison(:all, :order => "category_id")
-    @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('facture'))
+    @types = Factcat.all
 
     @test = Print.new
     respond_to do |format|

@@ -1,0 +1,10 @@
+http://ruby.scripting.ca/postgres/
+
+Postgres Adapter:
+gem install ruby-postgres
+
+
+install rails on OSX
+http://hivelogic.com/articles/2005/12/01/ruby_rails_lighttpd_mysql_tiger
+ http://duncandavidson.com/essay/2006/04/portsandbox
+

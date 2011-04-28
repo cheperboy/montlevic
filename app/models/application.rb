@@ -27,6 +27,7 @@ class Application < ActiveRecord::Base
   	['adu', 'adu', ''], 
   	['id', 'id', ''], 
   	['category_name', 'cat', ''], 
+  	['factcat_name', 'class', ''], 
   	['print_factype', 'compta', ''], 
   	['type', 'type', ''], 
   	['user_name', 'Presta', ''], 

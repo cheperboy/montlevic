@@ -4,7 +4,6 @@ module ApplicationHelper
   HEADER_VALUE = 1
   HEADER_UNIT = 3
 
-
   def euros
     return '€'
   end

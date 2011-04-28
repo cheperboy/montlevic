@@ -1,5 +1,14 @@
 
 = EN COURS
+CSS table td width (remettre le border collapse)
+
+->nouveau model pour gari, maison, invest. -->OK
+
+
+
+= A Faire
+- supprimer "Diverse" de Categories (Diverse doit etre traitée comme une facture.)
+
 1- Vente.rb get_cout_ha_parcelle
 
 ->classer les charges en fonction du type, pour l'affichage 

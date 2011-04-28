@@ -11,15 +11,18 @@
 <% form_for @facture, :controller => :factures do |f| -%>
 	<table>
 	<% saisons = Saison.find(:all, :order => :name) %>
-	<%= form_tr_select(f, 'Campagne', :saison_id, saisons, :id, :name,  :selected => current_saison_id) %>
 	<%= form_tr_text(f, 'Nom', :name) %>
 	<%= form_tr_text(f, 'Ref perso', :ref) %>
-	<%= form_tr_date(f, 'Date', :date) %>
 	<%= form_tr_select(f, 'Categorie', :category_id, Category.find_by_type("facture"), :id, :name) %>
-	<%= form_tr_select(f, 'Libelle', :libelle_id, Libelle.find(:all), :id, :name) %>
-	<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype.find(:all), :id, :name) %>
-	<%= form_tr_check(f, 'Star', :star) %>
-	<%= form_tr_check(f, 'ADU', :adu) %>
+	<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype.find(:all, :order => :name), :id, :name) %>
+	<%= form_tr_select(f, 'Classement', :factcat_id, Factcat.find(:all, :order => :name), :id, :name) %>
+	<%= form_tr_select(f, 'Prestataire', :user_id, User.find(:all, :order => :name), :id, :name) %>
+	<tr>
+		<td>Repere : </td>
+		<td><%= f.label :star, "Star : " %><%= f.check_box :star %>
+		 | <%= f.label :adu, "ADU : " %>
+		<%= f.check_box :adu %></td>
+	</tr>
 	<%= form_tr_text_area(f, 'Infos', :desc, :size => "20x2") %>
 	</table>
 	<%= f.submit "Enregistrer" %>

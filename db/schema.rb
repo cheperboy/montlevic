@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.float    "cout"
     t.string   "ref_client"
     t.integer  "ref"
+    t.date     "date"
     t.string   "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -48,8 +49,8 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
 
   create_table "factures", :force => true do |t|
     t.integer  "saison_id",     :null => false
-    t.integer  "libelle_id"
     t.integer  "category_id"
+    t.integer  "factcat_id"
     t.integer  "factype_id"
     t.integer  "reportable_id"
     t.string   "type",          :null => false
@@ -219,11 +220,11 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.datetime "updated_at"
   end
 
-  create_table "libelles", :force => true do |t|
+  create_table "factcats", :force => true do |t|
     t.string    "name",         :null => false
     t.string    "desc"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime  "created_at"
+    t.datetime  "updated_at"
   end
 
 end

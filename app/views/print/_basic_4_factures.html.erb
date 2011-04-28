@@ -40,18 +40,18 @@
 		</tr>
 	<% end %>
 	
-	<!--Sous Total Facture "type" (maison, invest, agri) -->
+	<!--Sous Total Facture "factcat" (maison, invest, agri) -->
 	<% for type in @types %>
 		<tr class="subtotal">
 			<td class="left">Sous-total</td>
 			<td class="left"><b><%= type.name %></b></td>
 			<td></td>
 			<td></td>
-			<td><%= pretty(@test.Tfactures[:ha][type.name]) %></td>
-			<td><%= pretty(@test.Tfactures[:total][type.name]) %></td>	
+			<td><%= pretty(@test.Tfactures[:ha][type.id]) %></td>
+			<td><%= pretty(@test.Tfactures[:total][type.id]) %></td>	
 		<% @colonnes.each do |colonne| %>
-			<% cout_ha = pretty(@test.Tcols[colonne.id][:charges][:ha][type.name]) %>
-			<% cout_total = pretty(@test.Tcols[colonne.id][:charges][:total][type.name]) %>
+			<% cout_ha = pretty(@test.Tcols[colonne.id][:charges][:ha][type.id]) %>
+			<% cout_total = pretty(@test.Tcols[colonne.id][:charges][:total][type.id]) %>
 			<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
 				<td class="<%= td_class %>"><%= cout_ha %></td>
 				<td class="<%= td_class %>"><%= cout_total %> </td>
