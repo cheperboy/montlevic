@@ -6,13 +6,19 @@
 #       This sets the ARCHFLAGS environment variable to your native architecture
 
 development:
-  adapter: mysql
+  # adapter: mysql
+  # encoding: utf8
+  # database: montlevic_development_2
+  # pool: 5
+  # username: root
+  # password: root
+  # socket: /Applications/MAMP/tmp/mysql/mysql.sock
+  adapter: postgresql
   encoding: utf8
-  database: montlevic_development_2
+  database: comptagri
   pool: 5
-  username: root
-  password: root
-  socket: /Applications/MAMP/tmp/mysql/mysql.sock
+  username: postgres
+  password: picasso
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
