@@ -20,8 +20,9 @@ matthieu@OSX:~> su -l postgressu -l postgres
 postgres@OSX:~> /usr/local/bin/initdb -D /usr/local/pgsql/data
 ou bien "/usr/local/pgsql/bin/initdb:"
 
-lien B
-installation Gem PG:
+
+6- lien B
+installation de la gem postgres
 --------------------------
 debut history:
 ---------------------------

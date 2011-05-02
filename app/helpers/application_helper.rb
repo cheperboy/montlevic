@@ -122,19 +122,27 @@ module ApplicationHelper
     out += '<td class="td-right">'
     out += value.to_s
     if unit
-      out += ' ' + unit
+      out += ' ' + unit.to_s
     end
     out += '</td></tr>'
     return out
   end
 
-  def form_tr_text(form, name, col)
+
+  def form_tr_text(form, name, col, options=nil)
     out = ''
     out += '<tr><td>'
     out += form.label col, name
     out += ' : </td>'
     out += '<td>'
-    out += form.text_field col.to_sym
+    if options && options[:size]
+      out += form.text_field col.to_sym, :size => options[:size].to_s
+    else
+      out += form.text_field col.to_sym
+    end
+    if options && options[:unit]
+      out += ' ' + options[:unit]
+    end
     out += '</td></tr>'
     return out
   end

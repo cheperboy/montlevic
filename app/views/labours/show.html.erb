@@ -21,6 +21,10 @@
 		<td>Cout total : </td>
 		<td><%=h @labour.get_cout_total %> €</td>
 	</tr>
+	<tr>
+		<td>Description : </td>
+		<td><p><%=h @labour.desc %></p></td>
+	</tr>
 </table>
 
 <%- if @labour.labtoparcelles.length > 0 -%>

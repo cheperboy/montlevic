@@ -7,8 +7,7 @@ Category.delete_all
 upcategories = Upcategory.create([{ :name => 'facture'}, 
 { :name => 'pulve' }, 
 { :name => 'labour' },
-{ :name => 'vente' },
-{ :name => 'diverse' }])
+{ :name => 'vente' }])
 
 pulve = Upcategory.find_by_name('pulve')
 facture = Upcategory.find_by_name('facture')
@@ -17,12 +16,12 @@ vente = Upcategory.find_by_name('vente')
 diverse = Upcategory.find_by_name('diverse')
 
 categories = Category.create([
-  { :name => 'frais generaux', :upcategory => facture}, 
-  { :name => 'produits phyto', :upcategory => facture}, 
-  { :name => 'semences', :upcategory => facture}, 
-  { :name => 'mecanique', :upcategory => facture}, 
-  { :name => 'batiments', :upcategory => facture}, 
-  { :name => 'deplacement', :upcategory => facture}, 
+{ :name => 'frais generaux', :upcategory => facture}, 
+{ :name => 'produits phyto', :upcategory => facture}, 
+{ :name => 'semences', :upcategory => facture}, 
+{ :name => 'mecanique', :upcategory => facture}, 
+{ :name => 'batiments', :upcategory => facture}, 
+{ :name => 'deplacement', :upcategory => facture}, 
 { :name => 'frais de gestion', :upcategory => facture },
 { :name => 'fongicide', :upcategory => pulve },
 { :name => 'herbicide', :upcategory => pulve },
@@ -36,11 +35,12 @@ categories = Category.create([
 { :name => 'bricolage', :upcategory => diverse },
 { :name => 'autres', :upcategory => diverse }])
 
-factcats = Factcat.create([{ :name => 'agri'}, 
-{ :name => 'maison' }, 
-{ :name => 'invest' }])
+factcats = Factcat.create([
+  { :name => 'agri'}, 
+  { :name => 'maison' }, 
+  { :name => 'invest' }])
 
-saison = Saison.create(:name => "Saison-install")
+saison = Saison.create(:name => "Saison-install", :start_year => "2010")
 setting = Setting.create( :saison => saison, :value_parcelle => false, :detail_desc => false, :detail_ref => false)
 
 typecultures = Typeculture.create([
@@ -139,16 +139,16 @@ factureA = Debit.create(:name => 'Debit 1',
                           :desc => "from seeds",
                           :category => Category.find_by_name('deplacement'))
 
-factureB = Debit.create(:name => 'Debit 2', 
-                          :cout => 1000, 
-                          :user => User.find(:first),
-                          :factype => Factype.find_by_name("diff"),
-                          :factcat => Factcat.find_by_name("maison"),
-                          :saison => saison,
-                          :date => '2011-01-01',
-                          :desc => "from seeds",
-                          :category => Category.find_by_name('deplacement'))
-
+# factureB = Debit.create(:name => 'Debit 2', 
+#                           :cout => 1000, 
+#                           :user => User.find(:first),
+#                           :factype => Factype.find_by_name("diff"),
+#                           :factcat => Factcat.find_by_name("maison"),
+#                           :saison => saison,
+#                           :date => '2011-01-01',
+#                           :desc => "from seeds",
+#                           :category => Category.find_by_name('deplacement'))
+# 
 #labourA = Labour.create(  :name => 'Labour 1', 
 #                          :cout_ha_passage => 10, 
 #                          :user => User.find(:first),
@@ -173,43 +173,32 @@ factureB = Debit.create(:name => 'Debit 2',
 #                      :labour_id => labourB.id,
 #                      :value => 11)
 
-pulveA = Pulve.create(  :name => 'Pulve 1', 
-                        :dosage => 0,
-                        :prix_littre => 0,
-                        :cout_ha_passage => 1,
-                        :cout_fixe => 0,
-                        :user => User.find(:first),
-                        :saison => saison,
-                        :date => '2011-01-01',
-                        :desc => "from seeds",
-                        :category => Category.find_by_name('herbicide'))
-
-pulveB = Pulve.create(  :name => 'Pulve 2', 
-                        :dosage => 0,
-                        :prix_littre => 0,
-                        :cout_ha_passage => 0,
-                        :cout_fixe => 10,
-                        :user => User.find(:first),
-                        :saison => saison,
-                        :date => '2011-01-01',
-                        :desc => "from seeds",
-                        :category => Category.find_by_name('glyphosate'))
-
-Putofacture.create(  :facture_id => factureA.id,
-                     :pulve_id => pulveA.id,
-                     :value => 0)
-                      
-Putofacture.create(  :facture_id => factureB.id,
-                     :pulve_id => pulveB.id,
-                     :value => 0)
-                      
-for i in 1..30
-  Labour .create( :name => 'Labour '+i.to_s, 
-                  :cout_ha_passage => i+2,
-                  :user => User.find(:first),
-                  :saison => saison,
-                  :date => '2011-01-01',
-                  :desc => "from seeds",
-                  :category => Category.find_by_name('covercrop'))
-end
-                   
+# pulveA = Pulve.create(  :name => 'Pulve 1', 
+#                         :dosage => 0,
+#                         :prix_littre => 0,
+#                         :cout_ha_passage => 1,
+#                         :cout_fixe => 0,
+#                         :user => User.find(:first),
+#                         :saison => saison,
+#                         :date => '2011-01-01',
+#                         :desc => "from seeds",
+#                         :category => Category.find_by_name('herbicide'))
+# 
+# pulveB = Pulve.create(  :name => 'Pulve 2', 
+#                         :dosage => 0,
+#                         :prix_littre => 0,
+#                         :cout_ha_passage => 0,
+#                         :cout_fixe => 10,
+#                         :user => User.find(:first),
+#                         :saison => saison,
+#                         :date => '2011-01-01',
+#                         :desc => "from seeds",
+#                         :category => Category.find_by_name('glyphosate'))
+# 
+# Putofacture.create(  :facture_id => factureA.id,
+#                      :pulve_id => pulveA.id,
+#                      :value => 0)
+#                       
+# Putofacture.create(  :facture_id => factureB.id,
+#                      :pulve_id => pulveB.id,
+#                      :value => 0)    

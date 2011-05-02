@@ -32,6 +32,7 @@
 		<td><%= @labour.get_cout_total %></td>
 	</tr>
 <% end %>
+<%= form_tr_text_area(labour_form, 'Infos', :desc, :size => "20x1") %>
 </table>
 
 <br>
@@ -45,7 +46,7 @@
 	<tr>
 		<td><%= labour_form.label :cout_ha_passage, "Cout du passage : " %></td>
 		<td><%= labour_form.text_field :cout_ha_passage, :size => 4 %>  euros/Ha</td>
-	</tr>
+	</tr>	
 	</table>
 </fieldset>
 <br>

@@ -2,13 +2,10 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
 
-Upcategory.delete_all
-Category.delete_all
 upcategories = Upcategory.create([{ :name => 'facture'}, 
 { :name => 'pulve' }, 
 { :name => 'labour' },
-{ :name => 'vente' },
-{ :name => 'diverse' }])
+{ :name => 'vente' }])
 
 pulve = Upcategory.find_by_name('pulve')
 facture = Upcategory.find_by_name('facture')
@@ -17,9 +14,13 @@ vente = Upcategory.find_by_name('vente')
 diverse = Upcategory.find_by_name('diverse')
 
 categories = Category.create([
-{ :name => 'agri', :upcategory => facture}, 
-{ :name => 'maison', :upcategory => facture }, 
-{ :name => 'investissement', :upcategory => facture },
+{ :name => 'frais generaux', :upcategory => facture}, 
+{ :name => 'produits phyto', :upcategory => facture}, 
+{ :name => 'semences', :upcategory => facture}, 
+{ :name => 'mecanique', :upcategory => facture}, 
+{ :name => 'batiments', :upcategory => facture}, 
+{ :name => 'deplacement', :upcategory => facture}, 
+{ :name => 'frais de gestion', :upcategory => facture },
 { :name => 'fongicide', :upcategory => pulve },
 { :name => 'herbicide', :upcategory => pulve },
 { :name => 'glyphosate', :upcategory => pulve },
@@ -31,6 +32,10 @@ categories = Category.create([
 { :name => 'essence voiture', :upcategory => diverse },
 { :name => 'bricolage', :upcategory => diverse },
 { :name => 'autres', :upcategory => diverse }])
+
+factcats = Factcat.create([{ :name => 'agri'}, 
+{ :name => 'maison' }, 
+{ :name => 'invest' }])
 
 saison = Saison.create(:name => "Saison-install")
 setting = Setting.create( :saison => saison, :value_parcelle => false, :detail_desc => false, :detail_ref => false)
@@ -108,7 +113,8 @@ users = User.create([
 {:name => "La Poste"},
 {:name => "Brico Depot"},
 {:name => "divers"},
-{:name => "Bricomarche"}
+{:name => "Bricomarche"},
+{:name => "Aucun"}
 ])
 
 myuser = Myuser.create([
@@ -124,19 +130,21 @@ factureA = Debit.create(:name => 'Debit 1',
                           :cout => 1000, 
                           :user => User.find(:first),
                           :factype => Factype.find_by_name("diff"),
+                          :factcat => Factcat.find_by_name("agri"),
                           :saison => saison,
                           :date => '2011-01-01',
                           :desc => "from seeds",
-                          :category => Category.find_by_name('agri'))
+                          :category => Category.find_by_name('deplacement'))
 
 factureB = Debit.create(:name => 'Debit 2', 
                           :cout => 1000, 
                           :user => User.find(:first),
                           :factype => Factype.find_by_name("diff"),
+                          :factcat => Factcat.find_by_name("maison"),
                           :saison => saison,
                           :date => '2011-01-01',
                           :desc => "from seeds",
-                          :category => Category.find_by_name('agri'))
+                          :category => Category.find_by_name('deplacement'))
 
 #labourA = Labour.create(  :name => 'Labour 1', 
 #                          :cout_ha_passage => 10, 
@@ -192,5 +200,13 @@ Putofacture.create(  :facture_id => factureB.id,
                      :pulve_id => pulveB.id,
                      :value => 0)
                       
-
-                      
+for i in 1..3
+  Labour .create( :name => 'Labour '+i.to_s, 
+                  :cout_ha_passage => i+2,
+                  :user => User.find(:first),
+                  :saison => saison,
+                  :date => '2011-01-01',
+                  :desc => "from seeds",
+                  :category => Category.find_by_name('covercrop'))
+end
+                   
