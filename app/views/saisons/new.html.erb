@@ -3,10 +3,10 @@
 <% form_for(@saison) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
+<table>
+	<%= form_tr_text(f, 'Nom', :name) %>
+	<%= form_tr_text(f, 'Date', :year) %>
+</table>
 
   <p>
     <%= f.submit 'Create' %>

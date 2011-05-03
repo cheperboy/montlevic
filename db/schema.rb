@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
 
   create_table "saisons", :force => true do |t|
     t.string  "name", :null => false
-    t.string  "start_year"
+    t.string  "year"
     t.text    "desc"
   end
 

@@ -1,7 +1,11 @@
 <p>
-  <b>Name:</b>
+  <b>Nom:</b>
   <%=h @saison.name %>
 </p>
+<p>
+  <b>Annee:</b>
+  <%=h @saison.year.to_s %>
+</p>
 
-<%= link_to 'Edit', edit_saison_path(@saison) %> |
-<%= link_to 'Back', saisons_path %>
+<%= link_to 'Modifier', edit_saison_path(@saison) %> |
+<%= link_to 'Retour', saisons_path %>

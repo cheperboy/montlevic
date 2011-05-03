@@ -119,7 +119,7 @@ module ApplicationHelper
     out += '<tr><td class="td-left">'
     out += key.to_s
     out += ' : </td>'
-    out += '<td class="td-right">'
+    out += '<td class="td-left">'
     out += value.to_s
     if unit
       out += ' ' + unit.to_s
@@ -130,19 +130,21 @@ module ApplicationHelper
 
 
   def form_tr_text(form, name, col, options=nil)
+    value = ''
+    size = 25
+    unit = ''
+    if options
+      size = options[:size] if options[:size]
+      value = options[:value].to_s  if options[:value]
+      unit = ' ' + options[:unit].to_s  if options[:unit]
+    end
     out = ''
     out += '<tr><td>'
     out += form.label col, name
     out += ' : </td>'
-    out += '<td>'
-    if options && options[:size]
-      out += form.text_field col.to_sym, :size => options[:size].to_s
-    else
-      out += form.text_field col.to_sym
-    end
-    if options && options[:unit]
-      out += ' ' + options[:unit]
-    end
+    out += '<td class="td-left">'
+    out += form.text_field col.to_sym, :value => value, :size => size
+    out += unit
     out += '</td></tr>'
     return out
   end
@@ -152,7 +154,7 @@ module ApplicationHelper
     out += '<tr><td>'
     out += form.label col, name
     out += ' : </td>'
-    out += '<td>'
+    out += '<td class="td-left">'
     if options
       out += form.text_area col, :size => options[:size]
     else
@@ -162,13 +164,17 @@ module ApplicationHelper
     return out
   end
   
-  def form_tr_date(form, name, col)
+  def form_tr_date(form, name, col, options=nil)
+    # start_year = 1999
+    # if options && options[:start_year]
+    #   start_year = options[:start_year]
+    # end
     out = ''
     out += '<tr><td>'
     out += form.label col.to_sym, name
     out += ' : </td>'
-    out += '<td>'
-    out += form.date_select(col.to_sym, :start_year => 2008, :order => [:day, :month, :year]) 
+    out += '<td class="td-left">'
+    out += form.date_select(col.to_sym, :start_year => 2010, :order => [:day, :month, :year]) 
     out += '</td></tr>'
     return out
   end
@@ -178,7 +184,7 @@ module ApplicationHelper
     out += '<tr><td>'
     out += form.label col.to_sym, name
     out += ' : </td>'
-    out += '<td>'
+    out += '<td class="td-left">'
     unless options.nil?
       out += form.collection_select(col, collection, id, display, :selected => options[:selected]) 
     else

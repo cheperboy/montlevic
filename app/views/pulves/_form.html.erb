@@ -11,10 +11,19 @@
 	<%= "var putofacture='#{generate_template(pulve_form, :putofactures)}'" %>
 <% end -%>
 
+<% unless User.find_by_name('Trochet').nil? %>
+	<% selected = User.find_by_name('Trochet').id %>
+<% end %>
+
 <table>
 	<%= form_tr_text(pulve_form, 'Nom', :name) %>
-	<%= form_tr_date(pulve_form, 'Date', :date) %>
-	<%= form_tr_select(pulve_form, 'Prestataire', :user_id, User.find(:all, :order => :name), :id, :name) %>
+	<%= form_tr_date(pulve_form, 'Date', :date ) %>
+	<%= form_tr_select(pulve_form, 'Prestataire', 
+						:user_id, 
+						User.find(:all, :order => :name), 
+						:id, :name, 
+						:selected => selected) %>
+	<%= form_tr_select(pulve_form, 'Categorie', :category_id, Category.find_by_type("pulve"), :id, :name) %>
 	<%= form_tr_text_area(pulve_form, 'Infos', :desc, :size => "20x1") %>	
 
 <% if @pulve.cout_ha_passage %>
@@ -29,17 +38,16 @@
 <fieldset>
   <legend>Passage</legend>
 	<table>
-		<%= form_tr_text(pulve_form, 'Cout du passage', :cout_ha_passage, :unit => "euros/Ha", :size => 5) %>
+		<%= form_tr_text(pulve_form, 'Cout du passage', :cout_ha_passage, :unit => "€/Ha", :value => 0, :size => 5) %>
 	</table>
 </fieldset>
 <br>
 <fieldset>
   <legend>Produit</legend>
 	<table>
-	<%= form_tr_select(pulve_form, 'Categorie', :category_id, Category.find_by_type("pulve"), :id, :name) %>
-	<%= form_tr_text(pulve_form, 'Cout du littre', :prix_littre, :unit => '€/L', :size => 4) %>
-	<%= form_tr_text(pulve_form, 'Dosage', :dosage, :unit => 'L/Ha', :size => 4) %>
-	<%= form_tr_text(pulve_form, 'Cout fixe', :cout_fixe, :unit => '€', :size => 4) %>
+	<%= form_tr_text(pulve_form, 'Cout du littre', :prix_littre, :unit => '€/L', :value => 0, :size => 4) %>
+	<%= form_tr_text(pulve_form, 'Dosage', :dosage, :unit => 'L/Ha', :value => 0, :size => 4) %>
+	<%= form_tr_text(pulve_form, 'Cout fixe', :cout_fixe, :unit => '€', :value => 0, :size => 4) %>
 	</table>
 </fieldset>
 <br>

@@ -40,7 +40,7 @@ factcats = Factcat.create([
   { :name => 'maison' }, 
   { :name => 'invest' }])
 
-saison = Saison.create(:name => "Saison-install", :start_year => "2010")
+saison = Saison.create(:name => "Saison-install", :year => "2010")
 setting = Setting.create( :saison => saison, :value_parcelle => false, :detail_desc => false, :detail_ref => false)
 
 typecultures = Typeculture.create([

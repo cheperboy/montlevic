@@ -12,19 +12,20 @@
 	<%= "var labtofacture='#{generate_template(labour_form, :labtofactures)}'" %>
 <% end -%>
 
+<% unless User.find_by_name('Trochet').nil? %>
+	<% selected = User.find_by_name('Trochet').id %>
+<% end %>
+
 <table>
-	<tr>
-		<td><%= labour_form.label :name, "Nom : " %></td>
-		<td><%= labour_form.text_field :name %></td>
-	</tr>
-	<tr>
-		<td><%= labour_form.label :date, "Date : " %></td>
-		<td><%= labour_form.date_select(:date, :start_year => 2008, :order => [:day, :month, :year]) %></td>
-	</tr>
-	<tr>
-		<td><%= labour_form.label :user_id, "Prestataire : " %></td>
-		<td><%= labour_form.collection_select(:user_id, User.find(:all), :id, :name ) %></td>
-	</tr>
+	<%= form_tr_text(labour_form, 'Nom', :name) %>
+	<%= form_tr_date(labour_form, 'Date', :date ) %>
+	<%= form_tr_select(labour_form, 'Prestataire', 
+						:user_id, 
+						User.find(:all, :order => :name), 
+						:id, :name, 
+						:selected => selected) %>
+	<%= form_tr_select(labour_form, 'Categorie', :category_id, Category.find_by_type("labour"), :id, :name) %>
+	<%= form_tr_text_area(labour_form, 'Infos', :desc, :size => "20x1") %>	
 	
 <% if @labour.cout_ha_passage %>
 	<tr>
@@ -32,21 +33,13 @@
 		<td><%= @labour.get_cout_total %></td>
 	</tr>
 <% end %>
-<%= form_tr_text_area(labour_form, 'Infos', :desc, :size => "20x1") %>
 </table>
 
 <br>
 <fieldset>
   <legend>Passage</legend>
 	<table>
-	<tr>
-		<td><%= labour_form.label :category_id, "Categorie : " %></td>
-		<td><%= labour_form.collection_select(:category_id, Category.find_by_type("labour"), :id, :name ) %></td>
-	</tr>
-	<tr>
-		<td><%= labour_form.label :cout_ha_passage, "Cout du passage : " %></td>
-		<td><%= labour_form.text_field :cout_ha_passage, :size => 4 %>  euros/Ha</td>
-	</tr>	
+		<%= form_tr_text(labour_form, 'Cout du passage', :cout_ha_passage, :unit => '€/Ha', :value => 0, :size => 4) %>
 	</table>
 </fieldset>
 <br>
@@ -88,4 +81,3 @@
 <%= labour_form.submit "Enregistrer" %>
 </p>
 <% end -%>
-
