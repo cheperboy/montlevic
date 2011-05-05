@@ -19,6 +19,7 @@ class Application < ActiveRecord::Base
   	['category_name', 'categorie', ''], 
   	['user_name', 'Presta', ''], 
   	['name', 'nom', ''], 
+  	['dosage', 'Dosage', 'L/Ha'], 
   	['cout_ha_passage', 'Cout Ha', '€/Ha'], 
   	['print_date', 'date', '']]
 

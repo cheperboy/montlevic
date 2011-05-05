@@ -38,7 +38,8 @@ class Print < ActiveRecord::Base
   
   def calculate
     init_cols
-    init_factures
+    # logger.debug(self.Tcols.inspect)
+    return nil unless init_factures
     init_pulves
     init_labours
     init_ventes
@@ -50,6 +51,7 @@ class Print < ActiveRecord::Base
     run_totaux
     
     set_alias()
+    # return true
   end
  
   def init_display
@@ -138,7 +140,7 @@ class Print < ActiveRecord::Base
     @Tfactures[:total] = Hash.new()
     @Tfactures[:ha] = Hash.new()
     
-    unless @factures.nil?
+    unless @factures.nil? || @factures.size == 0
       for facture in @factures
         @Tfactures[facture.id] = {:parcelles => {}, :id => facture.id, :name => facture.name, :cout => facture.cout}
         #for parcelle in facture.parcelles
@@ -158,6 +160,8 @@ class Print < ActiveRecord::Base
           end
         end
       end
+    else # @factures.nil?
+      return nil
     end
   end
   

@@ -135,7 +135,7 @@ module ApplicationHelper
     unit = ''
     if options
       size = options[:size] if options[:size]
-      value = options[:value].to_s  if options[:value]
+      value = options[:value].to_s if options[:value]
       unit = ' ' + options[:unit].to_s  if options[:unit]
     end
     out = ''
@@ -143,7 +143,11 @@ module ApplicationHelper
     out += form.label col, name
     out += ' : </td>'
     out += '<td class="td-left">'
-    out += form.text_field col.to_sym, :value => value, :size => size
+    if options && options[:value]
+      out += form.text_field col.to_sym, :value => value, :size => size
+    else 
+      out += form.text_field col.to_sym, :size => size
+    end
     out += unit
     out += '</td></tr>'
     return out
@@ -174,7 +178,7 @@ module ApplicationHelper
     out += form.label col.to_sym, name
     out += ' : </td>'
     out += '<td class="td-left">'
-    out += form.date_select(col.to_sym, :start_year => 2010, :order => [:day, :month, :year]) 
+    out += form.date_select(col.to_sym, :start_year => 2008, :order => [:day, :month, :year]) 
     out += '</td></tr>'
     return out
   end

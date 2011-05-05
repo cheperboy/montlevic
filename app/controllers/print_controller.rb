@@ -39,15 +39,16 @@ class PrintController < ApplicationController
     respond_to do |format|
       @test = Print.new(Parcelle)
       unless @test.nil?
-        @test.calculate
-        format.html    
-      else
-        @display = 0
-        flash[:error] = "l'affichage par parcelles n'est pas possible pour cette saison"
-        format.html
+        if @test.calculate
+          format.html
+        else
+          @display = 0
+          flash[:error] = "l'affichage par parcelles n'est pas possible pour cette saison"
+          format.html
+        end
       end
-    end    
-  end  
+    end
+  end
   
   def zones
     @saison = Saison.find(session[:current_saison_id])
@@ -61,12 +62,13 @@ class PrintController < ApplicationController
     respond_to do |format|
       @test = Print.new(Zone)
       unless @test.nil?
-        @test.calculate
-        format.html    
-      else
-        @display = 0
-        flash[:error] = "l'affichage par zone n'est pas possible pour cette saison"
-        format.html
+        if @test.calculate
+          format.html
+        else
+          @display = 0
+          flash[:error] = "l'affichage par zones n'est pas possible pour cette saison"
+          format.html
+        end
       end
     end    
   end  
@@ -83,12 +85,13 @@ class PrintController < ApplicationController
     respond_to do |format|
       @test = Print.new(Typeculture)
       unless @test.nil?
-        @test.calculate
-        format.html    
-      else
-        @display = 0
-        flash[:error] = "l'affichage par type de culture n'est pas possible pour cette saison"
-        format.html
+        if @test.calculate
+          format.html
+        else
+          @display = 0
+          flash[:error] = "l'affichage par type de cultures n'est pas possible pour cette saison"
+          format.html
+        end
       end
     end    
   end  

@@ -96,8 +96,7 @@ class FacturesController < ApplicationController
     else
       @facture = Debit.new(params[:facture])
     end
-#    unless @facture.valid?
-#    end
+    @facture.saison_id = current_saison_id
     respond_to do |format|
       if @facture.save
         flash[:notice] = 'Enregistrement facture OK.'
