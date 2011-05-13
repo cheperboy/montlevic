@@ -1,7 +1,12 @@
 <% title "Prestataires et Clients" %>
 
-<%= render :partial => 'list' %>
-
-<br />
+<%= jqgrid("Users", "users", "/users",
+	[
+		{ :field => "id", :label => "ID", :resizable => true },
+		{ :field => "name", :label => "name", :resizable => true  }				
+	],
+	{ :rows_per_page => 50 }
+	
+) %>
 
 <%= link_to 'nouveau Client', new_user_path %>

@@ -1,7 +1,7 @@
 	<tr>
-<% (@colonnes.length * 2 + 5).times do %>
-		<td></td>
-<% end %>
+		<% td_number(@colonnes.length, @show[:cout_ha], @show[:cout_total]).times do %>
+				<td></td>
+		<% end %>
 	</tr>	
 <% unless (@colonnes.size == 0) %>
 <!-- Total  -->
@@ -16,9 +16,12 @@
 		<% cout_ha = pretty(@test.Tcols[colonne.id][:charges][:ha][:sum]) %>
 		<% cout_total = pretty(@test.Tcols[colonne.id][:charges][:total][:sum]) %>
 		<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
-			<td class="<%= td_class %>_subtotal"><%= cout_ha %></td>
-			<td class="<%= td_class %>_subtotal"><%= cout_total %></td>
-	<% end %>
+		<% if @show[:cout_ha] %>
+			<td class="<%= td_class %>"><%=h cout_ha %></td>
+		<% end %>
+		<% if @show[:cout_total] %>
+			<td class="<%= td_class %>"><%=h cout_total %></td>
+		<% end %>	<% end %>
 	</tr>
 <% end %>	
 

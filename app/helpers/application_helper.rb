@@ -313,7 +313,103 @@ module ApplicationHelper
   
   
   # h_to_s : affiche correctement un Hash en string  
-  def h_to_s(parcelle)
+  def h_to_s(h)
+    out = "<br>"
+    out += "DEBUG Hash<br><br>"
+    if(h.class.equal?(Hash))
+      h.each do |key, value|
+        out += "{#{key} => #{value}}"
+      end
+    else
+      out += h.to_s
+    end
+    out += "<br><br>FIN DEBUG Hash<br>inspect : <br>"
+    out += h.inspect
+  end
+
+  def p_sym(sym)
+    if sym.is_a?(Symbol)
+      return (':' + sym.to_s) 
+    elsif sym.is_a?(String)
+      return ('"' + sym.to_s + '"') 
+    else
+      return (sym.to_s) 
+    end
+  end
+
+  def out_hash1(data)
+    data.each do |key, value|
+      if value.is_a?(Hash)
+        logger.error "   #{p_sym(key)} => "
+        logger.error "    {"
+        out_hash2(value)
+        logger.error "    }"
+      elsif value.is_a?(Array)
+        out = "   #{p_sym(key)} => ["
+        value.each do |val|
+          out += p_sym(val) + ', '
+        end
+        out += ']'
+        logger.error out    
+      else
+        logger.error "   #{p_sym(key)} => #{p_sym(value)}, "
+      end
+    end
+  end
+  
+  def out_hash2(data)
+    data.each do |key, value|
+      if value.is_a?(Hash)
+        logger.error "     #{p_sym(key)} => "
+        logger.error "      {"
+        out_hash2(value)
+        logger.error "      }"
+      elsif value.is_a?(Array)
+        out = "     #{p_sym(key)} => ["
+        value.each do |val|
+          out += p_sym(val) + ', '
+        end
+        out += ']'
+        logger.error out    
+      else
+        logger.error "     #{p_sym(key)} => #{p_sym(value)}, "
+      end
+    end
+  end  
+  
+  def h_to_s_console(h)
+    logger.error("DEBUG Hash")
+    if(h.class.equal?(Hash))
+      logger.error("{")
+      h.each do |key, value|
+        if value.is_a?(Hash)
+          logger.error " #{p_sym(key)} => "
+          logger.error "  {"
+          out_hash1(value)
+          logger.error "  }"
+        elsif value.is_a?(Array)
+          out = " #{p_sym(key)} => ["
+          value.each do |val|
+            out += p_sym(val) + ', '
+          end
+          out += '], '
+          logger.error out
+        else
+          logger.error " #{p_sym(key)} => #{p_sym(value)}, "
+        end
+      end
+      logger.error("}")
+    end
+    logger.error("fin DEBUG Hash")
+    logger.error("inspect : ")
+    logger.error(h.inspect)
+    10.times do
+      logger.error("")
+    end
+  end
+  
+  # h_to_s : affiche correctement un Hash en string  
+  def h_to_s_old(parcelle)
     out = "debut<br>"
     if(parcelle.class.equal?(Hash))
       parcelle.each do |key, value|

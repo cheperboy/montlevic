@@ -1,6 +1,6 @@
 	<tr>
 		<th><%= link_to_function "Labours", "$('list_labours').toggle();" %></th>
-<% ( @colonnes.length * 2 + 5).times do %>
+<% td_number(@colonnes.length, @show[:cout_ha], @show[:cout_total]).times do %>
 		<td></td>
 <% end %>
 	</tr>
@@ -29,16 +29,24 @@
 			<% cout_ha = pretty(dep[colonne.id][:ha]) %>
 			<% cout_total = pretty(dep[colonne.id][:total]) %>
 			<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
-			<td class="<%= td_class %>"><%=h cout_ha %></td>
-			<td class="<%= td_class %>"><%=h cout_total %></td>
+			<% if @show[:cout_ha] %>
+				<td class="<%= td_class %>"><%=h cout_ha %></td>
+			<% end %>
+			<% if @show[:cout_total] %>
+				<td class="<%= td_class %>"><%=h cout_total %></td>
+			<% end %>
 		<% end %>
 		</tr>
 	<% end %>
 
+<!-- Ajout pour test par categories -->
+
+<!-- FIN Ajout pour test par type -->
+
 	<tr class="total">
 		<td id="nom">Total Labour:	</td>
-		<td></td>	
-		<td></td>	
+		<td></td>
+		<td></td>
 		<td></td>
 		<td><%= pretty(@test.Tlabours[:ha][:sum]) %></td>
 		<td><%= pretty(@test.Tlabours[:total][:sum]) %></td>	
@@ -46,8 +54,12 @@
 		<% cout_ha = pretty(@test.Tcols[colonne.id][:labours][:ha][:sum]) %>
 		<% cout_total = pretty(@test.Tcols[colonne.id][:labours][:total][:sum]) %>
 		<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
-		<td class="<%= td_class %>_subtotal"><%=h cout_ha %></td>
-		<td class="<%= td_class %>_subtotal"><%=h cout_total %></td>
+		<% if @show[:cout_ha] %>
+			<td class="<%= td_class %>_subtotal"><%=h cout_ha %></td>
+		<% end %>
+		<% if @show[:cout_total] %>
+			<td class="<%= td_class %>_subtotal"><%=h cout_total %></td>
+		<% end %>
 	<% end %>
 	</tr>
 

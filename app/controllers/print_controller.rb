@@ -1,5 +1,6 @@
 class PrintController < ApplicationController
-
+  facture_categories = Category.factures
+  
   def csv
     unless params[:model] == nil
       model = params[:model]
@@ -35,6 +36,8 @@ class PrintController < ApplicationController
     @factures = @saison.factures
     @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Factcat.all
+    @labour_categories = Category.find_by_upcategory("labour")
+    @facture_categories = Category.factures
 
     respond_to do |format|
       @test = Print.new(Parcelle)
@@ -58,6 +61,8 @@ class PrintController < ApplicationController
     @factures = @saison.factures.find(:all, :order => :cout)
     @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Factcat.all
+    @labour_categories = Category.find_by_upcategory("labour")
+    @facture_categories = Category.factures
 
     respond_to do |format|
       @test = Print.new(Zone)
@@ -81,9 +86,53 @@ class PrintController < ApplicationController
     @factures = @saison.factures.find(:all, :order => :cout)
     @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Factcat.all
+    @labour_categories = Category.labours
+    @facture_categories = Category.factures
 
     respond_to do |format|
       @test = Print.new(Typeculture)
+      unless @test.nil?
+        if @test.calculate
+          format.html
+        else
+          @display = 0
+          flash[:error] = "l'affichage par type de cultures n'est pas possible pour cette saison"
+          format.html
+        end
+      end
+    end    
+  end  
+  
+  def all
+    model = Typeculture
+    @show = Hash.new()
+    @show[:cout_total] = true
+    @show[:cout_ha] = true
+    @show[:pulves] = true
+    
+    if request.post?
+      model = params[:column].camelize.constantize unless params[:column].nil?
+      @show[:cout_total] = false
+      @show[:cout_ha] = false
+      @show[:pulves] = false
+      unless params[:show].nil?
+        @show[:cout_total] = params[:show]['cout_total'] unless params[:show]['cout_total'].nil?
+        @show[:cout_ha] = params[:show]['cout_ha'] unless params[:show]['cout_ha'].nil?
+        @show[:pulves] = params[:show]['pulves'] unless params[:show]['pulves'].nil?
+      end
+    end
+    @colonnes = model.find_for_saison()
+    @saison = Saison.find(session[:current_saison_id])
+    @labours = @saison.labours
+    @pulves = @saison.pulves
+    @factures = @saison.factures.find(:all, :order => :cout)
+    @ventes = @saison.ventes.find(:all, :order => "category_id")
+    @types = Factcat.all
+    @labour_categories = Category.labours
+    @facture_categories = Category.factures
+
+    respond_to do |format|
+      @test = Print.new(model)
       unless @test.nil?
         if @test.calculate
           format.html

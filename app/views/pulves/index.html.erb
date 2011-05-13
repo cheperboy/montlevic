@@ -2,9 +2,28 @@
 
 | <%= link_to 'Nouveau pulve', new_pulve_path %> |
 <br />
+<%= draw_table(Application::PULVE_HEAD, @pulves) %>
+
+
+
+<%#= jqgrid("Pulves", "pulves", "/pulves",
+	[
+		{ :field => "id", :label => "id", :width => 20, :resizable => true },
+		{ :field => "star", :label => "star", :width => 20, :resizable => true  },				
+		{ :field => "name", :label => "name", :width => 100, :resizable => true  },			
+		{ :field => "category_id", :label => "categorie", :width => 100, :resizable => true  },				
+		{ :field => "user", :label => "user", :width => 100, :resizable => true  },				
+		{ :field => "dosage", :label => "dosage", :width => 100, :resizable => true  },				
+		{ :field => "date", :label => "date", :width => 100, :resizable => true  },			
+		{ :field => "link", :label => "link", :width => 100, :resizable => true  }			
+	],
+	{ :rows_per_page => 50 , :height => 300, :autowidth => true }
+	
+) %>
+
+
 <br />
 
-<%= draw_table(Application::PULVE_HEAD, @pulves) %>
 
 
 

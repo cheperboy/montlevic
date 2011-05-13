@@ -2,6 +2,8 @@ Use this README file to introduce your application and point to useful places in
 Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
 
 
+
+
 Factures
 - Type de Comptabilisation ('Factype')
 'Factype' est un paramètre propre a chaque facture qui détermine la manière dont le cout de cette facture sera pris en compte dans la comptabilité
@@ -18,3 +20,10 @@ exemple: 'Facture_Fioul' vaut 100 euros. elle
 	La facture n'est pas prise en compte dans la comptabilité, elle sera visible mais son cout n'est pas impute
 	Ce choix est recommande lorsque la facture est saisie 'pour rappel' mais que son cout ne doit pas être pris en compte dans la compta.
 
+Pulve
+le nombre d'Ha est calcule d'apres le nombre de parcelles associées a ce Pulve
+le prix est la somme de deux données : le "cout fixe" et le "cout variable"
+--'cout fixe'
+	est égal a la valeur du champ "cout fixe saisi dans le formulaire.
+--'cout variable'
+	est égal a "nombre d'Ha" x "dosage" x "prix du litre"

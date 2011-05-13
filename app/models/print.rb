@@ -52,6 +52,10 @@ class Print < ActiveRecord::Base
     
     set_alias()
     # return true
+    logger.error('@Tfactures.to_yaml')
+    logger.error(@Tfactures.to_yaml)
+    logger.error('@Tcols[1].to_yaml')
+    logger.error(@Tcols[1].to_yaml)
   end
  
   def init_display
@@ -73,8 +77,8 @@ class Print < ActiveRecord::Base
       self.Tcols[:charges][:ha] = 0      # derniere case somme de tout les totaux ha
       self.Tcols[:benef][:total] = 0  # derniere case somme de TOUTES les ventes
       self.Tcols[:benef][:ha] = 0     # derniere case somme de TOUTES les ventes ha
-      self.Tcols[:vente_total] = 0  # derniere case somme de TOUTES les ventes
-      self.Tcols[:vente_ha] = 0     # derniere case somme de TOUTES les ventes ha
+      self.Tcols[:vente_total] = 0    # derniere case somme de TOUTES les ventes
+      self.Tcols[:vente_ha] = 0       # derniere case somme de TOUTES les ventes ha
       
       for col in @cols
         self.Tcols[:length] = @cols.length
@@ -96,8 +100,14 @@ class Print < ActiveRecord::Base
         self.Tcols[col.id][:factures][:total] = {}
         self.Tcols[col.id][:ventes][:ha] = {}
         self.Tcols[col.id][:ventes][:total] = {}
-        self.Tcols[col.id][:charges][:ha] = {}
         self.Tcols[col.id][:charges][:total] = {}
+        self.Tcols[col.id][:charges][:ha] = {}
+        self.Tcols[col.id][:charges][:category] = {}
+        self.Tcols[col.id][:charges][:category][:ha] = {}
+        self.Tcols[col.id][:charges][:category][:total] = {}
+        self.Tcols[col.id][:charges][:factcat] = {}
+        self.Tcols[col.id][:charges][:factcat][:ha] = {}
+        self.Tcols[col.id][:charges][:factcat][:total] = {}
         self.Tcols[col.id][:benef][:ha] = {}
         self.Tcols[col.id][:benef][:total] = {}
         
@@ -121,16 +131,22 @@ class Print < ActiveRecord::Base
         self.Tcols[col.id][:benef][:total][:sum] = 0
         self.Tcols[col.id][:benef][:ha][:sum] = 0
   
+        for cat in Category.factures
+          self.Tcols[col.id][:charges][:category][:total][cat.id] = 0  
+          self.Tcols[col.id][:charges][:category][:ha][cat.id] = 0
+        end
         for type in self.types_facture
           self.Tcols[col.id][:factures][:total][type.id] = 0  
           self.Tcols[col.id][:factures][:ha][type.id] = 0  
-          self.Tcols[col.id][:charges][:total][type.id] = 0  
-          self.Tcols[col.id][:charges][:ha][type.id] = 0
+          self.Tcols[col.id][:charges][:factcat][:total][type.id] = 0  
+          self.Tcols[col.id][:charges][:factcat][:ha][type.id] = 0
           self.Tcols[col.id][:benef][:total][type.id] = 0  
           self.Tcols[col.id][:benef][:ha][type.id] = 0
         end
       end
     end    
+    logger.error('@Tcols.to_yaml')
+    logger.error(self.Tcols.inspect)
   end
 
   def init_factures
@@ -141,8 +157,30 @@ class Print < ActiveRecord::Base
     @Tfactures[:ha] = Hash.new()
     
     unless @factures.nil? || @factures.size == 0
+      @Tfactures[:total][:sum] = 0 
+      @Tfactures[:ha][:sum] = 0  
+      @Tfactures[:total][:factcat] = Hash.new()
+      @Tfactures[:ha][:factcat] = Hash.new()
+      @Tfactures[:total][:category] = Hash.new()
+      @Tfactures[:ha][:category] = Hash.new()
+          
+      for factcat in self.types_facture
+        @Tfactures[:total][:factcat][factcat.id] = 0 
+        @Tfactures[:ha][:factcat][factcat.id] = 0    
+      end
+      for cat in Category.factures
+        @Tfactures[:total][:category][cat.id] = 0 
+        @Tfactures[:ha][:category][cat.id] = 0    
+      end
+    
       for facture in @factures
-        @Tfactures[facture.id] = {:parcelles => {}, :id => facture.id, :name => facture.name, :cout => facture.cout}
+        @Tfactures[facture.id] = {
+          :parcelles => {}, 
+          :id => facture.id, 
+          :name => facture.name, 
+          :cout => facture.cout,
+          :factcat => facture.factcat_id,
+          :category => facture.category_id}
         #for parcelle in facture.parcelles
         for col in @cols
           hcols = {:name => col.name, :surface => col.surface }  
@@ -151,14 +189,7 @@ class Print < ActiveRecord::Base
   
           @Tfactures[facture.id][:total] = 0 
           @Tfactures[facture.id][:ha] = 0 
-          @Tfactures[:total][:sum] = 0 
-          @Tfactures[:ha][:sum] = 0 
-          
-          for type in self.types_facture
-            @Tfactures[:total][type.id] = 0 
-            @Tfactures[:ha][type.id] = 0 
-          end
-        end
+       end
       end
     else # @factures.nil?
       return nil
@@ -214,6 +245,7 @@ class Print < ActiveRecord::Base
     @Tlabours = Hash.new()
     @Tlabours[:total] = Hash.new()
     @Tlabours[:ha] = Hash.new()
+    # @Tlabours[:categories] = Hash.new()
     @Tlabours[:total][:sum] = 0
     @Tlabours[:ha][:sum] = 0
     for labour in @labours
@@ -301,7 +333,6 @@ class Print < ActiveRecord::Base
       
       total_ha = facture.get_cout_ha
       total = facture.get_cout_total
-      @Tfactures[facture.id][:category] = facture.factcat_id
       @Tfactures[facture.id][:parcelles_size] = @Tfactures[facture.id][:parcelles].length
       @Tfactures[facture.id][:surface_total] = facture.sum_surfaces
       
@@ -314,10 +345,18 @@ class Print < ActiveRecord::Base
       @Tfactures[:ha][:sum] += total_ha
       
       #totaux par types de factures
-      for type in self.types_facture
-        if (@Tfactures[facture.id][:category] == type.id)
-          @Tfactures[:total][type.id] += total
-          @Tfactures[:ha][type.id] += total_ha
+      for factcat in self.types_facture
+        if (@Tfactures[facture.id][:factcat] == factcat.id)
+          @Tfactures[:total][:factcat][factcat.id] += total
+          @Tfactures[:ha][:factcat][factcat.id] += total_ha
+        end
+      end
+      
+      #totaux par categorie de factures
+      for cat in Category.factures
+        if (@Tfactures[facture.id][:category] == cat.id)
+          @Tfactures[:total][:category][cat.id] += total 
+          @Tfactures[:ha][:category][cat.id] += total_ha   
         end
       end
     end
@@ -400,11 +439,20 @@ class Print < ActiveRecord::Base
         @Tcols[col.id][:benef][:ha][:sum] -= cout_ha
         @Tcols[col.id][:benef][:total][:sum] -= cout_total
 
-
-        for type in self.types_facture
-          if (@Tfactures[facture.id][:category] == type.id)
-            @Tcols[col.id][:charges][:ha][type.id] += cout_ha
-            @Tcols[col.id][:charges][:total][type.id] += cout_total
+# FIXME ajouter un champ de plus comme dans la structure Tfactures pour differencier [factcat] et [category]
+        #totaux par types de factures
+        for factcat in self.types_facture
+          if (@Tfactures[facture.id][:factcat] == factcat.id)
+            @Tcols[col.id][:charges][:factcat][:ha][factcat.id] += cout_ha
+            @Tcols[col.id][:charges][:factcat][:total][factcat.id] += cout_total
+          end
+        end
+        
+        #totaux par categorie de factures
+        for cat in Category.factures
+          if (@Tfactures[facture.id][:category] == cat.id)
+            @Tcols[col.id][:charges][:category][:ha][cat.id] += cout_ha
+            @Tcols[col.id][:charges][:category][:total][cat.id] += cout_total
           end
         end
       end    
@@ -636,4 +684,3 @@ class Print < ActiveRecord::Base
   end
     
 end
-

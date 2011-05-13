@@ -3,6 +3,27 @@ class PulvesController < ApplicationController
   # GET /pulves.xml
   def index
     @pulves = Pulve.find_by_saison(:all)
+    # pulves = Pulve.find(:all, :conditions => ["saison_id = ?", Setting.find(:first).saison_id]) #do
+    #   if params[:_search] == "true"
+    #     name    =~ "%#{params[:name]}%" if params[:name].present?
+    #     star    =~ "%#{params[:star]}%" if params[:star].present?
+    #     dosage    =~ "%#{params[:name]}%" if params[:dosage].present?
+    #   end
+    #   paginate :page => params[:page], :per_page => params[:rows]      
+    #   order_by "#{params[:sidx]} #{params[:sord]}"
+    # end
+
+    respond_to do |format|
+      format.html
+      # format.json { render :json => pulves.to_jqgrid_json([:id,:star, :name, 'category.name', 'user.name', :dosage, :date, 'link'], 
+      #                                                    params[:page], 
+      #                                                    params[:rows], 
+      #                                                    pulves.total_entries) }
+    end
+  end
+ #, :category_id, :user_id, :dosage, :date 
+  def index_old
+    @pulves = Pulve.find_by_saison(:all)
 
     respond_to do |format|
       format.html # index.html.erb
