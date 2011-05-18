@@ -51,55 +51,59 @@
 					<td></td>
 			<% end %>
 		</tr>	
-	<% for type in @types %>
-		<tr class="subtotal">
-			<td class="left">Type</td>
-			<td class="left"><b><%= type.name %></b></td>
-			<td></td>
-			<td></td>
-			<td><%= pretty(@test.Tfactures[:ha][:factcat][type.id]) %></td>
-			<td><%= pretty(@test.Tfactures[:total][:factcat][type.id]) %></td>	
-		<% @colonnes.each do |colonne| %>
-			<% cout_ha = pretty(@test.Tcols[colonne.id][:charges][:factcat][:ha][type.id]) %>
-			<% cout_total = pretty(@test.Tcols[colonne.id][:charges][:factcat][:total][type.id]) %>
-			<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
-			<% if @show[:cout_ha] %>
-				<td class="<%= td_class %>"><%=h cout_ha %></td>
-			<% end %>
-			<% if @show[:cout_total] %>
-				<td class="<%= td_class %>"><%=h cout_total %></td>
-			<% end %>
+	<% if @show[:total_type] %>
+		<% for type in @types %>
+			<tr class="subtotal">
+				<td class="left">Type</td>
+				<td class="left"><b><%= type.name %></b></td>
+				<td></td>
+				<td></td>
+				<td><%= pretty(@test.Tfactures[:ha][:factcat][type.id]) %></td>
+				<td><%= pretty(@test.Tfactures[:total][:factcat][type.id]) %></td>	
+				<% @colonnes.each do |colonne| %>
+					<% cout_ha = pretty(@test.Tcols[colonne.id][:charges][:factcat][:ha][type.id]) %>
+					<% cout_total = pretty(@test.Tcols[colonne.id][:charges][:factcat][:total][type.id]) %>
+					<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
+					<% if @show[:cout_ha] %>
+						<td class="<%= td_class %>"><%=h cout_ha %></td>
+					<% end %>
+					<% if @show[:cout_total] %>
+						<td class="<%= td_class %>"><%=h cout_total %></td>
+					<% end %>
+				<% end %>
+			</tr>
 		<% end %>
-		</tr>
 	<% end %>
 	
 	<!--Sous Total Facture "category" (cout fixes, cout variables,...) -->
+	<% if @show[:total_cat] %>
 		<tr>
 			<td>Total par Categorie</td>
 			<% td_number(@colonnes.length, @show[:cout_ha], @show[:cout_total]).times do %>
 					<td></td>
 			<% end %>
 		</tr>	
-	<% for cat in @facture_categories %>
-		<tr class="subtotal">
-			<td class="left">Categorie</td>
-			<td class="left"><b><%= cat.name %></b></td>
-			<td></td>
-			<td></td>
-			<td><%= pretty(@test.Tfactures[:ha][:category][cat.id]) %></td>
-			<td><%= pretty(@test.Tfactures[:total][:category][cat.id]) %></td>	
-		<% @colonnes.each do |colonne| %>
-			<% cout_ha = pretty(@test.Tcols[colonne.id][:charges][:category][:ha][cat.id]) %>
-			<% cout_total = pretty(@test.Tcols[colonne.id][:charges][:category][:total][cat.id]) %>
-			<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
-			<% if @show[:cout_ha] %>
-				<td class="<%= td_class %>"><%=h cout_ha %></td>
+		<% for cat in @facture_categories %>
+			<tr class="subtotal">
+				<td class="left">Categorie</td>
+				<td class="left"><b><%= cat.name %></b></td>
+				<td></td>
+				<td></td>
+				<td><%= pretty(@test.Tfactures[:ha][:category][cat.id]) %></td>
+				<td><%= pretty(@test.Tfactures[:total][:category][cat.id]) %></td>	
+			<% @colonnes.each do |colonne| %>
+				<% cout_ha = pretty(@test.Tcols[colonne.id][:charges][:category][:ha][cat.id]) %>
+				<% cout_total = pretty(@test.Tcols[colonne.id][:charges][:category][:total][cat.id]) %>
+				<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
+				<% if @show[:cout_ha] %>
+					<td class="<%= td_class %>"><%=h cout_ha %></td>
+				<% end %>
+				<% if @show[:cout_total] %>
+					<td class="<%= td_class %>"><%=h cout_total %></td>
+				<% end %>
 			<% end %>
-			<% if @show[:cout_total] %>
-				<td class="<%= td_class %>"><%=h cout_total %></td>
-			<% end %>
+			</tr>
 		<% end %>
-		</tr>
 	<% end %>
 	
 	<!-- Total Facture -->

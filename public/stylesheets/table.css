@@ -1,12 +1,13 @@
 /* Begin : Table list */
 
-/*.table_print { border-collapse:collapse }*/
+.table_print { border-collapse:collapse }
+.table_print { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
 
 .table_print td, th, tr { 
  border-width:1px;
  border-style:solid; 
  border-color:grey;
-width: 25em; 
+ width: 20em; 
  }
 
 .table_print tr:hover { background-color: #eee; width: 25em; }

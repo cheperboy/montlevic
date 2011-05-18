@@ -57,6 +57,12 @@ class Pulve < Charge
     return (self.sum_surfaces * self.get_cout_ha)
   end
 
+  # retourne le cout total du produit (dosage x prix du littre) 
+  # uniquement pour affichage
+  def get_cout_total_produit
+    return (self.get_cout_ha_produit * self.sum_surfaces)
+  end
+  
   # retourne le cout total de cette charge 
   def get_cout_total_sans_reduc
     return (self.sum_surfaces * self.cout_ha_passage)

@@ -9,12 +9,11 @@
 	<% end %>
 <% end %>
 <br>
-  <strong>Affichage</strong>
+  <strong>Resultat</strong>
   <ul>
-  <%- ['zone', 'parcelle', 'typeculture'].each do |action| -%>	
-    <li><%= link_to action.to_s.pluralize, :controller => "print", :action => action.to_s.pluralize  %></li>
+  <%- ['html', 'html'].each do |action| -%>	
+    <li><%= link_to action, :controller => "print", :action => 'all'  %></li>
   <%- end -%>
-    <li><%= link_to "csv", :controller => "print", :action => "csv"  %></li>
   </ul>
   <strong>Charges</strong>
   <ul>

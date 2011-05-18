@@ -1,7 +1,7 @@
 class Verif < ActiveRecord::Base
   
   attr_accessor :serie,
-                :factures, :factypes, :structure, :data, :others
+                :factures, :factypes, :structure, :data, :others, :saisie
 
   LOW = 0
   HIGH = 1
@@ -36,6 +36,7 @@ class Verif < ActiveRecord::Base
     self.structure = Serie.new('Tests structure', [])
     self.data = Serie.new('Tests data', [])
     self.others = Serie.new('Autres tests', [])
+    self.saisie = Serie.new('Saisie', [])
   end
 
   def end_test
@@ -44,6 +45,7 @@ class Verif < ActiveRecord::Base
     self.serie << structure
     self.serie << data
     self.serie << others
+    self.serie << saisie
   end
 
   def get_result
@@ -66,7 +68,14 @@ class Verif < ActiveRecord::Base
     data.tests << data_contrib_lab
     data.tests << data_contrib_pu
 
+    saisie.tests << pulve_sans_facture
+    saisie.tests << pulve_avec_facture_et_valeur_incoh
+    saisie.tests << pulve_cout_produit_null
     
+  end
+
+  def almost_eql?(valeur, prix, seuil=2)
+   ((valeur - prix).abs < seuil)
   end
 
   def reportable_sans_report
@@ -312,6 +321,68 @@ class Verif < ActiveRecord::Base
     return test
   end
 
+#Saisie de donnee
+  def pulve_sans_facture
+    test = init_test('Pulves non associe a une facture', LOW)
+    test.num =0
+    @pulves = Pulve.find_by_saison(:all)
+    unless @pulves.nil?
+      @pulves.each do |pulve|    
+        if pulve.putofactures.empty?
+          test.num += 1
+          text = pulve.to_s(:default)
+          error = init_error(text, pulve.id, 'pulves')
+          test.errors << error
+        end
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
+  end
+
+  def pulve_avec_facture_et_valeur_incoh
+    test = init_test('Pulves associe a une valeur assoc facture incoherente', LOW)
+    test.num =0
+    @pulves = Pulve.find_by_saison(:all)
+    unless @pulves.nil?
+      @pulves.each do |pulve|    
+        var = true
+        unless pulve.putofactures.empty?
+          pulve.putofactures.each do |putofacture|
+            if almost_eql?(putofacture.value, pulve.get_cout_total_produit)
+              var = false
+            end
+          end
+        end
+        if var == true
+          test.num += 1
+          text = pulve.to_s(:default)
+          error = init_error(text, pulve.id, 'pulves')
+          test.errors << error
+        end
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
+  end
+
+  def pulve_cout_produit_null
+    test = init_test('Pulves dont le cout produit est nul', LOW)
+    test.num =0
+    @pulves = Pulve.find_by_saison(:all)
+    unless @pulves.nil?
+      @pulves.each do |pulve|    
+        if almost_eql?(pulve.get_cout_total_produit, 0, 1)
+          test.num += 1
+          text = pulve.to_s(:default)
+          error = init_error(text, pulve.id, 'pulves')
+          test.errors << error
+        end
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
+  end
 
 
 

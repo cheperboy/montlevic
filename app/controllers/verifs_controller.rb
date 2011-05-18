@@ -1,8 +1,14 @@
 class VerifsController < ApplicationController
 
   def index
-    @test = Verif.new
-    @test.run_test
+    #partie Verif de bug
+    @verif = Verif.new
+    @verif.run_test
+    # 
+    # #partie verif des saisies a faire (coherence Facture/Pulves par exemple)
+    # @saisie = Saisie.new
+    # @saisie.run_test
+    # 
     respond_to do |format|
       format.html
     end

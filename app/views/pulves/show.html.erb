@@ -14,8 +14,20 @@
 		<td><%=h @pulve.user.name %></td>
 	</tr>
 	<tr>
+		<td>Surface totale : </td>
+		<td><%=h @pulve.sum_surfaces %> Ha</td>
+	</tr>
+	<tr>
 		<td>Cout du littre : </td>
-		<td><%=h @pulve.prix_littre %> €/Ha</td>
+		<td><%=h @pulve.prix_littre %> €/L</td>
+	</tr>
+	<tr>
+		<td>Dosage : </td>
+		<td><%=h @pulve.dosage %> L/Ha</td>
+	</tr>
+	<tr>
+		<td>Cout du produit : </td>
+		<td><%=h @pulve.get_cout_total_produit %> €</td>
 	</tr>
 	<tr>
 		<td>Cout du passage : </td>
@@ -39,7 +51,7 @@
 		<li><%= putoparcelle.parcelle.typeculture.name %> - 
 			<%= putoparcelle.parcelle.name %> 
 			[surface : <%= putoparcelle.parcelle.surface %> ha] x 
-			[cout : <%= @pulve.get_cout_ha %>] =
+			[cout : <%= @pulve.get_cout_ha %> €/Ha] =
 			<%=h (putoparcelle.parcelle.surface * @pulve.get_cout_ha) %> €
 		</li>
 	<%- end -%>

@@ -17,6 +17,22 @@ class Charge < ActiveRecord::Base
 
   # ----- Getters -----
 
+  def to_s(*args)
+    out = ''
+    if args[0] == :default
+      out += (self.print_date + " ")
+      out += (self.category.name + " ")    
+      out += (self.name + " ")    
+    else
+      args.each do |arg|
+        out += (self.print_date + " ") if arg == :date
+        out += (self.category.name + " ") if arg == :category      
+        out += (self.name + " ") if arg == :name      
+      end
+    end
+    out
+  end
+  
   def print_date
     unless self.date.nil? || self.date.blank?
       out = "#{self.date.day}/#{self.date.month}/#{self.date.year}"

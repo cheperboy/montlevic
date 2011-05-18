@@ -30,7 +30,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :saisons
 
-  map.resources :pulves
+  map.resources :pulves, :collection => { :index => :any }
 
   map.resources :parcelles
 

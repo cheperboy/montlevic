@@ -8,6 +8,84 @@ module ApplicationHelper
     return '€'
   end
   
+  def draw_table_with_find(headers, elements, controller, action, print_stars=false)
+    # if print_stars == true
+    #   do ... end
+    # end
+    out = ""
+    out += form_tag :action => 'index'
+    out += check_box_tag 'test', value = true, checked = false, options = {:id => 'test'}
+    out += submit_tag :'Mettre a jour'
+  
+    head_size = headers.count
+    link_size = 3    
+    out += '<table class="table_list">'
+
+    #Headers
+    out += '<tr>'
+    headers.each do |key, value|
+      out += '<td><b>'+ value.to_s.capitalize + '</b></td>'    
+    end
+    out += "<td colspan='#{link_size.to_s}'></td>"
+    out += '</tr>'
+    
+    #Formulaire - tetes de colonnes
+    out += '<tr>'
+    headers.each do |key, value|
+      out += '<td>'
+      param = 'param['+ key.to_sym.to_s + ']'
+      out += text_field 'toto', key.to_sym, :size => 4
+      out += '</td>'    
+    end
+    out += "<td colspan='#{link_size.to_s}'></td>"
+    out += '</tr>'
+    
+    #Elements
+    elements.each do |element|
+      # determination de la class du model pour les liens show/edit/delete
+      element_class = element.class.to_s.downcase
+      if (element_class == "debit" ||
+          element_class == "diverse" ||
+          element_class == "reportable")
+          element_class = "facture"  
+      end
+      # Premier tr de l'element  
+      out += "<tr class='list-row'>"
+      headers.each do |header|
+        value = element.send(header[HEADER_KEY])
+        #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)
+        if header[0].eql?("star")
+          out += "<td>"
+          out += link_to_star(element.class, element.id, false)
+          out += "</td>"
+        elsif header[0].eql?("adu")
+            out += "<td>"
+            out += link_to_star(element.class, element.id, true)
+            out += "</td>"
+        else  
+          #class css du td : align_right ou align_left
+          td_class = "list-elt-right"
+          if    value.class == String then td_class = "list-elt-left"
+            elsif value.class.eql?(Float) then td_class = "list-elt-right"
+            elsif value.class.eql?(Fixnum) then td_class = "list-elt-right"
+          end
+          out += "<td class='#{td_class}'>"
+          out += "#{element.send(header[0].to_sym).to_s} #{header[2]}"
+          out += '</td>'
+        end
+      end
+      
+      #Liens
+      url = element_class.pluralize
+      id = element.id
+      out += '<td>'+ link_to_show(element_class, element.id) +'</td>'
+      out += '<td>'+ link_to_edit(element_class, element.id) +'</td>'
+      out += '<td>'+ link_to_delete(element_class, element.id) +'</td>'
+      out += '</tr>'    
+    end
+    out += '</table>'
+  end  
+  
   def draw_table(headers, elements, print_stars=false)
     # if print_stars == true
     #   do ... end

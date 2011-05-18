@@ -2,23 +2,23 @@ class PulvesController < ApplicationController
   # GET /pulves
   # GET /pulves.xml
   def index
-    @pulves = Pulve.find_by_saison(:all)
-    # pulves = Pulve.find(:all, :conditions => ["saison_id = ?", Setting.find(:first).saison_id]) #do
-    #   if params[:_search] == "true"
-    #     name    =~ "%#{params[:name]}%" if params[:name].present?
-    #     star    =~ "%#{params[:star]}%" if params[:star].present?
-    #     dosage    =~ "%#{params[:name]}%" if params[:dosage].present?
-    #   end
-    #   paginate :page => params[:page], :per_page => params[:rows]      
-    #   order_by "#{params[:sidx]} #{params[:sord]}"
+ #   @pulves = Pulve.find_by_saison(:all)
+# TODO onglet verif saisie donnees : verifier que les pulves qui ont un prix/L sont lies a une facture
+    @pulves = Pulve.find_by_saison(:all) do
+      name.contains? params[:toto][:name] if params[:toto] && params[:toto][:name]
+      name.contains? params[:toto][:user] if params[:toto] && params[:toto][:user]
+    end
+    
+    
+    # Application::PULVE_HEAD.each do |key, value|
+    #   out += '<td>'
+    #   param = 'param['+ key.to_sym.to_s + ']'
+    #   out += text_field 'toto', key.to_sym, :size => 4
+    #   out += '</td>'    
     # end
 
     respond_to do |format|
       format.html
-      # format.json { render :json => pulves.to_jqgrid_json([:id,:star, :name, 'category.name', 'user.name', :dosage, :date, 'link'], 
-      #                                                    params[:page], 
-      #                                                    params[:rows], 
-      #                                                    pulves.total_entries) }
     end
   end
  #, :category_id, :user_id, :dosage, :date 
