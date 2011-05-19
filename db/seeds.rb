@@ -144,7 +144,7 @@ factureA = Debit.create(:name => 'Debit 1',
                           :saison => saison,
                           :date => '2011-01-01',
                           :desc => "from seeds",
-                          :category => Category.find_by_name('produits phyto'))
+                          :category => Category.find_by_name('deplacement'))
 
 # factureB = Debit.create(:name => 'Debit 2', 
 #                           :cout => 1000, 

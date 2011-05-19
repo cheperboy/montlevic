@@ -2,7 +2,7 @@
 module ApplicationHelper
   HEADER_KEY = 0
   HEADER_VALUE = 1
-  HEADER_UNIT = 3
+  HEADER_UNIT = 2
 
   def euros
     return '€'
@@ -58,7 +58,7 @@ module ApplicationHelper
           out += "<td>"
           out += link_to_star(element.class, element.id, false)
           out += "</td>"
-        elsif header[0].eql?("adu")
+        elsif header[HEADER_KEY].eql?("adu")
             out += "<td>"
             out += link_to_star(element.class, element.id, true)
             out += "</td>"
@@ -70,7 +70,7 @@ module ApplicationHelper
             elsif value.class.eql?(Fixnum) then td_class = "list-elt-right"
           end
           out += "<td class='#{td_class}'>"
-          out += "#{element.send(header[0].to_sym).to_s} #{header[2]}"
+          out += "#{element.send(header[HEADER_KEY].to_sym).to_s} #{header[HEADER_UNIT]}"
           out += '</td>'
         end
       end
@@ -87,9 +87,6 @@ module ApplicationHelper
   end  
   
   def draw_table(headers, elements, print_stars=false)
-    # if print_stars == true
-    #   do ... end
-    # end
 
     out = ''
     head_size = headers.count
@@ -116,11 +113,11 @@ module ApplicationHelper
       headers.each do |header|
         value = element.send(header[HEADER_KEY])
         #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)
-        if header[0].eql?("star")
+        if header[HEADER_KEY].eql?("star")
           out += "<td>"
           out += link_to_star(element.class, element.id, false)
           out += "</td>"
-        elsif header[0].eql?("adu")
+        elsif header[HEADER_KEY].eql?("adu")
             out += "<td>"
             out += link_to_star(element.class, element.id, true)
             out += "</td>"
@@ -132,7 +129,7 @@ module ApplicationHelper
             elsif value.class.eql?(Fixnum) then td_class = "list-elt-right"
           end
           out += "<td class='#{td_class}'>"
-          out += "#{element.send(header[0].to_sym).to_s} #{header[2]}"
+          out += "#{value} #{header[HEADER_UNIT]}"
           out += '</td>'
         end
       end

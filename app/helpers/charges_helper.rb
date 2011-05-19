@@ -16,7 +16,7 @@ module ChargesHelper
       link_to_remote  display_star(facture_id), :url => { :action => "toggle_star", :id => facture_id }
     end
   end
-
+  
   def OLD_display_star(id)
     star = Facture.find(id).star
     if (star == 1)

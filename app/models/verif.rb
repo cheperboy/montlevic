@@ -372,7 +372,7 @@ class Verif < ActiveRecord::Base
     @pulves = Pulve.find_by_saison(:all)
     unless @pulves.nil?
       @pulves.each do |pulve|    
-        if almost_eql?(pulve.get_cout_total_produit, 0, 1)
+        if pulve.get_cout_total_produit == 0
           test.num += 1
           text = pulve.to_s(:default)
           error = init_error(text, pulve.id, 'pulves')

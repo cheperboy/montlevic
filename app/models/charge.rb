@@ -92,8 +92,26 @@ class Charge < ActiveRecord::Base
     end
     return false
   end
-   
- 
+
+  def toto
+    cultures = []
+    out = ''
+    Typeculture.find(:all).each do |culture|
+      self.parcelles.each do |parcelle|
+        if parcelle.typeculture == culture
+          cultures << culture.name
+        end
+      end
+    end
+    if cultures.empty?
+      cultures << ""
+    end
+    cultures.uniq.sort.each do |c|
+      out += c.to_s + ' '
+    end
+    out
+  end
+  
   # sum_surfaces
   # retourne la somme des surfaces de chaque parcelles associées à cette charge.
   # Si aucune parcelle n'est associée a cette charge, toutes les parcelles sont prises en compte.
