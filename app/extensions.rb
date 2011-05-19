@@ -53,16 +53,44 @@ class Hash
 end
 # END OF CLASS Hash
 
-class Float 
-  def approx_equal?(other)
-    # TODO : definir threshold en parametre d'appli
-    threshold = 0.1
-    if (self-other).abs < threshold    # "<" not exact either ;-) 
-      return true 
-    else 
-      return false 
-    end 
-  end 
+class Array
+
+  def to_s
+    out = ''
+    return out if (self.empty? || self.nil?)
+    self.each do |c|
+      out += c.to_s + ' '
+    end
+    out
+  end
+
+end
+# END OF CLASS Integer
+
+class Integer
+
+  def almost_eql?(value, threshold=2)
+   ((self - value).abs < threshold)
+  end
+
+end
+# END OF CLASS Integer
+
+  class Float
+
+    def almost_eql?(value, threshold=2)
+     ((self - value).abs < threshold)
+    end
+  
+  # def approx_equal?(other)
+  #   # TODO : definir threshold en parametre d'appli
+  #   threshold = 0.1
+  #   if (self-other).abs < threshold    # "<" not exact either ;-) 
+  #     return true 
+  #   else 
+  #     return false 
+  #   end 
+  # end 
 
   # redefinition de la methode to_s 
   # avec en argument le nombre de chiffre apres la virgule

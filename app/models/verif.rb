@@ -74,9 +74,9 @@ class Verif < ActiveRecord::Base
     
   end
 
-  def almost_eql?(valeur, prix, seuil=2)
-   ((valeur - prix).abs < seuil)
-  end
+  # def almost_eql?(valeur, prix, seuil=2)
+  #  ((valeur - prix).abs < seuil)
+  # end
 
   def reportable_sans_report
     test = init_test('Reportable sans aucun report', LOW)
@@ -349,7 +349,7 @@ class Verif < ActiveRecord::Base
         var = true
         unless pulve.putofactures.empty?
           pulve.putofactures.each do |putofacture|
-            if almost_eql?(putofacture.value, pulve.get_cout_total_produit)
+            if pulve.get_cout_total_produit.almost_eql?(putofacture.value, 2)
               var = false
             end
           end

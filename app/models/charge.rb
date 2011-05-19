@@ -93,9 +93,8 @@ class Charge < ActiveRecord::Base
     return false
   end
 
-  def toto
+  def typecultures
     cultures = []
-    out = ''
     Typeculture.find(:all).each do |culture|
       self.parcelles.each do |parcelle|
         if parcelle.typeculture == culture
@@ -103,13 +102,7 @@ class Charge < ActiveRecord::Base
         end
       end
     end
-    if cultures.empty?
-      cultures << ""
-    end
-    cultures.uniq.sort.each do |c|
-      out += c.to_s + ' '
-    end
-    out
+    cultures.uniq.sort.to_s
   end
   
   # sum_surfaces

@@ -16,7 +16,7 @@ class Application < ActiveRecord::Base
   	['star', 'star', ''], 
   	['adu', 'adu', ''], 
   	['id', 'id', ''], 
-  	['toto', 'Cultures', ''], 
+  	['typecultures', 'Cultures', ''], 
   	['category_name', 'categorie', ''], 
   	['user_name', 'Presta', ''], 
   	['name', 'nom', ''], 
