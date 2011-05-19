@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   create_table "putofactures", :force => true do |t|
     t.integer  "facture_id", :null => false
     t.integer  "pulve_id",   :null => false
-    t.integer  "value",      :null => false
+    t.float    "value",      :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
