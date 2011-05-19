@@ -144,7 +144,7 @@ factureA = Debit.create(:name => 'Debit 1',
                           :saison => saison,
                           :date => '2011-01-01',
                           :desc => "from seeds",
-                          :category => Category.find_by_name('deplacement'))
+                          :category => Category.find_by_name('produits phyto'))
 
 # factureB = Debit.create(:name => 'Debit 2', 
 #                           :cout => 1000, 
@@ -215,14 +215,14 @@ saison_2009_2010 = Saison.create(:name => "2009/2010", :year => "2009")
 setting.saison = saison_2009_2010
 setting.save!
 
-factureA = Debit.create(:name => 'Debit 1', 
-                          :cout => 1000, 
+factureA = Debit.create(:name => 'Achat Phyto', 
+                          :cout => 1305, 
                           :user => User.find(:first),
                           :factype => Factype.find_by_name("diff"),
                           :factcat => Factcat.find_by_name("agri"),
                           :saison => saison_2009_2010,
                           :date => '2011-01-01',
-                          :desc => "from seeds",
+                          :desc => "FURY en 5L x5 : 5 x 41.50 = 207.5 => 1.66 e/L AMISTAR en 5L x25 : 43,90 x 25 = 1097.5",
                           :category => Category.find_by_name('deplacement'))
 
 # 
