@@ -2,17 +2,12 @@ class Application < ActiveRecord::Base
 
   SAISON = Setting.find(1).saison_id
 
-  LABOUR_HEAD = [
-  	['star', 'star', ''], 
-  	['adu', 'adu', ''], 
-  	['id', 'id', ''], 
-  	['category_name', 'categorie', ''], 
-  	['user_name', 'Presta', ''], 
-  	['name', 'nom', ''], 
-  	['cout_ha_passage', 'Cout Ha', '€/Ha'], 
-  	['print_date', 'date', '']]
+  # HEADER_KEY = 0
+  # HEADER_VALUE = 1
+  # HEADER_UNIT = 2
+  # HEADER_FILTER = 3
   
-  PULVE_HEAD = [
+  LABOUR_HEAD = [
   	['star', 'star', ''], 
   	['adu', 'adu', ''], 
   	['id', 'id', ''], 
@@ -20,9 +15,20 @@ class Application < ActiveRecord::Base
   	['category_name', 'categorie', ''], 
   	['user_name', 'Presta', ''], 
   	['name', 'nom', ''], 
-  	['dosage', 'Dosage', 'L/Ha'], 
   	['cout_ha_passage', 'Cout Ha', '€/Ha'], 
   	['print_date', 'date', '']]
+  
+  PULVE_HEAD = [
+  	['star', 'star', '', false], 
+  	['adu', 'adu', '', false], 
+  	['id', 'id', '', false], 
+  	['typecultures', 'Cultures', '', false], 
+  	['category_name', 'categorie', '', false], 
+  	['user_name', 'Presta', '', false], 
+  	['name', 'nom', '', true], 
+  	['dosage', 'Dosage', 'L/Ha', false], 
+  	['cout_ha_passage', 'Cout Ha', '€/Ha', false], 
+  	['print_date', 'date', '', false]]
 
   FACTURE_HEAD = [
   	['star', 'star', ''], 

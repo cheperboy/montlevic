@@ -69,7 +69,7 @@ end
 
 class Integer
 
-  def almost_eql?(value, threshold=2)
+  def almost_eql?(value, threshold = 2)
    ((self - value).abs < threshold)
   end
 
@@ -78,19 +78,9 @@ end
 
   class Float
 
-    def almost_eql?(value, threshold=2)
+    def almost_eql?(value, threshold = 2)
      ((self - value).abs < threshold)
     end
-  
-  # def approx_equal?(other)
-  #   # TODO : definir threshold en parametre d'appli
-  #   threshold = 0.1
-  #   if (self-other).abs < threshold    # "<" not exact either ;-) 
-  #     return true 
-  #   else 
-  #     return false 
-  #   end 
-  # end 
 
   # redefinition de la methode to_s 
   # avec en argument le nombre de chiffre apres la virgule

@@ -4,18 +4,11 @@ class PulvesController < ApplicationController
   def index
  #   @pulves = Pulve.find_by_saison(:all)
 # TODO onglet verif saisie donnees : verifier que les pulves qui ont un prix/L sont lies a une facture
-    @pulves = Pulve.find_by_saison(:all) do
-      name.contains? params[:toto][:name] if params[:toto] && params[:toto][:name]
-      name.contains? params[:toto][:user] if params[:toto] && params[:toto][:user]
+    @pulves = Pulve.find(:all) do
+      saison = Setting.find(:first).saison_id
+      name.contains? params[:filter][:name] if params[:filter] && params[:filter][:name]
+      user.name.contains? params[:filter][:user] if params[:filter] && params[:filter][:user]
     end
-    
-    
-    # Application::PULVE_HEAD.each do |key, value|
-    #   out += '<td>'
-    #   param = 'param['+ key.to_sym.to_s + ']'
-    #   out += text_field 'toto', key.to_sym, :size => 4
-    #   out += '</td>'    
-    # end
 
     respond_to do |format|
       format.html

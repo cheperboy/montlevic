@@ -1,13 +1,6 @@
 <div id="bloc_left">
 
-<% if logged_in? %>  
-	<% form_for 'setting', :url => { :controller => "settings", :action => "update_saison" } do |form| %>
-		<strong>saison</strong> <%= form.collection_select('saison_id', Saison.find(:all), :id, :name, :selected => current_saison_id ) %>
-		<%= hidden_field('from', 'controller', :value => request.path_parameters['controller'])  %>
-		<%= hidden_field('from', 'action', :value => request.path_parameters['action'])  %>
-		<%= form.submit 'choisir' %>
-	<% end %>
-<% end %>
+
 <br>
   <strong>Resultat</strong>
   <ul>

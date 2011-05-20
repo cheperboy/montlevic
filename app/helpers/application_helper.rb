@@ -3,43 +3,48 @@ module ApplicationHelper
   HEADER_KEY = 0
   HEADER_VALUE = 1
   HEADER_UNIT = 2
+  HEADER_FILTER = 3
 
   def euros
     return '€'
   end
-  
+
   def draw_table_with_find(headers, elements, controller, action, print_stars=false)
-    # if print_stars == true
-    #   do ... end
-    # end
-    out = ""
-    out += form_tag :action => 'index'
-    out += check_box_tag 'test', value = true, checked = false, options = {:id => 'test'}
-    out += submit_tag :'Mettre a jour'
-  
     head_size = headers.count
     link_size = 3    
+    out = ""
+    #Formulaire de tri
+    out += form_tag :action => 'index'
+#    out += check_box_tag 'test', value = true, checked = false, options = {:id => 'test'}
+    out += submit_tag :'Filtrer'
     out += '<table class="table_list">'
-
-    #Headers
+    
+    #Head - TH
     out += '<tr>'
     headers.each do |key, value|
       out += '<td><b>'+ value.to_s.capitalize + '</b></td>'    
     end
     out += "<td colspan='#{link_size.to_s}'></td>"
-    out += '</tr>'
     
     #Formulaire - tetes de colonnes
     out += '<tr>'
-    headers.each do |key, value|
-      out += '<td>'
-      param = 'param['+ key.to_sym.to_s + ']'
-      out += text_field 'toto', key.to_sym, :size => 4
-      out += '</td>'    
+    headers.each do |header|
+      #TODO
+      # faire un switch/case sur la valeur de header[HEADER_FILTER]
+       # - soit checkbox
+       # - soit text-field
+       # - soit rien
+      if header[HEADER_FILTER]
+        out += '<td>'
+        out += text_field 'filter', header[HEADER_KEY].to_sym, :size => 4
+        out += '</td>'
+      else
+        out += '<td></td>'
+      end
     end
     out += "<td colspan='#{link_size.to_s}'></td>"
     out += '</tr>'
-    
+
     #Elements
     elements.each do |element|
       # determination de la class du model pour les liens show/edit/delete
@@ -54,7 +59,7 @@ module ApplicationHelper
       headers.each do |header|
         value = element.send(header[HEADER_KEY])
         #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)
-        if header[0].eql?("star")
+        if header[HEADER_KEY].eql?("star")
           out += "<td>"
           out += link_to_star(element.class, element.id, false)
           out += "</td>"
@@ -65,12 +70,12 @@ module ApplicationHelper
         else  
           #class css du td : align_right ou align_left
           td_class = "list-elt-right"
-          if    value.class == String then td_class = "list-elt-left"
+            if    value.class == String then td_class = "list-elt-left"
             elsif value.class.eql?(Float) then td_class = "list-elt-right"
             elsif value.class.eql?(Fixnum) then td_class = "list-elt-right"
           end
           out += "<td class='#{td_class}'>"
-          out += "#{element.send(header[HEADER_KEY].to_sym).to_s} #{header[HEADER_UNIT]}"
+          out += "#{value} #{header[HEADER_UNIT]}"
           out += '</td>'
         end
       end
@@ -124,7 +129,7 @@ module ApplicationHelper
         else  
           #class css du td : align_right ou align_left
           td_class = "list-elt-right"
-          if    value.class == String then td_class = "list-elt-left"
+            if    value.class == String then td_class = "list-elt-left"
             elsif value.class.eql?(Float) then td_class = "list-elt-right"
             elsif value.class.eql?(Fixnum) then td_class = "list-elt-right"
           end
