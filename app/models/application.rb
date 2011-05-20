@@ -20,7 +20,7 @@ class Application < ActiveRecord::Base
   
   PULVE_HEAD = [
   	['star', 'star', '', true, :check_box], 
-  	['adu', 'adu', '', false, :check_box], 
+  	['adu', 'adu', '', true, :check_box], 
   	['id', 'id', '', false], 
   	['typecultures', 'Cultures', '', false], 
   	['category_name', 'categorie', '', false], 
