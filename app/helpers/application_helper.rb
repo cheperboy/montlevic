@@ -4,12 +4,13 @@ module ApplicationHelper
   HEADER_VALUE = 1
   HEADER_UNIT = 2
   HEADER_FILTER = 3
+  HEADER_TYPE = 4
 
   def euros
     return '€'
   end
 
-  def draw_table_with_find(headers, elements, controller, action, print_stars=false)
+  def draw_table_with_find(headers, elements, controller, action, search)
     head_size = headers.count
     link_size = 3    
     out = ""
@@ -29,15 +30,26 @@ module ApplicationHelper
     #Formulaire - tetes de colonnes
     out += '<tr>'
     headers.each do |header|
-      #TODO
-      # faire un switch/case sur la valeur de header[HEADER_FILTER]
-       # - soit checkbox
-       # - soit text-field
-       # - soit rien
-      if header[HEADER_FILTER]
-        out += '<td>'
-        out += text_field 'filter', header[HEADER_KEY].to_sym, :size => 4
-        out += '</td>'
+      # key = :name ou :star ou :adu ou :cout_produit ... 
+      key = header[HEADER_KEY].to_sym 
+      # value vaut le text de recherche (requette)
+      value = ''
+      value = params[:filter][key].to_s if (params[:filter] && params[:filter][key])
+      
+      # si un filtre est prevu pour cette colonne :
+      if header[HEADER_FILTER] == true
+        if header[HEADER_TYPE] == :text_field
+          out += '<td>'
+          out += text_field 'filter', header[HEADER_KEY].to_sym, :size => 4, :value => value
+          out += '</td>'
+        elsif header[HEADER_TYPE] == :check_box
+          name = 'filter[' + header[HEADER_KEY] + ']'
+          out += '<td>'
+          out += check_box_tag name, value = false, checked = value
+           # check_box_tag 'show[pulves]', value = true, checked = @show[:pulves], options = {:id => 'show[pulves]'} %>
+           # check_box(:attribute, options, on_value, off_value)
+          out += '</td>'
+        end
       else
         out += '<td></td>'
       end
@@ -207,7 +219,6 @@ module ApplicationHelper
     out += '</td></tr>'
     return out
   end
-
 
   def form_tr_text(form, name, col, options=nil)
     value = ''

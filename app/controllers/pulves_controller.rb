@@ -4,12 +4,15 @@ class PulvesController < ApplicationController
   def index
  #   @pulves = Pulve.find_by_saison(:all)
 # TODO onglet verif saisie donnees : verifier que les pulves qui ont un prix/L sont lies a une facture
-    @pulves = Pulve.find(:all) do
+    @pulves = Pulve.find(:all, :order => :id) do
       saison = Setting.find(:first).saison_id
       name.contains? params[:filter][:name] if params[:filter] && params[:filter][:name]
+      star > params[:filter][:star] if params[:filter] && params[:filter][:star]
+      # star > 0
       user.name.contains? params[:filter][:user] if params[:filter] && params[:filter][:user]
     end
-
+    logger.error params.inspect
+    @search_params = params
     respond_to do |format|
       format.html
     end

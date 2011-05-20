@@ -1,4 +1,10 @@
 <% title "Analytic" %>
+<br />
+params : <%= params.inspect %>
+<br />
+@show : <%= @show.inspect %>
+<br />
+
 
 <% form_tag :action => 'all' do %> 
 	<%= select_tag(:column, options_for_select(%w{ Typeculture Parcelle Zone }, params[:column])) %>	

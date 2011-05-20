@@ -2,8 +2,13 @@
 
 | <%= link_to 'Nouveau pulve', new_pulve_path %> |
 <br />
-
-<%= draw_table_with_find(Application::PULVE_HEAD, @pulves, 'pulves', 'index') %>
+sp ; <%= @search_params[:pulve].inspect %>
+<br />
+sp.to_s ; <%= @search_params.to_s %>
+<br />
+params ; <%= params.inspect %>
+<br />
+<%= draw_table_with_find(Application::PULVE_HEAD, @pulves, 'pulves', 'index', params) %>
 <%#= draw_table(Application::PULVE_HEAD, @pulves) %>
 
 

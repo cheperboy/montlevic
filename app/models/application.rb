@@ -19,13 +19,13 @@ class Application < ActiveRecord::Base
   	['print_date', 'date', '']]
   
   PULVE_HEAD = [
-  	['star', 'star', '', false], 
-  	['adu', 'adu', '', false], 
+  	['star', 'star', '', true, :check_box], 
+  	['adu', 'adu', '', false, :check_box], 
   	['id', 'id', '', false], 
   	['typecultures', 'Cultures', '', false], 
   	['category_name', 'categorie', '', false], 
   	['user_name', 'Presta', '', false], 
-  	['name', 'nom', '', true], 
+  	['name', 'nom', '', true, :text_field], 
   	['dosage', 'Dosage', 'L/Ha', false], 
   	['cout_ha_passage', 'Cout Ha', '€/Ha', false], 
   	['print_date', 'date', '', false]]
