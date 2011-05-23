@@ -4,12 +4,24 @@ class PulvesController < ApplicationController
   def index
  #   @pulves = Pulve.find_by_saison(:all)
 # TODO onglet verif saisie donnees : verifier que les pulves qui ont un prix/L sont lies a une facture
+# PULVE_HEAD = [
+#   ['star', 'star', '', true, :check_box], 
+#   ['adu', 'adu', '', true, :check_box], 
+#   ['id', 'id', '', false], 
+#   ['typecultures', 'Cultures', '', false], 
+#   ['category_name', 'categorie', '', true, :text_field], 
+#   ['user_name', 'Presta', '', true, :text_field], 
+#   ['name', 'nom', '', true, :text_field], 
+#   ['dosage', 'Dosage', 'L/Ha', false], 
+#   ['cout_ha_passage', 'Cout Ha', '€/Ha', false], 
+#   ['print_date', 'date', '', false]]
+
     @pulves = Pulve.find(:all, :order => :id) do
       saison = Setting.find(:first).saison_id
       name.contains? params[:filter][:name] if params[:filter] && params[:filter][:name]
-      star == 1 if params[:filter] && params[:filter][:star]
-      adu == 1 if params[:filter] && params[:filter][:adu]
-      user.name.contains? params[:filter][:user] if params[:filter] && params[:filter][:user]
+      # category.name.contains? 'i'
+      star == 1 if ((params[:filter]) && (params[:filter][:star]))
+      adu == 1  if params[:filter] && params[:filter][:adu]
     end
     
     # with_scope(:find => {:conditions => ["saison_id = ?", Setting.find(:first).saison_id] }) do

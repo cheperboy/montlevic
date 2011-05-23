@@ -31,23 +31,21 @@ module ApplicationHelper
     out += '<tr>'
     headers.each do |header|
       # key = :name ou :star ou :adu ou :cout_produit ... 
-      key = header[HEADER_KEY].to_sym 
-      # value vaut le text de recherche (requette)
-      value = ''
-      value = params[:filter][key].to_s if (params[:filter] && params[:filter][key])
-      
+      key = header[HEADER_KEY].to_sym       
       # si un filtre est prevu pour cette colonne :
       if header[HEADER_FILTER] == true
         if header[HEADER_TYPE] == :text_field
+          state = ''
+          state = params[:filter][key].to_s if (params[:filter] && params[:filter][key])
           out += '<td>'
-          out += text_field 'filter', header[HEADER_KEY].to_sym, :size => 4, :value => value
+          out += text_field 'filter', header[HEADER_KEY].to_sym, :size => 4, :value => state
           out += '</td>'
         elsif header[HEADER_TYPE] == :check_box
+          state = false
+          state = true if ((params[:filter]) && (params[:filter][:star]))
           name = 'filter[' + header[HEADER_KEY] + ']'
           out += '<td>'
-          out += check_box_tag name, value = false, checked = value
-           # check_box_tag 'show[pulves]', value = true, checked = @show[:pulves], options = {:id => 'show[pulves]'} %>
-           # check_box(:attribute, options, on_value, off_value)
+          out += check_box_tag 'filter[star]', value = state, checked = state, options = {:id => 'filter[star]'}
           out += '</td>'
         end
       else
@@ -93,8 +91,6 @@ module ApplicationHelper
       end
       
       #Liens
-      url = element_class.pluralize
-      id = element.id
       out += '<td>'+ link_to_show(element_class, element.id) +'</td>'
       out += '<td>'+ link_to_edit(element_class, element.id) +'</td>'
       out += '<td>'+ link_to_delete(element_class, element.id) +'</td>'
