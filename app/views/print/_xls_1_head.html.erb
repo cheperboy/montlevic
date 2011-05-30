@@ -1,0 +1,48 @@
+<table class="table_print">
+	<tr>
+		<td></td>
+		<td></td>
+		<td class="date" ></td>
+		<td></td>
+		<td></td>
+		<td></td>
+<% @colonnes.each do |colonne| %>
+	<td class="<%= odd(@test.Tcols[colonne.id][:rang]) %>-head" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> ><b>
+		<%=h @test.Tcols[colonne.id][:name] %>
+	<% if (@test.Tcols[:col_model] == Parcelle) %>
+		<br><%=h Parcelle.find(@test.Tcols[colonne.id][:id]).typeculture.name %>
+	<% end %>		
+	</b></td>
+<% end %>
+	</tr>	
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+<% @colonnes.each do |colonne| %>
+		<td class="<%= odd(@test.Tcols[colonne.id][:rang]) %>-head" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> >
+			<b><%=h @test.Tcols[colonne.id][:surface] %> Ha</b>
+			<%#=h parcelle.typeculture.name %>
+		</td>
+<% end %>
+	</tr>	
+	<tr>
+		<td class="left"><b></b></td>
+		<td class="left"><b>nom</b></td>
+		<td class="left"><b>date</b></td>
+		<td class="left"><b>surface</b></td>
+		<td class="left"><b>cout/ha</b></td>
+		<td class="left"><b>total</b></td>
+<% @colonnes.each do |colonne| %>
+<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
+	<% if @show[:cout_ha] %>
+		<td class="<%= td_class %>">c/ha</td>
+	<% end %>
+	<% if @show[:cout_total] %>
+		<td class="<%= td_class %>">Total</td>
+	<% end %>
+<% end %>
+	</tr>	

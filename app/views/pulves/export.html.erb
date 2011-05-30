@@ -1,0 +1,12 @@
+<% title "test Pulve" %>
+<table border="1">
+  <tr>
+    <th>Name</th>
+  </tr>
+  <% @pulves.each do |p| %>
+    <tr>
+      <td><%= p.name %></td>
+      <td><%= p.user.name %></td>
+    <% end %>
+  </tr>
+</table>
