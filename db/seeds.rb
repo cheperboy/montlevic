@@ -256,57 +256,170 @@ end
 # 5 Ha + Bruneau - Labours
 labours = Labour.create([
   {:name => 'moisson', :cout_ha_passage => 10, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :date => '2009-07-24',
-  :desc => "", :category => Category.find_by_name('moisson')} ]),
+  :desc => "", :category => Category.find_by_name('moisson')} ])
 
-# 5 Ha + Bruneau - Pulves
-pulves = Pulve.create!([
-  {:name => 'Campo + Catalino', :category => Category.find_by_name('semis'), :dosage => 3.5, :date => '2009-08-31', :prix_littre => 0, 
-  :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'Kg/Ha, Catalino selection 2Ha cote haie'},
+  # 5 Ha + Bruneau - Pulves
+  pulves = Pulve.create!([
+    {:name => 'Campo + Catalino', :category => Category.find_by_name('semis'), :dosage => 3.5, :date => '2009-08-31', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'Kg/Ha, Catalino selection 2Ha cote haie'},
 
-  {:name => 'Colzamid', :category => Category.find_by_name('desherbant'), :dosage => 2.2, :date => '2009-08-31', :prix_littre => 0, 
-  :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
+    {:name => 'Colzamid', :category => Category.find_by_name('desherbant'), :dosage => 2.2, :date => '2009-08-31', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
 
-  {:name => 'Novrel', :category => Category.find_by_name('desherbant'), :dosage => 1.8, :date => '2009-09-02', :prix_littre => 0, 
-  :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
+    {:name => 'Novrel', :category => Category.find_by_name('desherbant'), :dosage => 1.8, :date => '2009-09-02', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
 
-  {:name => 'folyr', :category => Category.find_by_name('desherbant'), :dosage => 0.6, :date => '2009-09-20', :prix_littre => 0, 
-  :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
+    {:name => 'folyr', :category => Category.find_by_name('desherbant'), :dosage => 0.6, :date => '2009-09-20', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
 
-  {:name => 'fury', :category => Category.find_by_name('desherbant'), :dosage => 0.1, :date => '2009-09-20', :prix_littre => 0, 
-  :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha + huile 1L'},
+    {:name => 'fury', :category => Category.find_by_name('desherbant'), :dosage => 0.1, :date => '2009-09-20', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha + huile 1L'},
 
-  {:name => '0-25-25', :category => Category.find_by_name('engrais'), :dosage => 200, :date => '2010-02-04', :prix_littre => 0, 
-  :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'Kg ou Kg/Ha ?', :star => 1},
-  
-  {:name => 'azote', :category => Category.find_by_name('azote'), :dosage => 195, :date => '2010-02-10', :prix_littre => 0, 
-  :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => '195Kg = 65u'},
-  
-  {:name => 'azote', :category => Category.find_by_name('azote'), :dosage => 230, :date => '2010-03-09', :prix_littre => 0, 
-  :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => '230Kg = 77u'},
-  
-  {:name => 'azomag', :category => Category.find_by_name('soufre'), :dosage => 150, :date => '2010-03-12', :prix_littre => 0, 
-  :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => '150Kg = 30u'},
-  
-  {:name => 'fury', :category => Category.find_by_name('insecticide'), :dosage => 0.10, :date => '2010-03-19', :prix_littre => 0, 
-  :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
-  
-  {:name => 'proteus', :category => Category.find_by_name('insecticide'), :dosage => 0.5, :date => '2010-04-06', :prix_littre => 0, 
-  :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
-  
-  {:name => 'sunorg', :category => Category.find_by_name('fongicide'), :dosage => 0.6, :date => '2010-04-18', :prix_littre => 0, 
-  :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
-  
-  {:name => 'anistar', :category => Category.find_by_name('fongicide'), :dosage => 0.75, :date => '2010-05-07', :prix_littre => 0, 
-  :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'}
-  
+    {:name => '0-25-25', :category => Category.find_by_name('engrais'), :dosage => 200, :date => '2010-02-04', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'Kg ou Kg/Ha ?', :star => 1},
 
-])
+    {:name => 'azote', :category => Category.find_by_name('azote'), :dosage => 195, :date => '2010-02-10', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => '195Kg = 65u'},
 
+    {:name => 'azote', :category => Category.find_by_name('azote'), :dosage => 230, :date => '2010-03-09', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => '230Kg = 77u'},
 
-parcelle = saison_2009_2010.parcelles.find_by_name('Mitant')                      
+    {:name => 'azomag', :category => Category.find_by_name('soufre'), :dosage => 150, :date => '2010-03-12', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => '150Kg = 30u'},
+
+    {:name => 'fury', :category => Category.find_by_name('insecticide'), :dosage => 0.10, :date => '2010-03-19', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
+
+    {:name => 'proteus', :category => Category.find_by_name('insecticide'), :dosage => 0.5, :date => '2010-04-06', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
+
+    {:name => 'sunorg', :category => Category.find_by_name('fongicide'), :dosage => 0.6, :date => '2010-04-18', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
+
+    {:name => 'anistar', :category => Category.find_by_name('fongicide'), :dosage => 0.75, :date => '2010-05-07', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'}
+  ])
+
+parcelle = saison_2009_2010.parcelles.find_by_name('Mitant')
+parcelle.typeculture = Typeculture.find_by_name('Colza')
+parcelle.save!
+
 pulves.each do |pulve|
   putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)
 end
+labours.each do |labour|
+  labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)
+end
+
+  # 12 Ha Les Feuillets - Labours
+  labours = Labour.create!([
+    {:name => 'moisson', :cout_ha_passage => 10, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :date => '2009-07-25',
+    :desc => "", :category => Category.find_by_name('moisson')} ])
+
+  # 12 Ha Les Feuillets - Pulves
+  pulves = Pulve.create!([
+    {:name => 'Glyphosate', :category => Category.find_by_name('desherbant'), :dosage => 3, :date => '2009-08-13', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha, + 0,5 L huile'},
+
+    {:name => 'Campo', :category => Category.find_by_name('semis'), :dosage => 3.5, :date => '2009-09-05', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'Kg/Ha'},
+
+    {:name => 'Chrono', :category => Category.find_by_name('desherbant'), :dosage => 1.04, :date => '2009-09-29', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'Kg/Ha'},
+
+    {:name => 'Folyr + huile', :category => Category.find_by_name('desherbant'), :dosage => 0.6, :date => '2009-11-20', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'Kg/Ha, + huile 1L'},
+
+    {:name => 'Fury', :category => Category.find_by_name('insecticide'), :dosage => 0.1, :date => '2009-11-22', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
+
+    {:name => '0-25-25', :category => Category.find_by_name('engrais'), :dosage => 200, :date => '2010-02-04', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'Kg'},
+
+    {:name => 'azote', :category => Category.find_by_name('azote'), :dosage => 225, :date => '2010-02-10', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'Kg, 75u'},
+
+    {:name => 'azomag 20', :category => Category.find_by_name('soufre'), :dosage => 150, :date => '2010-03-12', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'Kg, 30u'},
+
+    {:name => 'fury', :category => Category.find_by_name('insecticide'), :dosage => 0.1, :date => '2010-03-19', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
+
+    {:name => 'proteus', :category => Category.find_by_name('insecticide'), :dosage => 0.5, :date => '2010-04-06', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
+
+    {:name => 'surnog', :category => Category.find_by_name('fongicide'), :dosage => 0.6, :date => '2010-04-18', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'},
+
+    {:name => 'amistar', :category => Category.find_by_name('fongicide'), :dosage => 0.75, :date => '2010-05-07', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'}
+     ])
+
+
+  parcelle = saison_2009_2010.parcelles.find_by_name('Feuillets')
+  parcelle.typeculture = Typeculture.find_by_name('Colza')
+  parcelle.save!
+
+  pulves.each do |pulve|
+    putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)
+  end
+  labours.each do |labour|
+    labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)
+  end
+  
+  # 14 Ha + 9Ha Cote luzerne - Labours
+  labours = Labour.create!([
+    {:name => 'moisson', :cout_ha_passage => 10, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :date => '2009-07-25',
+    :desc => "", :category => Category.find_by_name('moisson')} ])
+
+  # 14 Ha + 9Ha Cote luzerne - Pulves
+  pulves = Pulve.create!([
+    {:name => 'semis', :category => Category.find_by_name('semis'), :dosage => 170, :date => '2009-10-19', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'Kg, PR + Richepain + Frelon + selection Paledor + Richepain n41'},
+
+    {:name => 'Celtic', :category => Category.find_by_name('desherbant'), :dosage => 2, :date => '2009-11-19', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha, + Iso 2L/Ha. Sur tournesol + tour de champs'},
+
+    {:name => 'Harmony', :category => Category.find_by_name('desherbant'), :dosage => 25, :date => '2009-11-19', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'g, + Picosolo, 80g/Ha. sur Colza'},
+
+    {:name => 'super 45', :category => Category.find_by_name('engrais'), :dosage => 157, :date => '2010-02-04', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'Kg'},
+
+    {:name => 'azote', :category => Category.find_by_name('azote'), :dosage => 190, :date => '2010-02-11', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => '190 Kg, 64u'},
+
+    {:name => 'azote', :category => Category.find_by_name('azote'), :dosage => 183, :date => '2010-03-09', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => '183 Kg, 61u'},
+
+    {:name => 'Celio', :category => Category.find_by_name('desherbant'), :dosage => 0.5, :date => '2010-03-23', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => '0.5L + Huile 0.1L. sur 6.72 ha cote luzerne'},
+
+    {:name => 'Prochorage', :category => Category.find_by_name('fongicide'), :dosage => 1, :date => '2010-04-06', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => ''},
+
+    {:name => 'suplason', :category => Category.find_by_name('desherbant'), :dosage => 1, :date => '2010-04-18', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => '+ Storane 0.9L16 ha derriere maison'},
+
+    {:name => 'azote', :category => Category.find_by_name('azote'), :dosage => 120, :date => '2010-05-17', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => '120Kg, 40u'},
+
+    {:name => 'comet Player', :category => Category.find_by_name('fongicide'), :dosage => 120, :date => '2010-05-28', :prix_littre => 0, 
+    :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => '1 pack = 6 Ha'}
+
+     ])
+
+
+  parcelle = saison_2009_2010.parcelles.find_by_name('Feuillets')
+  parcelle.typeculture = Typeculture.find_by_name('Ble')
+  parcelle.save!
+
+  pulves.each do |pulve|
+    putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)
+  end
+  labours.each do |labour|
+    labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)
+  end
 
 
 

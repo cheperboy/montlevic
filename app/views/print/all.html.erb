@@ -1,38 +1,16 @@
 <% title "Analytic" %>
-<br />
-params : <%= params.inspect %>
-<br />
-@show : <%= @show.inspect %>
-<br />
 
+<%= link_to "Export Excel", :controller => "print", :action => 'export' %> | 
 
-<% form_tag :action => 'all' do %> 
-	<%= select_tag(:column, options_for_select(%w{ Typeculture Parcelle Zone }, params[:column])) %>	
-<br>
-<label for='show[pulves]'>Pulves : </label>
-<%= check_box_tag 'show[pulves]', value = true, checked = @show[:pulves], options = {:id => 'show[pulves]'} %>
-<br>
-<label for='show[cout_total]'>Cout Total : </label>
-<%= check_box_tag 'show[cout_total]', value = false, checked = @show[:cout_total], options = {:id => 'show[cout_total]'} %>
-<br>
-<label for='show[cout_ha]'>Cout Ha : </label>
-<%= check_box_tag 'show[cout_ha]', value = false, checked = @show[:cout_ha], options = {:id => 'show[cout_ha]'} %>
-<br>
-<label for='show[total_type]'>Total Type : </label>
-<%= check_box_tag 'show[total_type]', value = false, checked = @show[:total_type], options = {:id => 'show[total_type]'} %>
-<br>
-<label for='show[total_cat]'>Total Categorie : </label>
-<%= check_box_tag 'show[total_cat]', value = false, checked = @show[:total_cat], options = {:id => 'show[total_cat]'} %><br>
+<%#= link_to_function "Show Search",  toggle_div(:search) %>
+<br /><br />
 
-<br>
-	<%= submit_tag :'Mettre a jour' %>
-<% end %>
-
+<div id="search" style="display: none;">
+	<%= render :partial => 'search' %>
+</div>
 
 
 <% unless @display == 0 %>
-
 	<%= render(:partial => "print_basic") %>
-	
 <% end %>
 

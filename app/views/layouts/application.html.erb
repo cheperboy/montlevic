@@ -7,9 +7,10 @@
     <%= stylesheet_link_tag 'table' %>
     <%= stylesheet_link_tag 'index-list' %>
 	<%= javascript_include_tag "prototype" %>
+	<%= javascript_include_tag :defaults %>
 	<%= jqgrid_stylesheets %> 
 	<%= jqgrid_javascripts %>
-<%= yield(:head) %>
+	<%= yield(:head) %>
     <% javascript_tag do %>
       <%= yield(:jstemplates) %>
     <% end -%>

@@ -12,4 +12,5 @@ class Setting < ActiveRecord::Base
     @current_saison_id = Setting.find(:first).saison
   end
 
+  
 end

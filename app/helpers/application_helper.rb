@@ -6,6 +6,14 @@ module ApplicationHelper
   HEADER_FILTER = 3
   HEADER_TYPE = 4
 
+  def toggle_div(div) 
+    logger.error 'toggle_div id : ' + div.to_s + ' page[div] : ' + page[div]
+    update_page do |page|
+      page[div].toggle
+      page[div].visual_effect :highlight
+    end 
+  end
+  
   def euros
     return '€'
   end
@@ -42,10 +50,10 @@ module ApplicationHelper
           out += '</td>'
         elsif header[HEADER_TYPE] == :check_box
           state = false
-          state = true if ((params[:filter]) && (params[:filter][:star]))
+          state = true if ((params[:filter]) && (params[:filter][key]))
           name = 'filter[' + header[HEADER_KEY] + ']'
           out += '<td>'
-          out += check_box_tag 'filter[star]', value = state, checked = state, options = {:id => 'filter[star]'}
+          out += check_box_tag name, value = state, checked = state, options = {:id => 'filter[star]'}
           out += '</td>'
         end
       else

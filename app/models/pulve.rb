@@ -33,6 +33,24 @@ class Pulve < Charge
   validates_numericality_of :cout_ha_passage, :message => "n'est pas un nombre"
   validates_numericality_of :cout_fixe, :message => "n'est pas un nombre"
 
+# ----- Finders -----
+
+  # named_scope :with_star,
+  #             {:conditions => ["star = ?", 1]}
+
+  def self.find_with_saison(*args) 
+    with_scope(:find => {:conditions => ["saison_id = ?", Setting.find(:first).saison_id]}) do 
+      find(*args)
+    end 
+  end
+
+  def self.with_star
+    with_scope(:find => {:conditions => ["user_id = 2"]}) do
+      yield
+    end
+  end
+
+
 # ----- Methodes -----
   
   def get_cout_ha_produit

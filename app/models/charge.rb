@@ -1,7 +1,7 @@
 class Charge < ActiveRecord::Base
 
   self.abstract_class = true
-  
+
   # permet de créer une classe sans que la 
   # table correspondante existe dans la db
 #  class << self

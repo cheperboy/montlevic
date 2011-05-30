@@ -52,10 +52,6 @@ class Print < ActiveRecord::Base
     
     set_alias()
     # return true
-    logger.error('@Tfactures.to_yaml')
-    logger.error(@Tfactures.to_yaml)
-    logger.error('@Tcols[1].to_yaml')
-    logger.error(@Tcols[1].to_yaml)
   end
  
   def init_display
@@ -145,8 +141,8 @@ class Print < ActiveRecord::Base
         end
       end
     end    
-    logger.error('@Tcols.to_yaml')
-    logger.error(self.Tcols.inspect)
+    # logger.error('@Tcols.to_yaml')
+    # logger.error(self.Tcols.inspect)
   end
 
   def init_factures

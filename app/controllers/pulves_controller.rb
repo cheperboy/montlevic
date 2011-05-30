@@ -23,25 +23,18 @@ class PulvesController < ApplicationController
       star == 1 if ((params[:filter]) && (params[:filter][:star]))
       adu == 1  if params[:filter] && params[:filter][:adu]
     end
-    
-    # with_scope(:find => {:conditions => ["saison_id = ?", Setting.find(:first).saison_id] }) do
-    #   find(*args)
-    # end
 
-    logger.error params.inspect
-    @search_params = params
     respond_to do |format|
       format.html
     end
   end
- #, :category_id, :user_id, :dosage, :date 
-  def index_old
-    @pulves = Pulve.find_by_saison(:all)
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @pulves }
-    end
+  def export
+    headers['Content-Type'] = "application/vnd.ms-excel"
+    headers['Content-Disposition'] = 'attachment; filename="report.xls"'
+    headers['Cache-Control'] = ''
+    @pulves = Pulve.find_by_saison(:all)
+    render :layout => false
   end
 
   # GET /pulves/1
