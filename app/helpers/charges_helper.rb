@@ -3,7 +3,6 @@ module ChargesHelper
     link_to_remote  display.to_s,
                     :url => { :action => "list", :order => col.to_s },
                     :update => 'list_facture'
-
   end
 
   def OLD_link_to_star(facture_id, adu)
@@ -25,14 +24,9 @@ module ChargesHelper
       return image_tag('star-white2.jpg')
     end
   end
-
-  # def OLD_display_adu(id)
-  #   star = Facture.find(id).adu
-  #   if (star == 1)
-  #     return image_tag('star-green.jpg')
-  #   else
-  #     return image_tag('star-white2.jpg')
-  #   end
-  # end
+  
+  def select_pulve_units(form, col)
+    form.select(col, Application::PULVE_DOSAGE_UNITS)
+  end
 
 end

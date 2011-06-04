@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer  "star"
     t.integer  "adu"
     t.text     "desc"
+    t.string   "unit"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

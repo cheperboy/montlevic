@@ -82,9 +82,13 @@ module ApplicationHelper
           out += link_to_star(element.class, element.id, false)
           out += "</td>"
         elsif header[HEADER_KEY].eql?("adu")
-            out += "<td>"
-            out += link_to_star(element.class, element.id, true)
-            out += "</td>"
+          out += "<td>"
+          out += link_to_star(element.class, element.id, true)
+          out += "</td>"
+        elsif header[HEADER_KEY].eql?("dosage")
+          out += "<td class='list-elt-right'>"
+          out += element.dosage.to_s + ' ' + element.unit
+          out += "</td>"
         else  
           #class css du td : align_right ou align_left
           td_class = "list-elt-right"
@@ -248,6 +252,30 @@ module ApplicationHelper
     return out
   end
 
+  # identique a form_tr_text mais sans le <tr></tr>
+  def form_text(form, name, col, options=nil)
+    value = ''
+    size = 25
+    unit = ''
+    if options
+      size = options[:size] if options[:size]
+      value = options[:value].to_s if options[:value]
+      unit = ' ' + options[:unit].to_s  if options[:unit]
+    end
+    out = ''
+    out += form.label col, name
+    out += ' : </td>'
+    out += '<td class="td-left">'
+    if options && options[:value]
+      out += form.text_field col.to_sym, :value => value, :size => size
+    else 
+      out += form.text_field col.to_sym, :size => size
+    end
+    out += unit
+    out += '</td></tr>'
+    return out
+  end
+
   def form_tr_text_area(form, name, col, options=nil)
     out = ''
     out += '<tr><td>'
@@ -292,7 +320,7 @@ module ApplicationHelper
     out += '</td></tr>'
     return out
   end
-  
+
   def form_tr_check(form, name, col)
     out = ''
     out += '<tr><td>'

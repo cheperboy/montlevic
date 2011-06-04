@@ -2,11 +2,10 @@
 
 <%= link_to "Export Excel", :controller => "print", :action => 'export' %> | 
 
-<%#= link_to_function "Show Search",  toggle_div(:search) %>
-<br /><br />
+<%= link_to_function "Affichage", update_page { |page| page[:search].toggle } %>
 
-<div id="search" style="display: none;">
-	<%= render :partial => 'search' %>
+</p> <div id="search" style="display: none;">
+<%= render :partial => 'search' %>
 </div>
 
 

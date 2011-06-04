@@ -1,7 +1,9 @@
 class Application < ActiveRecord::Base
 
-  SAISON = Setting.find(1).saison_id
+  PULVE_DOSAGE_UNITS = [['L/Ha', 'L/Ha'], ['Kg/Ha', 'Kg/Ha']]
 
+  SAISON = Setting.find(1).saison_id
+  
   # HEADER_KEY = 0
   # HEADER_VALUE = 1
   # HEADER_UNIT = 2
@@ -26,7 +28,7 @@ class Application < ActiveRecord::Base
   	['category_name', 'categorie', '', false, :text_field], 
   	['user_name', 'Presta', '', false, :text_field], 
   	['name', 'nom', '', true, :text_field], 
-  	['dosage', 'Dosage', 'L/Ha', false], 
+  	['dosage', 'Dosage', 'toto', false], 
   	['cout_ha_passage', 'Cout Ha', '€/Ha', false], 
   	['print_date', 'date', '', false]]
 

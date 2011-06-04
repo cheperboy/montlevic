@@ -1,44 +1,8 @@
 class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
+
   def index
-
-    # 
-    # toto = []
-    # toto << 'jhon'
-    # toto << 'mat'
-    # logger.error(toto.to_s)
-    # 
-    # @subsubdata = {}
-    # @subsubdata['subsub1'] = 'string'
-    # @subsubdata[:subsub2] = :_sym_
-    # @subsubdata[:inte] = 1000.33
-    # 
-    # @subdata = {}
-    # @subdata[:tab] = toto
-    # @subdata[:sub2] = @subsubdata
-    # 
-    # @data={}
-    # @data[:valeur1] = 'premiere'
-    # @data[:valeur2] = 'seconde'
-    # @data[3] = toto
-    # @data['the sub'] = @subdata
-   
-    users = User.find(:all) do
-      if params[:_search] == "true"
-        name    =~ "%#{params[:name]}%" if params[:name].present?
-      end
-      paginate :page => params[:page], :per_page => params[:rows]      
-      order_by "#{params[:sidx]} #{params[:sord]}"
-    end
-
-    respond_to do |format|
-      format.html
-      format.json { render :json => users.to_jqgrid_json([:id,:name], 
-                                                         params[:page], params[:rows], users.total_entries) }
-    end
-  end
-  def index_old
     @users = User.all(:order => :name)
 
     respond_to do |format|

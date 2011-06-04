@@ -6,37 +6,39 @@
 	</tr>
 
 <% unless (((@labours.class == Array) && @labours.size == 0) || (@labours.nil?)) %>
-	<% @labours.each do |labour| %>
-		<% dep = @test.Tlabours[labour.id] %>
+	<% if @show[:labours] %>
+		<% @labours.each do |labour| %>
+			<% dep = @test.Tlabours[labour.id] %>
 					 
-		<tr>
-			<td class='left'><strong><%= labour.category.name %></strong></td>
-			<td class='left'>
-				<%= link_popup_labour(dep) %> 
-				<% if labour.factures_assoc? %>
-					*
-				<% end %>
-			</td>
-			<td><%= labour.date.to_s :dmy %></td>	
-			<td>
-				<%= labour.parcelles.length %> p - 
-				<%= pretty(dep[:surface_total]) %> ha
-			</td>
-			<td><%= pretty(dep[:ha]) %></td>
-			<td><%= print_popup(pretty(dep[:total]), "@test.Tlabours[labour.id][:total]") %></td>
+			<tr>
+				<td class='left'><strong><%= labour.category.name %></strong></td>
+				<td class='left'>
+					<%= link_popup_labour(dep) %> 
+					<% if labour.factures_assoc? %>
+						*
+					<% end %>
+				</td>
+				<td><%= labour.date.to_s :dmy %></td>	
+				<td>
+					<%= labour.parcelles.length %> p - 
+					<%= pretty(dep[:surface_total]) %> ha
+				</td>
+				<td><%= pretty(dep[:ha]) %></td>
+				<td><%= print_popup(pretty(dep[:total]), "@test.Tlabours[labour.id][:total]") %></td>
 		
-		<% @colonnes.each do |colonne| %>
-			<% cout_ha = pretty(dep[colonne.id][:ha]) %>
-			<% cout_total = pretty(dep[colonne.id][:total]) %>
-			<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
-			<% if @show[:cout_ha] %>
-				<td class="<%= td_class %>"><%=h cout_ha %></td>
+			<% @colonnes.each do |colonne| %>
+				<% cout_ha = pretty(dep[colonne.id][:ha]) %>
+				<% cout_total = pretty(dep[colonne.id][:total]) %>
+				<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
+				<% if @show[:cout_ha] %>
+					<td class="<%= td_class %>"><%=h cout_ha %></td>
+				<% end %>
+				<% if @show[:cout_total] %>
+					<td class="<%= td_class %>"><%=h cout_total %></td>
+				<% end %>
 			<% end %>
-			<% if @show[:cout_total] %>
-				<td class="<%= td_class %>"><%=h cout_total %></td>
-			<% end %>
+			</tr>
 		<% end %>
-		</tr>
 	<% end %>
 
 <!-- Ajout pour test par categories -->
