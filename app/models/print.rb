@@ -62,7 +62,7 @@ class Print < ActiveRecord::Base
   end
   
   def init_cols
-    self.res = Analytic.new()
+    # self.res = Analytic.new()
     unless @cols.nil?
       rang = 0
 
