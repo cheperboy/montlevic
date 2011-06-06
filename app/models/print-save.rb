@@ -1,7 +1,6 @@
 class Print < ActiveRecord::Base
   require 'csv'
 
-
   #alias :big :small
 
   #Txxx variables temporaires
@@ -22,9 +21,6 @@ class Print < ActiveRecord::Base
       @factures = @saison.factures
       @ventes = @saison.ventes
       @types_facture = Factcat.all
-      @cats_labour = Category.labours
-      @cats_facture = Category.factures
-      
     else
       return nil
     end
@@ -77,8 +73,8 @@ class Print < ActiveRecord::Base
       self.Tcols[:charges][:ha] = 0      # derniere case somme de tout les totaux ha
       self.Tcols[:benef][:total] = 0  # derniere case somme de TOUTES les ventes
       self.Tcols[:benef][:ha] = 0     # derniere case somme de TOUTES les ventes ha
-      self.Tcols[:vente_total] = 0  # derniere case somme de TOUTES les ventes
-      self.Tcols[:vente_ha] = 0     # derniere case somme de TOUTES les ventes ha
+      self.Tcols[:vente_total] = 0    # derniere case somme de TOUTES les ventes
+      self.Tcols[:vente_ha] = 0       # derniere case somme de TOUTES les ventes ha
       
       for col in @cols
         self.Tcols[:length] = @cols.length
@@ -100,10 +96,14 @@ class Print < ActiveRecord::Base
         self.Tcols[col.id][:factures][:total] = {}
         self.Tcols[col.id][:ventes][:ha] = {}
         self.Tcols[col.id][:ventes][:total] = {}
-        self.Tcols[col.id][:charges][:type] = {}
-        self.Tcols[col.id][:charges][:type] = {}
-        self.Tcols[col.id][:charges][:type][:ha] = {}
-        self.Tcols[col.id][:charges][:type][:total] = {}
+        self.Tcols[col.id][:charges][:total] = {}
+        self.Tcols[col.id][:charges][:ha] = {}
+        self.Tcols[col.id][:charges][:category] = {}
+        self.Tcols[col.id][:charges][:category][:ha] = {}
+        self.Tcols[col.id][:charges][:category][:total] = {}
+        self.Tcols[col.id][:charges][:factcat] = {}
+        self.Tcols[col.id][:charges][:factcat][:ha] = {}
+        self.Tcols[col.id][:charges][:factcat][:total] = {}
         self.Tcols[col.id][:benef][:ha] = {}
         self.Tcols[col.id][:benef][:total] = {}
         
@@ -122,21 +122,27 @@ class Print < ActiveRecord::Base
         
         self.Tcols[col.id][:factures][:total][:sum] = 0  
         self.Tcols[col.id][:factures][:ha][:sum] = 0  
-        self.Tcols[col.id][:charges][:type][:total][:sum] = 0  
-        self.Tcols[col.id][:charges][:type][:ha][:sum] = 0  
+        self.Tcols[col.id][:charges][:total][:sum] = 0  
+        self.Tcols[col.id][:charges][:ha][:sum] = 0  
         self.Tcols[col.id][:benef][:total][:sum] = 0
         self.Tcols[col.id][:benef][:ha][:sum] = 0
   
+        for cat in Category.factures
+          self.Tcols[col.id][:charges][:category][:total][cat.id] = 0  
+          self.Tcols[col.id][:charges][:category][:ha][cat.id] = 0
+        end
         for type in self.types_facture
           self.Tcols[col.id][:factures][:total][type.id] = 0  
           self.Tcols[col.id][:factures][:ha][type.id] = 0  
-          self.Tcols[col.id][:charges][:type][:total][type.id] = 0  
-          self.Tcols[col.id][:charges][:type][:ha][type.id] = 0
+          self.Tcols[col.id][:charges][:factcat][:total][type.id] = 0  
+          self.Tcols[col.id][:charges][:factcat][:ha][type.id] = 0
           self.Tcols[col.id][:benef][:total][type.id] = 0  
           self.Tcols[col.id][:benef][:ha][type.id] = 0
         end
       end
     end    
+    # logger.error('@Tcols.to_yaml')
+    # logger.error(self.Tcols.inspect)
   end
 
   def init_factures
@@ -145,37 +151,41 @@ class Print < ActiveRecord::Base
     @Tfactures = Hash.new()
     @Tfactures[:total] = Hash.new()
     @Tfactures[:ha] = Hash.new()
-    @Tfactures[:type] = Hash.new()
-    @Tfactures[:cat] = Hash.new()
-    @Tfactures[:type][:total] = Hash.new()
-    @Tfactures[:cat][:total] = Hash.new()
-    @Tfactures[:type][:ha] = Hash.new()
-    @Tfactures[:cat][:ha] = Hash.new()
     
     unless @factures.nil? || @factures.size == 0
+      @Tfactures[:total][:sum] = 0 
+      @Tfactures[:ha][:sum] = 0  
+      @Tfactures[:total][:factcat] = Hash.new()
+      @Tfactures[:ha][:factcat] = Hash.new()
+      @Tfactures[:total][:category] = Hash.new()
+      @Tfactures[:ha][:category] = Hash.new()
+          
+      for factcat in self.types_facture
+        @Tfactures[:total][:factcat][factcat.id] = 0 
+        @Tfactures[:ha][:factcat][factcat.id] = 0    
+      end
+      for cat in Category.factures
+        @Tfactures[:total][:category][cat.id] = 0 
+        @Tfactures[:ha][:category][cat.id] = 0    
+      end
+    
       for facture in @factures
-        @Tfactures[facture.id] = {:parcelles => {}, :id => facture.id, :name => facture.name, :cout => facture.cout}
+        @Tfactures[facture.id] = {
+          :parcelles => {}, 
+          :id => facture.id, 
+          :name => facture.name, 
+          :cout => facture.cout,
+          :factcat => facture.factcat_id,
+          :category => facture.category_id}
         #for parcelle in facture.parcelles
         for col in @cols
           hcols = {:name => col.name, :surface => col.surface }  
           @Tfactures[facture.id][:parcelles].store(col.id, hcols)
           @Tfactures[facture.id][col.id] = {:ha => 0, :total => 0 , :cout_sans_charges => 0 }
   
-          #@Tfactures[facture.id][:category] = facture.category_id 
           @Tfactures[facture.id][:total] = 0 
           @Tfactures[facture.id][:ha] = 0 
-          @Tfactures[:total][:sum] = 0 
-          @Tfactures[:ha][:sum] = 0 
-          
-          for type in self.types_facture
-            @Tfactures[:type][:total][type.id] = 0 
-            @Tfactures[:type][:ha][type.id] = 0 
-          end
-          for cat in @cats_facture
-            @Tfactures[:cat][:total][cat.id] = 0 
-            @Tfactures[:cat][:ha][cat.id] = 0 
-          end
-        end
+       end
       end
     else # @factures.nil?
       return nil
@@ -231,15 +241,11 @@ class Print < ActiveRecord::Base
     @Tlabours = Hash.new()
     @Tlabours[:total] = Hash.new()
     @Tlabours[:ha] = Hash.new()
+    # @Tlabours[:categories] = Hash.new()
     @Tlabours[:total][:sum] = 0
     @Tlabours[:ha][:sum] = 0
     for labour in @labours
-      @Tlabours[labour.id] = {:parcelles => {}, 
-                              :id => labour.id, 
-                              :name => labour.name, 
-                              :total => 0, 
-                              :ha_passage => labour.cout_ha_passage,
-                              :category => labour.category_id}
+      @Tlabours[labour.id] = {:parcelles => {}, :id => labour.id, :name => labour.name, :total => 0, :ha_passage => labour.cout_ha_passage}
       for col in @cols
         hcols = {:name => col.name, :surface => col.surface }  
         @Tlabours[labour.id][:parcelles].store(col.id, hcols)
@@ -323,11 +329,9 @@ class Print < ActiveRecord::Base
       
       total_ha = facture.get_cout_ha
       total = facture.get_cout_total
-      @Tfactures[facture.id][:category] = facture.factcat_id
-      @Tfactures[facture.id][:cat_facture] = facture.category_id
       @Tfactures[facture.id][:parcelles_size] = @Tfactures[facture.id][:parcelles].length
       @Tfactures[facture.id][:surface_total] = facture.sum_surfaces
-
+      
       #total de la facture
       @Tfactures[facture.id][:total] = total
       @Tfactures[facture.id][:ha] = total_ha
@@ -337,17 +341,18 @@ class Print < ActiveRecord::Base
       @Tfactures[:ha][:sum] += total_ha
       
       #totaux par types de factures
-      for type in self.types_facture
-        if (@Tfactures[facture.id][:category] == type.id)
-          @Tfactures[:type][:total][type.id] += total
-          @Tfactures[:type][:ha][type.id] += total_ha
+      for factcat in self.types_facture
+        if (@Tfactures[facture.id][:factcat] == factcat.id)
+          @Tfactures[:total][:factcat][factcat.id] += total
+          @Tfactures[:ha][:factcat][factcat.id] += total_ha
         end
       end
-      #totaux par categories de factures
-      for cat in @cats_facture
-        if (@Tfactures[facture.id][:cat_facture] == cat.id)
-          @Tfactures[:cat][:total][cat.id] += total
-          @Tfactures[:cat][:ha][cat.id] += total_ha
+      
+      #totaux par categorie de factures
+      for cat in Category.factures
+        if (@Tfactures[facture.id][:category] == cat.id)
+          @Tfactures[:total][:category][cat.id] += total 
+          @Tfactures[:ha][:category][cat.id] += total_ha   
         end
       end
     end
@@ -372,21 +377,21 @@ class Print < ActiveRecord::Base
       @Tventes[:ha][:sum] += @Tventes[vente.id][:ha]
     end
   end
-  
+
   def run_totaux    
     #TOTAUX PAR PARCELLES
     for labour in @labours
       for col in @cols
         cout_ha = @Tlabours[labour.id][col.id][:ha]
         cout_total = @Tlabours[labour.id][col.id][:total]
-
+      
       #somme des labours par col
         @Tcols[col.id][:labours][:ha][:sum] += cout_ha
         @Tcols[col.id][:labours][:total][:sum] += cout_total
- 
+     
       #total des couts par parcelle
-        @Tcols[col.id][:charges][:type][:ha][:sum] += cout_ha
-        @Tcols[col.id][:charges][:type][:total][:sum] += cout_total
+        @Tcols[col.id][:charges][:ha][:sum] += cout_ha
+        @Tcols[col.id][:charges][:total][:sum] += cout_total
 
         #total des benefs par parcelle
         @Tcols[col.id][:benef][:ha][:sum] -= cout_ha
@@ -404,22 +409,12 @@ class Print < ActiveRecord::Base
         @Tcols[col.id][:pulves][:total][:sum] += cout_total
      
       #total des couts par parcelle
-        @Tcols[col.id][:charges][:type][:ha][:sum] += cout_ha
-        @Tcols[col.id][:charges][:type][:total][:sum] += cout_total
+        @Tcols[col.id][:charges][:ha][:sum] += cout_ha
+        @Tcols[col.id][:charges][:total][:sum] += cout_total
 
         #total des benefs par parcelle
         @Tcols[col.id][:benef][:ha][:sum] -= cout_ha
         @Tcols[col.id][:benef][:total][:sum] -= cout_total
-        
-        #pas encore utilise a l'affichage
-        #total des pulves par categorie pour chaque colonne
-        for cat in Category.find_by_type('pulve')
-          if (@Tpulves[pulve.id][:category] == cat.id)
-            @Tcols[col.id][:pulve_cat][:ha][cat.id] += cout_ha
-            @Tcols[col.id][:pulve_cat][:total][cat.id] += cout_total
-          end
-        end
-        
       end
     end
     
@@ -440,21 +435,20 @@ class Print < ActiveRecord::Base
         @Tcols[col.id][:benef][:ha][:sum] -= cout_ha
         @Tcols[col.id][:benef][:total][:sum] -= cout_total
 
-        #pas encore utilise a l'affichage
-        #total des pulves par categorie (Upcategory.Category) pour chaque colonne
-        #FIXME remplace 'pulve' par 'facture' dans les lignes suivantes:
-        for cat in Category.find_by_type('pulve')
-          if (@Tpulves[pulve.id][:category] == cat.id)
-            @Tcols[col.id][:pulve_cat][:ha][cat.id] += cout_ha
-            @Tcols[col.id][:pulve_cat][:total][cat.id] += cout_total
+# FIXME ajouter un champ de plus comme dans la structure Tfactures pour differencier [factcat] et [category]
+        #totaux par types de factures
+        for factcat in self.types_facture
+          if (@Tfactures[facture.id][:factcat] == factcat.id)
+            @Tcols[col.id][:charges][:factcat][:ha][factcat.id] += cout_ha
+            @Tcols[col.id][:charges][:factcat][:total][factcat.id] += cout_total
           end
         end
-
-        #total des factures par type de facture (Factcat)
-        for type in self.types_facture
-          if (@Tfactures[facture.id][:category] == type.id)
-            @Tcols[col.id][:charges][:ha][:type][type.id] += cout_ha
-            @Tcols[col.id][:charges][:total][:type][type.id] += cout_total
+        
+        #totaux par categorie de factures
+        for cat in Category.factures
+          if (@Tfactures[facture.id][:category] == cat.id)
+            @Tcols[col.id][:charges][:category][:ha][cat.id] += cout_ha
+            @Tcols[col.id][:charges][:category][:total][cat.id] += cout_total
           end
         end
       end    
@@ -497,193 +491,5 @@ class Print < ActiveRecord::Base
       #@Tcols[:benef][:ha] += @Tcols[col.id][:benef][:ha][:sum]
     end    
   end
-
-  def csv_put_tete(w, model)
-    row = []
-    ((self.csv[:nb_cols] * 2) + self.csv[:nb_row_before]).times { row << nil }
-    csv_write(w, row)
-    
-    row.clear
-    row = [model.to_s.pluralize]
-    ((self.csv[:nb_cols] * 2) + self.csv[:nb_row_before] - 1 ).times { row << nil }
-    csv_write(w, row)
-    row.clear
-  end
-
-  def csv_end(w)
-    w.close
-    self.csv[:table] += '</table>'    
-  end
-
-  def csv_init
-    self.csv = {}
-    self.csv[:html] = ''
-    self.csv[:table] = '<table class="table_print">'
-    self.csv[:nb_cols] = self.Tcols[:length]
-    self.csv[:nb_row_before] = 5
-    self.csv[:nb_row_total] = csv[:nb_cols] + self.csv[:nb_row_before]
-  end
-  
-  def write_row(w, row)
-    w << row    
-  end
-
-  def write_html(row)
-    row.each do |col|
-      self.csv[:html] += col.to_s + ', '
-    end
-    self.csv[:html] += '<br>'      
-  end
-
-  def write_table(row)
-    self.csv[:table] += '<tr>'      
-    row.each do |col|
-      self.csv[:table] += '<td> ' + col.to_s + '</td>'
-    end
-    self.csv[:table] += '</tr>'      
-  end
-  
-  def csv_write(w, row)
-    write_table(row)
-    write_html(row)
-    write_row(w, row)
-  end
-
-  def csv_tete(w)
-    row = []
-    self.csv[:nb_row_before].times do row << nil end
-    self.Tcols[:ids].each do |id|
-      row << self.Tcols[id][:name]
-      row << (self.Tcols[id][:surface].to_s + ' Ha')
-    end
-    csv_write(w, row)  
-    
-    row.clear
-    row = [nil, 'nom', 'passage Ha', 'total/Ha', 'total'] 
-    entete = ['c/Ha', 'total']
-    (self.csv[:nb_cols]).times { row += entete }
-    csv_write(w, row)
-  end
-  
-  def csv_charges(w, model, detail_total, unused)
-  # csv_charges
-  # w : writer
-  # model : Labour, Pulve, Facture, Vente
-  # detail_total : 
-  #   true  : total for all types 
-  #   false : total sum only
-
-    
-    sym = model.to_s.downcase.pluralize.to_sym
-    # sym = 'labours' ou 'pulves'...
-    row = []
-    
-    csv_put_tete(w, model.to_s.pluralize)
-    if (self.display[sym] == 1)
-      lines = model.find_by_saison(:all)
-      lines.each do |line|
-        dep = self.val[sym][line.id] 
-  
-        row << line.category.name + ' ' + line.name
-        row << line.date.to_s
-        cell = line.parcelles.length.to_s
-        cell += ' p - '
-        cell += pretty_csv(dep[:surface_total]).to_s
-        cell += ' ha'
-        row << cell
-        row << pretty_csv(dep[:ha]).to_s
-        row << pretty_csv(dep[:total]).to_s
-        self.val[:cols][:ids].each do |id|
-          row << pretty_csv(dep[id][:ha])
-          row << pretty_csv(dep[id][:total])
-        end
-        csv_write(w, row)
-        row.clear
-      end
-    end
-    #Total 'model'    
-    if detail_total
-      csv_total_by_types(w, model)
-    end
-
-    title = 'Total ' + model.to_s.pluralize
-    row << [title]
-    (self.csv[:nb_row_before] - 3).times { row << nil }    
-    row << pretty_csv(self.val[sym][:ha][:sum])
-    row << pretty_csv(self.val[sym][:total][:sum])
-    self.Tcols[:ids].each do |id|
-      row << pretty_csv(self.val[:cols][id][sym][:ha][:sum])
-      row << pretty_csv(self.val[:cols][id][sym][:total][:sum])
-    end
-    csv_write(w, row)
-  end
-  
-  def csv_total_by_types(w, model)
-    sym = model.to_s.downcase.pluralize.to_sym
-    row = []
-    csv_put_tete(w, 'sous-total')
-    for type in @types
-      row << type.name
-      2.times {row << nil}
-      row << pretty_csv(self.val[sym][:ha][type.name])
-      row << pretty_csv(self.val[sym][:total][type.name])
-      self.Tcols[:ids].each do |id|
-        row << pretty_csv(self.val[:cols][id][:charges][:ha][type.name])
-        row << pretty_csv(self.val[:cols][id][:charges][:total][type.name])
-      end
-      csv_write(w, row)
-      row.clear
-    end
-  end
-  
-  def csv_total_line(w, model)
-    row = []
-    title = 'total ' + model.to_s
-    sym = model.to_s.to_sym
-    csv_put_tete(w, title)
-    (self.csv[:nb_row_before] - 2).times {row << nil}
-    row << pretty_csv(self.Tcols[sym][:ha])
-    row << pretty_csv(self.Tcols[sym][:total])    
-    self.Tcols[:ids].each do |id|
-      row << pretty_csv(self.Tcols[id][sym][:ha][:sum])
-      row << pretty_csv(self.Tcols[id][sym][:total][:sum])
-    end
-    csv_write(w, row)
-  end
-
-  def csv_benefs(w)
-    row = []
-    csv_put_tete(w, 'Benefs')
-    (self.csv[:nb_row_before] - 2).times { row << nil }    
-    row << pretty_csv(self.Tcols[:benef][:ha])
-    row << pretty_csv(self.Tcols[:benef][:total])
-    self.Tcols[:ids].each do |id|
-      row <<  pretty_csv(self.Tcols[id][:benef][:ha][:sum])
-      row <<  pretty_csv(self.Tcols[id][:benef][:total][:sum])
-    end
-    csv_write(w, row)
-  end
-  
-  def generate_csv(model)
-    #self.info_debug = detail[:labour]
-    csv_init
-    
-    date = Date.today.to_s
-    file_name = date + '_' + model.to_s
-    file = RAILS_ROOT + '/csv/' + file_name + '.csv'
-    w = CSV.open(file, 'w')
-    csv_tete(w)
-    csv_charges(w, Labour, false, 0)
-    csv_charges(w, Pulve, false, 0)
-    csv_charges(w, Facture, true, 0)
-    csv_total_line(w, 'charges')
-    
-    csv_charges(w, Vente, false, 0)
-    csv_total_line(w, 'benef')
-    
-    
-    csv_end(w)
-  end
-    
 end
 

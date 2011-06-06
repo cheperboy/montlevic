@@ -8,10 +8,12 @@ class Print < ActiveRecord::Base
   #Pxxx variables par Parcelle
   attr_accessor :Tcols, :Tfactures, :Tlabours, :Tpulves, :Tventes, :Tbenefs,
                 :val,
+                :res,
                 :csv, :csv_html, :display, :info_debug,
                 :saison, :labours, :pulves, :factures, :ventes, :types_facture, :col_model, :cols
 
   def initialize(col_model)
+
     unless col_model.find_for_saison().nil?    
       @col_model = col_model
       @cols = col_model.find_for_saison()
@@ -60,6 +62,7 @@ class Print < ActiveRecord::Base
   end
   
   def init_cols
+    self.res = Analytic.new()
     unless @cols.nil?
       rang = 0
 
@@ -491,192 +494,5 @@ class Print < ActiveRecord::Base
       #@Tcols[:benef][:ha] += @Tcols[col.id][:benef][:ha][:sum]
     end    
   end
-
-  def csv_put_tete(w, model)
-    row = []
-    ((self.csv[:nb_cols] * 2) + self.csv[:nb_row_before]).times { row << nil }
-    csv_write(w, row)
-    
-    row.clear
-    row = [model.to_s.pluralize]
-    ((self.csv[:nb_cols] * 2) + self.csv[:nb_row_before] - 1 ).times { row << nil }
-    csv_write(w, row)
-    row.clear
-  end
-
-  def csv_end(w)
-    w.close
-    self.csv[:table] += '</table>'    
-  end
-
-  def csv_init
-    self.csv = {}
-    self.csv[:html] = ''
-    self.csv[:table] = '<table class="table_print">'
-    self.csv[:nb_cols] = self.Tcols[:length]
-    self.csv[:nb_row_before] = 5
-    self.csv[:nb_row_total] = csv[:nb_cols] + self.csv[:nb_row_before]
-  end
-  
-  def write_row(w, row)
-    w << row    
-  end
-
-  def write_html(row)
-    row.each do |col|
-      self.csv[:html] += col.to_s + ', '
-    end
-    self.csv[:html] += '<br>'      
-  end
-
-  def write_table(row)
-    self.csv[:table] += '<tr>'      
-    row.each do |col|
-      self.csv[:table] += '<td> ' + col.to_s + '</td>'
-    end
-    self.csv[:table] += '</tr>'      
-  end
-  
-  def csv_write(w, row)
-    write_table(row)
-    write_html(row)
-    write_row(w, row)
-  end
-
-  def csv_tete(w)
-    row = []
-    self.csv[:nb_row_before].times do row << nil end
-    self.Tcols[:ids].each do |id|
-      row << self.Tcols[id][:name]
-      row << (self.Tcols[id][:surface].to_s + ' Ha')
-    end
-    csv_write(w, row)  
-    
-    row.clear
-    row = [nil, 'nom', 'passage Ha', 'total/Ha', 'total'] 
-    entete = ['c/Ha', 'total']
-    (self.csv[:nb_cols]).times { row += entete }
-    csv_write(w, row)
-  end
-  
-  def csv_charges(w, model, detail_total, unused)
-  # csv_charges
-  # w : writer
-  # model : Labour, Pulve, Facture, Vente
-  # detail_total : 
-  #   true  : total for all types 
-  #   false : total sum only
-
-    
-    sym = model.to_s.downcase.pluralize.to_sym
-    # sym = 'labours' ou 'pulves'...
-    row = []
-    
-    csv_put_tete(w, model.to_s.pluralize)
-    if (self.display[sym] == 1)
-      lines = model.find_by_saison(:all)
-      lines.each do |line|
-        dep = self.val[sym][line.id] 
-  
-        row << line.category.name + ' ' + line.name
-        row << line.date.to_s
-        cell = line.parcelles.length.to_s
-        cell += ' p - '
-        cell += pretty_csv(dep[:surface_total]).to_s
-        cell += ' ha'
-        row << cell
-        row << pretty_csv(dep[:ha]).to_s
-        row << pretty_csv(dep[:total]).to_s
-        self.val[:cols][:ids].each do |id|
-          row << pretty_csv(dep[id][:ha])
-          row << pretty_csv(dep[id][:total])
-        end
-        csv_write(w, row)
-        row.clear
-      end
-    end
-    #Total 'model'    
-    if detail_total
-      csv_total_by_types(w, model)
-    end
-
-    title = 'Total ' + model.to_s.pluralize
-    row << [title]
-    (self.csv[:nb_row_before] - 3).times { row << nil }    
-    row << pretty_csv(self.val[sym][:ha][:sum])
-    row << pretty_csv(self.val[sym][:total][:sum])
-    self.Tcols[:ids].each do |id|
-      row << pretty_csv(self.val[:cols][id][sym][:ha][:sum])
-      row << pretty_csv(self.val[:cols][id][sym][:total][:sum])
-    end
-    csv_write(w, row)
-  end
-  
-  def csv_total_by_types(w, model)
-    sym = model.to_s.downcase.pluralize.to_sym
-    row = []
-    csv_put_tete(w, 'sous-total')
-    for type in @types
-      row << type.name
-      2.times {row << nil}
-      row << pretty_csv(self.val[sym][:ha][type.name])
-      row << pretty_csv(self.val[sym][:total][type.name])
-      self.Tcols[:ids].each do |id|
-        row << pretty_csv(self.val[:cols][id][:charges][:ha][type.name])
-        row << pretty_csv(self.val[:cols][id][:charges][:total][type.name])
-      end
-      csv_write(w, row)
-      row.clear
-    end
-  end
-  
-  def csv_total_line(w, model)
-    row = []
-    title = 'total ' + model.to_s
-    sym = model.to_s.to_sym
-    csv_put_tete(w, title)
-    (self.csv[:nb_row_before] - 2).times {row << nil}
-    row << pretty_csv(self.Tcols[sym][:ha])
-    row << pretty_csv(self.Tcols[sym][:total])    
-    self.Tcols[:ids].each do |id|
-      row << pretty_csv(self.Tcols[id][sym][:ha][:sum])
-      row << pretty_csv(self.Tcols[id][sym][:total][:sum])
-    end
-    csv_write(w, row)
-  end
-
-  def csv_benefs(w)
-    row = []
-    csv_put_tete(w, 'Benefs')
-    (self.csv[:nb_row_before] - 2).times { row << nil }    
-    row << pretty_csv(self.Tcols[:benef][:ha])
-    row << pretty_csv(self.Tcols[:benef][:total])
-    self.Tcols[:ids].each do |id|
-      row <<  pretty_csv(self.Tcols[id][:benef][:ha][:sum])
-      row <<  pretty_csv(self.Tcols[id][:benef][:total][:sum])
-    end
-    csv_write(w, row)
-  end
-  
-  def generate_csv(model)
-    #self.info_debug = detail[:labour]
-    csv_init
-    
-    date = Date.today.to_s
-    file_name = date + '_' + model.to_s
-    file = RAILS_ROOT + '/csv/' + file_name + '.csv'
-    w = CSV.open(file, 'w')
-    csv_tete(w)
-    csv_charges(w, Labour, false, 0)
-    csv_charges(w, Pulve, false, 0)
-    csv_charges(w, Facture, true, 0)
-    csv_total_line(w, 'charges')
-    
-    csv_charges(w, Vente, false, 0)
-    csv_total_line(w, 'benef')
-    
-    
-    csv_end(w)
-  end
-    
 end
+

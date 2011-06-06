@@ -1,12 +1,9 @@
 
 = EN COURS
-CSS table td width (remettre le border collapse)
-
-->nouveau model pour gari, maison, invest. -->OK
-
-
 
 = A Faire
+-nouveau model pour gerer un element de comparaison (parcelle, zone ou type de culture). dans un element on stocke aussi ses totaux (contrairement a ce qui est fait actuellement dans print.rb). 
+
 - supprimer "Diverse" de Categories (Diverse doit etre traitée comme une facture.)
 
 1- Vente.rb get_cout_ha_parcelle

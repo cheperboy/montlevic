@@ -1,6 +1,6 @@
 class PrintController < ApplicationController
   facture_categories = Category.factures
-  
+
   def csv
     unless params[:model] == nil
       model = params[:model]

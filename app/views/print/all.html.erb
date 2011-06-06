@@ -1,5 +1,7 @@
 <% title "Analytic" %>
 
+<%= debug(@res.saisons) %> | 
+
 <%= link_to "Export Excel", :controller => "print", :action => 'export' %> | 
 
 <%= link_to_function "Affichage", update_page { |page| page[:search].toggle } %>
