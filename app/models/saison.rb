@@ -10,27 +10,29 @@ class Saison < ActiveRecord::Base
   has_many :reportables
 
   has_one :setting    
-
+  
+  # retourne les id des Typecultures des parcelles de la saison (ou nil)
   def typecultures
     typecultures = []
     parcelles = self.parcelles
     unless parcelles.size == 0
       parcelles.each do |parcelle|
-        typecultures << parcelle.typeculture.id
+        typecultures << parcelle.typeculture
       end
       typecultures = typecultures.uniq
-    end
+    end 
     return nil if typecultures.size == 0
     typecultures
   end
   
+  # retourne les id des Zones des parcelles de la saison (ou nil)
   def zones
     zones = []
     parcelles = self.parcelles
     unless parcelles.size == 0
       parcelles.uniq.each do |parcelle|
         parcelle.zones.each do |zone|
-          zones << zone.id
+          zones << zone
         end
       end
       zones = zones.uniq

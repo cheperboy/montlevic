@@ -21,8 +21,16 @@ class Category < ActiveRecord::Base
     find_by_upcategory('labour')
   end
     
+  def self.pulves
+    find_by_upcategory('pulve')
+  end
+    
   def self.factures
     find_by_upcategory('facture')
+  end
+
+  def self.ventes
+    find_by_upcategory('vente')
   end
 
     

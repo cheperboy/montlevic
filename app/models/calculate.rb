@@ -1,7 +1,4 @@
-class Print < ActiveRecord::Base
-  require 'csv'
-
-  #alias :big :small
+class Calculate < ActiveRecord::Base
 
   #Txxx variables temporaires
   #Zxxx variables par Zone
@@ -10,13 +7,17 @@ class Print < ActiveRecord::Base
                 :val,
                 :res,
                 :csv, :csv_html, :display, :info_debug,
-                :saison, :labours, :pulves, :factures, :ventes, :types_facture, :col_model, :cols
+                :saison, :labours, :pulves, :factures, :ventes, :types_facture, :col_model, :cols,
+                :c, # model de colonne en symbole pluriel :parcelles, :zones, :typecultures
+                :sid #saison_id
 
   def initialize(col_model)
-    unless col_model.find_for_saison().nil?    
+    unless col_model.find_for_saison().nil?  
+      @c = col_model.to_s.downcase.pluralize.to_sym
       @col_model = col_model
       @cols = col_model.find_for_saison()
       @saison = Saison.find(Setting.find(:first).saison_id)
+      @sid = @saison.id
       @labours = @saison.labours
       @pulves = @saison.pulves
       @factures = @saison.factures
@@ -38,6 +39,7 @@ class Print < ActiveRecord::Base
   end
   
   def calculate
+    @res = Analytic.new()
     init_cols
     # logger.debug(self.Tcols.inspect)
     return nil unless init_factures
@@ -183,6 +185,9 @@ class Print < ActiveRecord::Base
       end
     
       for facture in @factures
+        datas = { :id => facture.id, :name => facture.name, :category_id => facture.category_id }
+        @res.set_saison_line_datas(@sid, :factures, facture.id, datas)
+
         @Tfactures[facture.id] = {
           :parcelles => {}, 
           :id => facture.id, 
@@ -191,7 +196,7 @@ class Print < ActiveRecord::Base
           :factcat => facture.factcat_id,
           :category => facture.category_id}
         #for parcelle in facture.parcelles
-        for col in @cols
+        for col in @cols          
           hcols = {:name => col.name, :surface => col.surface }  
           @Tfactures[facture.id][:parcelles].store(col.id, hcols)
           @Tfactures[facture.id][col.id] = {:ha => 0, :total => 0 , :cout_sans_charges => 0 }
@@ -241,6 +246,10 @@ class Print < ActiveRecord::Base
     @Tventes[:total][:sum] = 0
     @Tventes[:ha][:sum] = 0
     for vente in @ventes
+      datas = { :id => vente.id, :name => vente.name, :category_id => vente.category_id,
+                :ha_passage => vente.cout_ha_passage }
+
+      @res.set_saison_line_datas(@sid, :ventes, vente.id, datas)
       @Tventes[vente.id] = {:parcelles => {}, :id => vente.id, :name => vente.name, :total => 0, :ha => 0 }
       for col in @cols
         hcols = {:name => col.name, :surface => col.surface }
@@ -251,7 +260,6 @@ class Print < ActiveRecord::Base
   end
   
   def init_labours
-    @res = Analytic.new()
     @Tlabours = Hash.new()
     @Tlabours[:total] = Hash.new()
     @Tlabours[:ha] = Hash.new()
@@ -268,6 +276,11 @@ class Print < ActiveRecord::Base
     end
 
     for labour in @labours
+      datas = { :id => labour.id, :name => labour.name, :category_id => labour.category_id,
+                :ha_passage => labour.cout_ha_passage, :user_id => labour.user_id }
+                
+      @res.set_saison_line_datas(@sid, :labours, labour.id, datas)
+      
       @Tlabours[labour.id] = {
         :parcelles => {}, 
         :id => labour.id, 
@@ -280,12 +293,8 @@ class Print < ActiveRecord::Base
         hcols = {:name => col.name, :surface => col.surface }  
         @Tlabours[labour.id][:parcelles].store(col.id, hcols)
         @Tlabours[labour.id][col.id] = {:ha => 0, :total => 0 }
-        # @res.set_line_ha(1, col.pluralize.downcase, col.id, :labours, labour.id, 10)
-        @res.set_saison_line_ha(2, :labours, labour.id, 333)
       end
-      # logger.error "inspect @Tlabours[labour.id][:parcelles] : " + @Tlabours[labour.id][:parcelles].to_yaml
     end
-    logger.error "yaml res.saisons[2] : " + @res.saisons[2].to_yaml
   end
 
   def init_pulves
@@ -304,6 +313,10 @@ class Print < ActiveRecord::Base
     end
 
     for pulve in @pulves
+      datas = { :id => pulve.id, :name => pulve.name, :category_id => pulve.category_id, 
+                :ha_passage => pulve.cout_ha_passage, :cout_fixe => pulve.cout_fixe, :user_id => pulve.user_id}
+      @res.set_saison_line_datas(@sid, :pulves, pulve.id, datas)
+
       @Tpulves[pulve.id] = {
         :parcelles => {}, 
         :id => pulve.id, 
@@ -329,6 +342,8 @@ class Print < ActiveRecord::Base
         cout_total = labour.get_cout_total_col(col)
         @Tlabours[labour.id][col.id][:ha] = cout_ha
         @Tlabours[labour.id][col.id][:total] = cout_total
+        @res.set_line(@sid, @c, col.id, :labours, labour.id, :ha, cout_ha)
+        @res.set_line(@sid, @c, col.id, :labours, labour.id, :total, cout_total)
       end
  
       @Tlabours[labour.id][:parcelles_size] = @Tlabours[labour.id][:parcelles].length      
@@ -345,7 +360,9 @@ class Print < ActiveRecord::Base
         if (@Tlabours[labour.id][:category] == cat.id)
           @Tlabours[:total][:category][cat.id] +=  @Tlabours[labour.id][:total]
           @Tlabours[:ha][:category][cat.id] +=  @Tlabours[labour.id][:ha]
-        end
+          @res.set_line(@sid, @c, col.id, :category, cat.id, :ha, cout_ha)
+          @res.set_line(@sid, @c, col.id, :category, cat.id, :total, cout_total)
+         end
       end
     end
   end

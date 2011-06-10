@@ -8,7 +8,7 @@
 		<td></td>
 <% @colonnes.each do |colonne| %>
 	<td class="<%= odd(@test.Tcols[colonne.id][:rang]) %>-head" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> ><b>
-		<%=h @test.Tcols[colonne.id][:name] %> - <%=h colonne.id.to_s %>
+		<%=h @test.Tcols[colonne.id][:name] %>
 	<% if (@test.Tcols[:col_model] == Parcelle) %>
 		<br><%=h Parcelle.find(@test.Tcols[colonne.id][:id]).typeculture.name %>
 	<% end %>		

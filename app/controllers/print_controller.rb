@@ -187,6 +187,7 @@ class PrintController < ApplicationController
     @types = Factcat.all
     @labour_categories = Category.labours
     @facture_categories = Category.factures
+    @pulve_categories = Category.pulves
     @pulves = @saison.pulves
     
     respond_to do |format|

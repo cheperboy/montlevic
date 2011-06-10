@@ -1,11 +1,9 @@
 <div id="bloc_left">
-
-
 <br>
-  <strong>Resultat</strong>
+  <strong>Resultat</strong >
   <ul>
-  <%- ['html', 'html'].each do |action| -%>	
-    <li><%= link_to action, :controller => "print", :action => 'all'  %></li>
+  <%- ['print', 'calculate'].each do |controller| -%>	
+    <li><%= link_to controller, :controller => controller, :action => 'all'  %></li>
   <%- end -%>
   </ul>
   <strong>Charges</strong>

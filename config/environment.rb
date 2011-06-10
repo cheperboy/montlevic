@@ -10,6 +10,8 @@ Rails::Initializer.run do |config|
   
   #Ajouté par matthieu
   require 'extensions'
+  config.gem "haml"
+  
   #Date::DATE_FORMATS[:dmy] = '%d/%m/%Y'
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers

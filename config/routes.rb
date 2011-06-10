@@ -53,7 +53,7 @@ ActionController::Routing::Routes.draw do |map|
                                             :diverses => :get,
                                             :modif => :any }
 
-  map.resources :categories
+  map.resources :categories, :collection => { :test => :any}
   map.resources :upcategories do |upcat|
     upcat.resources :categories
   end

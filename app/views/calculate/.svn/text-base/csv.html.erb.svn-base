@@ -1,0 +1,5 @@
+
+ids :
+<%= @writer %>
+<%= @test.Tcols[1][:name].to_s %>
+
