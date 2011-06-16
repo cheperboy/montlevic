@@ -246,8 +246,7 @@ class Calculate < ActiveRecord::Base
     @Tventes[:total][:sum] = 0
     @Tventes[:ha][:sum] = 0
     for vente in @ventes
-      datas = { :id => vente.id, :name => vente.name, :category_id => vente.category_id,
-                :ha_passage => vente.cout_ha_passage }
+      datas = { :id => vente.id, :name => vente.name, :category_id => vente.category_id }
 
       @res.set_saison_line_datas(@sid, :ventes, vente.id, datas)
       @Tventes[vente.id] = {:parcelles => {}, :id => vente.id, :name => vente.name, :total => 0, :ha => 0 }
@@ -275,12 +274,7 @@ class Calculate < ActiveRecord::Base
       @Tlabours[:ha][:category][cat.id] = 0
     end
 
-    for labour in @labours
-      datas = { :id => labour.id, :name => labour.name, :category_id => labour.category_id,
-                :ha_passage => labour.cout_ha_passage, :user_id => labour.user_id }
-                
-      @res.set_saison_line_datas(@sid, :labours, labour.id, datas)
-      
+    for labour in @labours      
       @Tlabours[labour.id] = {
         :parcelles => {}, 
         :id => labour.id, 
@@ -340,28 +334,31 @@ class Calculate < ActiveRecord::Base
         #valeur ha et total pour chaque col affecté a la labour
         cout_ha = labour.get_cout_ha_col(col)
         cout_total = labour.get_cout_total_col(col)
-        @Tlabours[labour.id][col.id][:ha] = cout_ha
-        @Tlabours[labour.id][col.id][:total] = cout_total
-        @res.set_line(@sid, @c, col.id, :labours, labour.id, :ha, cout_ha)
-        @res.set_line(@sid, @c, col.id, :labours, labour.id, :total, cout_total)
+        @res.set_line(@sid, @c, col.id, :labours, :all, labour.id, :ha, cout_ha)
+        @res.set_line(@sid, @c, col.id, :labours, :all, labour.id, :total, cout_total)
       end
  
-      @Tlabours[labour.id][:parcelles_size] = @Tlabours[labour.id][:parcelles].length      
-      @Tlabours[labour.id][:ha] = labour.get_cout_ha
-#DONE 01/04/2011 correction erreur contrib. (cf branch "contrib")
-      @Tlabours[labour.id][:total] = labour.get_cout_total
-      @Tlabours[labour.id][:surface_total] = labour.sum_surfaces
-      #total labour
-      @Tlabours[:total][:sum] += @Tlabours[labour.id][:total]
-      @Tlabours[:ha][:sum] += @Tlabours[labour.id][:ha]
+      datas = { :id => labour.id, :name => labour.name, :category_id => labour.category_id, :category_name => labour.category.name,
+                :ha_passage => labour.cout_ha_passage, :user_id => labour.user_id, :factures_assoc => labour.factures_assoc?,
+                :date => labour.date, :parcelles_length => labour.parcelles.length,
+                :surface_total => labour.sum_surfaces }
+           
+      @res.set_saison_line_datas(@sid, :labours, labour.id, datas)
+      datas = @res.get_saison_line_datas(@sid, :labours, labour.id)
+      logger.error "datas labour #{labour.id.to_s} cat #{labour.name} : " + datas[:id].to_s
+      # total du labour
+      @res.set_saison_line(@sid, :labours, :all, labour.id, :ha, labour.get_cout_ha)
+      @res.set_saison_line(@sid, :labours, :all, labour.id, :total, labour.get_cout_total)
       
+      #total des labours
+      @res.add_other_line_for_saison(@sid, :resultats, :total_labours, :ha, labour.get_cout_ha)      
+      @res.add_other_line_for_saison(@sid, :resultats, :total_labours, :total, labour.get_cout_total)
+            
       #totaux par categorie de labours
       for cat in Category.labours
         if (@Tlabours[labour.id][:category] == cat.id)
-          @Tlabours[:total][:category][cat.id] +=  @Tlabours[labour.id][:total]
-          @Tlabours[:ha][:category][cat.id] +=  @Tlabours[labour.id][:ha]
-          @res.set_line(@sid, @c, col.id, :category, cat.id, :ha, cout_ha)
-          @res.set_line(@sid, @c, col.id, :category, cat.id, :total, cout_total)
+          @res.add_saison_line(@sid, :labours, :category, cat.id, :ha, labour.get_cout_ha)
+          @res.add_saison_line(@sid, :labours, :category, cat.id, :total, labour.get_cout_total)
          end
       end
     end
@@ -375,6 +372,8 @@ class Calculate < ActiveRecord::Base
         cout_total = pulve.get_cout_total_col(col)
         @Tpulves[pulve.id][col.id][:ha] = cout_ha
         @Tpulves[pulve.id][col.id][:total] = cout_total
+        @res.set_line(@sid, @c, col.id, :pulves, :all, pulve.id, :ha, cout_ha)
+        @res.set_line(@sid, @c, col.id, :pulves, :all, pulve.id, :total, cout_total)
       end
  
       @Tpulves[pulve.id][:parcelles_size] = @Tpulves[pulve.id][:parcelles].length      
@@ -383,7 +382,12 @@ class Calculate < ActiveRecord::Base
       @Tpulves[pulve.id][:ha] = pulve.get_cout_ha
       @Tpulves[pulve.id][:total] = pulve.get_cout_total
       @Tpulves[pulve.id][:surface_total] = pulve.sum_surfaces
-      #total pulve
+
+      # total du pulve
+      @res.set_saison_line(@sid, :pulves, :all, pulve.id, :ha, pulve.get_cout_ha)
+      @res.set_saison_line(@sid, :pulves, :all, pulve.id, :total, pulve.get_cout_total)
+
+      #total pulves
       @Tpulves[:total][:sum] += @Tpulves[pulve.id][:total]
       @Tpulves[:ha][:sum] += @Tpulves[pulve.id][:ha]
       
@@ -392,6 +396,8 @@ class Calculate < ActiveRecord::Base
         if (@Tpulves[pulve.id][:category] == cat.id)
           @Tpulves[:total][:category][cat.id] += @Tpulves[pulve.id][:total]
           @Tpulves[:ha][:category][cat.id] += @Tpulves[pulve.id][:ha]   
+          @res.set_line(@sid, @c, col.id, :pulves, :category, cat.id, :ha, cout_ha)
+          @res.set_line(@sid, @c, col.id, :pulves, :category, cat.id, :total, cout_total)
         end
       end
     end
@@ -405,6 +411,8 @@ class Calculate < ActiveRecord::Base
         cout_total = facture.get_cout_total_col(col)
         @Tfactures[facture.id][col.id][:ha] = cout_ha
         @Tfactures[facture.id][col.id][:total] = cout_total
+        @res.set_line(@sid, @c, col.id, :factures, :all, facture.id, :ha, cout_ha)
+        @res.set_line(@sid, @c, col.id, :factures, :all, facture.id, :total, cout_total)
       end
       
       total_ha = facture.get_cout_ha
@@ -415,6 +423,8 @@ class Calculate < ActiveRecord::Base
       #total de la facture
       @Tfactures[facture.id][:total] = total
       @Tfactures[facture.id][:ha] = total_ha
+      @res.set_saison_line(@sid, :factures, :all, facture.id, :ha, total_ha)
+      @res.set_saison_line(@sid, :factures, :all, facture.id, :total, total)
       
       #total des factures
       @Tfactures[:total][:sum] += total
@@ -425,6 +435,8 @@ class Calculate < ActiveRecord::Base
         if (@Tfactures[facture.id][:factcat] == factcat.id)
           @Tfactures[:total][:factcat][factcat.id] += total
           @Tfactures[:ha][:factcat][factcat.id] += total_ha
+          @res.set_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :ha, cout_ha)
+          @res.set_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :total, cout_total)
         end
       end
       
@@ -433,6 +445,8 @@ class Calculate < ActiveRecord::Base
         if (@Tfactures[facture.id][:category] == cat.id)
           @Tfactures[:total][:category][cat.id] += total 
           @Tfactures[:ha][:category][cat.id] += total_ha   
+          @res.set_line(@sid, @c, col.id, :factures, :category, cat.id, :ha, cout_ha)
+          @res.set_line(@sid, @c, col.id, :factures, :category, cat.id, :total, cout_total)
         end
       end
     end
@@ -462,24 +476,32 @@ class Calculate < ActiveRecord::Base
     #TOTAUX PAR PARCELLES
     for labour in @labours
       for col in @cols
-        cout_ha = @Tlabours[labour.id][col.id][:ha]
-        cout_total = @Tlabours[labour.id][col.id][:total]
-      
+        cout_ha = @res.get_line(@sid, @c, col.id, :labours, :all, labour.id, :ha)
+        cout_total = @res.get_line(@sid, @c, col.id, :labours, :all, labour.id, :total)
+              
         #somme des labours par col
+        @res.add_other_line(@sid, @c, col.id, :resultats, :total_labours, :ha, cout_ha)
+        @res.add_other_line(@sid, @c, col.id, :resultats, :total_labours, :total, cout_total)
         @Tcols[col.id][:labours][:ha][:sum] += cout_ha
         @Tcols[col.id][:labours][:total][:sum] += cout_total
      
         #total des couts par parcelle
+        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, cout_ha)
+        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, cout_total)
         @Tcols[col.id][:charges][:ha][:sum] += cout_ha
         @Tcols[col.id][:charges][:total][:sum] += cout_total
 
         #total des benefs par parcelle
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-cout_ha))
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-cout_total))
         @Tcols[col.id][:benef][:ha][:sum] -= cout_ha
         @Tcols[col.id][:benef][:total][:sum] -= cout_total
       
         #totaux par categorie de labour
         for cat in Category.labours
           if (@Tlabours[labour.id][:category] == cat.id)
+            @res.add_line(@sid, @c, col.id, :labours, :category, cat.id, :ha, cout_ha)
+            @res.add_line(@sid, @c, col.id, :labours, :category, cat.id, :total, cout_total)
             @Tcols[col.id][:labours][:category][:ha][cat.id] += cout_ha
             @Tcols[col.id][:labours][:category][:total][cat.id] += cout_total
           end

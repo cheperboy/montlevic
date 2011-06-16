@@ -280,8 +280,6 @@ class Print < ActiveRecord::Base
         hcols = {:name => col.name, :surface => col.surface }  
         @Tlabours[labour.id][:parcelles].store(col.id, hcols)
         @Tlabours[labour.id][col.id] = {:ha => 0, :total => 0 }
-        # @res.set_line_ha(1, col.pluralize.downcase, col.id, :labours, labour.id, 10)
-        @res.set_saison_line_ha(2, :labours, labour.id, 333)
       end
       # logger.error "inspect @Tlabours[labour.id][:parcelles] : " + @Tlabours[labour.id][:parcelles].to_yaml
     end

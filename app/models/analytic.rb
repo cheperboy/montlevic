@@ -75,6 +75,7 @@ class Analytic < ActiveRecord::Base
   
   def init_colonne_type(saison_id, col_type)
     self.saisons[saison_id][col_type] = {}
+    self.saisons[saison_id][col_type] = {}
   end
   
   def init_colonne(saison_id, col_type, col_id)
@@ -99,11 +100,10 @@ class Analytic < ActiveRecord::Base
     end
   end
 
-  # champs resultats de la saison communs a toutes les colonnes (total_facture, total_labours, ..., benef)
+  # lignes resultats de la saison communs a toutes les colonnes (total_facture, total_labours, ..., benef)
   def init_other_line_type_for_saison(saison_id, other_line_type)
     self.saisons[saison_id][other_line_type] = {}
     self.other_lines_type_sections[other_line_type].each do |other_section|
-      #total_facture, _total_labours, ..., benef
       self.saisons[saison_id][other_line_type][other_section] = {} 
       self.saisons[saison_id][other_line_type][other_section][:ha] = 0
       self.saisons[saison_id][other_line_type][other_section][:total] = 0
@@ -118,7 +118,7 @@ class Analytic < ActiveRecord::Base
     end
   end
   
-  #pour chaque colonne, categories et types de chaque type de lingne (labours.categories, factures.types, ...)
+  #pour chaque colonne, categories et types de chaque type de ligne (labours.categories, factures.types, ...)
   def init_sections(saison, col_type, col_id, line_type)
     # self.saisons[saison_id][col_type][col_id][line_type][section] = {} 
     Category.send(line_type).each do |cat|
@@ -144,7 +144,7 @@ class Analytic < ActiveRecord::Base
     end    
   end
   
-  #commun a chaque colonne chaque colonne, categories et types de chaque type de lingne 
+  #commun a chaque colonne, categories et types de chaque type de lingne 
   def init_sections_for_saison(saison, line_type)
     # self.saisons[saison_id][col_type][col_id][line_type][section] = {} 
     Category.send(line_type).each do |cat|
@@ -171,26 +171,53 @@ class Analytic < ActiveRecord::Base
   end
 
   def set_saison_line_datas(s_id, line_type, line_id, datas)
-    s_id=2
     self.saisons[s_id][line_type][:all][line_id][:datas] = datas
   end
   def get_saison_line_datas(s_id, line_type, line_id)
-    s_id=2
     self.saisons[s_id][line_type][:all][line_id][:datas]
   end
   
-  def set_saison_line(s_id, line_type, line_id, cost, value)
-    s_id=2
-    self.saisons[s_id][line_type][:all][line_id][cost] = value
+  def set_saison_line(s_id, line_type, section, line_id, cost, value)
+    self.saisons[s_id][line_type][section][line_id][cost] = value
   end
-  def get_saison_line(s_id, line_type, line_id, cost)
-    self.saisons[s_id][line_type][:all][line_id][cost]
+  def add_saison_line(s_id, line_type, section, line_id, cost, value)
+    self.saisons[s_id][line_type][section][line_id][cost] += value
+  end
+  def get_saison_line(s_id, line_type, section, line_id, cost)
+    self.saisons[s_id][line_type][section][line_id][cost]
   end
   
-  def set_line(s_id, col_type, col_id, line_type, line_id, cost, value)
-    s_id=2
-    self.saisons[s_id][col_type][col_id][line_type][:all][line_id][cost] = value
+  def set_line(s_id, col_type, col_id, line_type, section, line_id, cost, value)
+    self.saisons[s_id][col_type][col_id][line_type][section][line_id][cost] = value
   end
+  def add_line(s_id, col_type, col_id, line_type, section, line_id, cost, value)
+    self.saisons[s_id][col_type][col_id][line_type][section][line_id][cost] += value
+  end
+  def get_line(s_id, col_type, col_id, line_type, section, line_id, cost)
+    self.saisons[s_id][col_type][col_id][line_type][section][line_id][cost]
+  end
+
+  def set_other_line(s_id, col_type, col_id, line_type, section, cost, value)
+    self.saisons[s_id][col_type][col_id][line_type][section][cost] = value
+  end
+  def add_other_line(s_id, col_type, col_id, line_type, section, cost, value)
+    self.saisons[s_id][col_type][col_id][line_type][section][cost] += value
+  end
+  def get_other_line(s_id, col_type, col_id, line_type, section, cost)
+    self.saisons[s_id][col_type][col_id][line_type][section][cost]
+  end
+
+  def set_other_line_for_saison(s_id, line_type, section, cost, value)
+    self.saisons[s_id][line_type][section][cost] = value
+  end
+  def add_other_line_for_saison(s_id, line_type, section, cost, value)
+    self.saisons[s_id][line_type][section][cost] += value
+  end
+  def get_other_line_for_saison(s_id, line_type, section, cost)
+    self.saisons[s_id][line_type][section][cost]
+  end
+
+
 
   def set_colonne(saison_id, colonne_type, colonne_id, datas)
     if saisons[saison_id]
