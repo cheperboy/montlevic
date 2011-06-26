@@ -27,6 +27,7 @@ module PrintHelper
     return (col_length * num + 5)
   end
   
+  # obsolete, utile pour l'ancienne vue Print, A SUPPRIMER
   def type_first_letter(facture)
     return 'n' if facture.class.equal?(Reportable)
     return 'r' if facture.class.equal?(Report)

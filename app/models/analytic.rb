@@ -4,7 +4,8 @@ class Analytic < ActiveRecord::Base
   
   #iterators
   attr_accessor :colonnes_type, 
-                :other_colonnes_type,
+                :saison_colonne_type,
+                :saison_colonne_type_sections,
                 :lines_type, 
                 :lines_type_sections, 
                 :other_lines_type,
@@ -18,7 +19,8 @@ class Analytic < ActiveRecord::Base
 
     # init iterators
     self.colonnes_type = [:parcelles, :zones, :typecultures]
-    self.other_colonnes_type = [:sum]
+    self.saison_colonne_type = [:sum]
+    self.saison_colonne_type_sections = [:total_charges, :benef ] # Sections only for :sum
     self.lines_type = [:labours, :pulves, :factures, :ventes]
     self.other_lines_type = [:resultats]
     self.costs_type = [:ha, :total]
@@ -53,8 +55,20 @@ class Analytic < ActiveRecord::Base
           other_lines_type.each do |other_line_type| # :resultats
             init_other_line_type(saison.id, col_type, colonne.id, other_line_type)
           end
+        end        
+      end
+      
+      # colonne "saison" appelee avec ses sections (total_charges, :benef)
+      saison_colonne_type.each do |saison_col_type| # :sum
+        saisons[saison.id][saison_col_type] = {}
+        saison_colonne_type_sections.each do |section|
+          saisons[saison.id][saison_col_type][section] = {}
+          costs_type.each do |cost|
+            saisons[saison.id][saison_col_type][section][cost] = 0
+          end
         end
       end
+    
     end
     Saison.find(:all).each do |s|
       # logger.error "yaml self.saisons[#{s.id}] : " + self.saisons[s.id].to_yaml
@@ -75,11 +89,11 @@ class Analytic < ActiveRecord::Base
   
   def init_colonne_type(saison_id, col_type)
     self.saisons[saison_id][col_type] = {}
-    self.saisons[saison_id][col_type] = {}
   end
   
   def init_colonne(saison_id, col_type, col_id)
     self.saisons[saison_id][col_type][col_id] = {}
+    self.saisons[saison_id][col_type][col_id][:datas] = {}
   end
   
   # pour chaque colonne init line puis section de chaque line
@@ -170,6 +184,13 @@ class Analytic < ActiveRecord::Base
     end    
   end
 
+  def set_colonne_datas(s_id, col_type, col_id, datas)
+    self.saisons[s_id][col_type][col_id][:datas] = datas
+  end
+  def get_colonne_datas(s_id, col_type, col_id, data)
+    self.saisons[s_id][col_type][col_id][:datas][data]
+  end
+  
   def set_saison_line_datas(s_id, line_type, line_id, datas)
     self.saisons[s_id][line_type][:all][line_id][:datas] = datas
   end
@@ -217,32 +238,15 @@ class Analytic < ActiveRecord::Base
     self.saisons[s_id][line_type][section][cost]
   end
 
-
-
-  def set_colonne(saison_id, colonne_type, colonne_id, datas)
-    if saisons[saison_id]
-      if saisons[saison_id][colonne_type.to_sym]
-        if saisons[saison_id][colonne_type.to_sym][colonne_id]
-          saisons[saison.id][colonne_type.to_sym][colonne_id] = datas
-          return true
-        end
-      end
-    end
-    return false
+  def set_saison_section(s_id, saison_colonne_type, saison_colonne_type_section, cost, value)
+    saisons[s_id][saison_col_type][saison_colonne_type_section][cost] = value
+  end
+  def add_saison_section(s_id, saison_colonne_type, saison_colonne_type_section, cost, value)
+    saisons[s_id][saison_col_type][saison_colonne_type_section][cost] += value
+  end
+  def get_saison_section(s_id, saison_colonne_type, saison_colonne_type_section, cost)
+    saisons[s_id][saison_col_type][saison_colonne_type_section][cost]
   end
   
-  def get_colonne(saison_id, colonne_type, colonne_id)
-    if res.saisons[saison_id]
-      if res.saisons[saison_id][colonne_type.to_sym]
-        if res.saisons[saison_id][colonne_type.to_sym][colonne_id]
-          return res.saisons[saison.id][colonne_type.to_sym][colonne_id]
-        end
-      end
-    else
-      logger.error 'Analytic.Res.saisons... not valid in get_colonne()'
-      return nil
-    end
-  end
-
 end
 

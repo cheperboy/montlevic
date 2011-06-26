@@ -8,46 +8,86 @@
 <% unless (@ventes.size == 0) %>
 
 	<% @ventes.each do |vente| %>
-		<% dep = @test.Tventes[vente.id] %>
+		<% datas = @test.res.get_saison_line_datas(@test.sid, :ventes, vente.id) %>
 	
 		<tr>
-			<td class="left"><b><%= vente.category.name %></b></td>
-			<td class="left"><%= link_popup_vente(dep) %></td>
-			<td><%= vente.date.to_s :dmy %></td>	
-			<td><%= vente.parcelles.length %> p - <%= pretty(dep[:surface_total]) %> ha</td>
-			<td><%= pretty(dep[:ha]) %></td>
-			<td><%= print_popup(pretty(dep[:total]), "@test.Tventes[vente.id][:total]") %></td>
+			<td class="left"><b><%= datas[:category_name] %></b></td>
+			<td class="left"><%= link_popup_vente(datas[:id]) %></td>
+			<td><%= datas[:date].to_s :dmy %></td>	
+			<td>
+				<%= datas[:parcelles_length] %> p - 
+				<%= datas[:surface_total] %> ha
+			</td>
+			<td><%= @test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :ha).display %></td>
+			<td><%= @test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :total).display %></td>
 		
-		<% @colonnes.each do |colonne| %>
-			<% cout_ha = pretty(dep[colonne.id][:ha]) %>
-			<% cout_total = pretty(dep[colonne.id][:total]) %>
-			<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
-			<% if @show[:cout_ha] %>
-				<td class="<%= td_class %>"><%=h cout_ha %></td>
+			<% rang = 0 %>
+			<% @colonnes.each do |colonne| %>
+				<% rang += 1 %>
+				<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :ha).display %>
+				<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :total).display %>
+				<% if @show[:cout_ha] %>
+					<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
+				<% end %>
+				<% if @show[:cout_total] %>
+					<td class="<%= odd(rang) %>"><%=h cout_total %></td>
+				<% end %>
 			<% end %>
-			<% if @show[:cout_total] %>
-				<td class="<%= td_class %>"><%=h cout_total %></td>
-			<% end %>		<% end %>
 		</tr>
 	<% end %>
+
+	<!--Sous Total Vente "category" (Avoir, foin, ble, ...) -->
+	<% if @show[:total_cat] %>
+		<tr>
+			<td>Total par Categorie</td>
+			<% td_number(@colonnes.length, @show[:cout_ha], @show[:cout_total]).times do %>
+					<td></td>
+			<% end %>
+		</tr>	
+		<% for cat in @vente_categories %>
+			<tr class="subtotal">
+				<td class="left">Categorie</td>
+				<td class="left"><b><%= cat.name %></b></td>
+				<td></td>
+				<td></td>
+				<td><%= @test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :ha).display %></td>
+				<td><%= @test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :total).display %></td>
+				<% rang = 0 %>
+				<% @colonnes.each do |colonne| %>
+					<% rang += 1 %>
+					<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :ha).display %>
+					<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :total).display %>
+					<% if @show[:cout_ha] %>
+						<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
+					<% end %>
+					<% if @show[:cout_total] %>
+						<td class="<%= odd(rang) %>"><%=h cout_total %></td>
+					<% end %>
+				<% end %>
+			</tr>
+		<% end %>
+	<% end %>
+
 
 	<tr class="total">
 		<td class="left"><b>Total Ventes</b></td>
 		<td></td>	
 		<td></td>	
 		<td></td>
-		<td><%= pretty(@test.Tventes[:ha][:sum]) %></td>
-		<td><%= pretty(@test.Tventes[:total][:sum]) %></td>	
-	<% @colonnes.each do |colonne| %>
-		<% cout_ha = pretty(@test.Tcols[colonne.id][:ventes][:ha][:sum]) %>
-		<% cout_total = pretty(@test.Tcols[colonne.id][:ventes][:total][:sum]) %>
-		<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
-		<% if @show[:cout_ha] %>
-			<td class="<%= td_class %>_subtotal"><%=h cout_ha %></td>
+		<td><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_ventes, :ha).display %></td>
+		<td><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_ventes, :total).display %></td>	
+		<% rang = 0 %>
+		<% @colonnes.each do |colonne| %>
+			<% rang += 1 %>
+			<% cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_ventes, :ha).display %>
+			<% cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_ventes, :total).display %>
+			<% if @show[:cout_ha] %>
+				<td class="<%= odd(rang) %>_subtotal"><%=h cout_ha %></td>
+			<% end %>
+			<% if @show[:cout_total] %>
+				<td class="<%= odd(rang) %>_subtotal"><%=h cout_total %></td>
+			<% end %>
 		<% end %>
-		<% if @show[:cout_total] %>
-			<td class="<%= td_class %>_subtotal"><%=h cout_total %></td>
-		<% end %>	<% end %>
 	</tr>
 	
 <% end %>

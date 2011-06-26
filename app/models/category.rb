@@ -6,7 +6,7 @@ class Category < ActiveRecord::Base
   
   def self.find_by_type(type)
     type_id = Upcategory.find(:all, :conditions => { :name => type })
-    logger.error('type_id' + type_id.to_s)
+    # logger.error('type_id' + type_id.to_s)
     categories = Category.find(:all, :conditions => { :upcategory_id => type_id })
     categories
   end

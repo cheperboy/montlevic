@@ -283,7 +283,7 @@ class Print < ActiveRecord::Base
       end
       # logger.error "inspect @Tlabours[labour.id][:parcelles] : " + @Tlabours[labour.id][:parcelles].to_yaml
     end
-    logger.error "yaml res.saisons[2] : " + @res.saisons[2].to_yaml
+    # logger.error "yaml res.saisons[2] : " + @res.saisons[2].to_yaml
   end
 
   def init_pulves

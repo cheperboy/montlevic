@@ -7,8 +7,6 @@
 <% unless (((@factures.class == Array) && @factures.size == 0) || (@factures.nil?)) %>
 	<% @factures.each do |facture| %>
 		<% fact = @test.Tfactures[facture.id] %>
-		<% logger.error "[facture.id] : " + facture.id.to_s %>
-		<% logger.error "fact : " + fact.to_s %>
 		<% nb_parcelles = facture.parcelles.length %>
 		<% type = facture.class.to_s %>
 		<tr id='list_factures'>

@@ -1,48 +1,58 @@
 <table class="table_print">
-	<tr>
-		<td></td>
-		<td></td>
-		<td class="date" ></td>
-		<td></td>
-		<td></td>
-		<td></td>
+
+<!-- 1 ere ligne -->
+<tr>
+<% 6.times do %>
+	<td></td>
+<% end %>
+<% rang = 0 %>
 <% @colonnes.each do |colonne| %>
-	<td class="<%= odd(@test.Tcols[colonne.id][:rang]) %>-head" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> ><b>
-		<%=h @test.Tcols[colonne.id][:name] %> - <%=h colonne.id.to_s %>
-	<% if (@test.Tcols[:col_model] == Parcelle) %>
-		<br><%=h Parcelle.find(@test.Tcols[colonne.id][:id]).typeculture.name %>
-	<% end %>		
+	<% rang += 1 %>
+	<td class="<%= odd(rang) %>-head" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> >
+		[<%=h colonne.id %>]
+	</td>
+<% end %>
+</tr>	
+
+<!-- 2eme ligne -->
+<tr>
+<% 6.times do %>
+	<td></td>
+<% end %>
+		
+<% rang = 0 %>
+<% @colonnes.each do |colonne| %>
+	<% rang += 1 %>
+	<td class="<%= odd(rang) %>-head" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> ><b>
+	<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :name) %> <br>
+
+	<% if @test.c == Parcelle %>
+		<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :typeculture) %> - 
+	<% elsif ((@test.c == Typeculture) || (@test.c == Zone))  %>
+		<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :parcelles) %> - 
+	<% end %>	
+	<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :surface) %> Ha
+
 	</b></td>
 <% end %>
-	</tr>	
-	<tr>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
+</tr>	
+
+<!-- 3eme ligne -->
+<tr>
+	<td class="left"><b></b></td>
+	<td class="left"><b>nom</b></td>
+	<td class="left"><b>date</b></td>
+	<td class="left"><b>surface</b></td>
+	<td class="left"><b>cout/ha</b></td>
+	<td class="left"><b>total</b></td>
+<% rang = 0 %>
 <% @colonnes.each do |colonne| %>
-		<td class="<%= odd(@test.Tcols[colonne.id][:rang]) %>-head" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> >
-			<b><%=h @test.Tcols[colonne.id][:surface] %> Ha</b>
-			<%#=h parcelle.typeculture.name %>
-		</td>
-<% end %>
-	</tr>	
-	<tr>
-		<td class="left"><b></b></td>
-		<td class="left"><b>nom</b></td>
-		<td class="left"><b>date</b></td>
-		<td class="left"><b>surface</b></td>
-		<td class="left"><b>cout/ha</b></td>
-		<td class="left"><b>total</b></td>
-<% @colonnes.each do |colonne| %>
-<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
+	<% rang += 1 %>
 	<% if @show[:cout_ha] %>
-		<td class="<%= td_class %>">c/ha</td>
+		<td class="<%= odd(rang) %>">c/ha</td>
 	<% end %>
 	<% if @show[:cout_total] %>
-		<td class="<%= td_class %>">Total</td>
+		<td class="<%= odd(rang) %>">Total</td>
 	<% end %>
 <% end %>
 	</tr>	

@@ -10,18 +10,18 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td><%= pretty(@test.Tcols[:charges][:ha]) %></td>
-		<td class="td-total"><%= pretty(@test.Tcols[:charges][:total]) %></td>	
+		<td><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :ha).display %></td>
+		<td class="td-total"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :total).display %></td>	
+		<% rang = 0 %> 
 	<% @colonnes.each do |colonne| %>
-		<% cout_ha = pretty(@test.Tcols[colonne.id][:charges][:ha][:sum]) %>
-		<% cout_total = pretty(@test.Tcols[colonne.id][:charges][:total][:sum]) %>
-		<% td_class = odd(@test.Tcols[colonne.id][:rang]) %>
+		<% rang += 1 %>
+		<% cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_charges, :ha).display %>
+		<% cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_charges, :total).display %>
 		<% if @show[:cout_ha] %>
-			<td class="<%= td_class %>"><%=h cout_ha %></td>
+			<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
 		<% end %>
 		<% if @show[:cout_total] %>
-			<td class="<%= td_class %>"><%=h cout_total %></td>
+			<td class="<%= odd(rang) %>"><%=h cout_total %></td>
 		<% end %>	<% end %>
 	</tr>
 <% end %>	
-

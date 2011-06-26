@@ -87,6 +87,7 @@ module ApplicationHelper
           out += "</td>"
         elsif header[HEADER_KEY].eql?("dosage")
           out += "<td class='list-elt-right'>"
+          logger.error "id : "+ element.id.to_s + " "+ element.unit.to_s
           out += element.dosage.to_s + ' ' + element.unit
           out += "</td>"
         else  
@@ -427,8 +428,8 @@ module ApplicationHelper
   
   def pretty(val)
     precision = 1
-    return "" if (val.equal?(0))
-    return "" if (val == 0.0)
+    return "-" if (val.equal?(0))
+    return "-" if (val < 0.0)
     return val.to_i if (val == val.to_i)
     return val if precision == 0
     return (val * 10 ** precision).round.to_f / 10 ** precision

@@ -35,6 +35,7 @@ class CalculateController < ApplicationController
     @labour_categories = Category.labours
     @facture_categories = Category.factures
     @pulve_categories = Category.pulves
+    @vente_categories = Category.ventes
     @pulves = @saison.pulves
     
     respond_to do |format|
