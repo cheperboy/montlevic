@@ -28,16 +28,6 @@ class Calculate < ActiveRecord::Base
     end
   end
   
-  def set_alias
-    self.val = {}
-    self.val[:factures] = self.Tfactures
-    self.val[:labours] = self.Tlabours
-    self.val[:pulves] = self.Tpulves
-    self.val[:ventes] = self.Tventes
-    self.val[:benefs] = self.Tbenefs
-    self.val[:cols] = self.Tcols
-  end
-  
   def calculate
     @res = Analytic.new()
     init_cols
@@ -52,8 +42,7 @@ class Calculate < ActiveRecord::Base
     run_factures
     run_ventes
     run_totaux
-    
-    set_alias()
+    verif
     # return true
   end
  
@@ -424,7 +413,7 @@ class Calculate < ActiveRecord::Base
       datas = { :id => facture.id, :name => facture.name, :category_id => facture.category_id,
                 :category_name => facture.category.name, :user_id => facture.user_id,
                 :cout_total => facture.get_cout_total, :charges_assoc => facture.charges?, :date => facture.date, 
-                :parcelles_length => facture.parcelles.length, :surface_total => facture.sum_surfaces }
+                :parcelles_length => facture.parcelles.length, :surface_total => facture.sum_surfaces, :sum_charges => facture.sum_charges}
       
       @res.set_saison_line_datas(@sid, :factures, facture.id, datas)
       
@@ -618,56 +607,64 @@ class Calculate < ActiveRecord::Base
   end
   
   def verif
-    total_pulves_ha =   @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :ha)
-    total_labours_ha =  @res.get_other_line_for_saison(@sid, :resultats, :total_labours, :ha)
-    total_factures_ha = @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :ha)
-    total_pulves =      @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :total)
-    total_labours =     @res.get_other_line_for_saison(@sid, :resultats, :total_labours, :total)
-    total_factures =    @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
+    # total_pulves_ha =   @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :ha)
+    # total_labours_ha =  @res.get_other_line_for_saison(@sid, :resultats, :total_labours, :ha)
+    # total_factures_ha = @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :ha)
+    # total_pulves =      @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :total)
+    # total_labours =     @res.get_other_line_for_saison(@sid, :resultats, :total_labours, :total)
+    # total_factures =    @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
 
-    by_col_total_charges = 0
-    for col in @cols
-      @Tcols[:charges][:total] += @Tcols[col.id][:charges][:total][:sum]
-      #@Tcols[:charges][:ha] += @Tcols[col.id][:charges][:ha][:sum]
+    labours = 0
+    pulves = 0
+    factures_total = 0
+    factures_sum_charges = 0
 
-      @Tcols[:benef][:total] += @Tcols[col.id][:benef][:total][:sum]
-      #@Tcols[:benef][:ha] += @Tcols[col.id][:benef][:ha][:sum]
-    end
- 
-  
-    # types_charges = [:labours, :pulves, :factures]
     charges = 0
     charges_by_col = 0
     charges_by_line = 0
+    charges_by_line_ha = 0
         
     # somme des charges
     for col in @cols
       for labour in @labours
-        charges += get_line(@sid, @c, col.id, :labours, :all, labour.id, :total)
+        labours += @res.get_line(@sid, @c, col.id, :labours, :all, labour.id, :total)
       end
       for pulve in @pulves
-        charges += get_line(@sid, @c, col.id, :pulves, :all, pulve.id, :total)
+        pulves += @res.get_line(@sid, @c, col.id, :pulves, :all, pulve.id, :total)
       end
       for facture in @factures
-        charges += get_line(@sid, @c, col.id, :factures, :all, factures.id, :total)
+        factures_total += @res.get_line(@sid, @c, col.id, :factures, :all, facture.id, :total)
       end
     end
+    charges = labours + pulves + factures_total
     
+    for facture in @factures
+      factures_sum_charges += @res.get_saison_line_datas(@sid, :factures, facture.id)[:sum_charges]
+    end
+    
+
     # somme des charges par totaux de col
     for col in @cols
-      charges_by_col += get_other_line(@sid, @c, col.id, :resultats, :total_labours, :total) 
-      charges_by_col += get_other_line(@sid, @c, col.id, :resultats, :total_pulves, :total) 
-      charges_by_col += get_other_line(@sid, @c, col.id, :resultats, :total_factures, :total) 
+      charges_by_col += @res.get_other_line(@sid, @c, col.id, :resultats, :total_labours, :total) 
+      charges_by_col += @res.get_other_line(@sid, @c, col.id, :resultats, :total_pulves, :total) 
+      charges_by_col += @res.get_other_line(@sid, @c, col.id, :resultats, :total_factures, :total) 
     end
-    
     # somme des charges par totaux de ligne
-    for charge in type_charges
-      charges_by_line += get_other_line_for_saison(@sid, :resultats, :total_labours, :total)
-      charges_by_line += get_other_line_for_saison(@sid, :resultats, :total_pulves, :total)
-      charges_by_line += get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
-    end
+    charges_by_line_ha += @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :ha)
+    charges_by_line_ha += @res.get_other_line_for_saison(@sid, :resultats, :total_labours, :ha)
+    charges_by_line_ha += @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :ha)
+    charges_by_line +=    @res.get_other_line_for_saison(@sid, :resultats, :total_labours, :total)
+    charges_by_line +=    @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :total)
+    charges_by_line +=    @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
     
-    
+    logger.error "charges : #{charges}"
+    logger.error "charges_by_line : #{charges_by_line}"
+    logger.error "charges_by_col : #{charges_by_col}"
+    logger.error "-----"
+    logger.error "labours + pulves = factures.sum_charges ?"
+    logger.error "labours #{labours} + pulves #{pulves} = #{labours + pulves}"
+    logger.error "factures_sum_charges #{factures_sum_charges}"
+
   end
     
 end

@@ -13,6 +13,7 @@
 #   username: postgres
 #   password: picasso
 
+# Config ok pour SQLite
 development:
   adapter: sqlite3
   database: db/montlevic.sqlite3
