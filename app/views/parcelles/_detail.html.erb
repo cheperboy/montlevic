@@ -1,16 +1,16 @@
-<table>
+<table class=table_data>
   <tr>
-    <td>Parcelle | </td>
-    <td>surface | </td>
-    <td>Zones | </td>
-    <td>surface | </td>
-    <td>total | </td>
+    <td>Parcelle</td>
+    <td>surface</td>
+    <td>Zones</td>
+    <td>surface (Ha)</td>
+    <td>surface (%)</td>
   </tr>
 
 <% @parcelles.each do |parcelle| %>
   <tr>
-    <td><%= link_to parcelle.name, edit_parcelle_path(parcelle) %> | </td>
-    <td><%= parcelle.surface %> | </td>
+    <td><%= link_to parcelle.name, edit_parcelle_path(parcelle) %></td>
+    <td class=right><%= parcelle.surface %></td>
     <td></td>
     <td></td>
     <td></td>
@@ -18,15 +18,15 @@
   	<% zones = Zone.find_by_parcelle(parcelle.id) %>
 	<% unless zones.nil? %>
 	  	<% zones.each do |zone| %>
-	  <tr>
-	  	<td></td>
-	    <td></td>
-	    <td><%= zone.name %> | </td>
-	    <td><%= zone.surface %> | </td>
-	    <%= percent_of_zone(parcelle, zone.id) %>
-	  </tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td><%= zone.name %></td>
+			<td class=right><%= zone.surface.to_s(2) %></td>
+			<%= percent_of_zone(parcelle, zone.id) %>
+		</tr>
 		<% end %>
 	<% end %>
-  </tr>
 <% end %>
+
 </table>

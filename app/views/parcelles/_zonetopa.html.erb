@@ -1,7 +1,7 @@
 <div class="zonetopa">
   <p>
     <%= f.label :zone_id, "Zone : " %>
-    <%= f.collection_select (:zone_id, Zone.find(:all), :id, :name ) %>
+    <%= f.collection_select (:zone_id, Zone.find(:all, :order => :surface), :id, :surface_and_name ) %>
     
     <%= f.label :value, "Value: " %>
     <%= f.text_field :value, :size => 3 %>

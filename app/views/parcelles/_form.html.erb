@@ -8,6 +8,7 @@
 	<%= "var zonetopa='#{generate_template(parcelle_form, :zonetopas)}'" %>
 <% end -%>
 
+<fieldset>
 <p>
 <%= parcelle_form.label :name, "Parcelle:" %>
 <%= parcelle_form.text_field :name %>
@@ -36,4 +37,4 @@
 <%= parcelle_form.submit "Enregistrer" %>
 </p>
 <% end -%>
-
+</fieldset>

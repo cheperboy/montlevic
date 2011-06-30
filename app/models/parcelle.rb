@@ -84,11 +84,4 @@ class Parcelle < ActiveRecord::Base
     return percent
   end
 
-  def percent_of_zone(zone_id)
-    zone = Zone.find(zone_id)
-    zonetopa = Zonetopa.find_by(zone_id, self.id)
-    percent = zonetopa.value * 100 / self.surface
-    return percent
-  end
-
 end

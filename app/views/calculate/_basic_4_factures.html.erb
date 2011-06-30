@@ -13,8 +13,8 @@
 				<%= link_popup_facture(datas[:id]) %>
 				<% if datas[:charges_assoc] %> * <% end %>
 			</td>
-			<td><%= datas[:date].to_s :dmy %></td>	
-			<td><%= datas[:parcelles_length].to_s %> p</td>
+			<td class='date'><%= datas[:date].to_s :dmy %></td>	
+			<td class='left'><%= datas[:parcelles_length].to_s %> p</td>
 			<td><%= @test.res.get_saison_line(@test.sid, :factures, :all, facture.id, :ha).display %></td>
 			<td><%= @test.res.get_saison_line(@test.sid, :factures, :all, facture.id, :total).display %></td>
 	
@@ -119,5 +119,3 @@
 	<% end %>
 </tr>
 <% end %>
-
-	

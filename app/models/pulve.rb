@@ -51,7 +51,7 @@ class Pulve < Charge
   end
 
 
-# ----- Methodes -----
+# ----- Methodes de calcul -----
   
   def get_cout_ha_produit
     return(self.dosage * self.prix_littre)
@@ -85,7 +85,12 @@ class Pulve < Charge
   def get_cout_total_sans_reduc
     return (self.sum_surfaces * self.cout_ha_passage)
   end
-  
+
+  # ----- Methodes de verif -----
+  # TODO completer cela et afficher les infos dans la liste des pulves
+  def facture_assoc?
+    self.putofactures.empty?
+  end
   
 #  def get_cout_ha_parcelle_with_rate(parcelle)
 #    cout_ha_parcelle = 0

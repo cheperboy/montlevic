@@ -12,4 +12,4 @@
 .table_list td { padding-right: 0.5em; }
 
 .table_list td.list-elt-left { text-align:left; }
-.table_list td.list-elt-left { text-align:right; }
+.table_list td.list-elt-right { text-align:right; }

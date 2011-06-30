@@ -25,15 +25,16 @@ class Vente < Charge
     return (self.prix)
   end
 
-  def get_cout_ha_parcelle(parcelle)
-    cout_ha_parcelle = 0
-    if (all_parcelles?)
-      cout_ha_parcelle = self.get_cout_ha
-    elsif (self.parcelles.include?(parcelle))
-      ventoparcelle = self.ventoparcelles.find(:parcelle_id => parcelle.id)
-      cout_ha_parcelle = self.ventoparcelles.value / parcelle.surface
-    end
-    return cout_ha_parcelle
-  end
+  # TODO regler le probleme de cette fonction (est-il necessaire de reecrir sur get_cout_ha_parcelle(parcelle) de charge.rb)
+  # def get_cout_ha_parcelle(parcelle)
+  #   cout_ha_parcelle = 0
+  #   if (all_parcelles?)
+  #     cout_ha_parcelle = self.get_cout_ha
+  #   elsif (self.parcelles.include?(parcelle))
+  #     ventoparcelle = self.ventoparcelles.find(:parcelle_id => parcelle.id)
+  #     cout_ha_parcelle = self.ventoparcelles.value / parcelle.surface
+  #   end
+  #   return cout_ha_parcelle
+  # end
 
 end

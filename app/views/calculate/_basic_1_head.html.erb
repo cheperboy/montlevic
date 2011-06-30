@@ -2,9 +2,12 @@
 
 <!-- 1 ere ligne -->
 <tr>
-<% 6.times do %>
-	<td></td>
-<% end %>
+<td><!-- Saison_id --><%#=h  @test.res.get_saison_datas(@test.sid, :id) %></td>
+<td></td>
+<td class=date></td>
+<td></td>
+<td colspan=2>Total saison</td>
+
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
 	<% rang += 1 %>
@@ -16,20 +19,22 @@
 
 <!-- 2eme ligne -->
 <tr>
-<% 6.times do %>
+	<td>Saison : <%=h  @test.res.get_saison_datas(@test.sid, :name) %></td>
 	<td></td>
-<% end %>
+	<td class=date></td>
+	<td></td>
+	<td colspan=2><%=h  @test.res.get_saison_datas(@test.sid, :surface) %> Ha</td>
 		
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
 	<% rang += 1 %>
 	<td class="<%= odd(rang) %>-head" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> ><b>
 	<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :name) %> <br>
-
-	<% if @test.c == Parcelle %>
-		<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :typeculture) %> - 
-	<% elsif ((@test.c == Typeculture) || (@test.c == Zone))  %>
-		<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :parcelles) %> - 
+	
+	<% if @test.c.to_s == "parcelles" %>
+		<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :typeculture) %> - <br>
+	<% elsif ((@test.c.to_s == "typecultures") || (@test.c == "zones"))  %>
+		<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :parcelles) %> - <br>
 	<% end %>	
 	<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :surface) %> Ha
 
@@ -41,7 +46,7 @@
 <tr>
 	<td class="left"><b></b></td>
 	<td class="left"><b>nom</b></td>
-	<td class="left"><b>date</b></td>
+	<td class=date><b>date</b></td>
 	<td class="left"><b>surface</b></td>
 	<td class="left"><b>cout/ha</b></td>
 	<td class="left"><b>total</b></td>

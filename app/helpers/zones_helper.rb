@@ -6,7 +6,7 @@ module ZonesHelper
     else
       color = 'red'
     end
-    out = '<td style="color: ' + color + ';">' + value.to_s + ' % | </td>' 
+    out = '<td style="color: ' + color + ';">' + value.to_s(2) + ' %</td>' 
   end  
   
   def percent_of_parcelle(zone, parcelle_id, col)
@@ -27,7 +27,7 @@ module ZonesHelper
         color = 'red'
       end
     end
-    out = '<td style="color: ' + color + ';">' + percent.to_s + ' % | </td>'
+    out = '<td style="color: ' + color + ';">' + percent.to_s(2) + ' %</td>'
     return out
   end
 

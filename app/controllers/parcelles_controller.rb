@@ -45,6 +45,7 @@ class ParcellesController < ApplicationController
         format.html { redirect_to(@parcelle) }
         format.xml  { render :xml => @parcelle, :status => :created, :location => @parcelle }
       else
+        logger.error @parcelle.errors.to_s
         format.html { render :action => "new" }
         format.xml  { render :xml => @parcelle.errors, :status => :unprocessable_entity }
       end

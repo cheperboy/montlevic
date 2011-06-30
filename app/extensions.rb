@@ -94,7 +94,7 @@ class Float
   # avec en argument le nombre de chiffre apres la virgule
   alias_method :orig_to_s, :to_s
 
-  def display(precision = 0)
+  def display(precision = 1)
     return "-" if ((-0.01 < self) && (self < 0.01))
     return self.to_i if (self == self.to_i)
     # return self if precision == 0
@@ -102,13 +102,13 @@ class Float
     # return (self * 10 ** precision).round.to_f / 10 ** precision
   end
 
-  # def to_s(arg = nil)
-  #   if arg.nil?
-  #     orig_to_s
-  #   else
-  #     sprintf("%.#{arg}f", self)
-  #   end
-  # end
+  def to_s(arg = nil)
+    if arg.nil?
+      orig_to_s
+    else
+      sprintf("%.#{arg}f", self)
+    end
+  end
 
   def pretty(val)
     precision = 1

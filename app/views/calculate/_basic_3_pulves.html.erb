@@ -11,8 +11,8 @@
 			<tr>
 				<td class='left'><strong><%= datas[:category_name] %></strong></td>
 				<td class='left'><%= link_popup_pulve(datas[:id]) %></td>
-				<td><%= datas[:date].to_s :dmy %></td>	
-				<td>
+				<td class="date"><%= datas[:date].to_s :dmy %></td>	
+				<td class='left'>
 					<%= datas[:parcelles_length] %> p - 
 					<%= datas[:surface_total].display %> ha
 				</td>

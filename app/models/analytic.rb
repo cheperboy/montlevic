@@ -78,6 +78,7 @@ class Analytic < ActiveRecord::Base
   # self.saisons[s][:col_type][col.id][:labours][:ha][:sum]
   def init_saison(saison)
     self.saisons[saison.id] = {}
+    self.saisons[saison.id][:datas] = 0
     lines_type.each do |line_type| # :labours, :pulves, :factures
       init_line_type_for_saison(saison.id, line_type)
       init_sections_for_saison(saison, line_type)
@@ -184,13 +185,20 @@ class Analytic < ActiveRecord::Base
     end    
   end
 
+  def set_saison_datas(s_id, datas)
+    self.saisons[s_id][:datas] = datas
+  end
+  def get_saison_datas(s_id, data)
+    self.saisons[s_id][:datas][data]
+  end
+
   def set_colonne_datas(s_id, col_type, col_id, datas)
     self.saisons[s_id][col_type][col_id][:datas] = datas
   end
   def get_colonne_datas(s_id, col_type, col_id, data)
     self.saisons[s_id][col_type][col_id][:datas][data]
   end
-  
+
   def set_saison_line_datas(s_id, line_type, line_id, datas)
     self.saisons[s_id][line_type][:all][line_id][:datas] = datas
   end

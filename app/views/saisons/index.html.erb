@@ -1,12 +1,12 @@
-<h1>Listing saisons</h1>
+<% title "Saisons" %>
 
-<table>
-  <tr>
-    <th>Saison</th>
-    <th>Annee</th>
-    <th></th>
+<table class=table_data>
+  <tr class=bold>
+    <td>Saison</td>
+    <td>Annee</td>
+    <td></td>
     <% if admin? %>
-    	<th></th>
+    	<td></td>
 	<% end %>
   </tr>
 
@@ -16,7 +16,7 @@
     <td><%=h saison.year.to_s %></td>
     <td><%= link_to 'Modifier', edit_saison_path(saison) %></td>
     <% if admin? %>
-		<td><%= link_to 'Destroy', saison, :confirm => 'Are you sure?', :method => :delete %></td>
+		<td><%= link_to 'Supprimer', saison, :confirm => 'Supprimer vraiment?', :method => :delete %></td>
 	<% end %>
   </tr>
 <% end %>

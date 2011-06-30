@@ -14,7 +14,7 @@ module ParcellesHelper
     else
       color = 'red'
     end
-    out = '<td style="color: ' + color + ';">' + percent.to_s + ' % | </td>'
+    out = '<td style="color: ' + color + ';">' + percent.to_s + ' %</td>'
     return out
   end
 

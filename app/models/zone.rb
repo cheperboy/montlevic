@@ -6,6 +6,14 @@ class Zone < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :surface
 
+  def name_and_surface
+    @name_and_surface = name + " - " + surface.to_s(2) + " Ha" 
+  end
+
+  def surface_and_name
+    @surface_and_name = surface.to_s(2) + " Ha - " + name 
+  end
+
   def self.find_for_saison()
     zones = []
     parcelles = Parcelle.find_by_saison(:all)

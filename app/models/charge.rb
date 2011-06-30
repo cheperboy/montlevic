@@ -122,6 +122,10 @@ class Charge < ActiveRecord::Base
     s
   end
   
+  def get_cout_ha_for_saison(surface_of_saison)
+    get_cout_total / surface_of_saison
+  end
+  
   def get_cout_ha_col(col)
       return get_cout_ha_parcelle(col) if col.class.equal?(Parcelle)
       return get_cout_ha_zone(col) if col.class.equal?(Zone)
@@ -197,5 +201,4 @@ class Charge < ActiveRecord::Base
     return(surfaces * self.get_cout_ha_typeculture(typeculture))
   end
   
-
 end

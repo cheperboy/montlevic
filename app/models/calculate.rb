@@ -9,7 +9,9 @@ class Calculate < ActiveRecord::Base
                 :csv, :csv_html, :display, :info_debug,
                 :saison, :labours, :pulves, :factures, :ventes, :types_facture, :col_model, :cols,
                 :c, # model de colonne en symbole pluriel :parcelles, :zones, :typecultures
-                :sid #saison_id
+                :sid, #saison_id
+                :surface,
+                :surface_of_saison
 
   def initialize(col_model)
     unless col_model.find_for_saison().nil?  
@@ -53,117 +55,31 @@ class Calculate < ActiveRecord::Base
   
   def init_cols
     unless @cols.nil?
-      rang = 0
-
-    #Init Hparcelles 
-      self.Tcols = {}
-      self.Tcols[:ids] = []
-      self.Tcols[:col_model] = @col_model
-      self.Tcols[:charges] = {} 
-      self.Tcols[:benef] = {}  
-      self.Tcols[:charges][:total] = 0   # derniere case somme de toutes les charges de chaque colonnes
-      self.Tcols[:charges][:ha] = 0      # derniere case somme de tout les totaux ha
-      self.Tcols[:benef][:total] = 0  # derniere case somme de TOUTES les ventes
-      self.Tcols[:benef][:ha] = 0     # derniere case somme de TOUTES les ventes ha
-      self.Tcols[:vente_total] = 0    # derniere case somme de TOUTES les ventes
-      self.Tcols[:vente_ha] = 0       # derniere case somme de TOUTES les ventes ha
-
-      for col in @cols        
+      saison_datas = {}
+      saison_datas[:id] = @saison.id
+      saison_datas[:name] = @saison.name
+      saison_datas[:year] = @saison.year.to_s
+      saison_datas[:surface] = 0
+      for col in @cols
+        # init saison datas
+        saison_datas[:surface] += col.surface
         # init col datas
-        datas = {}
-        datas[:name] = col.name
-        datas[:id] = col.id
+        col_datas = {}
+        col_datas[:name] = col.name
+        col_datas[:id] = col.id
         case col_model.to_s.downcase
         when "parcelle"
-          datas[:surface] = col.surface
-          datas[:typeculture] = col.typeculture.name
+          col_datas[:surface] = col.surface
+          col_datas[:typeculture] = col.typeculture.name
         when 'zone', 'typeculture'
-          datas[:surface] = col.surface
-          datas[:nombre_parcelles] = "xxx"
-          datas[:parcelles] = "p1, p2, p3.."
-        else logger.error "illegal command #{col_model}"
+          col_datas[:surface] = col.surface
+          col_datas[:nombre_parcelles] = "xxx"
+          col_datas[:parcelles] = "p1, p2, p3.."
         end
-        # end of init col datas
-
-        @res.set_colonne_datas(@sid, @c, col.id, datas)
-
-        self.Tcols[:length] = @cols.length
-        self.Tcols[:ids] << col.id
-
-        self.Tcols[col.id] = {}
-        self.Tcols[col.id][:pulves] = {}
-        self.Tcols[col.id][:labours] = {}
-        self.Tcols[col.id][:factures] = {}
-        self.Tcols[col.id][:ventes] = {}
-        self.Tcols[col.id][:charges] = {}
-        self.Tcols[col.id][:benef] = {}
-        
-        self.Tcols[col.id][:pulves][:ha] = {}
-        self.Tcols[col.id][:pulves][:total] = {}
-        self.Tcols[col.id][:pulves][:category] = {}
-        self.Tcols[col.id][:pulves][:category][:ha] = {}
-        self.Tcols[col.id][:pulves][:category][:total] = {}
-        self.Tcols[col.id][:labours][:ha] = {}
-        self.Tcols[col.id][:labours][:total] = {}
-        self.Tcols[col.id][:labours][:category] = {}
-        self.Tcols[col.id][:labours][:category][:ha] = {}
-        self.Tcols[col.id][:labours][:category][:total] = {}
-        self.Tcols[col.id][:factures][:ha] = {}
-        self.Tcols[col.id][:factures][:total] = {}
-        self.Tcols[col.id][:ventes][:ha] = {}
-        self.Tcols[col.id][:ventes][:total] = {}
-        self.Tcols[col.id][:charges][:total] = {}
-        self.Tcols[col.id][:charges][:ha] = {}
-        self.Tcols[col.id][:charges][:category] = {}
-        self.Tcols[col.id][:charges][:category][:ha] = {}
-        self.Tcols[col.id][:charges][:category][:total] = {}
-        self.Tcols[col.id][:charges][:factcat] = {}
-        self.Tcols[col.id][:charges][:factcat][:ha] = {}
-        self.Tcols[col.id][:charges][:factcat][:total] = {}
-        self.Tcols[col.id][:benef][:ha] = {}
-        self.Tcols[col.id][:benef][:total] = {}
-        
-        self.Tcols[col.id][:id] = col.id
-        self.Tcols[col.id][:name] = col.name
-        self.Tcols[col.id][:surface] = col.surface
-        
-        rang += 1
-        self.Tcols[col.id][:rang] = rang
-        self.Tcols[col.id][:labours][:ha][:sum] = 0
-        self.Tcols[col.id][:labours][:total][:sum] = 0
-        self.Tcols[col.id][:pulves][:ha][:sum] = 0
-        self.Tcols[col.id][:pulves][:total][:sum] = 0
-        self.Tcols[col.id][:ventes][:ha][:sum] = 0
-        self.Tcols[col.id][:ventes][:total][:sum] = 0
-        
-        self.Tcols[col.id][:factures][:total][:sum] = 0  
-        self.Tcols[col.id][:factures][:ha][:sum] = 0  
-        self.Tcols[col.id][:charges][:total][:sum] = 0  
-        self.Tcols[col.id][:charges][:ha][:sum] = 0  
-        self.Tcols[col.id][:benef][:total][:sum] = 0
-        self.Tcols[col.id][:benef][:ha][:sum] = 0
-  
-        for cat in Category.labours
-          self.Tcols[col.id][:labours][:category][:total][cat.id] = 0
-          self.Tcols[col.id][:labours][:category][:ha][cat.id] = 0
-        end
-        for cat in Category.pulves
-          self.Tcols[col.id][:pulves][:category][:total][cat.id] = 0  
-          self.Tcols[col.id][:pulves][:category][:ha][cat.id] = 0
-        end
-        for cat in Category.factures
-          self.Tcols[col.id][:charges][:category][:total][cat.id] = 0  
-          self.Tcols[col.id][:charges][:category][:ha][cat.id] = 0
-        end
-        for type in self.types_facture
-          self.Tcols[col.id][:factures][:total][type.id] = 0  
-          self.Tcols[col.id][:factures][:ha][type.id] = 0  
-          self.Tcols[col.id][:charges][:factcat][:total][type.id] = 0  
-          self.Tcols[col.id][:charges][:factcat][:ha][type.id] = 0
-          self.Tcols[col.id][:benef][:total][type.id] = 0  
-          self.Tcols[col.id][:benef][:ha][type.id] = 0
-        end
+        @res.set_colonne_datas(@sid, @c, col.id, col_datas)
       end
+      @res.set_saison_datas(@sid, saison_datas)
+      @surface_of_saison = saison_datas[:surface]
     end
   end
 
@@ -350,8 +266,8 @@ class Calculate < ActiveRecord::Base
       @res.set_saison_line_datas(@sid, :labours, labour.id, datas)
 
       # total du labour
-      @res.set_saison_line(@sid, :labours, :all, labour.id, :ha, labour.get_cout_ha)
       @res.set_saison_line(@sid, :labours, :all, labour.id, :total, labour.get_cout_total)
+      @res.set_saison_line(@sid, :labours, :all, labour.id, :ha, labour.get_cout_ha_for_saison(@surface_of_saison))
       
       #total des labours
       @res.add_other_line_for_saison(@sid, :resultats, :total_labours, :ha, labour.get_cout_ha)      
@@ -418,12 +334,13 @@ class Calculate < ActiveRecord::Base
       @res.set_saison_line_datas(@sid, :factures, facture.id, datas)
       
       #total de la facture
-      @res.set_saison_line(@sid, :factures, :all, facture.id, :ha, facture.get_cout_ha)
       @res.set_saison_line(@sid, :factures, :all, facture.id, :total, facture.get_cout_total)
+      @res.set_saison_line(@sid, :factures, :all, facture.id, :ha, facture.get_cout_ha_for_saison(@surface_of_saison))
       
+      # TO TEST
       #total des factures
-      @res.add_other_line_for_saison(@sid, :resultats, :total_factures, :ha, facture.get_cout_ha)      
       @res.add_other_line_for_saison(@sid, :resultats, :total_factures, :total, facture.get_cout_total)
+      @res.add_other_line_for_saison(@sid, :resultats, :total_factures, :ha, facture.get_cout_ha_for_saison(@surface_of_saison))     
       
       #totaux par types de factures
       for factcat in self.types_facture
@@ -559,7 +476,6 @@ class Calculate < ActiveRecord::Base
       for col in @cols
         cout_ha = @res.get_line(@sid, @c, col.id, :ventes, :all, vente.id, :ha)
         cout_total = @res.get_line(@sid, @c, col.id, :ventes, :all, vente.id, :total)
-        
         #somme des ventes par col
         @res.add_other_line(@sid, @c, col.id, :resultats, :total_ventes, :ha, cout_ha)
         @res.add_other_line(@sid, @c, col.id, :resultats, :total_ventes, :total, cout_total)
@@ -567,13 +483,13 @@ class Calculate < ActiveRecord::Base
         #total des benefs par col
         @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (cout_ha))
         @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (cout_total))
-      end
       
-      #totaux par categorie de vente
-      for cat in Category.ventes
-        if (vente.category_id == cat.id)
-          @res.add_line(@sid, @c, col.id, :ventes, :category, cat.id, :ha, cout_ha)
-          @res.add_line(@sid, @c, col.id, :ventes, :category, cat.id, :total, cout_total)
+        #totaux par categorie de vente
+        for cat in Category.ventes
+          if (vente.category_id == cat.id)
+            @res.add_line(@sid, @c, col.id, :ventes, :category, cat.id, :ha, cout_ha)
+            @res.add_line(@sid, @c, col.id, :ventes, :category, cat.id, :total, cout_total)
+          end
         end
       end
     end
@@ -657,13 +573,13 @@ class Calculate < ActiveRecord::Base
     charges_by_line +=    @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :total)
     charges_by_line +=    @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
     
-    logger.error "charges : #{charges}"
-    logger.error "charges_by_line : #{charges_by_line}"
-    logger.error "charges_by_col : #{charges_by_col}"
-    logger.error "-----"
-    logger.error "labours + pulves = factures.sum_charges ?"
-    logger.error "labours #{labours} + pulves #{pulves} = #{labours + pulves}"
-    logger.error "factures_sum_charges #{factures_sum_charges}"
+    # logger.error "charges : #{charges}"
+    # logger.error "charges_by_line : #{charges_by_line}"
+    # logger.error "charges_by_col : #{charges_by_col}"
+    # logger.error "-----"
+    # logger.error "labours + pulves = factures.sum_charges ?"
+    # logger.error "labours #{labours} + pulves #{pulves} = #{labours + pulves}"
+    # logger.error "factures_sum_charges #{factures_sum_charges}"
 
   end
     

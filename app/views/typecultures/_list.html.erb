@@ -1,14 +1,16 @@
-<table>
-  <tr>
+<table class=table_data>
+  <tr class=bold>
     <td>Nom</td>
-    <td>parcelles</td>
+    <td class=center>Nombre de parcelles</td>
     <td></td>
-    <td></td>
+    <% if admin? %>
+		<td></td>
+	<% end %>
   </tr>
 <% @typecultures.each do |typeculture| %>
   <tr>
     <td><%= typeculture.name %></td>
-    <td><%= typeculture.parcelles.size %></td>
+    <td class=center><%= typeculture.parcelles.size %></td>
     <td><%= link_to 'Editer', edit_typeculture_path(typeculture) %></td>
     <% if admin? %>
 		<td><%= link_to 'Supprimer', typeculture, :confirm => 'Are you sure?', :method => :delete %></td>

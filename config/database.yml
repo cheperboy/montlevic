@@ -5,20 +5,20 @@
 #   sudo env ARCHFLAGS="-arch i386" gem install mysql -- --with-mysql-config=/usr/local/mysql/bin/mysql_config
 #       This sets the ARCHFLAGS environment variable to your native architecture
 
-# development:
-#   adapter: postgresql
-#   encoding: utf8
-#   database: comptagri
-#   pool: 5
-#   username: postgres
-#   password: picasso
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: comptagri
+  pool: 5
+  username: postgres
+  password: picasso
 
 # Config ok pour SQLite
-development:
-  adapter: sqlite3
-  database: db/montlevic.sqlite3
-  pool: 5
-  timeout: 5000
+# development:
+#   adapter: sqlite3
+#   database: db/montlevic.sqlite3
+#   pool: 5
+#   timeout: 5000
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

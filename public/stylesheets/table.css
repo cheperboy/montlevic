@@ -1,4 +1,27 @@
-/* Begin : Table list */
+/* Begin : Table Datas : Category, Zone, Parcelle, User, ... */
+
+.table_data { border-collapse:collapse }
+.table_data { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
+
+.table_data td, th, tr { 
+	text-align: left;
+	 border-style:solid; 
+	border-width:1px;
+	border-color:grey;
+	padding-left: 20px;
+ }
+
+.table_data th.right{ text-align: left; }
+.table_data td.right{ text-align: left; }
+.table_data tr.bold{ font-weight: bold; }
+.table_data td.bold{ font-weight: bold; }
+.table_data td.center{ text-align: center; }
+.table_data td.right{ text-align: right; }
+.table_data tr:hover { background-color: #eee;}
+
+/* End : Table Datas */
+
+/* Begin : Table print */
 
 .table_print { border-collapse:collapse }
 .table_print { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
@@ -7,28 +30,27 @@
  border-width:1px;
  border-style:solid; 
  border-color:grey;
- width: 20em; 
  }
 
-.table_print tr:hover { background-color: #eee; width: 25em; }
+.table_print tr:hover { background-color: #eee; }
 .table_print tr.subtotal { color: green; }
 .table_print tr.total { color: red; }
 .table_print td.td-total { font-weight:700; }
 
 
-.table_print td, tr{ text-align: right; }
+.table_print td, tr{ text-align: right; padding-right: 10px; }
 
-.table_print th.left{ text-align: left; width: 25em;}
-.table_print td.left{ text-align: left; width: 25em;}
-.table_print td.date{ width: 25em; }
+.table_print th.left{ text-align: left; padding-right: 10px; /*width: 25em;*/ }
+.table_print td.left{ text-align: left; padding-right: 10px; /*width: 25em;*/ }
+.table_print td.date{ max-width: 7em; padding-right: 10px; text-align: left; }
 
-.table_print td.even { background-color: #FFFACD; width: 25em; }
-.table_print td.even-head { background-color: #FFFACD; text-align:left; width: 25em; }
-.table_print td.even_subtotal { background-color: #eecfa1; }
+.table_print td.even { background-color: #FFFACD; padding-right: 8px; }
+.table_print td.even-head { background-color: #FFFACD; text-align:left; padding-right: 8px; }
+.table_print td.even_subtotal { background-color: #eecfa1; padding-right: 8px; }
 
-.table_print td.odd { background-color: #e0eee0; }
-.table_print td.odd-head { background-color: #e0eee0; text-align:left; }
-.table_print td.odd_subtotal { background-color: #c1cdc1; }
+.table_print td.odd { text-align: left; background-color: #e0eee0; padding-right: 8px; }
+.table_print td.odd-head { text-align: left; background-color: #e0eee0; padding-right: 8px; }
+.table_print td.odd_subtotal { text-align: left; background-color: #c1cdc1; padding-right: 8px; }
 
 /* End : Table list */
 

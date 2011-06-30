@@ -1,15 +1,20 @@
-<table>
+<table class=table_data>
   <tr>
-    <td>Culture</td>
     <td>Nom</td>
-    <td>surface</td>
+    <td class=right>surface (Ha)</td>
+    <td>Culture</td>
+	<% if admin? %>
+	    <td></td>
+		<td></td>
+		<td></td>
+	<% end %>
   </tr>
 
 <% @parcelles.each do |parcelle| %>
   <tr>
-    <td><%= parcelle.typeculture.name %></td>
     <td><%= parcelle.name %></td>
-    <td><%= parcelle.surface %></td>
+    <td class=right><%= parcelle.surface.display(2) %></td>
+    <td><%= parcelle.typeculture.name %></td>
 	
 	<% if admin? %>
 	    <td><%= link_to 'Voir', parcelle %></td>
