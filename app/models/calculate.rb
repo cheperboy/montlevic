@@ -270,13 +270,13 @@ class Calculate < ActiveRecord::Base
       @res.set_saison_line(@sid, :labours, :all, labour.id, :ha, labour.get_cout_ha_for_saison(@surface_of_saison))
       
       #total des labours
-      @res.add_other_line_for_saison(@sid, :resultats, :total_labours, :ha, labour.get_cout_ha)      
+      @res.add_other_line_for_saison(@sid, :resultats, :total_labours, :ha, labour.get_cout_ha_for_saison(@surface_of_saison))      
       @res.add_other_line_for_saison(@sid, :resultats, :total_labours, :total, labour.get_cout_total)
             
       #totaux par categorie de labours
       for cat in Category.labours
         if (labour.category_id == cat.id)
-          @res.add_saison_line(@sid, :labours, :category, cat.id, :ha, labour.get_cout_ha)
+          @res.add_saison_line(@sid, :labours, :category, cat.id, :ha, labour.get_cout_ha_for_saison(@surface_of_saison))
           @res.add_saison_line(@sid, :labours, :category, cat.id, :total, labour.get_cout_total)
          end
       end
@@ -300,17 +300,17 @@ class Calculate < ActiveRecord::Base
       @res.set_saison_line_datas(@sid, :pulves, pulve.id, datas)
 
       # total du pulve
-      @res.set_saison_line(@sid, :pulves, :all, pulve.id, :ha, pulve.get_cout_ha)
+      @res.set_saison_line(@sid, :pulves, :all, pulve.id, :ha, pulve.get_cout_ha_for_saison(@surface_of_saison))
       @res.set_saison_line(@sid, :pulves, :all, pulve.id, :total, pulve.get_cout_total)
 
       #total des pulves
-      @res.add_other_line_for_saison(@sid, :resultats, :total_pulves, :ha, pulve.get_cout_ha)      
+      @res.add_other_line_for_saison(@sid, :resultats, :total_pulves, :ha, pulve.get_cout_ha_for_saison(@surface_of_saison))      
       @res.add_other_line_for_saison(@sid, :resultats, :total_pulves, :total, pulve.get_cout_total)
       
       #totaux par categorie de pulves
       for cat in Category.pulves
         if (pulve.category_id == cat.id)
-          @res.add_saison_line(@sid, :pulves, :category, cat.id, :ha, pulve.get_cout_ha)
+          @res.add_saison_line(@sid, :pulves, :category, cat.id, :ha, pulve.get_cout_ha_for_saison(@surface_of_saison))
           @res.add_saison_line(@sid, :pulves, :category, cat.id, :total, pulve.get_cout_total)
         end
       end
@@ -337,7 +337,6 @@ class Calculate < ActiveRecord::Base
       @res.set_saison_line(@sid, :factures, :all, facture.id, :total, facture.get_cout_total)
       @res.set_saison_line(@sid, :factures, :all, facture.id, :ha, facture.get_cout_ha_for_saison(@surface_of_saison))
       
-      # TO TEST
       #total des factures
       @res.add_other_line_for_saison(@sid, :resultats, :total_factures, :total, facture.get_cout_total)
       @res.add_other_line_for_saison(@sid, :resultats, :total_factures, :ha, facture.get_cout_ha_for_saison(@surface_of_saison))     
@@ -345,7 +344,7 @@ class Calculate < ActiveRecord::Base
       #totaux par types de factures
       for factcat in self.types_facture
         if (facture.factcat_id == factcat.id)
-          @res.add_saison_line(@sid, :factures, :factcat, factcat.id, :ha, facture.get_cout_ha)
+          @res.add_saison_line(@sid, :factures, :factcat, factcat.id, :ha, facture.get_cout_ha_for_saison(@surface_of_saison))
           @res.add_saison_line(@sid, :factures, :factcat, factcat.id, :total, facture.get_cout_total)
         end
       end
@@ -353,11 +352,21 @@ class Calculate < ActiveRecord::Base
       #totaux par categorie de factures
       for cat in Category.factures
         if (facture.category_id == cat.id)
-          @res.add_saison_line(@sid, :factures, :category, cat.id, :ha, facture.get_cout_ha)
+          @res.add_saison_line(@sid, :factures, :category, cat.id, :ha, facture.get_cout_ha_for_saison(@surface_of_saison))
           @res.add_saison_line(@sid, :factures, :category, cat.id, :total, facture.get_cout_total)
         end
       end
     end
+    # cout ha pour la colonne saison
+    # pour optimiser la vitesse de traitement, on peu calculer uniquement les cout totaux puis refaire une boucle 
+    # (for facture in @factures) pour le calcul du cout ha de saison.
+    # cf les lignes suivantes en commentaire
+    # for facture in @factures
+    #   @res.set_saison_line(@sid, :factures, :all, facture.id, :ha, facture.get_cout_ha_for_saison(@surface_of_saison))
+    # end
+    # facture_total = @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
+    # @res.set_other_line_for_saison(@sid, :resultats, :total_factures, :ha, (facture_total/@surface_of_saison))     
+    
   end
 
   def run_ventes
@@ -377,17 +386,17 @@ class Calculate < ActiveRecord::Base
       @res.set_saison_line_datas(@sid, :ventes, vente.id, datas)
       
       #total de la vente
-      @res.set_saison_line(@sid, :ventes, :all, vente.id, :ha, vente.get_cout_ha)
+      @res.set_saison_line(@sid, :ventes, :all, vente.id, :ha, vente.get_cout_ha_for_saison(@surface_of_saison))
       @res.set_saison_line(@sid, :ventes, :all, vente.id, :total, vente.get_cout_total)
 
       # total des ventes
-      @res.add_other_line_for_saison(@sid, :resultats, :total_ventes, :ha, vente.get_cout_ha)      
+      @res.add_other_line_for_saison(@sid, :resultats, :total_ventes, :ha, vente.get_cout_ha_for_saison(@surface_of_saison))      
       @res.add_other_line_for_saison(@sid, :resultats, :total_ventes, :total, vente.get_cout_total)
       
       #totaux par categorie de ventes
       for cat in Category.ventes
         if (vente.category_id == cat.id)
-          @res.add_saison_line(@sid, :ventes, :category, cat.id, :ha, vente.get_cout_ha)
+          @res.add_saison_line(@sid, :ventes, :category, cat.id, :ha, vente.get_cout_ha_for_saison(@surface_of_saison))
           @res.add_saison_line(@sid, :ventes, :category, cat.id, :total, vente.get_cout_total)
         end
       end
@@ -494,7 +503,6 @@ class Calculate < ActiveRecord::Base
       end
     end
     
-
 #SOMME DES TOTAUX
 
     # total Charges (et total_ha) pour la saison (pas par colonnes, colonne "saison")
