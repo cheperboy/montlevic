@@ -6,7 +6,7 @@
 <td></td>
 <td class=date></td>
 <td></td>
-<td colspan=2>Total saison</td>
+<td colspan=2 class="saison">Total saison</td>
 
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
@@ -23,7 +23,7 @@
 	<td></td>
 	<td class=date></td>
 	<td></td>
-	<td colspan=2><%=h  @test.res.get_saison_datas(@test.sid, :surface) %> Ha</td>
+	<td class="saison" colspan=2><%=h  @test.res.get_saison_datas(@test.sid, :surface) %> Ha</td>
 		
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
@@ -48,8 +48,8 @@
 	<td class="left"><b>nom</b></td>
 	<td class=date><b>date</b></td>
 	<td class="left"><b>surface</b></td>
-	<td class="left"><b>cout/ha</b></td>
-	<td class="left"><b>total</b></td>
+	<td class="saison" class="left"><b>cout/ha</b></td>
+	<td class="saison" class="left"><b>total</b></td>
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
 	<% rang += 1 %>

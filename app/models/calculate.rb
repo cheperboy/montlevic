@@ -3,9 +3,7 @@ class Calculate < ActiveRecord::Base
   #Txxx variables temporaires
   #Zxxx variables par Zone
   #Pxxx variables par Parcelle
-  attr_accessor :Tcols, :Tfactures, :Tlabours, :Tpulves, :Tventes, :Tbenefs,
-                :val,
-                :res,
+  attr_accessor :res,
                 :csv, :csv_html, :display, :info_debug,
                 :saison, :labours, :pulves, :factures, :ventes, :types_facture, :col_model, :cols,
                 :c, # model de colonne en symbole pluriel :parcelles, :zones, :typecultures
@@ -33,12 +31,6 @@ class Calculate < ActiveRecord::Base
   def calculate
     @res = Analytic.new()
     init_cols
-    # logger.debug(self.Tcols.inspect)
-    return nil unless init_factures
-    init_pulves
-    init_labours
-    init_ventes
-
     run_labours
     run_pulves
     run_factures
@@ -83,173 +75,6 @@ class Calculate < ActiveRecord::Base
     end
   end
 
-  def init_factures
-    rang = 0
-    
-    @Tfactures = Hash.new()
-    @Tfactures[:total] = Hash.new()
-    @Tfactures[:ha] = Hash.new()
-    
-    unless @factures.nil? || @factures.size == 0
-      @Tfactures[:total][:sum] = 0 
-      @Tfactures[:ha][:sum] = 0  
-      @Tfactures[:total][:factcat] = Hash.new()
-      @Tfactures[:ha][:factcat] = Hash.new()
-      @Tfactures[:total][:category] = Hash.new()
-      @Tfactures[:ha][:category] = Hash.new()
-          
-      for factcat in self.types_facture
-        @Tfactures[:total][:factcat][factcat.id] = 0 
-        @Tfactures[:ha][:factcat][factcat.id] = 0    
-      end
-      for cat in Category.factures
-        @Tfactures[:total][:category][cat.id] = 0 
-        @Tfactures[:ha][:category][cat.id] = 0    
-      end
-    
-      for facture in @factures
-        datas = { :id => facture.id, :name => facture.name, :category_id => facture.category_id }
-        @res.set_saison_line_datas(@sid, :factures, facture.id, datas)
-
-        @Tfactures[facture.id] = {
-          :parcelles => {}, 
-          :id => facture.id, 
-          :name => facture.name, 
-          :cout => facture.cout,
-          :factcat => facture.factcat_id,
-          :category => facture.category_id}
-        #for parcelle in facture.parcelles
-        for col in @cols          
-          hcols = {:name => col.name, :surface => col.surface }  
-          @Tfactures[facture.id][:parcelles].store(col.id, hcols)
-          @Tfactures[facture.id][col.id] = {:ha => 0, :total => 0 , :cout_sans_charges => 0 }
-  
-          @Tfactures[facture.id][:total] = 0 
-          @Tfactures[facture.id][:ha] = 0 
-       end
-      end
-    else # @factures.nil?
-      return nil
-    end
-  end
-  
-  def init_benefs
-    @types = Category.find_all_by_upcategory_id(Upcategory.find_by_name('vente'))
-    rang = 0    
-
-    @Tventes = Hash.new()
-    @Tventes[:total] = Hash.new()
-    @Tventes[:ha] = Hash.new()
-    
-    for vente in @ventes
-      @Tventes[vente.id] = {:parcelles => {}, :id => vente.id, :name => vente.name, :cout => vente.value }
-      #for parcelle in facture.parcelles
-      for col in @cols
-        hcols = {:name => col.name, :surface => col.surface }  
-        @Tventes[vente.id][:parcelles].store(col.id, hcols)
-        @Tventes[vente.id][col.id] = {:ha => 0, :total => 0 , :cout_sans_charges => 0 }
-
-        @Tventes[vente.id][:total] = 0 
-        @Tventes[vente.id][:ha] = 0 
-        @Tventes[:total][:sum] = 0 
-        @Tventes[:ha][:sum] = 0 
-        
-        for type in @types
-          @Tventes[:total][type.name] = 0 
-          @Tventes[:ha][type.name] = 0 
-        end
-      end
-    end
-  end
-  
-  def init_ventes
-    @Tventes = Hash.new()
-    @Tventes[:total] = Hash.new()
-    @Tventes[:ha] = Hash.new()
-    @Tventes[:total][:sum] = 0
-    @Tventes[:ha][:sum] = 0
-    for vente in @ventes
-      datas = { :id => vente.id, :name => vente.name, :category_id => vente.category_id }
-
-      @res.set_saison_line_datas(@sid, :ventes, vente.id, datas)
-      @Tventes[vente.id] = {:parcelles => {}, :id => vente.id, :name => vente.name, :total => 0, :ha => 0 }
-      for col in @cols
-        hcols = {:name => col.name, :surface => col.surface }
-        @Tventes[vente.id][:parcelles].store(col.id, hcols)
-        @Tventes[vente.id][col.id] = {:ha => 0, :total => 0 }
-      end
-    end
-  end
-  
-  def init_labours
-    @Tlabours = Hash.new()
-    @Tlabours[:total] = Hash.new()
-    @Tlabours[:ha] = Hash.new()
-    # @Tlabours[:categories] = Hash.new()
-    @Tlabours[:total][:sum] = 0
-    @Tlabours[:ha][:sum] = 0
-    @Tlabours[:total][:category] = {}
-    @Tlabours[:ha][:category] = {}
-
-    # init des categories de labours
-    for cat in Category.labours
-      @Tlabours[:total][:category][cat.id] = 0
-      @Tlabours[:ha][:category][cat.id] = 0
-    end
-
-    for labour in @labours      
-      @Tlabours[labour.id] = {
-        :parcelles => {}, 
-        :id => labour.id, 
-        :name => labour.name, 
-        :total => 0, 
-        :ha_passage => labour.cout_ha_passage,
-        :category => labour.category_id
-      }
-      for col in @cols
-        hcols = {:name => col.name, :surface => col.surface }  
-        @Tlabours[labour.id][:parcelles].store(col.id, hcols)
-        @Tlabours[labour.id][col.id] = {:ha => 0, :total => 0 }
-      end
-    end
-  end
-
-  def init_pulves
-    @Tpulves = Hash.new()
-    @Tpulves[:total] = Hash.new()
-    @Tpulves[:ha] = Hash.new()
-    @Tpulves[:total][:sum] = 0
-    @Tpulves[:ha][:sum] = 0
-    @Tpulves[:total][:category] = {}
-    @Tpulves[:ha][:category] = {}
-    
-    # init des categories de pulve
-    for cat in Category.pulves
-      @Tpulves[:total][:category][cat.id] = 0 
-      @Tpulves[:ha][:category][cat.id] = 0   
-    end
-
-    for pulve in @pulves
-      datas = { :id => pulve.id, :name => pulve.name, :category_id => pulve.category_id, 
-                :ha_passage => pulve.cout_ha_passage, :cout_fixe => pulve.cout_fixe, :user_id => pulve.user_id}
-      @res.set_saison_line_datas(@sid, :pulves, pulve.id, datas)
-
-      @Tpulves[pulve.id] = {
-        :parcelles => {}, 
-        :id => pulve.id, 
-        :name => pulve.name, 
-        :total => 0, 
-        :ha_passage => pulve.cout_ha_passage,
-        :category => pulve.category_id
-      }
-
-      for col in @cols
-        hcols = {:name => col.name, :surface => col.surface }  
-        @Tpulves[pulve.id][:parcelles].store(col.id, hcols)
-        @Tpulves[pulve.id][col.id] = {:ha => 0, :total => 0 }
-      end
-    end
-  end
 
   def run_labours
     for labour in @labours
@@ -302,6 +127,14 @@ class Calculate < ActiveRecord::Base
       # total du pulve
       @res.set_saison_line(@sid, :pulves, :all, pulve.id, :ha, pulve.get_cout_ha_for_saison(@surface_of_saison))
       @res.set_saison_line(@sid, :pulves, :all, pulve.id, :total, pulve.get_cout_total)
+      
+      # TODO 1 revoir le mode de calcul du cout_ha dans pulve.rb
+      # TODO 2 supprimer/cacher le champ coup_fixe du pulve (ou pas?)
+      # pulve.get_cout_ha_for_saison(@surface_of_saison) = 
+      # = get_cout_total / surface_of_saison
+      # = (self.sum_surfaces * self.get_cout_ha) / surface_of_saison
+      # = (self.sum_surfaces * (self.cout_ha_passage + self.get_cout_ha_produit + (self.cout_fixe / self.sum_surfaces))) / surface_of_saison
+      # = (self.cout_ha_passage + self.get_cout_ha_produit + (self.cout_fixe / self.sum_surfaces))
 
       #total des pulves
       @res.add_other_line_for_saison(@sid, :resultats, :total_pulves, :ha, pulve.get_cout_ha_for_saison(@surface_of_saison))      
@@ -531,13 +364,6 @@ class Calculate < ActiveRecord::Base
   end
   
   def verif
-    # total_pulves_ha =   @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :ha)
-    # total_labours_ha =  @res.get_other_line_for_saison(@sid, :resultats, :total_labours, :ha)
-    # total_factures_ha = @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :ha)
-    # total_pulves =      @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :total)
-    # total_labours =     @res.get_other_line_for_saison(@sid, :resultats, :total_labours, :total)
-    # total_factures =    @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
-
     labours = 0
     pulves = 0
     factures_total = 0

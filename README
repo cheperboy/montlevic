@@ -1,8 +1,6 @@
 
 = EN COURS
 
-= A Faire
--nouveau model pour gerer un element de comparaison (parcelle, zone ou type de culture). dans un element on stocke aussi ses totaux (contrairement a ce qui est fait actuellement dans print.rb). 
 
 - supprimer "Diverse" de Categories (Diverse doit etre traitée comme une facture.)
 
@@ -14,8 +12,6 @@
 - facture par ordre de prix croissant
 
 
-saison.charges
-= saison.pulves + saison.labours
 
 
 Rake Notes :
@@ -26,7 +22,7 @@ Rake Notes :
 
 €
 == TODO
-- ajouter une class "MyLog" qui exploite logger.info("#{Time.now} Destroyed Weblog ID ##{@weblog.id}!")
+# TODO ajouter une class "MyLog" qui exploite logger.info("#{Time.now} Destroyed Weblog ID ##{@weblog.id}!")
 - ajouter zonetopas dans verif
 
 =Verif

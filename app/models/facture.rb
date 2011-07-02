@@ -50,7 +50,8 @@ class Facture < Charge
 
   # ----- Finders -----
   #test 14 avril 2011
-#FIXME finir cette methode!
+#TODO finir cette methode!
+# classement par cout?
   def self.find_with_order()
     saison = Saison.find(Setting.find(:first).saison_id)
     all_factures = saison.factures.find(:all, :order => :cout)

@@ -406,8 +406,8 @@ module ApplicationHelper
   end
 
   #retourne une valeur tronquée d'un int
-  # TODO : "precision" devrait etre defini par l'utilisateur dans les parametres de l'appli
-  # TODO : number_with_precision(1111.2345, :precision => 2, :separator => ',', :delimiter => '.')
+  # OPTIMIZE : "precision" devrait etre defini par l'utilisateur dans les parametres de l'appli
+  # OPTIMIZE : number_with_precision(1111.2345, :precision => 2, :separator => ',', :delimiter => '.')
   def get_value_or_blank(var, value)
     val = var[value.to_sym]
     return (pretty(val))

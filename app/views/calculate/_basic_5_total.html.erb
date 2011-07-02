@@ -1,6 +1,12 @@
 	<tr>
-		<% td_number(@colonnes.length, @show[:cout_ha], @show[:cout_total]).times do %>
-				<td></td>
+		<th></th>
+		<% td_number_before_saison().times do %>
+			<td></td>
+		<% end %>
+		<td class="saison"></td>
+		<td class="saison"></td>
+		<% td_number_after_saison(@colonnes.length, @show[:cout_ha], @show[:cout_total]).times do %>
+			<td></td>
 		<% end %>
 	</tr>	
 <% unless (@colonnes.size == 0) %>
@@ -10,8 +16,8 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :ha).display %></td>
-		<td class="td-total"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :total).display %></td>	
+		<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :ha).display %></td>
+		<td class="saison"><span class="td-total"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :total).display %></span></td>	
 		<% rang = 0 %> 
 	<% @colonnes.each do |colonne| %>
 		<% rang += 1 %>

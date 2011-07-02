@@ -35,10 +35,13 @@
 .table_print tr:hover { background-color: #eee; }
 .table_print tr.subtotal { color: green; }
 .table_print tr.total { color: red; }
-.table_print td.td-total { font-weight:700; }
+.table_print span.td-total { font-weight:700; }
 
 
 .table_print td, tr{ text-align: right; padding-right: 10px; }
+
+.table_print td.saison{ background-color: #eecfa1; }
+.table_print th.saison{ background-color: #eecfa1; }
 
 .table_print th.left{ text-align: left; padding-right: 10px; /*width: 25em;*/ }
 .table_print td.left{ text-align: left; padding-right: 10px; /*width: 25em;*/ }

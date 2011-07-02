@@ -1,6 +1,11 @@
 <tr>
 	<th><%= link_to_function "Labours", "$('list_labours').toggle();" %></th>
-	<% td_number(@colonnes.length, @show[:cout_ha], @show[:cout_total]).times do %>
+	<% td_number_before_saison().times do %>
+		<td></td>
+	<% end %>
+	<td class="saison"></td>
+	<td class="saison"></td>
+	<% td_number_after_saison(@colonnes.length, @show[:cout_ha], @show[:cout_total]).times do %>
 		<td></td>
 	<% end %>
 </tr>
@@ -21,8 +26,8 @@
 					<%= datas[:parcelles_length] %> p - 
 					<%= datas[:surface_total] %> ha
 				</td>
-				<td><%= @test.res.get_saison_line(@test.sid, :labours, :all, labour.id, :ha).display %></td>
-				<td><%= @test.res.get_saison_line(@test.sid, :labours, :all, labour.id, :total).display %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :all, labour.id, :ha).display %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :all, labour.id, :total).display %></td>
 			<% rang = 0 %>
 			<% @colonnes.each do |colonne| %>
 				<% rang += 1 %>
@@ -43,8 +48,13 @@
 	<% if @show[:total_cat] %>
 		<tr>
 			<td>Total par Categorie</td>
-			<% td_number(@colonnes.length, @show[:cout_ha], @show[:cout_total]).times do %>
-					<td></td>
+			<% td_number_before_saison().times do %>
+				<td></td>
+			<% end %>
+			<td class="saison"></td>
+			<td class="saison"></td>
+			<% td_number_after_saison(@colonnes.length, @show[:cout_ha], @show[:cout_total]).times do %>
+				<td></td>
 			<% end %>
 		</tr>	
 		<% for cat in @labour_categories %>
@@ -53,8 +63,8 @@
 				<td class="left"><b><%= cat.name %></b></td>
 				<td></td>
 				<td></td>
-				<td><%= @test.res.get_saison_line(@test.sid, :labours, :category, cat.id, :ha).display %></td>
-				<td><%= @test.res.get_saison_line(@test.sid, :labours, :category, cat.id, :total).display %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :category, cat.id, :ha).display %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :category, cat.id, :total).display %></td>
 				<% rang = 0 %>
 				<% @colonnes.each do |colonne| %>
 					<% rang += 1 %>
@@ -76,8 +86,8 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_labours, :ha).display %></td>
-		<td><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_labours, :total).display %></td>	
+		<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_labours, :ha).display %></td>
+		<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_labours, :total).display %></td>	
 		<% rang = 0 %>
 		<% @colonnes.each do |colonne| %>
 			<% rang += 1 %>

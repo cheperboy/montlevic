@@ -15,7 +15,7 @@ module PrintHelper
     end  
   end
   
-  #calcule le nombre de <td> en fonction du nombre de colonnes (cols + cout_ha? + cout_total?)
+  # A SUPPRIMER
   def td_number(col_length, show_cout_ha, show_cout_total)
     if show_cout_ha && show_cout_total
       num = 2
@@ -27,6 +27,22 @@ module PrintHelper
     return (col_length * num + 5)
   end
   
+  def td_number_after_saison(col_length, show_cout_ha, show_cout_total)
+    if show_cout_ha && show_cout_total
+      num = 2
+    elsif ((show_cout_ha && !show_cout_total) || (!show_cout_ha && show_cout_total))
+      num = 1
+    else
+      num = 0
+    end  
+    return (col_length * num)
+  end
+  
+  # nombre de <td> avant la colonne "saison"
+  def td_number_before_saison
+    return 3
+  end
+
   # obsolete, utile pour l'ancienne vue Print, A SUPPRIMER
   def type_first_letter(facture)
     return 'n' if facture.class.equal?(Reportable)

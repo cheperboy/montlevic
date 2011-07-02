@@ -103,6 +103,6 @@ class Pulve < Charge
 #    end
 #    return cout_ha_parcelle
 #  end
-  
+
   
 end

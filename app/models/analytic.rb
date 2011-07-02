@@ -146,7 +146,6 @@ class Analytic < ActiveRecord::Base
       self.saisons[saison.id][col_type][col_id][line_type][:all][line.id] = {} 
       self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:ha] = 0
       self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:total] = 0
-      # TODO remplacer line.name par {} pour y stocker les champs de la db
       self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:data] = line.name
     end
     if line_type == :factures
