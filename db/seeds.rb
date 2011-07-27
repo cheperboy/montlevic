@@ -48,7 +48,7 @@ factcats = Factcat.create([
   { :name => 'invest' }])
 
 saison = Saison.create(:name => "Saison-test", :year => "2010")
-setting = Setting.create( :saison => saison, :value_parcelle => false, :detail_desc => false, :detail_ref => false)
+setting = Setting.create( :saison => saison, :float_precision => 1, :value_parcelle => false, :detail_desc => false, :detail_ref => false)
 
 typecultures = Typeculture.create([
 {:name => "Ble"},

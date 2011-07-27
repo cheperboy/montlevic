@@ -4,17 +4,6 @@ class PulvesController < ApplicationController
   def index
  #   @pulves = Pulve.find_by_saison(:all)
 # TODO onglet verif saisie donnees : verifier que les pulves qui ont un prix/L sont lies a une facture
-# PULVE_HEAD = [
-#   ['star', 'star', '', true, :check_box], 
-#   ['adu', 'adu', '', true, :check_box], 
-#   ['id', 'id', '', false], 
-#   ['typecultures', 'Cultures', '', false], 
-#   ['category_name', 'categorie', '', true, :text_field], 
-#   ['user_name', 'Presta', '', true, :text_field], 
-#   ['name', 'nom', '', true, :text_field], 
-#   ['dosage', 'Dosage', 'L/Ha', false], 
-#   ['cout_ha_passage', 'Cout Ha', '€/Ha', false], 
-#   ['print_date', 'date', '', false]]
 
     @pulves = Pulve.find(:all, :order => :id) do
       saison = Setting.find(:first).saison_id
@@ -85,6 +74,21 @@ class PulvesController < ApplicationController
   # PUT /pulves/1
   # PUT /pulves/1.xml
   def update
+    @pulve = Pulve.find(params[:id])
+
+    respond_to do |format|
+      if @pulve.update_attributes(params[:pulve])
+        flash[:notice] = 'Pulve was successfully updated.'
+        format.html { redirect_to(@pulve) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @pulve.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  def actualize
     @pulve = Pulve.find(params[:id])
 
     respond_to do |format|

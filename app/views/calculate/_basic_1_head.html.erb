@@ -6,13 +6,14 @@
 <td></td>
 <td class=date></td>
 <td></td>
-<td colspan=2 class="saison">Total saison</td>
+<td colspan=2 class="saison-head-name">Total saison</td>
 
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
 	<% rang += 1 %>
-	<td class="<%= odd(rang) %>-head" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> >
-		[<%=h colonne.id %>]
+	<td class="<%= odd(rang) %>-head-name" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> >
+		<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :name) %> <br>
+		<!-- [<%=h colonne.id %>] -->
 	</td>
 <% end %>
 </tr>	
@@ -23,20 +24,20 @@
 	<td></td>
 	<td class=date></td>
 	<td></td>
-	<td class="saison" colspan=2><%=h  @test.res.get_saison_datas(@test.sid, :surface) %> Ha</td>
+	<td class="saison-head-surface" colspan=2><%=h  @test.res.get_saison_datas(@test.sid, :surface).display(1) %> Ha</td>
 		
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
 	<% rang += 1 %>
-	<td class="<%= odd(rang) %>-head" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> ><b>
-	<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :name) %> <br>
+	<td class="<%= odd(rang) %>-head-surface" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> ><b>
+	<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :surface).display(1) %> Ha <br>
 	
 	<% if @test.c.to_s == "parcelles" %>
 		<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :typeculture) %> - <br>
-	<% elsif ((@test.c.to_s == "typecultures") || (@test.c == "zones"))  %>
-		<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :parcelles) %> - <br>
+	<%# elsif ((@test.c.to_s == "typecultures") || (@test.c == "zones"))  %>
+		<%#=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :parcelles) %> - <br>
 	<% end %>	
-	<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :surface) %> Ha
+	
 
 	</b></td>
 <% end %>

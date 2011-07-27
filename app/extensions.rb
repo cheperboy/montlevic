@@ -94,12 +94,16 @@ class Float
   # avec en argument le nombre de chiffre apres la virgule
   alias_method :orig_to_s, :to_s
 
-  def display(precision = 1)
+  def display(precision=nil)
     return "-" if ((-0.01 < self) && (self < 0.01))
-    return self.to_i if (self == self.to_i)
-    # return self if precision == 0
-    return (sprintf("%.#{precision}f", self))
-    # return (self * 10 ** precision).round.to_f / 10 ** precision
+    # ligne suivante commentee pour forcer les Integer a s'afficher avec precision apres virgule
+    # return self.to_i if (self == self.to_i)
+    
+    #this dont work - see surface dans une des cases header
+    unless precision != nil
+      precision = Setting::FLOAT_PRECISION
+    end
+    return (sprintf("%.#{precision}f", self.to_f))
   end
 
   def to_s(arg = nil)

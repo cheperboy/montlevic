@@ -4,6 +4,7 @@
 						:header_message => "Problemes lors de l'enregistrement", 
 						:message => "corriger les erreurs suivantes" 
 %>
+
 <% form_for @pulve do |pulve_form| -%>
 
 <% content_for :jstemplates do -%>
@@ -26,10 +27,17 @@
 	<%= form_tr_select(pulve_form, 'Categorie', :category_id, Category.find_by_type("pulve"), :id, :name) %>
 	<%= form_tr_text_area(pulve_form, 'Infos', :desc, :size => "20x1") %>	
 
+
+
 <% if @pulve.cout_ha_passage %>
 	<tr>
 		<td>Cout total : </td>
-		<td><%= @pulve.get_cout_total %></td>
+		<td><%= @pulve.get_cout_total %> 
+			<%=	link_to_remote	"Actualiser" , 
+						:url => {:action => 'actualize'},
+						:update => 'form', 
+						:type => :synchronous 
+			%></td>
 	</tr>
 <% end %>
 

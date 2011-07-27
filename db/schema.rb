@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer "value_parcelle", :limit => 2
     t.integer "detail_desc",    :limit => 2
     t.integer "detail_ref",     :limit => 2
+    t.integer   "float_precision"
   end
 
   create_table "typecultures", :force => true do |t|

@@ -8,15 +8,19 @@
 </tr>  
 <tr>
 	<td><%= f.label :value_parcelle, "Detail parcelle : " %></td>
-	<td><%= f.check_box ( :value_parcelle) %></td>
+	<td><%= f.check_box(:value_parcelle) %></td>
 </tr>
 <tr>
 	<td><%= f.label :detail_desc, "Detail description pour l'affichage: " %></td>
-	<td><%= f.check_box (:detail_desc) %></td>
+	<td><%= f.check_box(:detail_desc) %></td>
 </tr>  
 <tr>
 	<td><%= f.label :detail_ref, "Detail reference pour l'affichage: " %></td>
-	<td><%= f.check_box (:detail_ref) %></td>
+	<td><%= f.check_box(:detail_ref) %></td>
+</tr>  
+<tr>
+	<td><%= f.label :float_precision, "Nombre de chiffre après la virgule (0, 1, 2, ou 3): " %></td>
+	<td><%= f.text_field :float_precision %></td>
 </tr>  
 </table>
 </p>

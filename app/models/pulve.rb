@@ -25,8 +25,8 @@ class Pulve < Charge
   validates_presence_of :cout_ha_passage
   validates_presence_of :cout_fixe
   
-  validates_associated :putoparcelles
-  validates_associated :putofactures
+  # validates_associated :putoparcelles
+  # validates_associated :putofactures
   
   validates_numericality_of :dosage, :message => "n'est pas un nombre"
   validates_numericality_of :prix_littre, :message => "n'est pas un nombre"

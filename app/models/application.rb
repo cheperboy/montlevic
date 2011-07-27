@@ -29,6 +29,7 @@ class Application < ActiveRecord::Base
   	['user_name', 'Presta', '', false, :text_field], 
   	['name', 'nom', '', true, :text_field], 
   	['dosage', 'Dosage', 'toto', false], 
+ # 	['unit', 'Unit', '', false], 
   	['cout_ha_passage', 'Cout Ha', '€/Ha', false], 
   	['print_date', 'date', '', false]]
 
