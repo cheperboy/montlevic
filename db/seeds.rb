@@ -189,6 +189,7 @@ pulveA = Pulve.create(  :name => 'Pulve 1',
                         :saison => saison,
                         :date => '2011-01-01',
                         :desc => "from seeds",
+                        :unit => 'L/Ha',
                         :category => Category.find_by_name('herbicide'))
 
 pulveB = Pulve.create(  :name => 'Pulve 2', 
@@ -199,6 +200,7 @@ pulveB = Pulve.create(  :name => 'Pulve 2',
                         :user => User.find(:first),
                         :saison => saison,
                         :date => '2011-01-01',
+                        :unit => 'L/Ha',
                         :desc => "from seeds",
                         :category => Category.find_by_name('glyphosate'))
 

@@ -13,11 +13,11 @@ class Labour < Charge
   accepts_nested_attributes_for :labtoparcelles, :allow_destroy => true
   accepts_nested_attributes_for :labtofactures, :allow_destroy => true
 
-  validates_presence_of :name
-  validates_presence_of :category
-  validates_presence_of :user
-  validates_presence_of :cout_ha_passage
-  validates_numericality_of :cout_ha_passage, :message => "n'est pas un nombre"
+  validates_presence_of :name, :message => "le nom ne doit pas etre vide"
+  validates_presence_of :category, :message => "categorie ne doit pas etre vide"
+  validates_presence_of :user, :message => "prestataire ne doit pas etre vide"
+  validates_presence_of :cout_ha_passage, :message => "cout ha passage ne doit pas etre vide"
+  validates_numericality_of :cout_ha_passage, :message => "cout ha passage n'est pas un nombre"
   validates_associated :labtoparcelles
   validates_associated :labtofactures
 

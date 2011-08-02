@@ -1,0 +1,36 @@
+<h1>Listing produits</h1>
+
+| <%= link_to 'Nouveau produit', new_produit_path %> |
+<br />
+
+<br />
+@search_params.to_s ; <%= @search_params.to_s %>
+<br />
+params.inspect : <%= params.inspect %>
+<br />
+<%#= draw_table_with_find(Application::PULVE_HEAD, @pulves, 'pulves', 'index', params) %>
+<%= draw_table(Application::PRODUIT_HEAD, @produits) %>
+
+
+
+<%#= jqgrid("Pulves", "pulves", "/pulves",
+	[
+		{ :field => "id", :label => "id", :width => 20, :resizable => true },
+		{ :field => "star", :label => "star", :width => 20, :resizable => true  },				
+		{ :field => "name", :label => "name", :width => 100, :resizable => true  },			
+		{ :field => "category_id", :label => "categorie", :width => 100, :resizable => true  },				
+		{ :field => "user", :label => "user", :width => 100, :resizable => true  },				
+		{ :field => "dosage", :label => "dosage", :width => 100, :resizable => true  },				
+		{ :field => "date", :label => "date", :width => 100, :resizable => true  },			
+		{ :field => "link", :label => "link", :width => 100, :resizable => true  }			
+	],
+	{ :rows_per_page => 50 , :height => 300, :autowidth => true }
+	
+) %>
+
+
+<br />
+
+
+
+

@@ -1,0 +1,41 @@
+<% title "Produit" %>
+
+<table>
+	<tr>
+		<td>Nom : </td>
+		<td><%=h @produit.name %></td>
+	</tr>
+	<tr>
+		<td>Categorie : </td>
+		<td><%=h @produit.category.name %></td>
+	</tr>
+	<tr>
+		<td>Cout total : </td>
+		<td><%=h @produit.prix %> €/L</td>
+	</tr>
+	<tr>
+		<td>Cout du litre : </td>
+		<td><%=h @pulve.get_cout_litre %> €</td>
+	</tr>
+	<tr>
+		<td>Description : </td>
+		<td><p><%=h @produit.desc %></p></td>
+	</tr>
+</table>
+
+<%- if @produit.protofactures.length > 0 -%>
+	<h3>Factures</h3>
+	<ul>
+	<%- @produit.protofactures.each do |protofacture| -%>
+		<li><%= protofacture.facture.name %>
+			[<%= protofacture.facture.cout %> €]
+		 	contribution : <%= protofacture.value %> €
+		</li>
+	<%- end -%>
+	</ul>
+<%- end -%>
+<p>
+  <%= link_to "Edit", edit_produit_path(@produit) %> |
+  <%= link_to "Destroy", @produit, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", produits_path %>
+</p>

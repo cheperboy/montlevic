@@ -16,6 +16,9 @@ class Pulve < Charge
   accepts_nested_attributes_for :putofactures, :allow_destroy => true
 
 # ----- Validations -----
+  def validate
+    errors.add("Nom", "Ne doit pas etre vide") unless name != ''
+  end
   
   validates_presence_of :name
   validates_presence_of :category

@@ -48,6 +48,7 @@ class LaboursController < ApplicationController
         format.html { redirect_to(@labour) }
         format.xml  { render :xml => @labour, :status => :created, :location => @labour }
       else
+        add_errors_to_model(@labour.errors)
         format.html { render :action => "new" }
         format.xml  { render :xml => @labour.errors, :status => :unprocessable_entity }
       end
@@ -65,8 +66,9 @@ class LaboursController < ApplicationController
         format.html { redirect_to(@labour) }
         format.xml  { head :ok }
       else
+        add_errors_to_model(@labour.errors)
+        @labour = Labour.new(params[:labour])
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @labour.errors, :status => :unprocessable_entity }
       end
     end
   end

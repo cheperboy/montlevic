@@ -1,0 +1,44 @@
+<% javascript :defaults, 'delegate' %>
+
+<%= error_messages_for :produit, :protofacture,
+						:header_message => "Problemes lors de l'enregistrement", 
+						:message => "corriger les erreurs suivantes" 
+%>
+
+<% form_for @produit do |produit_form| -%>
+
+<% content_for :jstemplates do -%>
+	<%= "var protofacture='#{generate_template(produit_form, :protofactures)}'" %>
+<% end -%>
+
+<table>
+	<%= form_tr_text(produit_form, 'Nom', :name) %>
+	<%= form_tr_select(produit_form, 'Categorie', :category_id, Category.find_by_type("pulve"), :id, :name) %>
+	<%= form_tr_text_area(produit_form, 'Infos', :desc, :size => "20x1") %>	
+	<%= form_tr_text(produit_form, 'Prix', :prix, :unit => '€', :value => (@produit.prix || ''), :size => 4) %>
+	<%= form_tr_text(produit_form, 'Quantite', :quantite, :unit => select_produit_units(produit_form, :unit), :value => (@produit.quantite || ''), :size => 4) %>
+</table>
+<br>
+
+<fieldset>
+  <legend>Factures</legend>
+<div id="protofactures">
+	<% produit_form.fields_for :protofactures do |protofacture_form| %>
+		<% unless produit_form.object.new_record? %>
+			<%= render :partial => 'protofacture', :locals => { :f => protofacture_form } %>
+		<% end %>
+	<% end %>
+</div>
+<p>
+<%= link_to 'Ajouter une facture', '#protofacture', :class => "add_nested_item", :rel => "protofactures" %>
+</p>
+</fieldset>
+<br>
+
+<p>
+<%= produit_form.submit "Enregistrer" %>
+</p>
+
+
+<% end -%>
+

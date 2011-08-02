@@ -18,6 +18,34 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.datetime "updated_at"
   end
 
+  create_table "produits", :force => true do |t|
+    t.integer  "category_id"
+    t.integer  "saison_id"
+    t.string   "name"
+    t.string   "desc"
+    t.float    "prix"
+    t.float    "quantite"
+    t.string   "unit"
+    t.integer  "star"
+    t.integer  "adu"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  create_table "protofactures", :force => true do |t|
+    t.integer  "produit_id"
+    t.integer  "facture_id"
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  create_table "putoproduits", :force => true do |t|
+    t.integer  "pulve_id"
+    t.integer  "produit_id"
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "charges", :id => false, :force => true do |t|
     t.integer "toto"
   end

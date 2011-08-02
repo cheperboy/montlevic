@@ -66,7 +66,11 @@ class PulvesController < ApplicationController
         format.xml  { render :xml => @pulve, :status => :created, :location => @pulve }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @pulve.errors, :status => :unprocessable_entity }
+        @pulve.errors.each do |type, name|
+          flash[:error] += '- <b>' + type.to_s + '</b> ' + name.to_s + '<br>'
+        end
+        @pulve = Pulve.new(params[:pulve])
+        format.html { render :action => "new" }
       end
     end
   end

@@ -1,6 +1,7 @@
 class Application < ActiveRecord::Base
 
   PULVE_DOSAGE_UNITS = [['L/Ha', 'L/Ha'], ['Kg/Ha', 'Kg/Ha']]
+  PRODUIT_QUANTITE_UNITS = [['L', 'L'], ['Kg', 'Kg']]
 
   SAISON = Setting.find(1).saison_id
   
@@ -21,17 +22,26 @@ class Application < ActiveRecord::Base
   	['print_date', 'date', '']]
   
   PULVE_HEAD = [
-  	['star', 'star', '', true, :check_box], 
-  	['adu', 'adu', '', true, :check_box], 
-  	['id', 'id', '', false], 
-  	['typecultures', 'Cultures', '', false], 
-  	['category_name', 'categorie', '', false, :text_field], 
-  	['user_name', 'Presta', '', false, :text_field], 
-  	['name', 'nom', '', true, :text_field], 
-  	['dosage', 'Dosage', 'toto', false], 
- # 	['unit', 'Unit', '', false], 
-  	['cout_ha_passage', 'Cout Ha', '€/Ha', false], 
-  	['print_date', 'date', '', false]]
+   	['star', 'star', '', true, :check_box], 
+   	['adu', 'adu', '', true, :check_box], 
+   	['id', 'id', '', false], 
+   	['typecultures', 'Cultures', '', false], 
+   	['category_name', 'categorie', '', false, :text_field], 
+   	['user_name', 'Presta', '', false, :text_field], 
+   	['name', 'nom', '', true, :text_field], 
+   	['dosage', 'Dosage', 'toto', false], 
+  # 	['unit', 'Unit', '', false], 
+   	['cout_ha_passage', 'Cout Ha', '€/Ha', false], 
+   	['print_date', 'date', '', false]]
+
+   PRODUIT_HEAD = [
+    # ['star', 'star', '', true, :check_box], 
+    # ['adu', 'adu', '', true, :check_box], 
+   	['id', 'id', '', false], 
+   	['category_name', 'categorie', '', false, :text_field], 
+   	['name', 'nom', '', true, :text_field], 
+   	['quantite', 'Quantite', '', false], 
+   	['unit', 'Unite', '', false]]
 
   FACTURE_HEAD = [
   	['star', 'star', ''], 

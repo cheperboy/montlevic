@@ -28,5 +28,9 @@ module ChargesHelper
   def select_pulve_units(form, col)
     form.select(col, Application::PULVE_DOSAGE_UNITS)
   end
+  
+  def select_produit_units(form, col)
+    form.select(col, Application::PRODUIT_QUANTITE_UNITS)
+  end
 
 end

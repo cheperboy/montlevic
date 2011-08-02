@@ -39,6 +39,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :labours
 
+  map.resources :produits
+
   map.resources :factypes
 
   map.resources :factures, :collection => { :reports => :get,

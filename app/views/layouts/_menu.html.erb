@@ -8,7 +8,7 @@
   </ul>
   <strong>Charges</strong>
   <ul>
-    <%- [Facture, Labour, Pulve].each do |model| -%>
+    <%- [Facture, Labour, Pulve, Produit].each do |model| -%>
     <li>
       <%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url") %>  
 			<%= link_to "New", eval("new_#{model.name.downcase}_url")  %>

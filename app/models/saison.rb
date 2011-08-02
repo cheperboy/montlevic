@@ -1,6 +1,6 @@
 class Saison < ActiveRecord::Base
 
-  validates_presence_of :name
+  validates_presence_of :name, :message => 'aie'
 
   has_many :parcelles
   has_many :labours
@@ -8,6 +8,7 @@ class Saison < ActiveRecord::Base
   has_many :factures
   has_many :ventes
   has_many :reportables
+  has_many :produits
 
   has_one :setting    
   

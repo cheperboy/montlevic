@@ -14,6 +14,13 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
   
+  def add_errors_to_model(model_errors)
+    flash[:error] = 'Données Invalide :<br>'
+    model_errors.each do |type, name|
+      flash[:error] += '- <b>' + type.to_s + '</b> ' + name.to_s + '<br>'
+    end
+  end
+
   def login_required 
     unless session[:user_id]
       flash[:notice] = "Please log in"
