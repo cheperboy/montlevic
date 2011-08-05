@@ -9,11 +9,11 @@ class Vente < Charge
   
   accepts_nested_attributes_for :ventoparcelles, :allow_destroy => true
 
-  validates_presence_of :name
-  validates_presence_of :category
-  validates_presence_of :user
-  validates_presence_of :prix
-  validates_numericality_of :prix, :message => "n'est pas un nombre"
+  validates_presence_of :name, :message => "Nom doit etre indique"
+  validates_presence_of :category, :message => "Categorie doit etre indique"
+  validates_presence_of :user, :message => "Prestataire doit etre indique"
+  validates_presence_of :prix, :message => "Prix doit etre indique"
+  validates_numericality_of :prix, :message => "Prix doit etre un nombre"
   validates_associated :ventoparcelles
 
   def get_cout_ha

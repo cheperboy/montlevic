@@ -25,6 +25,10 @@ class Category < ActiveRecord::Base
     find_by_upcategory('pulve')
   end
     
+  def self.putoproduits
+    find_by_upcategory('pulve')
+  end
+    
   def self.factures
     find_by_upcategory('facture')
   end

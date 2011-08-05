@@ -73,6 +73,7 @@ class VentesController < ApplicationController
         format.html { redirect_to(@vente) }
         format.xml  { render :xml => @vente, :status => :created, :location => @vente }
       else
+        add_errors_to_model(@vente.errors)
         format.html { render :action => "new" }
         format.xml  { render :xml => @vente.errors, :status => :unprocessable_entity }
       end
@@ -90,6 +91,7 @@ class VentesController < ApplicationController
         format.html { redirect_to(@vente) }
         format.xml  { head :ok }
       else
+        add_errors_to_model(@vente.errors)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @vente.errors, :status => :unprocessable_entity }
       end

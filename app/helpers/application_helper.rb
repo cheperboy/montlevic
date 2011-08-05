@@ -31,7 +31,7 @@ module ApplicationHelper
     #Head - TH
     out += '<tr>'
     headers.each do |key, value|
-      out += '<td><b>'+ value.to_s.capitalize + '</b></td>'    
+      out += '<td class="list-elt-left"><b>'+ value.to_s.capitalize + '</b></td>'    
     end
     out += "<td colspan='#{link_size.to_s}'></td>"
     
@@ -93,10 +93,14 @@ module ApplicationHelper
         else  
           #class css du td : align_right ou align_left
           td_class = "list-elt-right"
-            if    value.class == String then td_class = "list-elt-left"
-            elsif value.class.eql?(Float) then td_class = "list-elt-right"
-            elsif value.class.eql?(Fixnum) then td_class = "list-elt-right"
+          if    value.class == String then td_class = "list-elt-left"
+          elsif value.class.eql?(Float) then td_class = "list-elt-right"
+          elsif value.class.eql?(Fixnum) then td_class = "list-elt-right"
           end
+          
+          #si value est un float, on le tronque pour l'affichage
+          if value.class.eql?(Float) then value = value.display end
+          
           out += "<td class='#{td_class}'>"
           out += "#{value} #{header[HEADER_UNIT]}"
           out += '</td>'
@@ -116,13 +120,14 @@ module ApplicationHelper
 
     out = ''
     head_size = headers.count
-    link_size = 3    
+    link_size = 3  # 3 liens: add, show, delete  
     out += '<table class="table_list">'
     #Head
     out += '<tr>'
     headers.each do |key, value|
-      out += '<td><b>'+ value.to_s.capitalize + '</b></td>'    
+      out += "<td class='list-elt-left'><b>"+ value.to_s.capitalize + "</b></td>"    
     end
+    # 3 liens: add, show, delete 
     out += "<td colspan='#{link_size.to_s}'></td>"
     
     #Elements
@@ -150,12 +155,26 @@ module ApplicationHelper
         else  
           #class css du td : align_right ou align_left
           td_class = "list-elt-right"
-            if    value.class == String then td_class = "list-elt-left"
-            elsif value.class.eql?(Float) then td_class = "list-elt-right"
-            elsif value.class.eql?(Fixnum) then td_class = "list-elt-right"
+          if    value.class == String then td_class = "list-elt-left"
+          elsif value.class.eql?(Float) then td_class = "list-elt-right"
+          elsif value.class.eql?(Fixnum) then td_class = "list-elt-right"
           end
+          
+          #si value est un float, on le tronque pour l'affichage
+          if value.class.eql?(Float) then value = value.display end
+          
+          #si unit est un string alors on l'affiche tel quel. si c'est un :sym, il faut appeler la methode de l'objet.
+          if header[HEADER_UNIT].class.eql?(String)
+            unit = header[HEADER_UNIT]
+          elsif header[HEADER_UNIT].class.eql?(Symbol)
+            unit = element.send(header[HEADER_UNIT])
+          else
+            unit = ''
+          end
+          
+          # Affichage 'value' et 'unit'
           out += "<td class='#{td_class}'>"
-          out += "#{value} #{header[HEADER_UNIT]}"
+          out += "#{value} #{unit}"
           out += '</td>'
         end
       end
@@ -307,6 +326,17 @@ module ApplicationHelper
     return out
   end
   
+  def form_tr_simple_select(form, name, col, collection)
+    out = ''
+    out += '<tr><td>'
+    out += form.label col.to_sym, name
+    out += ' : </td>'
+    out += '<td class="td-left">'
+    out += form.select(col, collection) 
+    out += '</td></tr>'
+    return out
+  end
+
   def form_tr_select(form, name, col, collection, id, display, options = nil)
     out = ''
     out += '<tr><td>'

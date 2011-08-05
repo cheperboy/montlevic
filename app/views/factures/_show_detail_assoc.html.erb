@@ -1,3 +1,37 @@
+<%- if @facture.protofactures.length > 0 -%>
+	<h3>Produits</h3>
+	<table class=table_data>
+		<tr class=bold>
+			<td>Categorie</td>
+			<td>Nom</td>
+			<td>Quantite</td>
+			<td>Cout</td>
+			<td>Prix Unitaire</td>
+			<td></td>
+		</tr>
+		<%- total = 0 -%>
+		<%- @facture.protofactures.each do |protofacture| -%>
+			<%- total += protofacture.prix -%>
+		<tr>
+			<td><%=h protofacture.produit.category.name %></td>
+			<td><%=h protofacture.produit.name %></td>
+			<td><%=h protofacture.quantite %> <%=h protofacture.produit.unit %></td>
+			<td><%=h protofacture.prix %> €</td>
+			<td><%=h (protofacture.prix / protofacture.quantite).display %> €/<%=h protofacture.produit.unit %></td>
+			<td><%= link_to image_tag('img-voir.png'), :controller => "produits", :action => "show", :id => protofacture.produit %></td>
+		</tr>
+	<%- end -%>
+		<tr class=bold>
+			<td>Total</td>
+			<td></td>
+			<td></td>
+			<td><%=h total %></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+<%- end -%>
+
 <h3>Associations</h3>
 <% unless @facture.charges? %>
 		<p>Cette facture n'est associee a aucune charge de type Labour ou Pulve.</p>

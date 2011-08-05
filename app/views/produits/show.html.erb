@@ -11,11 +11,11 @@
 	</tr>
 	<tr>
 		<td>Cout total : </td>
-		<td><%=h @produit.prix %> €/L</td>
+		<td><%#=h @produit.get_cout_total %> </td>
 	</tr>
 	<tr>
-		<td>Cout du litre : </td>
-		<td><%=h @pulve.get_cout_litre %> €</td>
+		<td>Prix total: </td>
+		<td><%=h @produit.get_cout_total %> €</td>
 	</tr>
 	<tr>
 		<td>Description : </td>
@@ -23,17 +23,45 @@
 	</tr>
 </table>
 
+<h3>Factures</h3>
 <%- if @produit.protofactures.length > 0 -%>
-	<h3>Factures</h3>
-	<ul>
-	<%- @produit.protofactures.each do |protofacture| -%>
-		<li><%= protofacture.facture.name %>
-			[<%= protofacture.facture.cout %> €]
-		 	contribution : <%= protofacture.value %> €
-		</li>
+	<table class=table_data>
+		<tr class=bold>
+			<td>Date</td>
+			<td>Nom (cout)</td>
+			<td>Prix du produit</td>
+			<td></td>
+		</tr>
+		<%- @produit.protofactures.each do |protofacture| -%>
+		<tr>
+			<td><%=h protofacture.facture.date.to_s %></td>
+			<td><%=h protofacture.facture.name %> (<%=h protofacture.facture.cout %>)</td>
+			<td><%=h protofacture.prix %></td>
+			<td><%= link_to image_tag('img-voir.png'), :controller => "factures", :action => "show", :id => protofacture.facture %></td>
+		</tr>
 	<%- end -%>
-	</ul>
+	</table>
 <%- end -%>
+
+<h3>Passages</h3>
+<table class=table_data>
+	<tr>
+		<td class=left>date</td>
+		<td class=left>Nom</td>
+		<td class=left>Dosage</td>
+		<td class=left>Surface</td>
+	</tr>
+<%- @produit.pulves.each do |pulve| -%>
+	<%- putoproduit = @produit.find_putoproduit_by_pulve(pulve.id) -%>
+	<tr>
+		<td><%=h pulve.date %></td>
+		<td><%=h pulve.name %></td>
+		<td><%=h (putoproduit.dosage * pulve.sum_surfaces).display %></td>
+		<td><%=h (pulve.sum_surfaces).display %></td>
+	</tr>
+<%- end -%>
+</table>
+
 <p>
   <%= link_to "Edit", edit_produit_path(@produit) %> |
   <%= link_to "Destroy", @produit, :confirm => 'Are you sure?', :method => :delete %> |

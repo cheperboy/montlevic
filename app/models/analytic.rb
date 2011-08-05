@@ -21,14 +21,15 @@ class Analytic < ActiveRecord::Base
     self.colonnes_type = [:parcelles, :zones, :typecultures]
     self.saison_colonne_type = [:sum]
     self.saison_colonne_type_sections = [:total_charges, :benef ] # Sections only for :sum
-    self.lines_type = [:labours, :pulves, :factures, :ventes]
+    self.lines_type = [:labours, :putoproduits, :pulves, :factures, :ventes]
     self.other_lines_type = [:resultats]
     self.costs_type = [:ha, :total]
     
     self.other_lines_type_sections = {}
-    self.other_lines_type_sections[:resultats] = [:total_labours, :total_pulves, :total_factures, :total_ventes,
+    self.other_lines_type_sections[:resultats] = [:total_labours, :total_pulves, :total_putoproduits, :total_factures, :total_ventes,
                                             :total_charges, :benef ]
     self.lines_type_sections = {}
+    self.lines_type_sections[:putoproduits] = [:all, :category]
     self.lines_type_sections[:pulves] = [:all, :category]
     self.lines_type_sections[:labours] = [:all, :category]
     self.lines_type_sections[:ventes] = [:all, :category]
@@ -146,7 +147,10 @@ class Analytic < ActiveRecord::Base
       self.saisons[saison.id][col_type][col_id][line_type][:all][line.id] = {} 
       self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:ha] = 0
       self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:total] = 0
-      self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:data] = line.name
+      # OPTIMIZE supprimer les 3 lignes suivantes si le champs :data ne sert a rien 
+      # unless line.class.eql?(Putoproduit)
+      #   self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:data] = line.name
+      # end
     end
     if line_type == :factures
       Factcat.all.each do |factcat|

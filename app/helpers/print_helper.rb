@@ -251,6 +251,45 @@ module PrintHelper
     return out
   end
   
+  def link_popup_putoproduit(data)
+    if data.is_a?(Integer)
+      putoproduit = Putoproduit.find(data)
+    else
+      putoproduit = Putoproduit.find(data[:id])
+    end
+    #affichage tableau
+    out = '<a href=" '+ edit_pulve_path(putoproduit.pulve) +'" class="tip">'+ putoproduit.pulve.name + ' - ' + putoproduit.produit.name 
+
+    #affichage popup
+    out += '
+    <span>        
+    <fieldset class    = "popup">
+    <legend class    = "popup"><b>Pulve :: '+ putoproduit.produit.name + '</b></legend>'
+
+    out += '
+    <table class = "table_popup">
+    ' + tr_text("Id", data[:id]) + '
+    ' + tr_text("Categorie", data[:category_name]) + '
+    ' + tr_text("Surface", data[:sum_surfaces], 'Ha') + '
+    ' + tr_text("Cout Ha", data[:cout_ha], '€/Ha') + '
+    ' + tr_text("Cout Total", data[:cout_total], '€') +'
+    ' + tr_text("Dosage", putoproduit.dosage, 'L/Ha') +'
+    ' + tr_text("Pix littre", putoproduit.produit.get_prix_unit, '€/L') +'
+    </table> '
+
+    #nombre et enumeration des parcelles du labour
+    out += '<br><b>'+ putoproduit.pulve.parcelles.length.to_s+' parcelles : </b><ul>'
+    for parcelle in putoproduit.pulve.parcelles
+      out += '<li>'+ parcelle.name + ' (' + parcelle.surface.to_s + 'ha)</li>'
+    end
+    out += '</ul>'
+    out += '
+    </fieldset>
+    </span>
+    </a>'
+    return out
+  end
+  
   def link_popup_vente(dep)
     if dep.is_a?(Integer)
       vente = Vente.find(dep)

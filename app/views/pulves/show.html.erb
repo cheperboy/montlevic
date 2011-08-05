@@ -6,36 +6,24 @@
 		<td><%=h @pulve.name %></td>
 	</tr>
 	<tr>
-		<td>Categorie : </td>
-		<td><%=h @pulve.category.name %></td>
-	</tr>
-	<tr>
 		<td>Prestataire : </td>
 		<td><%=h @pulve.user.name %></td>
 	</tr>
 	<tr>
 		<td>Surface totale : </td>
-		<td><%=h @pulve.sum_surfaces %> Ha</td>
+		<td><%=h @pulve.sum_surfaces.display %> Ha</td>
 	</tr>
 	<tr>
-		<td>Cout du littre : </td>
-		<td><%=h @pulve.prix_littre %> €/L</td>
+		<td>Cout des produits : </td>
+		<td><%=h @pulve.get_cout_ha_produit.display %> €/Ha</td>
 	</tr>
 	<tr>
-		<td>Dosage : </td>
-		<td><%=h @pulve.dosage %> <%=h @pulve.unit %></td>
-	</tr>
-	<tr>
-		<td>Cout du produit : </td>
-		<td><%=h @pulve.get_cout_total_produit %> €</td>
-	</tr>
-	<tr>
-		<td>Cout du passage : </td>
-		<td><%=h @pulve.cout_ha_passage %> €/Ha</td>
+		<td>Cout total Ha: </td>
+		<td><%=h @pulve.get_cout_ha.display %> €/Ha</td>
 	</tr>
 	<tr>
 		<td>Cout total : </td>
-		<td><%=h @pulve.get_cout_total %> €</td>
+		<td><%=h @pulve.get_cout_total.display %> €</td>
 	</tr>
 	<tr>
 		<td>Description : </td>
@@ -43,20 +31,98 @@
 	</tr>
 </table>
 
+<h3>Synthese des couts</h3>
+<table class=table_data>
+	<tr>
+		<td class=left></td>
+		<td class=left>cout Ha (€/Ha)</td>
+		<td class=left>cout total (€)</td>
+	</tr>
+	<tr>
+		<td class=left>Cout du passage</td>
+		<td><%=h @pulve.cout_ha_passage.display %></td>
+		<td><%=h (@pulve.cout_ha_passage * @pulve.sum_surfaces).display %></td>
+	</tr>
+	<tr>
+		<td class=left>Cout des produits</td>
+		<td><%=h @pulve.get_cout_ha_produits.display %></td>
+		<td><%=h (@pulve.get_cout_total_produits).display %></td>
+	</tr>
+	<tr>
+		<td class=left>Somme</td>
+		<td><%=h @pulve.get_cout_ha.display %></td>
+		<td><%=h (@pulve.get_cout_total).display %></td>
+	</tr>
+</table>
 
-<%- if @pulve.putoparcelles.length > 0 -%>
-	<h3>Parcelles (<%= @pulve.sum_surfaces %> Ha)</h3>
-	<ul>
-	<%- @pulve.putoparcelles.each do |putoparcelle| -%>
-		<li><%= putoparcelle.parcelle.typeculture.name %> - 
-			<%= putoparcelle.parcelle.name %> 
-			[surface : <%= putoparcelle.parcelle.surface %> ha] x 
-			[cout : <%= @pulve.get_cout_ha %> €/Ha] =
-			<%=h (putoparcelle.parcelle.surface * @pulve.get_cout_ha) %> €
-		</li>
+
+<%- if @pulve.putoproduits.length > 0 -%>
+	<h3>Produits</h3>
+	<table class=table_data>
+		<tr class=bold>
+			<td class=left>Categorie</td>
+			<td class=left>Nom</td>
+			<td class=left>Prix unitaire</td>
+			<td class=left>Dosage</td>
+			<td class=left>quantite</td>
+			<td class=left>cout/Ha</td>
+			<td class=left>cout</td>
+			<td class=left></td>
+		</tr>
+		<%- @pulve.putoproduits.each do |putoproduit| -%>
+		<tr>
+			<td class=left><%=h putoproduit.produit.category.name %></td>
+			<td class=left><%=h putoproduit.produit.name %></td>
+			<td><%=h (putoproduit.produit.get_prix_unit).display %> €/<%= putoproduit.produit.unit.to_s %></td>
+			<td><%=h (putoproduit.dosage).display %> <%= putoproduit.produit.unit.to_s %>/Ha</td>
+			<td><%=h (@pulve.sum_surfaces * putoproduit.dosage).display %> <%= putoproduit.produit.unit.to_s %></td>
+			<td><%=h (putoproduit.dosage * putoproduit.produit.get_prix_unit).display %> €</td>
+			<td><%=h (@pulve.sum_surfaces * putoproduit.dosage * putoproduit.produit.get_prix_unit).display %> €</td>
+			<td><%= link_to image_tag('img-voir.png'), :controller => "produits", :action => "show", :id => putoproduit.produit %></td>
+		</tr>
 	<%- end -%>
-	</ul>
+	</table>
 <%- end -%>
+<br>
+<h3>Parcelles (<%= @pulve.sum_surfaces %> Ha)</h3>
+<%- if @pulve.putoparcelles.length > 0 -%>
+	<table class=table_data>
+		<tr class=bold>
+			<td>Culture</td>
+			<td>Parcelle</td>
+			<td>Surface</td>
+			<td>Cout Produit Ha</td>
+			<td>Cout Passage Ha</td>
+			<td>Cout Total Ha</td>
+			<td>Cout Total</td>
+		</tr>
+		<%- @pulve.putoparcelles.each do |putoparcelle| -%>
+			<%- cout_produit = 0 -%>
+			<%- @pulve.putoproduits.each do |putoproduit| -%>
+				<%- cout_produit += putoproduit.get_cout_ha_parcelle(putoparcelle.parcelle) -%>
+			<%- end -%>
+			<%- cout_total = 0 -%>
+			<%- @pulve.putoproduits.each do |putoproduit| -%>
+				<%- cout_total += putoproduit.get_cout_total_parcelle(putoparcelle.parcelle) -%>
+			<%- end -%>
+		
+		<tr>
+			<td><%=h putoparcelle.parcelle.typeculture.name %></td>
+			<td><%=h putoparcelle.parcelle.name %></td>
+			<td><%=h putoparcelle.parcelle.surface %> ha</td>		
+			<td><%=h (cout_produit).display %> €</td>
+			<td><%=h (@pulve.get_cout_ha_passage).display %> €</td>
+			<td><%=h (cout_total).display %> €</td>
+			<td><%=h (putoparcelle.parcelle.surface * @pulve.get_cout_ha).display %> €</td>
+		</tr>
+	<%- end -%>
+	</table>
+<%- else -%>
+<p>l'ensemble des parcelles sont prises en compte</p>
+<%- end -%>
+<br>
+
+
 
 <%- if @pulve.putofactures.length > 0 -%>
 	<h3>Factures</h3>

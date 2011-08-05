@@ -23,8 +23,6 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer  "saison_id"
     t.string   "name"
     t.string   "desc"
-    t.float    "prix"
-    t.float    "quantite"
     t.string   "unit"
     t.integer  "star"
     t.integer  "adu"
@@ -34,14 +32,16 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   create_table "protofactures", :force => true do |t|
     t.integer  "produit_id"
     t.integer  "facture_id"
-    t.float    "value"
+    t.float    "prix"
+    t.float    "quantite"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
   create_table "putoproduits", :force => true do |t|
+    t.integer  "saison_id"
     t.integer  "pulve_id"
     t.integer  "produit_id"
-    t.float    "value"
+    t.float    "dosage"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -157,18 +157,13 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
 
   create_table "pulves", :force => true do |t|
     t.integer  "saison_id",       :null => false
-    t.integer  "category_id",     :null => false
     t.integer  "user_id",         :null => false
     t.date     "date",            :null => false
     t.string   "name",            :null => false
-    t.float    "dosage"
-    t.float    "prix_littre"
     t.float    "cout_ha_passage"
-    t.float    "cout_fixe"
     t.integer  "star"
     t.integer  "adu"
     t.text     "desc"
-    t.string   "unit"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

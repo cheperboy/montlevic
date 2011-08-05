@@ -26,12 +26,10 @@ class Application < ActiveRecord::Base
    	['adu', 'adu', '', true, :check_box], 
    	['id', 'id', '', false], 
    	['typecultures', 'Cultures', '', false], 
-   	['category_name', 'categorie', '', false, :text_field], 
+    ['print_produits', 'Produits', '', :text_field], 
    	['user_name', 'Presta', '', false, :text_field], 
    	['name', 'nom', '', true, :text_field], 
-   	['dosage', 'Dosage', 'toto', false], 
-  # 	['unit', 'Unit', '', false], 
-   	['cout_ha_passage', 'Cout Ha', '€/Ha', false], 
+   	['get_cout_ha', 'Cout Ha', '€/Ha', false], 
    	['print_date', 'date', '', false]]
 
    PRODUIT_HEAD = [
@@ -40,8 +38,10 @@ class Application < ActiveRecord::Base
    	['id', 'id', '', false], 
    	['category_name', 'categorie', '', false, :text_field], 
    	['name', 'nom', '', true, :text_field], 
-   	['quantite', 'Quantite', '', false], 
-   	['unit', 'Unite', '', false]]
+   	['get_quantite', 'Quantite', '', false], 
+   	['unit', 'Unite', '', false],
+    ['get_prix_unit', 'Prix', :unit_price_by_quantity, false]    
+   	]
 
   FACTURE_HEAD = [
   	['star', 'star', ''], 

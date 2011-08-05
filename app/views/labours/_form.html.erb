@@ -1,11 +1,5 @@
 <% javascript :defaults, 'delegate' %>
-
-<%= error_messages_for :labour, :labtoparcelle, :labtofacture
-,
-						:header_message => "Problemes lors de l'enregistrement", 
-						:message => "corriger les erreurs suivantes" 
-%>
-						
+			
 <% form_for @labour do |labour_form| -%>
 
 <% content_for :jstemplates do -%>

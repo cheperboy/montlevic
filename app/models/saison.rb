@@ -9,8 +9,21 @@ class Saison < ActiveRecord::Base
   has_many :ventes
   has_many :reportables
   has_many :produits
+  has_many :putoproduits
 
   has_one :setting    
+  
+  # retourne les id des pulves des parcelles de la saison (ou nil)
+  def putoproduits
+    putoproduits = []
+    self.pulves.each do |pulve|
+      pulve.putoproduits.each do |putoproduit|
+        putoproduits << putoproduit
+      end
+    end
+    return nil if putoproduits.size == 0
+    putoproduits
+  end
   
   # retourne les id des Typecultures des parcelles de la saison (ou nil)
   def typecultures

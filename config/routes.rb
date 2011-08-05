@@ -4,6 +4,8 @@ ActionController::Routing::Routes.draw do |map|
                                           :delete_labtofacture => :any,
                                           :list_putofactures => :get,
                                           :delete_putofacture => :any,
+                                          :list_putoproduits => :get,
+                                          :delete_putoproduit => :any,
                                           :list_putoparcelles => :get,
                                           :delete_putoparcelle => :any,
                                           :list_labtoparcelles => :get,

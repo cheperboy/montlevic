@@ -4,8 +4,11 @@
 	<% unless Facture.find(:first).nil? %>
 	    <%= f.collection_select (:facture_id, Facture.find_by_saison(:all), :id, :name_and_type ) %>
     <% end %>	
-	<%= f.label :value, "prix : " %>
-    <%= f.text_field :value, :size => 3 %>
+	<br>	
+	<%= f.label :prix, "prix : " %>
+    <%= f.text_field :prix, :size => 3 %>
+	<%= f.label :quantite, "Quantite : " %>
+    <%= f.text_field :quantite, :size => 3 %>
     <%= remove_link_unless_new_record(f) -%>
   </p>
 </div>

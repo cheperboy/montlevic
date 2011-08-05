@@ -4,19 +4,21 @@
 .table_data { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
 
 .table_data td, th, tr { 
-	text-align: left;
-	 border-style:solid; 
+	padding-right: 12px;
+	text-align: right;
+	border-style:solid; 
 	border-width:1px;
 	border-color:grey;
-	padding-left: 20px;
+	padding-left: 10px;
  }
 
-.table_data th.right{ text-align: left; }
-.table_data td.right{ text-align: left; }
+.table_data th.left{ text-align: left; }
+.table_data th.right{ text-align: right; }
+.table_data td.left{ text-align: left; }
+.table_data td.right{ text-align: right; }
+.table_data td.center{ text-align: center; }
 .table_data tr.bold{ font-weight: bold; }
 .table_data td.bold{ font-weight: bold; }
-.table_data td.center{ text-align: center; }
-.table_data td.right{ text-align: right; }
 .table_data tr:hover { background-color: #eee;}
 
 /* End : Table Datas */

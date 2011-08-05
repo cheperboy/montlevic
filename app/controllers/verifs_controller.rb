@@ -110,6 +110,30 @@ class VerifsController < ApplicationController
     end
   end
   
+  def list_putoproduits
+    @putoproduits = Putoproduit.find(:all)  
+    respond_to do |format|
+      format.html
+    end
+  end
+  
+  def delete_putoproduit
+    putoproduit = Putoproduit.find(params[:id])  
+    if session[:admin]
+      if putoproduit.pulve.nil? || putoproduit.produit.nil?
+        putoproduit.destroy
+        flash[:notice] = 'Putoproduit will be deleted'   
+      else
+        flash[:error] = 'no need to delete this putoproduit'
+      end
+    else
+      flash[:error] = 'not deleted, Admin only!'
+    end        
+    respond_to do |format|
+      format.html { redirect_to :action => "list_putoproduits" }
+    end
+  end
+  
   def list_putoparcelles
     @putoparcelles = Putoparcelle.find(:all)  
     respond_to do |format|

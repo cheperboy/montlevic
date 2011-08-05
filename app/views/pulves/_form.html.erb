@@ -1,15 +1,11 @@
 <% javascript :defaults, 'delegate' %>
 
-<%= error_messages_for  :pulve, :putoparcelle, :putofacture,
-						:header_message => "Problemes lors de l'enregistrement", 
-						:message => "corriger les erreurs suivantes" 
-%>
-
 <% form_for @pulve do |pulve_form| -%>
 
 <% content_for :jstemplates do -%>
 	<%= "var putoparcelle='#{generate_template(pulve_form, :putoparcelles)}'" %>
 	<%= "var putofacture='#{generate_template(pulve_form, :putofactures)}'" %>
+	<%= "var putoproduit='#{generate_template(pulve_form, :putoproduits)}'" %>
 <% end -%>
 
 <% unless User.find_by_name('Trochet').nil? %>
@@ -24,41 +20,10 @@
 						User.find(:all, :order => :name), 
 						:id, :name, 
 						:selected => selected) %>
-	<%= form_tr_select(pulve_form, 'Categorie', :category_id, Category.find_by_type("pulve"), :id, :name) %>
+	<%= form_tr_text(pulve_form, 'Cout du passage', :cout_ha_passage, :unit => "€/Ha", :value => (@pulve.cout_ha_passage || 0), :size => 5) %>
 	<%= form_tr_text_area(pulve_form, 'Infos', :desc, :size => "20x1") %>	
 
-
-
-<% if @pulve.cout_ha_passage %>
-	<tr>
-		<td>Cout total : </td>
-		<td><%= @pulve.get_cout_total %> 
-			<%=	link_to_remote	"Actualiser" , 
-						:url => {:action => 'actualize'},
-						:update => 'form', 
-						:type => :synchronous 
-			%></td>
-	</tr>
-<% end %>
-
 </table>
-<br>
-<fieldset>
-  <legend>Passage</legend>
-	<table>
-		<%= form_tr_text(pulve_form, 'Cout du passage', :cout_ha_passage, :unit => "€/Ha", :value => (@pulve.cout_ha_passage || 0), :size => 5) %>
-	</table>
-</fieldset>
-<br>
-<fieldset>
-  <legend>Produit</legend>
-	<table>
-	<%= form_tr_text(pulve_form, 'Cout du littre', :prix_littre, :unit => '€/L', :value => (@pulve.prix_littre || 0), :size => 4) %>	
-	<%= form_tr_text(pulve_form, 'Dosage', :dosage, :unit => select_pulve_units(pulve_form, :unit), :size => 4) %>
-	
-	<%= form_tr_text(pulve_form, 'Cout fixe', :cout_fixe, :unit => '€', :value => (@pulve.cout_fixe || 0), :size => 4) %>
-	</table>
-</fieldset>
 <br>
 
 <fieldset>
@@ -73,6 +38,22 @@
 </div>
 <p>
 <%= link_to 'Ajouter une parcelle', '#putoparcelle', :class => "add_nested_item", :rel => "putoparcelles" %>
+</p>
+</fieldset>
+<br>
+
+<fieldset>
+  <legend>Produits</legend>
+  
+<div id="putoproduits">
+	<% pulve_form.fields_for :putoproduits do |putoproduit_form| %>
+		<% unless pulve_form.object.new_record? %>
+			<%= render :partial => 'putoproduit', :locals => { :f => putoproduit_form } %>
+		<% end %>
+	<% end %>
+</div>
+<p>
+<%= link_to 'Ajouter une produit', '#putoproduit', :class => "add_nested_item", :rel => "putoproduits" %>
 </p>
 </fieldset>
 <br>

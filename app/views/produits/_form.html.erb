@@ -1,10 +1,5 @@
 <% javascript :defaults, 'delegate' %>
 
-<%= error_messages_for :produit, :protofacture,
-						:header_message => "Problemes lors de l'enregistrement", 
-						:message => "corriger les erreurs suivantes" 
-%>
-
 <% form_for @produit do |produit_form| -%>
 
 <% content_for :jstemplates do -%>
@@ -15,8 +10,7 @@
 	<%= form_tr_text(produit_form, 'Nom', :name) %>
 	<%= form_tr_select(produit_form, 'Categorie', :category_id, Category.find_by_type("pulve"), :id, :name) %>
 	<%= form_tr_text_area(produit_form, 'Infos', :desc, :size => "20x1") %>	
-	<%= form_tr_text(produit_form, 'Prix', :prix, :unit => '€', :value => (@produit.prix || ''), :size => 4) %>
-	<%= form_tr_text(produit_form, 'Quantite', :quantite, :unit => select_produit_units(produit_form, :unit), :value => (@produit.quantite || ''), :size => 4) %>
+	<%= form_tr_simple_select(produit_form, 'Unite', :unit, Application::PRODUIT_QUANTITE_UNITS) %>
 </table>
 <br>
 

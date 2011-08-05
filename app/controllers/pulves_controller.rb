@@ -5,7 +5,7 @@ class PulvesController < ApplicationController
  #   @pulves = Pulve.find_by_saison(:all)
 # TODO onglet verif saisie donnees : verifier que les pulves qui ont un prix/L sont lies a une facture
 
-    @pulves = Pulve.find(:all, :order => :id) do
+    @pulves = Pulve.find_by_saison(:all, :order => :id) do
       saison = Setting.find(:first).saison_id
       name.contains? params[:filter][:name] if params[:filter] && params[:filter][:name]
       # category.name.contains? 'i'
@@ -61,14 +61,11 @@ class PulvesController < ApplicationController
 
     respond_to do |format|
       if @pulve.save
-        flash[:notice] = 'Pulve was successfully created.'
+        flash[:notice] = 'Pulve ajoute'
         format.html { redirect_to(@pulve) }
         format.xml  { render :xml => @pulve, :status => :created, :location => @pulve }
       else
-        format.html { render :action => "new" }
-        @pulve.errors.each do |type, name|
-          flash[:error] += '- <b>' + type.to_s + '</b> ' + name.to_s + '<br>'
-        end
+        add_errors_to_model(@pulve.errors)
         @pulve = Pulve.new(params[:pulve])
         format.html { render :action => "new" }
       end
@@ -82,10 +79,11 @@ class PulvesController < ApplicationController
 
     respond_to do |format|
       if @pulve.update_attributes(params[:pulve])
-        flash[:notice] = 'Pulve was successfully updated.'
+        flash[:notice] = 'Pulve mis a jour.'
         format.html { redirect_to(@pulve) }
         format.xml  { head :ok }
       else
+        add_errors_to_model(@pulve.errors)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @pulve.errors, :status => :unprocessable_entity }
       end

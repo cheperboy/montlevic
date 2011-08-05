@@ -15,6 +15,9 @@ class Facture < Charge
   
   has_many :facdivs
 
+  has_many :protofactures
+  has_many :produits, :through => :protofactures
+
   has_many :putofactures
   has_many :pulves, :through => :putofactures
 

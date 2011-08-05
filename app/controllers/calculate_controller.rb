@@ -29,6 +29,9 @@ class CalculateController < ApplicationController
     @colonnes = model.find_for_saison()
     @saison = Saison.find(session[:current_saison_id])
     @labours = @saison.labours
+    @pulves = @saison.pulves
+    @produits = @saison.produits
+    @putoproduits = @saison.putoproduits
     @factures = @saison.factures.find(:all, :order => :cout)
     @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Factcat.all
@@ -36,7 +39,6 @@ class CalculateController < ApplicationController
     @facture_categories = Category.factures
     @pulve_categories = Category.pulves
     @vente_categories = Category.ventes
-    @pulves = @saison.pulves
     
     respond_to do |format|
       @test = Calculate.new(model)

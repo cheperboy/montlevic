@@ -71,11 +71,7 @@ class ProduitsController < ApplicationController
         flash[:notice] = 'Enregistrement produit OK.'
         format.html { redirect_to(produits_url) }
       else
-        flash[:error] = 'Produit Invalide :<br>'
-        @produit.errors.each do |type, name|
-          flash[:error] += '- <b>' + type.to_s + '</b> ' + name.to_s + '<br>'
-        end
-        @produit = Produit.new(params[:produit])
+        add_errors_to_model(@produit.errors)
         format.html { render :action => "new" }
       end
     end
@@ -84,10 +80,11 @@ class ProduitsController < ApplicationController
   def update
     @produit = Produit.find(params[:id])
     respond_to do |format|
-      if @produit.update_attributes(params[:id])
-        flash[:notice] = 'Modification du produit '
-        format.html { render :action => "show" }
+      if @produit.update_attributes(params[:produit])
+        flash[:notice] = 'Modification du produit ok'
+        format.html { redirect_to(produits_url) }
       else
+        add_errors_to_model(@produit.errors)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @produit.errors, :status => :unprocessable_entity }
       end
