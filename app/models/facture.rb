@@ -166,18 +166,28 @@ class Facture < Charge
     return (self.factype_id == Factype.find_by_name('total').id)  
   end
   
-  #somme les contribition des labour d'une parcelle
+  #somme les contribition des labour d'une facture
   #c'est-a-dire les champs 'value' des labtofactures associés 
   def sum_labours
     Labtofacture.sum(:value, :conditions => ['facture_id = ?', self.id])
   end
   
   def sum_pulves
-    Putofacture.sum(:value, :conditions => ['facture_id = ?', self.id])
+    val=0
+    self.putofactures.each {|obj| val += obj.get_cout_total }
+    return val
+  end
+  
+  def sum_putoproduits
+    sum = 0
+    self.produits.each do |produit|
+      produit.pulves.each {|pulve| sum += produit.get_prix_unit * pulve.sum_surfaces }
+    end
+    return sum
   end
   
   def sum_charges
-    return (self.sum_pulves + sum_labours)
+    return (self.sum_pulves + self.sum_putoproduits + sum_labours)
   end
   
   def sum_reports
@@ -188,16 +198,8 @@ class Facture < Charge
     return (0)
   end
   
-  #ce calcul induit une incoherence de resultat entre res-ha et res-total dans les tableaux de synthese
-  #pour eviter cela, decommenter les 2 lignes..
   def get_cout_ha
-    if (self.comptable_null?)
-      return (0)
-#    if (self.comptable_null?)
-#      return ((self.get_cout_total / self.sum_surfaces) - self.sum_charges_ha - self.sum_reports_ha)
-    else
-      return (self.get_cout_total / self.sum_surfaces)
-    end
+    return (self.get_cout_total / self.sum_surfaces)
   end
   
   # retourne le cout total de cette charge
@@ -215,17 +217,6 @@ class Facture < Charge
     return (self.cout)
   end
     
-#  def get_cout_ha_parcelle_with_rate(parcelle)
-#    cout_ha_parcelle = 0
-#    if all_parcelles? 
-#      cout_ha_parcelle = self.get_cout_ha
-#    end
-#    if (self.parcelles.include?(parcelle))
-#    rate = Factoparcelle.find_by_parcelle(parcelle.id, self.id).rate
-#      cout_ha_parcelle = self.get_cout_ha * rate
-#    end
-#    return cout_ha_parcelle
-#  end
   
   
 end

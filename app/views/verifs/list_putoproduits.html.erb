@@ -25,6 +25,14 @@
 		</td>
 
 	    <td>
+	    	<% if obj.saison_id == nil %>
+				<%= obj.saison_id %> | 
+			<% else %>
+				<%= link_to obj.pulve_id, pulve_url(:id => obj.pulve_id) %> |
+			<% end %>
+		</td>
+		
+	    <td>
 	    	<% if pu_invalid %>
 				<%= obj.pulve_id %> | 
 			<% else %>

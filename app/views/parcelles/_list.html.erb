@@ -10,7 +10,9 @@
 	<% end %>
   </tr>
 
+<% sum_surfaces = 0 %>
 <% @parcelles.each do |parcelle| %>
+	<% sum_surfaces += parcelle.surface %>
   <tr>
     <td><%= parcelle.name %></td>
     <td class=right><%= parcelle.surface.display(2) %></td>
@@ -24,4 +26,16 @@
   
   </tr>
 <% end %>
+<tr class=bold>
+  <td>Total</td>
+  <td class=right><%= sum_surfaces %></td>
+  <td></td>
+	
+	<% if admin? %>
+	    <td></td>
+	    <td></td>
+	    <td></td>
+	<% end %>
+
+</tr>
 </table>

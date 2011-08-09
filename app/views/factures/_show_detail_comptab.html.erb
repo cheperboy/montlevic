@@ -5,7 +5,7 @@ correspond au cout de la facture moins la sommes des charges qui lui sont associ
 	<table>
 		  <tr>
 		    <td>Cout facture : </td>
-		    <td><b><%= @facture.cout %> €</b></td>
+		    <td><b><%= @facture.cout.display %> €</b></td>
 		  </tr>
 		  <tr>
 		    <td>Valeur des charges associees : </td>
@@ -13,7 +13,7 @@ correspond au cout de la facture moins la sommes des charges qui lui sont associ
 		  </tr>
 		  <tr>
 		    <td>Valeur comptable de la facture : </td>
-		    <td><b>= <%= @facture.cout - @facture.sum_charges %> €</b></td>
+		    <td><b>= <%= (@facture.cout - @facture.sum_charges).display %> €</b></td>
 		  </tr>
 	</table>
 <% end %>	

@@ -61,6 +61,10 @@ class PulvesController < ApplicationController
 
     respond_to do |format|
       if @pulve.save
+        @pulve.putoproduits.each do |putoproduit|
+          putoproduit.saison_id = current_saison_id
+          putoproduit.save!
+        end  
         flash[:notice] = 'Pulve ajoute'
         format.html { redirect_to(@pulve) }
         format.xml  { render :xml => @pulve, :status => :created, :location => @pulve }
@@ -79,6 +83,10 @@ class PulvesController < ApplicationController
 
     respond_to do |format|
       if @pulve.update_attributes(params[:pulve])
+        @pulve.putoproduits.each do |putoproduit|
+          putoproduit.saison_id = current_saison_id
+          putoproduit.save!
+        end  
         flash[:notice] = 'Pulve mis a jour.'
         format.html { redirect_to(@pulve) }
         format.xml  { head :ok }

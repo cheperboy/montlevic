@@ -120,7 +120,7 @@ class VerifsController < ApplicationController
   def delete_putoproduit
     putoproduit = Putoproduit.find(params[:id])  
     if session[:admin]
-      if putoproduit.pulve.nil? || putoproduit.produit.nil?
+      if putoproduit.pulve.nil? || putoproduit.produit.nil? || putoproduit.saison.nil?
         putoproduit.destroy
         flash[:notice] = 'Putoproduit will be deleted'   
       else

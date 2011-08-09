@@ -35,8 +35,8 @@
 		<%- @produit.protofactures.each do |protofacture| -%>
 		<tr>
 			<td><%=h protofacture.facture.date.to_s %></td>
-			<td><%=h protofacture.facture.name %> (<%=h protofacture.facture.cout %>)</td>
-			<td><%=h protofacture.prix %></td>
+			<td><%=h protofacture.facture.name %> (<%=h protofacture.facture.cout %>  €)</td>
+			<td><%=h protofacture.prix %>  €</td>
 			<td><%= link_to image_tag('img-voir.png'), :controller => "factures", :action => "show", :id => protofacture.facture %></td>
 		</tr>
 	<%- end -%>
@@ -45,19 +45,23 @@
 
 <h3>Passages</h3>
 <table class=table_data>
-	<tr>
+	<tr class=bold>
 		<td class=left>date</td>
 		<td class=left>Nom</td>
 		<td class=left>Dosage</td>
 		<td class=left>Surface</td>
+		<td class=left>Quantite</td>
+		<td class=left></td>
 	</tr>
 <%- @produit.pulves.each do |pulve| -%>
 	<%- putoproduit = @produit.find_putoproduit_by_pulve(pulve.id) -%>
 	<tr>
 		<td><%=h pulve.date %></td>
 		<td><%=h pulve.name %></td>
-		<td><%=h (putoproduit.dosage * pulve.sum_surfaces).display %></td>
-		<td><%=h (pulve.sum_surfaces).display %></td>
+		<td><%=h putoproduit.dosage.display %> L/Ha</td>
+		<td><%=h (pulve.sum_surfaces).display %> Ha</td>
+		<td><%=h (putoproduit.dosage * pulve.sum_surfaces).display %> L</td>
+		<td><%= link_to image_tag('img-voir.png'), :controller => "pulves", :action => "show", :id => pulve %></td>
 	</tr>
 <%- end -%>
 </table>

@@ -24,13 +24,11 @@ class Pulve < Charge
   validates_presence_of :name, :message => "nom ne doit pas etre nul"
   validates_presence_of :user, :message => "Prestataire ne doit pas etre nul"
   validates_presence_of :cout_ha_passage, :message => "cout ha passage ne doit pas etre nul"
-  validates_presence_of :cout_fixe, :message => "cout fixe ne doit pas etre nul"
   
   # validates_associated :putoparcelles
   # validates_associated :putofactures
   
   validates_numericality_of :cout_ha_passage, :message => "cout ha passage doit etre un nombre"
-  validates_numericality_of :cout_fixe, :message => " cout fixe doit etre un nombre"
 
 # ----- Finders -----
 
@@ -49,33 +47,33 @@ class Pulve < Charge
     end
   end
 
-# ----- Methodes de calcul -----
-def get_cout_ha_produits
-  val = 0
-  if produit_assoc?
-    self.putoproduits.each do |putoproduit|
-      val += putoproduit.dosage * putoproduit.produit.get_prix_unit
+  # ----- Methodes de calcul -----
+  def get_cout_ha_produits
+    val = 0
+    if produit_assoc?
+      self.putoproduits.each do |putoproduit|
+        val += putoproduit.dosage * putoproduit.produit.get_prix_unit
+      end
     end
+    return val
   end
-  return val
-end
 
-def get_cout_ha_produit
-  val = 0
-  if produit_assoc?
-    self.putoproduits.each do |putoproduit|
-      val += putoproduit.dosage * putoproduit.produit.get_prix_unit
+  def get_cout_ha_produit
+    val = 0
+    if produit_assoc?
+      self.putoproduits.each do |putoproduit|
+        val += putoproduit.dosage * putoproduit.produit.get_prix_unit
+      end
     end
+    return val
   end
-  return val
-end
 
   def get_cout_ha_passage
     self.cout_ha_passage
   end
 
   def get_cout_ha
-    return (self.cout_ha_passage + self.get_cout_ha_produit)
+    return (self.cout_ha_passage)
   end
   
   # retourne le cout total de cette charge
@@ -85,6 +83,10 @@ end
 
   def get_cout_total_produits
     return (self.get_cout_ha_produits * self.sum_surfaces)
+  end
+
+  def get_cout_total_passage
+    return (self.get_cout_ha_passage * self.sum_surfaces)
   end
 
   # # retourne le cout total du produit (dosage x prix du littre) 

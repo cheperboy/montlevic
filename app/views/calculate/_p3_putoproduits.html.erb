@@ -9,7 +9,6 @@
 		<td></td>
 	<% end %>
 </tr>	
-<% logger.error @putoproduits.class.to_s %>
 <% unless (((@putoproduits.class == Array) && @putoproduits.size == 0) || (@putoproduits.nil?)) %>
 <% logger.error "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" %>
 <% if @show[:pulves] %>
@@ -20,10 +19,7 @@
 			<td class='left'><strong><%= datas[:category_name] %></strong></td>
 			<td class='left'><%= link_popup_putoproduit(datas) %></td>
 			<td class="date"><%= datas[:date].to_s :dmy %></td>	
-			<td class='left'>
-				<%= datas[:parcelles_length] %> p - 
-				<%= datas[:surface_total].display %> ha
-			</td>
+			<td class='left'><%= datas[:sum_surfaces].display %> Ha</td>
 			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :putoproduits, :all, putoproduit.id, :ha).display %></td>
 			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :putoproduits, :all, putoproduit.id, :total).display %></td>
 
@@ -82,7 +78,7 @@
 <% end %>
 	
 	<tr class="total">
-		<td>Total Pulve:	</td>
+		<td>Total Produits:	</td>
 		<td></td>	
 		<td></td>	
 		<td></td>
@@ -103,3 +99,4 @@
 	</tr>
 	
 <% end %>
+<tr><td></td></tr>

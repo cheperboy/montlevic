@@ -198,33 +198,44 @@ module PrintHelper
     return out
   end
   
-  def link_popup_pulve(dep)
-    if dep.is_a?(Integer)
-      pulve = Pulve.find(dep)
-    else
-      pulve = Pulve.find(dep[:id])
-    end
+  def link_popup_pulve(data)
+    pulve = Pulve.find(data[:id])
     #affichage tableau
-    out              = '<a href=" '+ edit_pulve_path(pulve) +'" class="tip">'+ pulve.name 
+    out = '<a href=" '+ edit_pulve_path(pulve) +'" class="tip">'+ pulve.name 
 
     #affichage popup
     out += '
     <span>        
-    <fieldset class    = "popup">
-    <legend class    = "popup"><b>Pulve :: '+ pulve.name + '</b></legend>'
+    <fieldset class = "popup">
+    <legend class = "popup"><b>Pulve :: '+ pulve.name + '</b></legend>'
 
     out += '
     <table class = "table_popup">
-    ' + tr_text("Id", pulve.id) + '
-    ' + tr_text("Categorie", pulve.category.name) + '
-    ' + tr_text("Surface", pulve.sum_surfaces, 'Ha') + '
-    ' + tr_text("Cout Ha", pulve.get_cout_ha, '€/Ha') + '
-    ' + tr_text("Cout Total", pulve.get_cout_total, '€') +'
-    ' + tr_text("Dosage", pulve.dosage, 'L/Ha') +'
-    ' + tr_text("Pix littre", pulve.prix_littre, '€/L') +'
-    ' + tr_text("Cout Passage", pulve.cout_ha_passage, '€/Ha') +'
-    ' + tr_text("Cout Fixe", pulve.cout_fixe, '€') +'
+    ' + tr_text("Id", data[:id]) + '
+    ' + tr_text("Nom", data[:name]) + '
+    ' + tr_text("Surface", data[:sum_surfaces], 'Ha') + '
+    ' + tr_text("Cout Ha", data[:cout_ha_passage], '€/Ha') + '
+    ' + tr_text("Cout Total", data[:cout_total_passage], '€') +'
     </table> '
+
+    if pulve.produit_assoc?
+      out += '<br><b>'+pulve.putoproduits.length.to_s+' Produits : </b><ul>'
+      for putoproduit in pulve.putoproduits
+        out += '<li>'+  putoproduit.produit.name + ' (' + 
+        putoproduit.dosage.display + ' L/Ha' + 
+        putoproduit.produit.get_prix_unit.display + ' €/L)</li>'
+      end
+      out += '</ul>'
+    else
+      out += '<br>Pas de produits.<br>'
+    end
+
+    #nombre et enumeration des parcelles du pulve
+    out += '<b>'+pulve.parcelles.length.to_s+' parcelles : </b><ul>'
+    for parcelle in pulve.parcelles
+      out += '<li>'+parcelle.name + ' (' + parcelle.surface.to_s + 'ha)</li>'
+    end
+    out += '</ul>'
 
     if pulve.factures_assoc?
       out += '<br><b>'+pulve.factures.length.to_s+' Factures : </b><ul>'
@@ -234,16 +245,8 @@ module PrintHelper
         putofactures.facture.cout.to_s + ')</li>'
       end
       out += '</ul>'
-    else
-      out += '<br>Pas de factures associee.<br>'
     end
 
-    #nombre et enumeration des parcelles du labour
-    out += '<br><b>'+pulve.parcelles.length.to_s+' parcelles : </b><ul>'
-    for parcelle in pulve.parcelles
-      out += '<li>'+parcelle.name + ' (' + parcelle.surface.to_s + 'ha)</li>'
-    end
-    out += '</ul>'
     out += '
     </fieldset>
     </span>
