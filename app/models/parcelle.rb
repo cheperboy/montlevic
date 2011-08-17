@@ -42,6 +42,18 @@ class Parcelle < ActiveRecord::Base
       end
   end
  
+  def find_parcelle(name, saison_id)
+    if saison_id.nil?
+      param[:parcelle][:saison_id] = Setting.find(:first).saison_id
+    else
+      param[:parcelle][:saison_id] = saison_id
+    end
+    param[:parcelle][:name] = name
+    return parcelle = Parcelle.find(:first, :conditions => params[:parcelle])
+  end
+
+ 
+ 
   def self.find_by_zone(zone_id)
     parcelles = []
     zonetopas = Zonetopa.find(:all, :conditions => ["zone_id = ?", zone_id])
