@@ -52,7 +52,7 @@ class Pulve < Charge
     val = 0
     if produit_assoc?
       self.putoproduits.each do |putoproduit|
-        val += putoproduit.dosage * putoproduit.produit.get_prix_unit
+        val += putoproduit.dosage * putoproduit.produit.get_prix_unitaire
       end
     end
     return val
@@ -62,7 +62,7 @@ class Pulve < Charge
     val = 0
     if produit_assoc?
       self.putoproduits.each do |putoproduit|
-        val += putoproduit.dosage * putoproduit.produit.get_prix_unit
+        val += putoproduit.dosage * putoproduit.produit.get_prix_unitaire
       end
     end
     return val

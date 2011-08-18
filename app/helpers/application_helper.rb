@@ -16,6 +16,9 @@ module ApplicationHelper
   
   def euros
     return '€'
+  end 
+  def euro
+    return '€'
   end
 
   def draw_table_with_find(headers, elements, controller, action, search)

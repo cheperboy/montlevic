@@ -65,7 +65,7 @@ class Produit < ActiveRecord::Base
   end
   
   # ----- Calculs -----  
-  def get_prix_unit
+  def get_prix_unitaire
     if self.protofactures.count == 0
       return 0 
     else
@@ -114,8 +114,12 @@ class Produit < ActiveRecord::Base
     self.user.name
   end
   
-  def unit_price_by_quantity
+  def get_prix_unitaire_unit
     return "€/" + self.unit
   end
- 
+  
+  def get_dosage_unit
+    return "#{self.unit.to_s}/ha"
+  end
+
 end

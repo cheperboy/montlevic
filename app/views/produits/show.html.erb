@@ -54,7 +54,7 @@
 		<td class=left></td>
 	</tr>
 <%- @produit.pulves.each do |pulve| -%>
-	<%- putoproduit = @produit.find_putoproduit_by_pulve(pulve.id) -%>
+	<%- putoproduit = @produit.putoproduits.find_by_pulve_id(pulve.id) -%>
 	<tr>
 		<td><%=h pulve.date %></td>
 		<td><%=h pulve.name %></td>

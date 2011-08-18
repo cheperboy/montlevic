@@ -22,7 +22,7 @@
 			<td></td>
 			<td></td>
 			<td><%= zone.name %></td>
-			<td class=right><%= zone.surface.to_s(2) %></td>
+			<td class=right><%= zone.surface.display(2) %></td>
 			<%= percent_of_zone(parcelle, zone.id) %>
 		</tr>
 		<% end %>

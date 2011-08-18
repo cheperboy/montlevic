@@ -181,7 +181,7 @@ class Facture < Charge
   def sum_putoproduits
     sum = 0
     self.produits.each do |produit|
-      produit.pulves.each {|pulve| sum += produit.get_prix_unit * pulve.sum_surfaces }
+      produit.pulves.each {|pulve| sum += produit.get_prix_unitaire * pulve.sum_surfaces }
     end
     return sum
   end

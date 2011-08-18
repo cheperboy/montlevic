@@ -2,6 +2,7 @@ class ParcellesController < ApplicationController
 
   def index
     @parcelles = Parcelle.find_by_saison(:all)
+    @saison = Setting.find(:first).saison
 
     respond_to do |format|
       format.html # index.html.erb
@@ -20,6 +21,7 @@ class ParcellesController < ApplicationController
   end
 
   def new
+    @saison = Setting.find(:first).saison
     @parcelles = Parcelle.find_by_saison(:all)
     @parcelle = Parcelle.new
     @parcelle.zonetopas.build
@@ -31,6 +33,7 @@ class ParcellesController < ApplicationController
   end
 
   def edit
+    @saison = Setting.find(:first).saison
     @parcelles = Parcelle.find_by_saison(:all)
     @parcelle = Parcelle.find(params[:id])
   end

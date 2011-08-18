@@ -1,38 +1,38 @@
 <% labour_total = 0 %>
 <% labour_total_ha = 0 %>
 
-<% title "Parcelle" %>
+<% title "Parcelle  “#{@parcelle.name}” - #{@parcelle.surface.display} Ha" %>
 
-<table>
-	<%= tr_text('Nom', @parcelle.name) %>
-	<%= tr_text('Surface', @parcelle.surface) %>
-</table>
+<!-- <table>
+	<%#= tr_text('Nom', @parcelle.name) %>
+	<%#= tr_text('Surface', @parcelle.surface) %>
+</table> -->
 
 <% if @parcelle.labours.count == 0 %>
 	<p>Pas de labours</p>
 <% else %>
 	<h3>Labours</h3>
-	<table>
-	  <tr>
-	    <td>Categorie | </td>
-	    <td>Prestataire | </td>
-	    <td>Nom | </td>
-	    <td>Date | </td>
-	    <td>Cout Ha | </td>
-	    <td>Cout total | </td>
-		<td> | </td>
+	<table class=table_data>
+	  <tr class=bold>
+	    <th>Categorie</th>
+	    <th>Prestataire</th>
+	    <th>Nom</th>
+	    <td>Date</td>
+	    <td>Cout Ha</td>
+	    <td>Cout total</td>
+		<td></td>
 	  </tr>
 		<% @parcelle.labours.each do |labour| %>
 		  <tr>
-		    <td><%= labour.category.name %> | </td>
-		    <td><%= labour.user.name %> | </td>
-		    <td><%= labour.name %> | </td>
-		    <td><%= labour.date %> | </td>
-		    <td><%= labour.get_cout_ha %> € | </td>
-		    <td><%= labour.get_cout_total_col(@parcelle) %> € | </td>
-			<td><%= link_to image_tag('img-voir.png'), labour_url(:id => labour) %> | </td>
+		    <td><%= labour.category.name %></td>
+		    <td><%= labour.user.name %></td>
+		    <td><%= labour.name %></td>
+		    <td><%= labour.print_date %></td>
+		    <td><%= labour.get_cout_ha %> <%= euro %></td>
+		    <td><%= labour.get_cout_total_col(@parcelle) %> <%= euro %></td>
+			<td><%= link_to image_tag('img-voir.png'), labour_url(:id => labour) %></td>
 		  </tr>		  
-			<% labour_total_ha += labour.get_cout_ha %>
+			<% labour_total_ha += labour.get_cout_ha %> 
 			<% labour_total += labour.get_cout_total_col(@parcelle) %>
 		<% end %>
 	  <tr>
@@ -40,37 +40,67 @@
 	    <td> </td>
 	    <td> </td>
 	    <td> </td>
-	    <td><%= labour_total_ha.to_s %></td>
-	    <td><%= labour_total.to_s %></td>
-		<td> | </td>
+	    <td><%= labour_total_ha.to_s %> <%= euro %></td>
+	    <td><%= labour_total.to_s %> <%= euro %></td>
+		<td></td>
 	  </tr>
 	</table>
 <% end %>
 
-<% if @parcelle.pulves.count == 0 %>
-	<p>Pas de pulve</p>
+
+
+<% if @parcelle.putoparcelles.count == 0 %>
+	<p>Pas de traitements</p>
 <% else %>
-	<h3>Pulves</h3>
-	<table>
-	  <tr>
-	    <td>Categorie | </td>
-	    <td>Prestataire | </td>
-	    <td>Nom | </td>
-	    <td>Date | </td>
-	    <td>Cout Ha | </td>
-	    <td>Cout total | </td>
-		<td> | </td>
+	<h3>Traitements</h3>
+	<table class=table_data>
+	  <tr class=bold>
+	    <td>Nom</td>
+	    <td>Prestataire</td>
+	    <td>Categorie</td>
+	    <td>produit</td>
+	    <td class=value>Dosage</td>
+	    <td class=unit></td>
+	    <td>Date</td>
+	    <td>Cout Ha</td>
+	    <td>Cout total</td>
+		<td></td>
 	  </tr>
-		<% @parcelle.pulves.each do |pulve| %>
-		  <tr>
-		    <td><%= pulve.category.name %> | </td>
-		    <td><%= pulve.user.name %> | </td>
-		    <td><%= pulve.name %> | </td>
-		    <td><%= pulve.date %> | </td>
-		    <td><%= pulve.get_cout_ha_col(@parcelle) %> € | </td>
-		    <td><%= pulve.get_cout_total_col(@parcelle) %> € | </td>
-			<td><%= link_to image_tag('img-voir.png'), pulve_url(:id => pulve) %> | </td>
-		  </tr>
+	
+		<% @parcelle.putoparcelles.each do |putoparcelle| %>
+			<% count = 0 %>
+			<% putoparcelle.pulve.putoproduits.each do |putoproduit| %>
+				<% count += 1 %>
+				<% logger.error "count=	#{count.to_s}" %>
+				
+				<% if count == 1 %>
+				  <tr>
+				    <td><%= putoparcelle.pulve.name %></td>
+				    <td><%= putoparcelle.pulve.user.name %></td>
+				    <td><%= putoproduit.category.name %></td>
+				    <td><%= putoproduit.produit.name %></td>
+				    <td class=value><%= putoproduit.dosage.display %></td> 
+					<td class=unit><%= putoproduit.produit.get_dosage_unit %></td>
+				    <td><%= putoparcelle.pulve.print_date %></td>
+				    <td><%= putoparcelle.pulve.get_cout_ha_col(@parcelle) %> <%= euro %></td>
+				    <td><%= putoparcelle.pulve.get_cout_total_col(@parcelle) %> <%= euro %></td>
+					<td><%= link_to image_tag('img-voir.png'), pulve_url(:id => putoparcelle.pulve) %></td>
+				  </tr>
+				<% else %>
+				  <tr>
+					<td> - </td>
+				    <td> - </td>
+				    <td> - </td>
+				    <td><%= putoproduit.produit.name %></td>
+				    <td class=value><%= putoproduit.dosage.display %></td> 
+					<td class=unit><%= putoproduit.produit.get_dosage_unit %></td>
+				    <td> - </td>
+				    <td><%= putoparcelle.pulve.get_cout_ha_col(@parcelle) %> €</td>
+				    <td><%= putoparcelle.pulve.get_cout_total_col(@parcelle) %> €</td>
+					<td><%= link_to image_tag('img-voir.png'), pulve_url(:id => putoparcelle.pulve) %></td>
+				  </tr>
+				<% end %>
+			<% end %>
 		<% end %>
 	</table>
 <% end %>

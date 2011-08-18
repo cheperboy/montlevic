@@ -11,7 +11,7 @@ class Putoproduit < Charge
 
   # correspond au cout_ha_produit d'un pulve!
   def get_cout_ha
-    self.dosage * self.produit.get_prix_unit
+    self.dosage * self.produit.get_prix_unitaire
   end
   
   def category

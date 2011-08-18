@@ -223,7 +223,7 @@ module PrintHelper
       for putoproduit in pulve.putoproduits
         out += '<li>'+  putoproduit.produit.name + ' (' + 
         putoproduit.dosage.display + ' L/Ha' + 
-        putoproduit.produit.get_prix_unit.display + ' €/L)</li>'
+        putoproduit.produit.get_prix_unitaire.display + ' €/L)</li>'
       end
       out += '</ul>'
     else
@@ -277,7 +277,7 @@ module PrintHelper
     ' + tr_text("Cout Ha", data[:cout_ha], '€/Ha') + '
     ' + tr_text("Cout Total", data[:cout_total], '€') +'
     ' + tr_text("Dosage", putoproduit.dosage, 'L/Ha') +'
-    ' + tr_text("Pix littre", putoproduit.produit.get_prix_unit, '€/L') +'
+    ' + tr_text("Pix littre", putoproduit.produit.get_prix_unitaire, '€/L') +'
     </table> '
 
     #nombre et enumeration des parcelles du labour

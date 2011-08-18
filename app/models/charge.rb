@@ -35,7 +35,15 @@ class Charge < ActiveRecord::Base
   
   def print_date
     unless self.date.nil? || self.date.blank?
-      out = "#{self.date.day}/#{self.date.month}/#{self.date.year}"
+      day = self.date.day
+      if day.to_s.length.eql?(1)
+        day = "0" + day.to_s
+      end
+      month = self.date.month
+      if month.to_s.length.eql?(1)
+        month = "0" + month.to_s
+      end
+      out = "#{day.to_s}/#{month}/#{self.date.year}"
       return out
     end
   end

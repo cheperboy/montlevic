@@ -1,7 +1,7 @@
 class Application < ActiveRecord::Base
 
-  PULVE_DOSAGE_UNITS = [['L/Ha', 'L/Ha'], ['Kg/Ha', 'Kg/Ha']]
-  PRODUIT_QUANTITE_UNITS = [['L', 'L'], ['Kg', 'Kg']]
+  PULVE_DOSAGE_UNITS = [['L/Ha', 'L/Ha'], ['kg/Ha', 'kg/Ha']]
+  PRODUIT_QUANTITE_UNITS = [['L', 'L'], ['kg', 'kg']]
 
   SAISON = Setting.find(1).saison_id
   
@@ -33,14 +33,15 @@ class Application < ActiveRecord::Base
    	['print_date', 'date', '', false]]
 
    PRODUIT_HEAD = [
-    # ['star', 'star', '', true, :check_box], 
-    # ['adu', 'adu', '', true, :check_box], 
+    ['star', 'star', '', true, :check_box], 
+    ['adu', 'adu', '', true, :check_box], 
    	['id', 'id', '', false], 
    	['category_name', 'categorie', '', false, :text_field], 
    	['name', 'nom', '', true, :text_field], 
    	['get_quantite', 'Quantite', '', false], 
-   	['unit', 'Unite', '', false],
-    ['get_prix_unit', 'Prix', :unit_price_by_quantity, false]    
+   	['unit', '', '', false],
+    ['get_prix_unitaire', 'Prix', '', false], 
+    ['get_prix_unitaire_unit', '', '', false]
    	]
 
   FACTURE_HEAD = [

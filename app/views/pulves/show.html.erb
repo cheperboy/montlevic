@@ -73,11 +73,11 @@
 		<tr>
 			<td class=left><%=h putoproduit.produit.category.name %></td>
 			<td class=left><%=h putoproduit.produit.name %></td>
-			<td><%=h (putoproduit.produit.get_prix_unit).display %> €/<%= putoproduit.produit.unit.to_s %></td>
+			<td><%=h (putoproduit.produit.get_prix_unitaire).display %> €/<%= putoproduit.produit.unit.to_s %></td>
 			<td><%=h (putoproduit.dosage).display %> <%= putoproduit.produit.unit.to_s %>/Ha</td>
 			<td><%=h (@pulve.sum_surfaces * putoproduit.dosage).display %> <%= putoproduit.produit.unit.to_s %></td>
-			<td><%=h (putoproduit.dosage * putoproduit.produit.get_prix_unit).display %> €</td>
-			<td><%=h (@pulve.sum_surfaces * putoproduit.dosage * putoproduit.produit.get_prix_unit).display %> €</td>
+			<td><%=h (putoproduit.dosage * putoproduit.produit.get_prix_unitaire).display %> €</td>
+			<td><%=h (@pulve.sum_surfaces * putoproduit.dosage * putoproduit.produit.get_prix_unitaire).display %> €</td>
 			<td><%= link_to image_tag('img-voir.png'), :controller => "produits", :action => "show", :id => putoproduit.produit %></td>
 		</tr>
 	<%- end -%>

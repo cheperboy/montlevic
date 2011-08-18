@@ -11,8 +11,14 @@
   </tr>
 
 <% sum_surfaces = 0 %>
+<% surfaces = {} %>
+<% @saison.typecultures.each do |typeculture| %>
+	<% surfaces[typeculture.name.to_sym] = 0 %>
+<% end %>
+
 <% @parcelles.each do |parcelle| %>
 	<% sum_surfaces += parcelle.surface %>
+	<% surfaces[parcelle.typeculture.name.to_sym] += parcelle.surface %>
   <tr>
     <td><%= parcelle.name %></td>
     <td class=right><%= parcelle.surface.display(2) %></td>
@@ -26,8 +32,51 @@
   
   </tr>
 <% end %>
+
+<!-- TR vide -->
+<tr>
+	  <td></td>
+	  <td class=right></td>
+	  <td></td>
+
+		<% if admin? %>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		<% end %>
+</tr>
+
+<!-- TR's SAU par types de cultures -->
+<% @saison.typecultures.each do |typeculture| %>
+	<tr class=bold>
+	  <td>SAU <%= typeculture.name %></td>
+	  <td class=right><%= surfaces[typeculture.name.to_sym].display %></td>
+	  <td></td>
+
+		<% if admin? %>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		<% end %>
+	</tr>
+<% end %>
+
+<!-- TR vide -->
+<tr>
+	  <td></td>
+	  <td class=right></td>
+	  <td></td>
+
+		<% if admin? %>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		<% end %>
+</tr>
+
+<!-- TR TOTAL SAU -->
 <tr class=bold>
-  <td>Total</td>
+  <td>Total SAU</td>
   <td class=right><%= sum_surfaces %></td>
   <td></td>
 	
@@ -36,6 +85,5 @@
 	    <td></td>
 	    <td></td>
 	<% end %>
-
 </tr>
 </table>
