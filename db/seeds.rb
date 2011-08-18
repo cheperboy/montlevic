@@ -558,6 +558,7 @@ end
  putoproduit = Putoproduit.create!( :pulve => pulve, :produit => anistar, :saison => saison_2009_2010, :dosage => 0.75)
  pulves << pulve
 
+if nil
  # pulves = Pulve.create!([
  #   {:name => 'Glyphosate', :category => Category.find_by_name('desherbant'), :dosage => 3, :unit => 'L/Ha', :date => '2009-08-13', :prix_littre => 0, 
  #   :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha, + 0,5 L huile'},
@@ -595,7 +596,7 @@ end
  #   {:name => 'amistar', :category => Category.find_by_name('fongicide'), :dosage => 0.75, :unit => 'L/Ha', :date => '2010-05-07', :prix_littre => 0, 
  #   :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'L/Ha'}
  #    ])
-
+end
 
  parcelle_1 = saison_2009_2010.parcelles.find_by_name('Feuillets 1')
  parcelle_2 = saison_2009_2010.parcelles.find_by_name('Feuillets 3')
@@ -634,6 +635,48 @@ end
  putoproduit = Putoproduit.create!( :pulve => pulve, :produit => harmony, :saison => saison_2009_2010, :dosage => 25)
  pulves << pulve
 
+ pulve = Pulve.create!( 
+ :name => 'Super 45', :cout_ha_passage => 0, :user => trochet, :saison => saison_2009_2010, :date => '2010-02-04', :desc => "")
+ putoproduit = Putoproduit.create!( :pulve => pulve, :produit => super45, :saison => saison_2009_2010, :dosage => 157)
+ pulves << pulve
+
+ pulve = Pulve.create!( 
+ :name => 'Azote 1', :cout_ha_passage => 0, :user => trochet, :saison => saison_2009_2010, :date => '2010-02-11', :desc => "190 Kg, 64u")
+ putoproduit = Putoproduit.create!( :pulve => pulve, :produit => azote, :saison => saison_2009_2010, :dosage => 195)
+ pulves << pulve
+
+ pulve = Pulve.create!( 
+ :name => 'Azote 2', :cout_ha_passage => 0, :user => trochet, :saison => saison_2009_2010, :date => '2010-03-09', :desc => "183 Kg, 61u")
+ putoproduit = Putoproduit.create!( :pulve => pulve, :produit => azote, :saison => saison_2009_2010, :dosage => 183)
+ pulves << pulve
+
+ pulve = Pulve.create!( 
+ :name => 'Celio', :cout_ha_passage => 0, :user => trochet, :saison => saison_2009_2010, :date => '2010-03-23', :desc => "0.5L + Huile 0.1L. sur 6.72 ha cote luzerne")
+ putoproduit = Putoproduit.create!( :pulve => pulve, :produit => celio, :saison => saison_2009_2010, :dosage => 0.5)
+ pulves << pulve
+
+ pulve = Pulve.create!( 
+ :name => 'Procharge', :cout_ha_passage => 0, :user => trochet, :saison => saison_2009_2010, :date => '2010-04-06', :desc => "")
+ putoproduit = Putoproduit.create!( :pulve => pulve, :produit => procharge, :saison => saison_2009_2010, :dosage => 1)
+ pulves << pulve
+
+ pulve = Pulve.create!( 
+ :name => 'suplason', :cout_ha_passage => 0, :user => trochet, :saison => saison_2009_2010, :date => '2010-04-18', :desc => "TODO: ajuster les dosage a la surface. 16 ha derriere maison")
+ putoproduit = Putoproduit.create!( :pulve => pulve, :produit => suplason, :saison => saison_2009_2010, :dosage => 1)
+ putoproduit = Putoproduit.create!( :pulve => pulve, :produit => storane, :saison => saison_2009_2010, :dosage => 0.9)
+ pulves << pulve
+
+ pulve = Pulve.create!( 
+ :name => 'Azote 3', :cout_ha_passage => 0, :user => trochet, :saison => saison_2009_2010, :date => '2010-05-17', :desc => "120Kg, 40u")
+ putoproduit = Putoproduit.create!( :pulve => pulve, :produit => azote, :saison => saison_2009_2010, :dosage => 120)
+ pulves << pulve
+
+ pulve = Pulve.create!( 
+ :name => 'comet Player', :cout_ha_passage => 0, :user => trochet, :saison => saison_2009_2010, :date => '2010-05-28', :desc => "1 pack = 6 Ha")
+ putoproduit = Putoproduit.create!( :pulve => pulve, :produit => comet_player, :saison => saison_2009_2010, :dosage => 120)
+ pulves << pulve
+
+
 if nil
  # pulves = Pulve.create!([
  #   {:name => 'semis', :category => Category.find_by_name('semis'), :dosage => 170, :unit => 'L/Ha', :date => '2009-10-19', :prix_littre => 0, 
@@ -645,7 +688,6 @@ if nil
  #   {:name => 'Harmony', :category => Category.find_by_name('desherbant'), :dosage => 25, :unit => 'L/Ha', :date => '2009-11-19', :prix_littre => 0, 
  #   :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'g, + Picosolo, 80g/Ha. sur Colza'},
  # 
-end
  #   {:name => 'super 45', :category => Category.find_by_name('engrais'), :dosage => 157, :unit => 'L/Ha', :date => '2010-02-04', :prix_littre => 0, 
  #   :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => 'Kg'},
  # 
@@ -671,6 +713,7 @@ end
  #   :cout_ha_passage => 0, :cout_fixe => 0, :user => User.find_by_name('Trochet'), :saison => saison_2009_2010, :desc => '1 pack = 6 Ha'}
  # 
  #    ])
+end
 
  parcelle_1 = saison_2009_2010.parcelles.find_by_name('Derierre maison')
  parcelle_2 = saison_2009_2010.parcelles.find_by_name('Champ du Milieu')
