@@ -1,0 +1,68 @@
+/* Begin : affichage popup tableau Calculate */
+.popup legend { background-color: white;}
+fieldset.popup  { background-color: white;}
+
+.table_popup td, th { 
+ border-width: 0px;
+ border-style: none; 
+ border-color: white;
+} 
+
+td.td-right { text-align: right; }
+td.td-left { text-align: left; }
+
+a.tip { 
+	position: relative; 
+	color: black;
+	text-decoration:none;
+}
+
+a.tip span {
+	display: none;
+	position: absolute;
+	text-align: left;
+	top: 20px;
+	left: -10px;
+	min-width: 270px;
+	width: auto;
+	padding: 2px;
+	z-index: 100;
+	background: orange;
+	color: black;
+	border: 1px solid black;
+	-moz-border-radius: 5px; /* this works only in camino/firefox */
+	-webkit-border-radius: 5px; /* this is just for Safari */
+}
+
+a:hover.tip span { display: block; }
+a:hover.tip {font-size: 99%; /*for IE bug*/ }
+
+/* End : affichage info-bulle */
+
+/* Begin : affichage popup list-table */
+
+a.popup_desc { 
+	position: relative; 
+	color: black;
+	text-decoration:none;
+}
+
+a.popup_desc span {
+	display: none;
+	position: absolute;
+	text-align: left;
+	top: 25px;
+	left: -285px;
+	min-width: 270px;
+	width: auto;
+	padding: 2px;
+	z-index: 100;
+	background: #eecfa1;
+	color: black;
+	border: 1px solid black;
+	-moz-border-radius: 5px; /* this works only in camino/firefox */
+	-webkit-border-radius: 5px; /* this is just for Safari */
+}
+
+a:hover.popup_desc span { display: block; }
+a:hover.popup_desc {font-size: 99%; /*for IE bug*/ }
