@@ -14,6 +14,9 @@ module ApplicationHelper
     end 
   end
   
+  def ha
+    return 'ha'
+  end 
   def euros
     return '€'
   end 

@@ -353,7 +353,7 @@ if SAISON_2009_2010
   :name => 'Azote', :unit => 'L', :saison => saison_2009, :desc => "", :category => Category.find_by_name('azote'))
 
   azomag = Produit.create!(
-  :name => 'Azomag20', :unit => 'L', :saison => saison_2009, :desc => "", :category => Category.find_by_name('soufre'))
+  :name => 'Azomag20', :unit => 'kg', :saison => saison_2009, :desc => "", :category => Category.find_by_name('soufre'))
   #FIXME Azomag et souffre. est-ce le meme produit?
 
   azomag20 = Produit.create!(

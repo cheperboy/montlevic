@@ -197,6 +197,30 @@ module PrintHelper
     </a>'
     return out
   end
+
+  def link_popup_pulve_desc(name, pulve)
+    out = '
+    <a href="'+ pulve_path(pulve) +'" class="popup_desc"><img src="/images/img-voir.png" border="0"><span>
+    '+ pulve.desc + '
+    </span>
+    </a> '
+    return out
+  end
+  
+  def link_popup_pulve_desc_bis(name, pulve)
+    out = '
+    <a href="'+ pulve_path(pulve) +'"><img src="img-voir.png" border="0" class="popup_desc"><span>
+    '+ pulve.desc + '
+    </span>
+    </a> 
+
+    <a href=" '+ pulve_path(pulve) +'" class="popup_desc">'+ name + '
+    <span>
+    '+ pulve.desc + '
+    </span>
+    </a>'
+    return out
+  end
   
   def link_popup_pulve(data)
     pulve = Pulve.find(data[:id])

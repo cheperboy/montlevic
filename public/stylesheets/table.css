@@ -1,16 +1,18 @@
 /* Begin : Table Datas : Category, Zone, Parcelle, User, ... */
 
+
 .table_data { border-collapse:collapse }
 .table_data { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
-
-.table_data td, th, tr { 
-	padding-right: 12px;
-	text-align: right;
-	border-style:solid; 
-	border-width:1px;
-	border-color:grey;
-	padding-left: 10px;
+.table_data th{ 
+	border:1px solid grey; 
+	background-color: #ddd;
  }
+.table_data td, th, tr { 
+	text-align: left;
+	border: 1px solid grey; 
+	padding-left: 10px;
+	padding-right: 12px;	
+}
 
 .table_data th.left{ text-align: left; }
 .table_data th.right{ text-align: right; }
@@ -19,17 +21,19 @@
 .table_data td.center{ text-align: center; }
 .table_data tr.bold{ font-weight: bold; }
 .table_data td.bold{ font-weight: bold; }
-.table_data tr:hover { background-color: #eee;}
+.table_data tr:hover { background-color: #eecfa1; color: #000}
 
-.table_data td.value {
+.table_data th.value, td.value {
 	border-right-color :transparent;
 	text-align: right;
 	padding-right: 6px;
 }
-.table_data td.unit { 
+.table_data th.unit, td.unit { 
 text-align: left;
 padding-left: 0px;
 }
+
+
 
 /* End : Table Datas */
 
@@ -95,45 +99,3 @@ padding-left: 0px;
 .table_verif td.orange { background-color: orange; }
 
 /* End : Verif */
-
-/* Begin : affichage info-bulle */
-.popup legend { background-color: white;}
-fieldset.popup  { background-color: white;}
-
-.table_popup td, th { 
- border-width: 0px;
- border-style: none; 
- border-color: white;
-} 
-
-td.td-right { text-align: right; }
-td.td-left { text-align: left; }
-
-a.tip { 
-	position: relative; 
-	color: black;
-	text-decoration:none;
-}
-
-a.tip span {
-	display: none;
-	position: absolute;
-	text-align: left;
-	top: 20px;
-	left: -10px;
-	min-width: 270px;
-	width: auto;
-	padding: 2px;
-	z-index: 100;
-	background: orange;
-	color: black;
-	border: 1px solid black;
-	-moz-border-radius: 5px; /* this works only in camino/firefox */
-	-webkit-border-radius: 5px; /* this is just for Safari */
-}
-
-a:hover.tip span { display: block; }
-a:hover.tip {font-size: 99%; /*for IE bug*/ }
-
-/* End : affichage info-bulle */
-
