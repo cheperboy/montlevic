@@ -6,6 +6,11 @@ module ApplicationHelper
   HEADER_FILTER = 3
   HEADER_TYPE = 4
 
+# WORKING
+  # def test_somme_produits(@saison) 
+  # end
+  
+  
   def toggle_div(div) 
     logger.error 'toggle_div id : ' + div.to_s + ' page[div] : ' + page[div]
     update_page do |page|
@@ -22,6 +27,9 @@ module ApplicationHelper
   end 
   def euro
     return '€'
+  end
+  def euro_ha
+    return "€/#{ha}"
   end
 
   def draw_table_with_find(headers, elements, controller, action, search)

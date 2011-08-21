@@ -335,16 +335,6 @@ if SAISON_2009_2010
   zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 
-  factureA = Debit.create!(:name => 'Achat Phyto', 
-                          :cout => 1305, 
-                          :user => User.find(:first),
-                          :factype => Factype.find_by_name("diff"),
-                          :factcat => Factcat.find_by_name("agri"),
-                          :saison => saison_2009,
-                          :date => '2011-01-01',
-                          :desc => "FAKE TO AVOID NIL",
-                          :category => Category.find_by_name('deplacement'))
-
   # ----- Produits -----
   anistar = Produit.create!(
   :name => 'Anistar', :unit => 'L', :saison => saison_2009, :desc => "", :category => Category.find_by_name('fongicide'))
@@ -1167,23 +1157,47 @@ id = 1
 Saison.find(:all).each { |s| id = s.id} 
 Setting.find(:first).update_attribute(:saison_id,	id)
 
-# Pulves qui doivent etre rassembles
+# Pulves qui doivent etre rassembles :adu => 1
+# saison_2009.pulves.each do |pulve|
+#   saison_2009.pulves.each do |search_pulve|
+#     if ((pulve.putoproduits.find(:first).produit.id == search_pulve.putoproduits.find(:first).produit.id) &&
+#       (pulve.putoproduits.find(:first).dosage == search_pulve.putoproduits.find(:first).dosage) &&
+#       (pulve.id != search_pulve.id) &&
+#       (pulve.date == search_pulve.date))
+#       
+#       puts "MATCH"  
+#       puts "pulve   id name : " + pulve.id.to_s + " " + pulve.name  
+#       puts "search  id name : " + search_pulve.id.to_s + " " + search_pulve.name  
+#       pulve.update_attribute(:adu, 1)
+#     end
+#   end
+# end
+
+# set cout_ha_passage to 10 for each pulves
 saison_2009.pulves.each do |pulve|
-  saison_2009.pulves.each do |search_pulve|
-    if ((pulve.putoproduits.find(:first).produit.id == search_pulve.putoproduits.find(:first).produit.id) &&
-      (pulve.putoproduits.find(:first).dosage == search_pulve.putoproduits.find(:first).dosage) &&
-      (pulve.id != search_pulve.id) &&
-      (pulve.date == search_pulve.date))
-      
-      puts "MATCH"  
-      puts "pulve   id name : " + pulve.id.to_s + " " + pulve.name  
-      puts "search  id name : " + search_pulve.id.to_s + " " + search_pulve.name  
-      pulve.update_attribute(:adu, 1)
-    end
-  end
+  pulve.update_attribute(:cout_ha_passage, 10)
 end
 
+# Ajout d'un facture pour eviter bug nil
+facture = Debit.create!(:name => 'Achat Phyto', 
+                        :cout => 10000, 
+                        :user => User.find(:first),
+                        :factype => Factype.find_by_name("diff"),
+                        :factcat => Factcat.find_by_name("agri"),
+                        :saison => saison_2009,
+                        :date => '2011-01-01',
+                        :desc => "FAKE TO AVOID NIL",
+                        :category => Category.find_by_name('produits phyto'))
 
+
+# ajout d'un protofacture pour chaque produit pour simuler les couts
+saison_2009.produits.each do |produit|
+  protofacture = Protofacture.create!( 
+    :produit => produit,
+    :facture => facture,
+    :quantite => 500,
+    :prix => 1000)
+end
 
 
 

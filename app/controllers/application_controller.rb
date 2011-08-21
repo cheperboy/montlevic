@@ -41,4 +41,21 @@ class ApplicationController < ActionController::Base
     @current_saison_id ||= Setting.find(:first).saison_id
   end
 
+  def hide_menu 
+    # <% form_remote_tag :url => {:action => 'hide_menu'} do %> 
+    #   <%= text_field 'todo', 'name' %> 
+    #   <%= submit_tag 'TEST!!!' %>
+    # <% end %>
+    
+      render :update do |page| 
+        # page.insert_html  :bottom,  'todo_list' , "<li>#{todo.name}</li>" 
+        # page.replace_html 'bloc_left' ,  "bloc_left_hidden"
+        # page.visual_effect :highlight, 'bloc_left'
+        page.visual_effect  :toggle_blind, 'bloc_left'
+        # page.remove 'bloc_left'
+        # page.hide 'bloc_left'
+      # end 
+    end
+  end
+
 end

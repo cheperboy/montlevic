@@ -359,7 +359,7 @@ class Print < ActiveRecord::Base
       end
  
       @Tpulves[pulve.id][:parcelles_size] = @Tpulves[pulve.id][:parcelles].length      
-      @Tpulves[pulve.id][:ha_produit] = pulve.get_cout_ha_produit
+      @Tpulves[pulve.id][:ha_produit] = pulve.get_cout_ha_produits
       @Tpulves[pulve.id][:ha_passage] = pulve.cout_ha_passage
       @Tpulves[pulve.id][:ha] = pulve.get_cout_ha
       @Tpulves[pulve.id][:total] = pulve.get_cout_total

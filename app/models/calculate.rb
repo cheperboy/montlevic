@@ -155,12 +155,14 @@ class Calculate < ActiveRecord::Base
     end
   end
 
+# Le suffixe "_passage" est accolle a chaque methode car on veut les cout lies a la prestation uniquement
+# pas les couts lies au(x) produit(s). methodes_passage ajoutees dans Pulve.rb
   def run_pulves
     for pulve in @pulves
       for col in @cols
         #valeur ha et total pour chaque col affecté a la pulve
-        @res.set_line(@sid, @c, col.id, :pulves, :all, pulve.id, :ha, pulve.get_cout_ha_col(col))
-        @res.set_line(@sid, @c, col.id, :pulves, :all, pulve.id, :total, pulve.get_cout_total_col(col))
+        @res.set_line(@sid, @c, col.id, :pulves, :all, pulve.id, :ha, pulve.get_cout_ha_passage_col(col))
+        @res.set_line(@sid, @c, col.id, :pulves, :all, pulve.id, :total, pulve.get_cout_total_passage_col(col))
       end
 
       # champs :datas du pulve
@@ -177,8 +179,8 @@ class Calculate < ActiveRecord::Base
       @res.set_saison_line_datas(@sid, :pulves, pulve.id, datas)
 
       # total du pulve
-      @res.set_saison_line(@sid, :pulves, :all, pulve.id, :ha, pulve.get_cout_ha_for_saison(@surface_of_saison))
-      @res.set_saison_line(@sid, :pulves, :all, pulve.id, :total, pulve.get_cout_total)
+      @res.set_saison_line(@sid, :pulves, :all, pulve.id, :ha, pulve.get_cout_ha_passage_for_saison(@surface_of_saison))
+      @res.set_saison_line(@sid, :pulves, :all, pulve.id, :total, pulve.get_cout_total_passage)
     
       if nil
       # TODO 1 revoir le mode de calcul du cout_ha dans pulve.rb
@@ -186,13 +188,13 @@ class Calculate < ActiveRecord::Base
       # pulve.get_cout_ha_for_saison(@surface_of_saison) = 
       # = get_cout_total / surface_of_saison
       # = (self.sum_surfaces * self.get_cout_ha) / surface_of_saison
-      # = (self.sum_surfaces * (self.cout_ha_passage + self.get_cout_ha_produit + (self.cout_fixe / self.sum_surfaces))) / surface_of_saison
-      # = (self.cout_ha_passage + self.get_cout_ha_produit + (self.cout_fixe / self.sum_surfaces))
+      # = (self.sum_surfaces * (self.cout_ha_passage + self.get_cout_ha_produits + (self.cout_fixe / self.sum_surfaces))) / surface_of_saison
+      # = (self.cout_ha_passage + self.get_cout_ha_produits + (self.cout_fixe / self.sum_surfaces))
       end
       #total des pulves
       # FIXME Remplacer pulve.get_cout_ha_for_saison(@surface_of_saison) PAR PUTOPRODUIT...
-      @res.add_other_line_for_saison(@sid, :resultats, :total_pulves, :ha, pulve.get_cout_ha_for_saison(@surface_of_saison))      
-      @res.add_other_line_for_saison(@sid, :resultats, :total_pulves, :total, pulve.get_cout_total)
+      @res.add_other_line_for_saison(@sid, :resultats, :total_pulves, :ha, pulve.get_cout_ha_passage_for_saison(@surface_of_saison))      
+      @res.add_other_line_for_saison(@sid, :resultats, :total_pulves, :total, pulve.get_cout_total_passage)
     
       #totaux par categorie de pulves
       for cat in Category.pulves

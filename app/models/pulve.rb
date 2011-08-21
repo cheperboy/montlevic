@@ -38,7 +38,7 @@ class Pulve < Charge
   def self.find_with_saison(*args) 
     with_scope(:find => {:conditions => ["saison_id = ?", Setting.find(:first).saison_id]}) do 
       find(*args)
-    end 
+    end
   end
 
   def self.with_star
@@ -48,7 +48,7 @@ class Pulve < Charge
   end
 
   # ----- Methodes de calcul -----
-  def get_cout_ha_produits
+  def get_cout_ha_produits # produits seulement
     val = 0
     if produit_assoc?
       self.putoproduits.each do |putoproduit|
@@ -58,41 +58,117 @@ class Pulve < Charge
     return val
   end
 
-  def get_cout_ha_produit
-    val = 0
-    if produit_assoc?
-      self.putoproduits.each do |putoproduit|
-        val += putoproduit.dosage * putoproduit.produit.get_prix_unitaire
-      end
-    end
-    return val
-  end
-
-  def get_cout_ha_passage
-    self.cout_ha_passage
-  end
-
-  def get_cout_ha
-    return (self.cout_ha_passage)
-  end
-  
-  # retourne le cout total de cette charge
-  def get_cout_total
-    return (self.get_cout_ha * self.sum_surfaces)
-  end
-
-  def get_cout_total_produits
+  def get_cout_total_produits # produits seulement
     return (self.get_cout_ha_produits * self.sum_surfaces)
   end
 
-  def get_cout_total_passage
+  def get_cout_ha_passage # prestation seulement
+    self.cout_ha_passage
+  end
+
+  def get_cout_total_passage # prestation seulement
     return (self.get_cout_ha_passage * self.sum_surfaces)
   end
+  
+  def get_cout_ha # prestation + produits
+    return (self.cout_ha_passage + self.get_cout_ha_produits)
+  end
+
+  def get_cout_total # prestation + produits
+    return (self.get_cout_ha * self.sum_surfaces)
+  end
+
+  # ----- couts prestation -----  
+  # couts relatifs a la prestation (= cout du passage sans les produits)
+  # dans ces methodes, "passage" signifie "prestation"
+  def get_cout_ha_passage_for_saison(surface_of_saison)
+    get_cout_total_passage / surface_of_saison
+  end
+  
+  def get_cout_ha_passage_col(col)
+      return get_cout_ha_passage_parcelle(col) if col.class.equal?(Parcelle)
+      return get_cout_ha_passage_zone(col) if col.class.equal?(Zone)
+      return get_cout_ha_passage_typeculture(col) if col.class.equal?(Typeculture)
+  end
+
+  def get_cout_ha_passage_parcelle(parcelle)
+    cout_ha_parcelle = 0
+    if (all_parcelles? || self.parcelles.include?(parcelle))
+      cout_ha_parcelle = self.get_cout_ha_passage
+    end
+    return cout_ha_parcelle
+  end
+
+  def get_cout_ha_passage_typeculture(typeculture)
+    cout_ha_typeculture = 0
+    if (all_parcelles? || self.include_typeculture?(typeculture))
+      cout_ha_typeculture = self.get_cout_ha_passage
+    end
+    return cout_ha_typeculture
+  end
+
+  def get_cout_ha_passage_zone(zone)
+    cout_ha_zone = 0
+    if (all_parcelles? || self.include_zone?(zone))
+      cout_ha_zone = self.get_cout_ha_passage
+    end
+    return cout_ha_zone
+  end
+    
+  def get_cout_total_passage_col(col)
+    return get_cout_total_passage_parcelle(col) if col.class.equal?(Parcelle)
+    return get_cout_total_passage_zone(col) if col.class.equal?(Zone)
+    return get_cout_total_passage_typeculture(col) if col.class.equal?(Typeculture)
+  end
+  
+  def get_cout_total_passage_parcelle(parcelle)
+    return(parcelle.surface * self.get_cout_ha_passage_parcelle(parcelle))
+  end
+
+  def get_cout_total_passage_zone(zone)
+    surfaces=0
+    
+    #cas ou il il n'y a aucune parcelle associee
+    if (self.parcelles.count == 0)
+      surfaces = zone.surface
+
+    #cas ou il y a 1 ou plusieurs parcelles associees
+    else
+      zone.parcelles.each do |parcelle|
+        if self.parcelles.include?(parcelle)
+          surfaces+=parcelle.surface
+        end
+      end
+    end
+    return(surfaces * self.get_cout_ha_passage_zone(zone))
+  end
+  
+  def get_cout_total_passage_typeculture(typeculture)
+    surfaces=0
+    #cas ou il il n'y a aucune parcelle associee
+    if (self.parcelles.count == 0)
+      surfaces = typeculture.surface
+
+    #cas ou il y a 1 ou plusieurs parcelles associees
+    else
+      typeculture.parcelles.each do |parcelle|
+        if self.parcelles.include?(parcelle)
+          surfaces+=parcelle.surface
+        end
+      end
+    end
+    return(surfaces * self.get_cout_ha_passage_typeculture(typeculture))
+  end
+
+  # ----- FIN couts prestation -----
+
+
+
 
   # # retourne le cout total du produit (dosage x prix du littre) 
   # # uniquement pour affichage
   # def get_cout_total_produit
-  #   return (self.get_cout_ha_produit * self.sum_surfaces)
+  #   return (self.get_cout_ha_produits * self.sum_surfaces)
   # end
   # 
   # # retourne le cout total de cette charge 
@@ -110,18 +186,6 @@ class Pulve < Charge
     !self.putoproduits.empty?
   end
   
-#  def get_cout_ha_parcelle_with_rate(parcelle)
-#    cout_ha_parcelle = 0
-#    if all_parcelles? 
-#      cout_ha_parcelle = self.get_cout_ha
-#    end
-#    if (self.parcelles.include?(parcelle))
-#    rate = Putoparcelle.find_by_parcelle(parcelle.id, self.id).rate
-#      cout_ha_parcelle = self.get_cout_ha * rate
-#    end
-#    return cout_ha_parcelle
-#  end
-
 # ----- Methodes d'affichage -----
 
   def categories
