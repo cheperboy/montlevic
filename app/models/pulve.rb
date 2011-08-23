@@ -49,13 +49,11 @@ class Pulve < Charge
 
   # ----- Methodes de calcul -----
   def get_cout_ha_produits # produits seulement
-    val = 0
+    cout_ha_produits = 0
     if produit_assoc?
-      self.putoproduits.each do |putoproduit|
-        val += putoproduit.dosage * putoproduit.produit.get_prix_unitaire
-      end
+      self.putoproduits.each {|putoproduit| cout_ha_produits += putoproduit.dosage * putoproduit.produit.get_prix_unitaire}
     end
-    return val
+    cout_ha_produits
   end
 
   def get_cout_total_produits # produits seulement
@@ -129,14 +127,14 @@ class Pulve < Charge
     surfaces=0
     
     #cas ou il il n'y a aucune parcelle associee
-    if (self.parcelles.count == 0)
+    if self.parcelles.count.eql?(0)
       surfaces = zone.surface
 
     #cas ou il y a 1 ou plusieurs parcelles associees
     else
       zone.parcelles.each do |parcelle|
         if self.parcelles.include?(parcelle)
-          surfaces+=parcelle.surface
+          surfaces += parcelle.surface
         end
       end
     end
@@ -146,7 +144,7 @@ class Pulve < Charge
   def get_cout_total_passage_typeculture(typeculture)
     surfaces=0
     #cas ou il il n'y a aucune parcelle associee
-    if (self.parcelles.count == 0)
+    if self.parcelles.count.eql?(0)
       surfaces = typeculture.surface
 
     #cas ou il y a 1 ou plusieurs parcelles associees

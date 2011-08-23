@@ -1,6 +1,8 @@
 	<tr>
 		<th><%= link_to_function "Factures", "$('list_factures').toggle();" %></th>
-		<% td_number_before_saison().times do %>
+		<td></td>
+		<% if @show[:date_surface] %> 
+			<td></td>
 			<td></td>
 		<% end %>
 		<td class="saison"></td>
@@ -18,8 +20,10 @@
 				<%= link_popup_facture(datas[:id]) %>
 				<% if datas[:charges_assoc] %> * <% end %>
 			</td>
-			<td class='date'><%= datas[:date].to_s :dmy %></td>	
-			<td class='left'><%= datas[:parcelles_length].to_s %> p</td>
+			<% if @show[:date_surface] %> 
+				<td class='date'><%= datas[:date].to_s :dmy %></td>	
+				<td class='left'><%= datas[:parcelles_length].to_s %> p</td>
+			<% end %>
 			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :factures, :all, facture.id, :ha).display %></td>
 			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :factures, :all, facture.id, :total).display %></td>
 	
@@ -41,8 +45,10 @@
 	<!--Sous Total Facture "factcat" (maison, invest, agri) -->
 		<tr>
 			<td>Total par Type</td>
-			<% td_number_before_saison().times do %>
-				<td></td>
+			<td></td>	
+			<% if @show[:date_surface] %> 
+				<td></td>	
+				<td></td>	
 			<% end %>
 			<td class="saison"></td>
 			<td class="saison"></td>
@@ -55,8 +61,10 @@
 			<tr class="subtotal">
 				<td class="left">Type</td>
 				<td class="left"><b><%= type.name %></b></td>
-				<td></td>
-				<td></td>
+				<% if @show[:date_surface] %> 
+					<td></td>	
+					<td></td>	
+				<% end %>
 				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :factures, :factcat, type.id, :ha).display %></td>
 				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :factures, :factcat, type.id, :total).display %></td>
 				<% rang = 0 %>
@@ -79,8 +87,10 @@
 	<% if @show[:total_cat] %>
 		<tr>
 			<td>Total par Categorie</td>
-			<% td_number_before_saison().times do %>
-				<td></td>
+			<td></td>	
+			<% if @show[:date_surface] %> 
+				<td></td>	
+				<td></td>	
 			<% end %>
 			<td class="saison"></td>
 			<td class="saison"></td>
@@ -92,8 +102,10 @@
 			<tr class="subtotal">
 				<td class="left">Categorie</td>
 				<td class="left"><b><%= cat.name %></b></td>
-				<td></td>
-				<td></td>
+				<% if @show[:date_surface] %> 
+					<td></td>	
+					<td></td>	
+				<% end %>
 				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :factures, :category, cat.id, :ha).display %></td>
 				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :factures, :category, cat.id, :total).display %></td>
 				<% rang = 0 %>
@@ -116,8 +128,10 @@
 <tr class="total">
 	<td class="left"><b>Total Factures</b></td>
 	<td></td>	
-	<td></td>	
-	<td></td>
+	<% if @show[:date_surface] %> 
+		<td></td>	
+		<td></td>	
+	<% end %>
 	<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_factures, :ha).display %></td>
 	<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_factures, :total).display %></td>	
 	<% rang = 0 %>

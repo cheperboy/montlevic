@@ -60,6 +60,7 @@ if SEEDS_BASIC
   tournesol = Typeculture.create!({:name => "Tournesol"})
   colza = Typeculture.create!({:name => "Colza"})
   jachere = Typeculture.create!({:name => "Jachere"})
+  luzerne = Typeculture.create!({:name => "Luzerne"})
   typeculture = Typeculture.find(:first)
 
   factypes = Factype.create!([
@@ -222,10 +223,12 @@ if SAISON_2010_2011
                            :category => Category.find_by_name('covercrop'))
 
   Labtofacture.create!(  :facture_id => factureA.id,
+                        :saison => saison_2010,
                        :labour_id => labourA.id,
                        :value => 10)
                      
   Labtofacture.create!(  :facture_id => factureB.id,
+                        :saison => saison_2010,
                        :labour_id => labourB.id,
                        :value => 11)
 
@@ -264,11 +267,13 @@ if SAISON_2010_2011
                            :category => Category.find_by_name('desherbant'))
 
   protofacture = Protofacture.create!( :produit => produitA,
+                                      :saison => saison_2010,
                                      :facture => factureA,
                                      :quantite => 25,
                                      :prix => 207.5)
 
   protofacture = Protofacture.create!( :produit => produitB,
+                                    :saison => saison_2010,
                                      :facture => factureA,
                                      :quantite => 125,
                                      :prix => 1097.5)
@@ -308,7 +313,7 @@ if SAISON_2009_2010
   # La Rue
   zone = Zone.find(3) 
   #TODO pont des champ non trouve dans le carnet Trochet
-  parcelle = Parcelle.create!(:name => "Pont des champs", :saison => saison_2009, :typeculture => ble, :surface => 10)
+  parcelle = Parcelle.create!(:name => "Pont des champs", :saison => saison_2009, :typeculture => luzerne, :surface => 10)
   zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
   parcelle = Parcelle.create!(:name => "Aeromodelisme", :saison => saison_2009, :typeculture => tournesol, :surface => 13.55)
   zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
@@ -1193,6 +1198,7 @@ facture = Debit.create!(:name => 'Achat Phyto',
 # ajout d'un protofacture pour chaque produit pour simuler les couts
 saison_2009.produits.each do |produit|
   protofacture = Protofacture.create!( 
+    :saison => saison_2009,
     :produit => produit,
     :facture => facture,
     :quantite => 500,

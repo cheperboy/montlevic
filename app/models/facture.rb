@@ -180,8 +180,12 @@ class Facture < Charge
   
   def sum_putoproduits
     sum = 0
+    logger.error "sum = " + sum.to_s  
     self.produits.each do |produit|
-      produit.pulves.each {|pulve| sum += produit.get_prix_unitaire * pulve.sum_surfaces }
+      produit.pulves.each do |pulve| 
+        putoproduit = pulve.putoproduits.find_by_produit_id(produit.id)
+        sum += putoproduit.dosage * produit.get_prix_unitaire * pulve.sum_surfaces
+      end
     end
     return sum
   end

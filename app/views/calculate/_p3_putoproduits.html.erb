@@ -1,6 +1,11 @@
+<!-- TODO ajouter un scroll dans ce tableau pour voir les en-tete de colonne -->
+<!-- TODO supprimer colo date et surface si bool show_pulve et labour a null -->
+
 <tr>
 	<th id="nom">Produits</th>
-	<% td_number_before_saison().times do %>
+	<td></td>
+	<% if @show[:date_surface] %> 
+		<td></td>	
 		<td></td>
 	<% end %>
 	<td class="saison"></td>
@@ -10,7 +15,6 @@
 	<% end %>
 </tr>	
 <% unless (((@putoproduits.class == Array) && @putoproduits.size == 0) || (@putoproduits.nil?)) %>
-<% logger.error "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" %>
 <% if @show[:pulves] %>
 <% @pulves.each do |pulve| %>
 	<% pulve.putoproduits.each do |putoproduit| %>
@@ -18,8 +22,10 @@
 		<tr>
 			<td class='left'><strong><%= datas[:category_name] %></strong></td>
 			<td class='left'><%= link_popup_putoproduit(datas) %></td>
-			<td class="date"><%= datas[:date].to_s :dmy %></td>	
-			<td class='left'><%= datas[:sum_surfaces].display %> Ha</td>
+			<% if @show[:date_surface] %> 
+				<td class="date"><%= datas[:date].to_s :dmy %></td>	
+				<td class='left'><%= datas[:sum_surfaces].display %> Ha</td>
+			<% end %> 
 			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :putoproduits, :all, putoproduit.id, :ha).display %></td>
 			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :putoproduits, :all, putoproduit.id, :total).display %></td>
 
@@ -44,9 +50,11 @@
 <% if @show[:total_cat] %>
 	<tr>
 		<td>Total par Categorie</td>
-		<% td_number_before_saison().times do %>
+		<td></td>
+		<% if @show[:date_surface] %> 
 			<td></td>
-		<% end %>
+			<td></td>
+		<% end %> 
 		<td class="saison"></td>
 		<td class="saison"></td>
 		<% td_number_after_saison(@colonnes.length, @show[:cout_ha], @show[:cout_total]).times do %>
@@ -57,8 +65,10 @@
 		<tr class="subtotal">
 			<td class="left">Categorie</td>
 			<td class="left"><b><%= cat.name %></b></td>
-			<td></td>
-			<td></td>
+			<% if @show[:date_surface] %> 
+				<td></td>
+				<td></td>
+			<% end %> 
 			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :putoproduits, :category, cat.id, :ha).display %></td>
 			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :putoproduits, :category, cat.id, :total).display %></td>
 			<% rang = 0 %>
@@ -79,9 +89,11 @@
 	
 	<tr class="total">
 		<td>Total Produits:	</td>
-		<td></td>	
-		<td></td>	
 		<td></td>
+		<% if @show[:date_surface] %> 
+			<td></td>
+			<td></td>
+		<% end %> 
 		<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_putoproduits, :ha).display %></td>
 		<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_putoproduits, :total).display %></td>	
 		<% rang = 0 %>
@@ -99,5 +111,3 @@
 	</tr>
 	
 <% end %>
-<tr><td colspan=9>supprimer colo date et surface si bool show_pulve et labour a null</td></tr>
-<tr><td colspan=9>ajouter un scroll dans ce tableau pour voir les en-tete</td></tr>

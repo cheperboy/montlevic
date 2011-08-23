@@ -71,8 +71,6 @@
 			<% count = 0 %>
 			<% putoparcelle.pulve.putoproduits.each do |putoproduit| %>
 				<% count += 1 %>
-				<% logger.error "count=	#{count.to_s}" %>
-				
 				<% if count == 1 %>
 				  <tr>
 				    <td><%= putoparcelle.pulve.user.name %></td>

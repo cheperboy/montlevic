@@ -1,7 +1,9 @@
 	<tr>
 		<th id="nom">Benefices</th>
-		<% td_number_before_saison().times do %>
-			<td></td>
+		<td></td>	
+		<% if @show[:date_surface] %> 
+			<td></td>	
+			<td></td>	
 		<% end %>
 		<td class="saison"></td>
 		<td class="saison"></td>
@@ -11,8 +13,10 @@
 	<tr class="total">
 		<td class="left">Total Benefs:	</td>
 		<td></td>	
-		<td></td>	
-		<td></td>
+		<% if @show[:date_surface] %> 
+			<td></td>	
+			<td></td>	
+		<% end %>
 		<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :benef, :ha).display %></td>
 		<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :benef, :total).display %></td>	
 		<% rang = 0 %>

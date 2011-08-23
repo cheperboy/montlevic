@@ -48,55 +48,46 @@ class Produit < ActiveRecord::Base
         find(*args)
       end
   end
-  
-  def self.find_by_pulve_and_produit(pulve_id, produit_id, *args)
-    with_scope(:find => { :conditions => ["pulve_id = ? AND produit_id = ?", pulve_id, produit_id]}) do
-        find(*args)
-      end
-  end
-
-  def find_putoproduit_by_pulve(pulve_id)
-    self.putoproduits.each do |putoproduit|
-      if putoproduit.pulve_id.eql?(pulve_id)
-        return putoproduit
-      end
-      return nil
-    end
-  end
-  
+    
   # ----- Calculs -----  
   def get_prix_unitaire
-    if self.protofactures.count == 0
-      return 0 
-    else
-      prix_unit = 0
-      self.protofactures.each do |protofac|
-        prix_unit += protofac.prix / protofac.quantite
-      end
-      prix_unit / self.protofactures.count
+    prix_unitaire = 0
+    unless self.protofactures.count == 0
+      self.protofactures.each {|protofac| prix_unitaire += protofac.prix / protofac.quantite}
+      prix_unitaire = prix_unitaire / self.protofactures.count
     end
+    return prix_unitaire
   end
 
   def get_quantite
-    if self.protofactures.count == 0
-      return 0 
-    else
-      total = 0
-      self.protofactures.each do |protofac|
-        total += protofac.quantite
-      end
-      total
+    total = 0
+    unless self.protofactures.count.eql?(0)
+      self.protofactures.each {|protofac| total += protofac.quantite}
     end
+    return total
   end  
+
+  def get_used_quantite
+    used = 0
+    self.pulves.each do |pulve| 
+      putoproduit = self.putoproduits.find_by_pulve_id(pulve.id)
+      used += putoproduit.dosage * pulve.sum_surfaces
+    end
+    return (used)
+  end
     
   def get_cout_total
-    if self.protofactures.count == 0
-      return 0 
-    else
-      cout_total = 0
-      self.protofactures.each do |protofac|
-        cout_total += protofac.prix
-      end
+    cout_total = 0
+    unless self.protofactures.count.eql?(0)
+      self.protofactures.each {|protofac| cout_total += protofac.prix}
+    end
+    return cout_total 
+  end
+  
+  def get_cout_total
+    cout_total = 0
+    unless self.protofactures.count.eql?(0)
+      self.protofactures.each {|protofac| cout_total += protofac.prix}
       cout_total
     end
   end
@@ -121,5 +112,14 @@ class Produit < ActiveRecord::Base
   def get_dosage_unit
     return "#{self.unit.to_s}/ha"
   end
-
+  
+  # ----- Verif -----
+  def stock_lower_than_used?
+    return (get_quantite < get_used_quantite)
+  end
+  def stock_lower_than_used_display
+    if stock_lower_than_used?
+      return "X"
+    end
+  end     
 end

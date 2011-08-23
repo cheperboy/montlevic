@@ -1,11 +1,13 @@
 class ProduitsController < ApplicationController
 
   def modif
-    @produits = Produit.find_by_sql("select * from 'produits'")
+    @produits = Produit.find_all
     @produits.each do |produit|
-      produit[:type] = 'Debit'
-      logger.info 'modif produit : ' + produit.id
-      produit.save!
+      if produit.get_quantite < produit.get_quantite_used
+        logger.info 'modif produit : ' + produit.id
+        produit.update_attribute(:quantite, produit.get_quantite_used)
+        produit.save!
+      end
     end
   end
    
@@ -35,6 +37,12 @@ class ProduitsController < ApplicationController
 
   def index
     @produits = Produit.find_by_saison(:all, :order => 'category_id DESC')
+    @produits.each do |produit|
+      if produit.stock_lower_than_used?
+        produit.protofactures.first.quantite = produit.get_used_quantite
+        produit.save
+      end
+    end
     respond_to do |format|
       format.html
     end
@@ -68,6 +76,10 @@ class ProduitsController < ApplicationController
     @produit.saison_id = current_saison_id
     respond_to do |format|
       if @produit.save
+        @produit.protofactures.each do |protofacture|
+          protofacture.saison_id = current_saison_id
+          protofacture.save!
+        end  
         flash[:notice] = 'Enregistrement produit OK.'
         format.html { redirect_to(produits_url) }
       else
@@ -81,6 +93,10 @@ class ProduitsController < ApplicationController
     @produit = Produit.find(params[:id])
     respond_to do |format|
       if @produit.update_attributes(params[:produit])
+        @produit.protofactures.each do |protofacture|
+          protofacture.saison_id = current_saison_id
+          protofacture.save!
+        end  
         flash[:notice] = 'Modification du produit ok'
         format.html { redirect_to(produits_url) }
       else

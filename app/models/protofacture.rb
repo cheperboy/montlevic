@@ -2,6 +2,7 @@ class Protofacture < ActiveRecord::Base
 
   belongs_to :facture
   belongs_to :produit
+  belongs_to :saison
   
   validates_presence_of :quantite, :message => "valeur non definie"
   validates_numericality_of :quantite, :message => "n'est pas un nombre"

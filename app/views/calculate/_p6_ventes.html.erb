@@ -1,7 +1,9 @@
 	<tr>
 		<th id="nom">Ventes</th>
-		<% td_number_before_saison().times do %>
-			<td></td>
+		<td></td>	
+		<% if @show[:date_surface] %> 
+			<td></td>	
+			<td></td>	
 		<% end %>
 		<td class="saison"></td>
 		<td class="saison"></td>
@@ -18,11 +20,13 @@
 		<tr>
 			<td class="left"><b><%= datas[:category_name] %></b></td>
 			<td class="left"><%= link_popup_vente(datas[:id]) %></td>
-			<td><%= datas[:date].to_s :dmy %></td>	
-			<td>
-				<%= datas[:parcelles_length] %> p - 
-				<%= datas[:surface_total] %> ha
-			</td>
+			<% if @show[:date_surface] %> 
+				<td><%= datas[:date].to_s :dmy %></td>	
+				<td>
+					<%= datas[:parcelles_length] %> p - 
+					<%= datas[:surface_total] %> ha
+				</td>
+			<% end %>
 			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :ha).display %></td>
 			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :total).display %></td>
 		
@@ -45,8 +49,10 @@
 	<% if @show[:total_cat] %>
 		<tr>
 			<td>Total par Categorie</td>
-			<% td_number_before_saison().times do %>
-				<td></td>
+			<td></td>	
+			<% if @show[:date_surface] %> 
+				<td></td>	
+				<td></td>	
 			<% end %>
 			<td class="saison"></td>
 			<td class="saison"></td>
@@ -82,8 +88,10 @@
 <tr class="total">
 	<td class="left"><b>Total Ventes</b></td>
 	<td></td>	
-	<td></td>	
-	<td></td>
+	<% if @show[:date_surface] %> 
+		<td></td>	
+		<td></td>	
+	<% end %>
 	<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_ventes, :ha).display %></td>
 	<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_ventes, :total).display %></td>	
 	<% rang = 0 %>

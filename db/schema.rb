@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.datetime "updated_at"
   end
   create_table "protofactures", :force => true do |t|
+    t.integer  "saison_id"
     t.integer  "produit_id"
     t.integer  "facture_id"
     t.float    "prix"
@@ -75,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "factoparcelles", :force => true do |t|
+    t.integer  "saison_id"
     t.integer  "parcelle_id"
     t.integer  "facture_id"
     t.float    "value"
@@ -125,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "labtofactures", :force => true do |t|
+    t.integer  "saison_id"
     t.integer  "facture_id"
     t.integer  "labour_id"
     t.float    "value"
@@ -133,6 +136,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "labtoparcelles", :force => true do |t|
+    t.integer  "saison_id"
     t.integer  "parcelle_id"
     t.integer  "labour_id"
     t.float    "value"
@@ -169,6 +173,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "putofactures", :force => true do |t|
+    t.integer  "saison_id"
     t.integer  "facture_id", :null => false
     t.integer  "pulve_id",   :null => false
     t.float    "value",      :null => false
@@ -177,6 +182,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "putoparcelles", :force => true do |t|
+    t.integer  "saison_id"
     t.integer  "parcelle_id", :null => false
     t.integer  "pulve_id",    :null => false
     t.float    "value"
@@ -231,6 +237,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "ventoparcelles", :force => true do |t|
+    t.integer  "saison_id"
     t.integer "vente_id",    :null => false
     t.integer "parcelle_id", :null => false
     t.float   "value",       :null => false
@@ -248,6 +255,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "zonetopas", :force => true do |t|
+    t.integer  "saison_id"
     t.integer  "parcelle_id", :null => false
     t.integer  "zone_id",     :null => false
     t.float    "value",       :null => false

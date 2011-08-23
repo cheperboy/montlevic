@@ -82,7 +82,6 @@ class Analytic < ActiveRecord::Base
     self.saisons[saison.id][:datas] = 0
     lines_type.each do |line_type| # :labours, :pulves, :factures
       init_line_type_for_saison(saison.id, line_type)
-      logger.error "line_type="+line_type.to_s
       init_sections_for_saison(saison, line_type)
     end
     other_lines_type.each do |other_line_type| # :resultats

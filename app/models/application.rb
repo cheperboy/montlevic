@@ -29,12 +29,14 @@ class Application < ActiveRecord::Base
     ['print_produits', 'Produits', '', :text_field], 
    	['user_name', 'Presta', '', false, :text_field], 
    	['name', 'nom', '', true, :text_field], 
+   	['sum_surfaces', 'surface', '', true, :text_field], 
    	['get_cout_ha', 'Cout Ha', '€/Ha', false], 
    	['print_date', 'date', '', false]]
 
    PRODUIT_HEAD = [
     ['star', 'star', '', true, :check_box], 
     ['adu', 'adu', '', true, :check_box], 
+    ['stock_lower_than_used_display', 'stock', '', true], 
    	['id', 'id', '', false], 
    	['category_name', 'categorie', '', false, :text_field], 
    	['name', 'nom', '', true, :text_field], 

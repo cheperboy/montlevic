@@ -119,9 +119,9 @@
 			<td class=left><%=h putoproduit.produit.name %></td>
 			<td class=right><%=h (putoproduit.produit.get_prix_unitaire).display %> <%= euro %>/<%= putoproduit.produit.unit.to_s %></td>
 			<td class=right><%=h (putoproduit.dosage).display %> <%= putoproduit.produit.unit.to_s %>/<%= ha %></td>
-			<td class=right><%=h (@pulve.sum_surfaces * putoproduit.dosage).display %> <%= putoproduit.produit.unit.to_s %></td>
-			<td class=right><%=h (@pulve.get_cout_ha).display %> <%= euro_ha %></td>
-			<td class=right><%=h (@pulve.sum_surfaces * putoproduit.dosage * putoproduit.produit.get_prix_unitaire).display %> <%= euro %></td>
+			<td class=right><%=h (putoproduit.dosage * @pulve.sum_surfaces).display %> <%= putoproduit.produit.unit.to_s %></td>
+			<td class=right><%=h (putoproduit.dosage * putoproduit.produit.get_prix_unitaire).display %> <%= euro_ha %></td>
+			<td class=right><%=h (putoproduit.dosage * putoproduit.produit.get_prix_unitaire * @pulve.sum_surfaces).display %> <%= euro %></td>
 			<td><%= link_to image_tag('img-voir.png'), :controller => "produits", :action => "show", :id => putoproduit.produit %></td>
 		</tr>
 	<%- end -%>

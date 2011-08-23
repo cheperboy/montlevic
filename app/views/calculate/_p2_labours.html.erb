@@ -1,6 +1,8 @@
 <tr>
 	<th><%= link_to_function "Travail du sol", "$('list_labours').toggle();" %></th>
-	<% td_number_before_saison().times do %>
+	<td></td>
+	<% if @show[:date_surface] %> 
+		<td></td>	
 		<td></td>
 	<% end %>
 	<td class="saison"></td>
@@ -21,11 +23,13 @@
 						*
 					<% end %>
 				</td>
-				<td class='left'><%= datas[:date].to_s :dmy %></td>	
-				<td class='left'>
-					<%= datas[:parcelles_length] %> p - 
-					<%= datas[:surface_total] %> ha
-				</td>
+				<% if @show[:date_surface] %> 
+					<td class='left'><%= datas[:date].to_s :dmy %></td>	
+					<td class='left'>
+						<%= datas[:parcelles_length] %> p - 
+						<%= datas[:surface_total] %> ha
+					</td>
+				<% end %> 
 				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :all, labour.id, :ha).display %></td>
 				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :all, labour.id, :total).display %></td>
 			<% rang = 0 %>
@@ -50,11 +54,13 @@
 			<tr>
 				<td class='left'>Traitement</strong></td>
 				<td class='left'><%= link_popup_pulve(datas) %></td>
-				<td class="date"><%= datas[:date].to_s :dmy %></td>	
-				<td class='left'>
-					<%= datas[:parcelles_length] %> p - 
-					<%= datas[:sum_surfaces].display %> ha
-				</td>
+				<% if @show[:date_surface] %> 
+					<td class="date"><%= datas[:date].to_s :dmy %></td>	
+					<td class='left'>
+						<%= datas[:parcelles_length] %> p - 
+						<%= datas[:sum_surfaces].display %> ha
+					</td>
+				<% end %> 
 				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :pulves, :all, pulve.id, :ha).display %></td>
 				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :pulves, :all, pulve.id, :total).display %></td>
 	
@@ -78,7 +84,9 @@
 	<% if @show[:total_cat] %>
 		<tr>
 			<td>Total par Categorie</td>
-			<% td_number_before_saison().times do %>
+			<td></td>	
+			<% if @show[:date_surface] %> 
+				<td></td>	
 				<td></td>
 			<% end %>
 			<td class="saison"></td>
@@ -89,12 +97,15 @@
 		</tr>	
 
 		<!-- Categories de Labours et categorie "Prestation Traitements"-->
+		<!-- Categories de Labours-->
 		<% for cat in @labour_categories %>
 			<tr class="subtotal">
 				<td class="left">Prestation</td>
 				<td class="left"><b><%= cat.name %></b></td>
-				<td></td>
-				<td></td>
+				<% if @show[:date_surface] %> 
+					<td></td>	
+					<td></td>
+				<% end %>
 				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :category, cat.id, :ha).display %></td>
 				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :category, cat.id, :total).display %></td>
 				<% rang = 0 %>
@@ -111,11 +122,14 @@
 				<% end %>
 			</tr>
 		<% end %>
+		<!-- Categorie "Prestation Traitements"-->
 		<tr class="subtotal">
 			<td class=left>Prestation</td>
-			<td class=left>Traitements Phyto</td>
-			<td></td>
-			<td></td>
+			<td class=left><b>Traitements Phyto<b></td>
+			<% if @show[:date_surface] %> 
+				<td></td>
+				<td></td>
+			<% end %> 
 			<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_pulves, :ha).display %></td>
 			<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_pulves, :total).display %></td>	
 			<% rang = 0 %>
@@ -133,24 +147,35 @@
 		</tr>
 		
 <!-- total prestation = total Labours + total Pulves -->
-
+	<% total_presta_saison_ha = (@test.res.get_other_line_for_saison(@test.sid, :resultats, :total_labours, :ha) +
+								@test.res.get_other_line_for_saison(@test.sid, :resultats, :total_pulves, :ha))
+	%>
+	<% total_presta_saison = (@test.res.get_other_line_for_saison(@test.sid, :resultats, :total_labours, :total) +
+								@test.res.get_other_line_for_saison(@test.sid, :resultats, :total_pulves, :total))
+	%>
 	<tr class="total">
 		<td id="nom">Total Prestations:	</td>
 		<td></td>
-		<td></td>
-		<td></td>
-		<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_labours, :ha).display %></td>
-		<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_labours, :total).display %></td>	
+		<% if @show[:date_surface] %> 
+			<td></td>	
+			<td></td>
+		<% end %>
+		<td class="saison"><%= total_presta_saison_ha.display %></td>
+		<td class="saison"><%= total_presta_saison.display %></td>	
 		<% rang = 0 %>
 		<% @colonnes.each do |colonne| %>
+			<% cout_ha = (@test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_labours, :ha) +
+						  @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_pulves, :ha))
+			%>
+			<% cout_total = (@test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_labours, :total) +
+							 @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_pulves, :total))
+			%>
 			<% rang += 1 %>
-			<% cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_labours, :ha).display %>
-			<% cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_labours, :total).display %>
 			<% if @show[:cout_ha] %>
-				<td class="<%= odd(rang) %>_subtotal"><%=h cout_ha %></td>
+				<td class="<%= odd(rang) %>_subtotal"><%=h cout_ha.display %></td>
 			<% end %>
 			<% if @show[:cout_total] %>
-				<td class="<%= odd(rang) %>_subtotal"><%=h cout_total %></td>
+				<td class="<%= odd(rang) %>_subtotal"><%=h cout_total.display %></td>
 			<% end %>
 		<% end %>
 	</tr>

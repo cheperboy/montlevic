@@ -8,6 +8,7 @@ class CalculateController < ApplicationController
     @show[:labours] = true
     @show[:total_type] = true
     @show[:total_cat] = true
+    @show[:date_surface] = true
     
     if request.post?
       model = params[:column].camelize.constantize unless params[:column].nil?
@@ -17,6 +18,7 @@ class CalculateController < ApplicationController
       @show[:labours] = false
       @show[:total_type] = false
       @show[:total_cat] = false
+      @show[:date_surface] = ((@show[:pulves] == true) && ( @show[:labours] == true))
       unless params[:show].nil?
         @show[:cout_total] = params[:show]['cout_total'] unless params[:show]['cout_total'].nil?
         @show[:cout_ha] = params[:show]['cout_ha'] unless params[:show]['cout_ha'].nil?
