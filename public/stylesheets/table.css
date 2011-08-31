@@ -33,6 +33,40 @@ text-align: left;
 padding-left: 0px;
 }
 
+/* End : Table Datas */
+
+
+/* Begin : Table Invisible */
+.table_invisible { border-collapse:collapse }
+
+.table_invisible td, th, tr { 
+	text-align: left;
+	border: 1px solid grey; 
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	padding-right: 12px;	
+}
+
+.table_invisible th.left{ text-align: left; }
+.table_invisible th.right{ text-align: right; }
+.table_invisible td.left{ text-align: left; }
+.table_invisible td.right{ text-align: right; }
+.table_invisible td.center{ text-align: center; }
+.table_invisible tr.bold{ font-weight: bold; }
+.table_invisible td.bold{ font-weight: bold; }
+.table_invisible tr:hover { background-color: #eee; color: #000}
+
+.table_invisible th.value, td.value {
+	border-right-color :transparent;
+	text-align: right;
+	padding-right: 6px;
+}
+.table_invisible th.unit, td.unit { 
+text-align: left;
+padding-left: 0px;
+}
+
 
 
 /* End : Table Datas */
@@ -48,7 +82,6 @@ padding-left: 0px;
  border-color:grey;
  }
 
-.table_print tr:hover { background-color: #eee; }
 .table_print tr.subtotal { color: green; }
 .table_print tr.total { color: red; }
 .table_print span.td-total { font-weight:700; }
@@ -74,6 +107,8 @@ padding-left: 0px;
 .table_print td.odd_subtotal 				{ background-color: #c1cdc1; padding-right: 8px; }
 .table_print td.odd-head-name 			{ background-color: #e0eee0; padding-right: 8px; text-align:center; }
 .table_print td.odd-head-surface 		{ background-color: #e0eee0; padding-right: 8px; text-align:center; }
+
+.table_print tr:hover { background-color: #eee; }
 
 /* End : Table list */
 

@@ -41,17 +41,8 @@ class LaboursController < ApplicationController
   def create
     @labour = Labour.new(params[:labour])
     @labour.saison_id = current_saison_id
-
     respond_to do |format|
       if @labour.save
-        @labour.labtoparcelles.each do |labtoparcelle|
-          labtoparcelle.saison_id = current_saison_id
-          labtoparcelle.save!
-        end  
-        @labour.labtofactures.each do |labtofacture|
-          labtofacture.saison_id = current_saison_id
-          labtofacture.save!
-        end  
         flash[:notice] = 'Labour was successfully created.'
         format.html { redirect_to(@labour) }
         format.xml  { render :xml => @labour, :status => :created, :location => @labour }
@@ -67,17 +58,8 @@ class LaboursController < ApplicationController
   # PUT /labours/1.xml
   def update
     @labour = Labour.find(params[:id])
-
     respond_to do |format|
       if @labour.update_attributes(params[:labour])
-        @labour.labtoparcelles.each do |labtoparcelle|
-          labtoparcelle.saison_id = current_saison_id
-          labtoparcelle.save!
-        end  
-        @labour.labtofactures.each do |labtofacture|
-          labtofacture.saison_id = current_saison_id
-          labtofacture.save!
-        end  
         flash[:notice] = 'Labour was successfully updated.'
         format.html { redirect_to(@labour) }
         format.xml  { head :ok }

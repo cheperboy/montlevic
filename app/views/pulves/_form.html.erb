@@ -21,7 +21,7 @@
 						:id, :name, 
 						:selected => selected) %>
 	<%= form_tr_text(pulve_form, 'Cout du passage', :cout_ha_passage, :unit => "€/Ha", :value => (@pulve.cout_ha_passage || 0), :size => 5) %>
-	<%= form_tr_text_area(pulve_form, 'Infos', :desc, :size => "20x1") %>	
+	<%= form_tr_text_area(pulve_form, 'Description', :desc, :size => Setting::TEXT_AREA_SIZE) %>	
 
 </table>
 <br>

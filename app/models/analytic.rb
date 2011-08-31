@@ -143,14 +143,16 @@ class Analytic < ActiveRecord::Base
       self.saisons[saison.id][col_type][col_id][line_type][:category][cat.id][:total] = 0
       self.saisons[saison.id][col_type][col_id][line_type][:category][cat.id][:name] = cat.name
     end
-    saison.send(line_type).each do |line|
-      self.saisons[saison.id][col_type][col_id][line_type][:all][line.id] = {} 
-      self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:ha] = 0
-      self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:total] = 0
-      # OPTIMIZE supprimer les 3 lignes suivantes si le champs :data ne sert a rien 
-      # unless line.class.eql?(Putoproduit)
-      #   self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:data] = line.name
-      # end
+    unless saison.send(line_type).nil?
+      saison.send(line_type).each do |line|
+        self.saisons[saison.id][col_type][col_id][line_type][:all][line.id] = {} 
+        self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:ha] = 0
+        self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:total] = 0
+        # OPTIMIZE supprimer les 3 lignes suivantes si le champs :data ne sert a rien 
+        # unless line.class.eql?(Putoproduit)
+        #   self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:data] = line.name
+        # end
+      end
     end
     if line_type == :factures
       Factcat.all.each do |factcat|
@@ -171,12 +173,14 @@ class Analytic < ActiveRecord::Base
       self.saisons[saison.id][line_type][:category][cat.id][:total] = 0
       self.saisons[saison.id][line_type][:category][cat.id][:name] = cat.name
     end
-    saison.send(line_type).each do |line|
-      self.saisons[saison.id][line_type][:all][line.id] = {} 
-      self.saisons[saison.id][line_type][:all][line.id][:ha] = 0
-      self.saisons[saison.id][line_type][:all][line.id][:total] = 0
-      # TODO remplacer line.name par {} pour y stocker les champs de la db
-      self.saisons[saison.id][line_type][:all][line.id][:data] = {}
+    unless saison.send(line_type).nil?
+      saison.send(line_type).each do |line|
+        self.saisons[saison.id][line_type][:all][line.id] = {} 
+        self.saisons[saison.id][line_type][:all][line.id][:ha] = 0
+        self.saisons[saison.id][line_type][:all][line.id][:total] = 0
+        # TODO remplacer line.name par {} pour y stocker les champs de la db
+        self.saisons[saison.id][line_type][:all][line.id][:data] = {}
+      end
     end
     if line_type == :factures
       Factcat.all.each do |factcat|

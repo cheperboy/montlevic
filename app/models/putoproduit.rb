@@ -8,7 +8,11 @@ class Putoproduit < Charge
   validates_presence_of :dosage, :message => "dosage ne doit pas etre nul"
   validates_numericality_of :dosage, :message => "n'est pas un nombre"
 
-
+  # Callback
+  def before_save 
+    self.saison ||= Application::SAISON
+  end
+   
   # correspond au cout_ha_produit d'un pulve!
   def get_cout_ha
     self.dosage * self.produit.get_prix_unitaire

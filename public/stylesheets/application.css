@@ -125,6 +125,5 @@ h3 {
 .colors, .task, .tag{border-left:10px solid #eee; padding-left:10px;}
 .task{border-color:#999; margin:2em 0;}
 
-.bold {
-	font-weight:bold;
-}
+.bold { font-weight:bold; }
+.red { color: red;}

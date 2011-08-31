@@ -75,15 +75,11 @@ class Produit < ActiveRecord::Base
     end
     return (used)
   end
+
+  def get_stock
+    return (get_quantite - get_used_quantite)
+  end  
     
-  def get_cout_total
-    cout_total = 0
-    unless self.protofactures.count.eql?(0)
-      self.protofactures.each {|protofac| cout_total += protofac.prix}
-    end
-    return cout_total 
-  end
-  
   def get_cout_total
     cout_total = 0
     unless self.protofactures.count.eql?(0)
@@ -112,6 +108,19 @@ class Produit < ActiveRecord::Base
   def get_dosage_unit
     return "#{self.unit.to_s}/ha"
   end
+  
+  def number_of_use
+    count=0
+    Pulve.find_by_saison(:all, :order => :id).each do |pulve| 
+      pulve.produits.each do |produit| 
+        if produit.id.eql?(self.id)
+          count += 1
+        end
+      end
+    end
+    return "<span class='red'>#{count.to_s}</span>" if count.eql?(0)
+    return count.to_s
+  end  
   
   # ----- Verif -----
   def stock_lower_than_used?

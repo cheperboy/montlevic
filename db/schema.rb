@@ -11,59 +11,32 @@
 
 ActiveRecord::Schema.define(:version => 20100330165713) do
 
-  create_table "categories", :force => true do |t|
-    t.integer  "upcategory_id"
-    t.string   "name"
+  create_table "zones", :force => true do |t|
+    t.string   "name",       :null => false
+    t.float    "surface",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "produits", :force => true do |t|
-    t.integer  "category_id"
-    t.integer  "saison_id"
-    t.string   "name"
-    t.string   "desc"
-    t.string   "unit"
-    t.integer  "star"
-    t.integer  "adu"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-  create_table "protofactures", :force => true do |t|
-    t.integer  "saison_id"
-    t.integer  "produit_id"
-    t.integer  "facture_id"
-    t.float    "prix"
-    t.float    "quantite"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-  create_table "putoproduits", :force => true do |t|
-    t.integer  "saison_id"
-    t.integer  "pulve_id"
-    t.integer  "produit_id"
-    t.float    "dosage"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "typecultures", :force => true do |t|
+    t.string "name", :null => false
   end
 
   create_table "charges", :id => false, :force => true do |t|
     t.integer "toto"
   end
 
-  create_table "facdivs", :force => true do |t|
-    t.integer  "facture_id",  :null => false
-    t.integer  "saison_id",   :null => false
-    t.integer  "category_id"
-    t.integer  "star"
-    t.integer  "adu"
-    t.integer  "user_id"
+  create_table "factypes", :force => true do |t|
     t.string   "name"
-    t.float    "cout"
-    t.string   "ref_client"
-    t.integer  "ref"
-    t.date     "date"
-    t.string   "desc"
+    t.string   "display"
+    t.text     "desc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "categories", :force => true do |t|
+    t.integer  "upcategory_id"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -75,13 +48,41 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.datetime "updated_at"
   end
 
-  create_table "factoparcelles", :force => true do |t|
-    t.integer  "saison_id"
-    t.integer  "parcelle_id"
-    t.integer  "facture_id"
-    t.float    "value"
+  create_table "users", :force => true do |t|
+    t.string   "name",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "upcategories", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "saisons", :force => true do |t|
+    t.string  "name", :null => false
+    t.string  "year"
+    t.text    "desc"
+  end
+
+  create_table "settings", :force => true do |t|
+    t.integer "saison_id",                   :null => false
+    t.integer "value_parcelle", :limit => 2
+    t.integer "detail_desc",    :limit => 2
+    t.integer "detail_ref",     :limit => 2
+    t.integer "float_precision"
+    t.string  "text_area_size"
+  end
+
+  create_table "verifs", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "myusers", :force => true do |t|
+    t.string  "login"
+    t.string  "password"
+    t.integer "admin",    :limit => 2
   end
 
   create_table "factures", :force => true do |t|
@@ -104,10 +105,91 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.datetime "updated_at"
   end
 
-  create_table "factypes", :force => true do |t|
+  create_table "facdivs", :force => true do |t|
+    t.integer  "facture_id",  :null => false
+    t.integer  "saison_id",   :null => false
+    t.integer  "category_id"
+    t.integer  "star"
+    t.integer  "adu"
+    t.integer  "user_id"
     t.string   "name"
-    t.string   "display"
+    t.float    "cout"
+    t.string   "ref_client"
+    t.integer  "ref"
+    t.date     "date"
+    t.string   "desc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "factoparcelles", :force => true do |t|
+    t.integer  "saison_id"
+    t.integer  "parcelle_id"
+    t.integer  "facture_id"
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "produits", :force => true do |t|
+    t.integer  "category_id",   :null => false
+    t.integer  "saison_id",     :null => false
+    t.string   "name",          :null => false
+    t.string   "desc"
+    t.string   "unit"
+    t.integer  "star"
+    t.integer  "adu"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  
+  create_table "protofactures", :force => true do |t|
+    t.integer  "saison_id"
+    t.integer  "produit_id"
+    t.integer  "facture_id"
+    t.float    "prix"
+    t.float    "quantite"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  
+  create_table "putoproduits", :force => true do |t|
+    t.integer  "saison_id"
+    t.integer  "pulve_id"
+    t.integer  "produit_id"
+    t.float    "dosage"
+    t.float    "dosage_vrai"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pulves", :force => true do |t|
+    t.integer  "saison_id",       :null => false
+    t.integer  "user_id",         :null => false
+    t.date     "date",            :null => false
+    t.string   "name",            :null => false
+    t.float    "cout_ha_passage"
+    t.integer  "star"
+    t.integer  "adu"
     t.text     "desc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "putofactures", :force => true do |t|
+    t.integer  "saison_id"
+    t.integer  "facture_id", :null => false
+    t.integer  "pulve_id",   :null => false
+    t.float    "value",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "putoparcelles", :force => true do |t|
+    t.integer  "saison_id",   :null => false
+    t.integer  "parcelle_id", :null => false
+    t.integer  "pulve_id",    :null => false
+    t.float    "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -144,78 +226,21 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.datetime "updated_at"
   end
 
-  create_table "myusers", :force => true do |t|
-    t.string  "login"
-    t.string  "password"
-    t.integer "admin",    :limit => 2
-  end
-
   create_table "parcelles", :force => true do |t|
     t.integer  "saison_id",      :null => false
     t.integer  "typeculture_id", :null => false
     t.string   "name",           :null => false
     t.float    "surface"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "pulves", :force => true do |t|
-    t.integer  "saison_id",       :null => false
-    t.integer  "user_id",         :null => false
-    t.date     "date",            :null => false
-    t.string   "name",            :null => false
-    t.float    "cout_ha_passage"
-    t.integer  "star"
-    t.integer  "adu"
     t.text     "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "putofactures", :force => true do |t|
-    t.integer  "saison_id"
-    t.integer  "facture_id", :null => false
-    t.integer  "pulve_id",   :null => false
-    t.float    "value",      :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "putoparcelles", :force => true do |t|
+  create_table "zonetopas", :force => true do |t|
     t.integer  "saison_id"
     t.integer  "parcelle_id", :null => false
-    t.integer  "pulve_id",    :null => false
-    t.float    "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "saisons", :force => true do |t|
-    t.string  "name", :null => false
-    t.string  "year"
-    t.text    "desc"
-  end
-
-  create_table "settings", :force => true do |t|
-    t.integer "saison_id",                   :null => false
-    t.integer "value_parcelle", :limit => 2
-    t.integer "detail_desc",    :limit => 2
-    t.integer "detail_ref",     :limit => 2
-    t.integer   "float_precision"
-  end
-
-  create_table "typecultures", :force => true do |t|
-    t.string "name", :null => false
-  end
-
-  create_table "upcategories", :force => true do |t|
-    t.string   "name",       :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "users", :force => true do |t|
-    t.string   "name",       :null => false
+    t.integer  "zone_id",     :null => false
+    t.float    "value",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -237,30 +262,10 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "ventoparcelles", :force => true do |t|
-    t.integer  "saison_id"
-    t.integer "vente_id",    :null => false
-    t.integer "parcelle_id", :null => false
-    t.float   "value",       :null => false
-  end
-
-  create_table "verifs", :force => true do |t|
-    t.string "name"
-  end
-
-  create_table "zones", :force => true do |t|
-    t.string   "name",       :null => false
-    t.float    "surface",    :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "zonetopas", :force => true do |t|
-    t.integer  "saison_id"
-    t.integer  "parcelle_id", :null => false
-    t.integer  "zone_id",     :null => false
-    t.float    "value",       :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "saison_id",      :null => false
+    t.integer   "vente_id",       :null => false
+    t.integer   "parcelle_id",    :null => false
+    t.float     "value",          :null => false
   end
 
 end

@@ -5,6 +5,7 @@ class Setting < ActiveRecord::Base
     DETAIL_DESC = Setting.find(:first).detail_desc
     DETAIL_REF = Setting.find(:first).detail_ref
     FLOAT_PRECISION = Setting.find(:first).float_precision
+    TEXT_AREA_SIZE = Setting.find(:first).text_area_size
   end
   
   belongs_to :saison

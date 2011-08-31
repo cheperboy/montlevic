@@ -14,4 +14,8 @@ class Protofacture < ActiveRecord::Base
     errors.add("Prix", "Prix ne doit pas etre nul") if prix == 0
   end
 
+  def before_save 
+    self.saison ||= Application::SAISON
+  end
+  
 end

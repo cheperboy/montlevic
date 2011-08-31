@@ -174,24 +174,60 @@ class Facture < Charge
   
   def sum_pulves
     val=0
-    self.putofactures.each {|obj| val += obj.get_cout_total }
+    self.putofactures.each {|putofacture| val += putofacture.value }
     return val
   end
   
-  def sum_putoproduits
+  # Somme des produits associes. uniquement les produits reellement utilises lors de traitements.
+  def sum_putoproduits_used2
     sum = 0
-    logger.error "sum = " + sum.to_s  
     self.produits.each do |produit|
-      produit.pulves.each do |pulve| 
+      produit.pulves.each do |pulve|
         putoproduit = pulve.putoproduits.find_by_produit_id(produit.id)
-        sum += putoproduit.dosage * produit.get_prix_unitaire * pulve.sum_surfaces
+        sum += putoproduit.dosage * produit.get_prix_unitaire * pulve.sum_surfaces      
+      end
+
+      # si le produit est compose de plusieurs factures, il faut associer "virtuellement" la valeur sum a chaque facture, 
+      # en commencant par la plus ancienne. lorsqu'on arrive a "self" on obtient la quantite de produit utilise et imputable a cette facture (a self)
+      if produit.factures.count > 1 #TODO limiter aux factures de la saison
+        produit.factures.each do |facture| #TODO limiter aux factures de la saison
+          if facture.id.eql?(self.id)
+            return(sum)
+          else
+            protofacture = facture.protofactures.find_by_produit_id(produit.id)
+            sum -= protofacture.value
+            sum
+          end
+        end
+      else
+       return(sum)
       end
     end
     return sum
   end
   
+  # Somme des produits associes. uniquement les produits reellement utilises lors de traitements.
+  # TODO : ATTENTION cette methode est correcte uniquement si les produits ne sont associes qu'a une seule facture
+  def sum_putoproduits_used
+    sum = 0
+    self.produits.each do |produit|
+      produit.pulves.each do |pulve|
+        putoproduit = pulve.putoproduits.find_by_produit_id(produit.id)
+        sum += putoproduit.dosage * produit.get_prix_unitaire * pulve.sum_surfaces      
+      end
+    end
+    return sum
+  end
+  
+  # Somme des produits associes.meme ceux qui n'ont pas ete utilises lors de traitements.
+  def sum_putoproduits_associated
+    sum = 0
+    self.protofactures.each { |protofacture| sum += protofacture.prix }
+    sum
+  end
+  
   def sum_charges
-    return (self.sum_pulves + self.sum_putoproduits + sum_labours)
+    return (self.sum_pulves + self.sum_putoproduits_associated + sum_labours)
   end
   
   def sum_reports

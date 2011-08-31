@@ -1,14 +1,13 @@
 class FacturesController < ApplicationController
 
-  def modif
-    @factures = Facture.find_by_sql("select * from 'factures'")
-    @factures.each do |facture|
-      facture[:type] = 'Debit'
-      logger.info 'modif facture : ' + facture.id
-      facture.save!
-    end
-
-  end
+  # def modif
+  #   @factures = Facture.find_by_sql("select * from 'factures'")
+  #   @factures.each do |facture|
+  #     facture[:type] = 'Debit'
+  #     logger.info 'modif facture : ' + facture.id
+  #     facture.save!
+  #   end
+  # end
    
   def toggle_star
     @facture = Facture.find(params[:id])
@@ -70,6 +69,8 @@ class FacturesController < ApplicationController
   # GET /factures/1.xml
   def show
     @facture = Facture.find(params[:id])
+    @show = {}
+    @show[:used] = false
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @facture }

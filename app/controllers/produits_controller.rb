@@ -37,12 +37,12 @@ class ProduitsController < ApplicationController
 
   def index
     @produits = Produit.find_by_saison(:all, :order => 'category_id DESC')
-    @produits.each do |produit|
-      if produit.stock_lower_than_used?
-        produit.protofactures.first.quantite = produit.get_used_quantite
-        produit.save
-      end
-    end
+    # @produits.each do |produit|
+    #   if produit.stock_lower_than_used?
+    #     produit.protofactures.first.quantite = produit.get_used_quantite
+    #     produit.save
+    #   end
+    # end
     respond_to do |format|
       format.html
     end
@@ -93,10 +93,6 @@ class ProduitsController < ApplicationController
     @produit = Produit.find(params[:id])
     respond_to do |format|
       if @produit.update_attributes(params[:produit])
-        @produit.protofactures.each do |protofacture|
-          protofacture.saison_id = current_saison_id
-          protofacture.save!
-        end  
         flash[:notice] = 'Modification du produit ok'
         format.html { redirect_to(produits_url) }
       else
@@ -109,27 +105,14 @@ class ProduitsController < ApplicationController
 
   def destroy
     @produit = Produit.find(params[:id])
-
-    # #Ne pas supprimer un produit Reportable avec des reports
-    # if (@produit.class == Reportable && (@produit.charges? || @produit.reports.count != 0))
-    #   flash[:error] = 'Produit Reportable avec reports ou associations : Non Supprimee'
-    # 
-    # #Ne pas supprimer une produit Diverse comportant des fiches
-    # elsif @produit.class == Diverse && @produit.facdivs.count != 0
-    #   flash[:error] = 'Produit Diverse avec facdivs : Non Supprimee'
-    # 
-    # #Ne pas supprimer une produit Report comportant des associations
-    # elsif (@produit.class == Report && @produit.charges?)
-    #   flash[:error] = 'Produit Report avec associations : Non Supprimee'
-    # 
-    # #Ne pas supprimer une produit Debit comportant des associations
-    #  elsif @produit.class == Debit && @produit.charges?
-    #     flash[:error] = 'Produit avec association (Vente, Labour ou Pulve) : Non Supprimee'
-    # 
-    #  else
+    
+    #Ne pas supprimer un produit utilise par un pulve
+    if (@produit.pulves.count != 0)
+      flash[:error] = 'Produit associe a un pulve : Non Supprimee'
+     else
         @produit.destroy
         flash[:notice] = 'Produit Supprime'
-      # end
+     end
 
     respond_to do |format|
       format.html { redirect_to(produits_url) }

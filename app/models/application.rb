@@ -3,7 +3,8 @@ class Application < ActiveRecord::Base
   PULVE_DOSAGE_UNITS = [['L/Ha', 'L/Ha'], ['kg/Ha', 'kg/Ha']]
   PRODUIT_QUANTITE_UNITS = [['L', 'L'], ['kg', 'kg']]
 
-  SAISON = Setting.find(1).saison_id
+  SAISON_ID = Setting.find(1).saison_id
+  SAISON = Setting.find(1).saison
   
   # HEADER_KEY = 0
   # HEADER_VALUE = 1
@@ -29,21 +30,25 @@ class Application < ActiveRecord::Base
     ['print_produits', 'Produits', '', :text_field], 
    	['user_name', 'Presta', '', false, :text_field], 
    	['name', 'nom', '', true, :text_field], 
-   	['sum_surfaces', 'surface', '', true, :text_field], 
-   	['get_cout_ha', 'Cout Ha', '€/Ha', false], 
-   	['print_date', 'date', '', false]]
+   	['sum_surfaces', 'surface', 'ha', true, :text_field], 
+   	['get_cout_ha', 'Cout Ha', '€/ha', false], 
+   	['print_date', 'date', '', false],
+   	['get_desc_popup', '', '', false]]
 
    PRODUIT_HEAD = [
     ['star', 'star', '', true, :check_box], 
     ['adu', 'adu', '', true, :check_box], 
-    ['stock_lower_than_used_display', 'stock', '', true], 
+    ['stock_lower_than_used_display', 'S', '', true], 
    	['id', 'id', '', false], 
    	['category_name', 'categorie', '', false, :text_field], 
    	['name', 'nom', '', true, :text_field], 
    	['get_quantite', 'Quantite', '', false], 
    	['unit', '', '', false],
+    # ['get_stock', 'Stock', '', false], 
+    # ['unit', '', '', false],
     ['get_prix_unitaire', 'Prix', '', false], 
-    ['get_prix_unitaire_unit', '', '', false]
+    ['get_prix_unitaire_unit', '', '', false],
+    ['number_of_use', '', '', false]
    	]
 
   FACTURE_HEAD = [

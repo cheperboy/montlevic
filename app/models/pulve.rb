@@ -212,4 +212,20 @@ class Pulve < Charge
     return out
   end
 
+  def get_desc_popup
+    out = ""
+    unless self.desc.eql?("")
+      out +='
+      <a href="" class="popup_desc">|?|<span>
+      '+ self.desc + '
+      </span>
+      </a>
+      '
+    end
+    return out
+  end
+  # <a href="'+ pulve_path(pulve) +'" class="popup_desc"><img src="/images/img-voir.png" border="0"><span>
+  # '+ pulve.desc + '
+  # </span>
+  # </a>
 end

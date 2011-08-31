@@ -73,13 +73,28 @@ class Integer
    ((self - value).abs < threshold)
   end
 
-  def display
-    if(self == 0)
-      return "-" 
-    else
-      return self.to_s
+  def display(*args)
+    precision = args[1]
+    options = args.extract_options!
+    
+    if (self == 0)
+      unless options[:with_zero]
+        return "-"
+      end 
     end
+    unless precision != nil
+      precision = Setting::FLOAT_PRECISION
+    end
+    return (sprintf("%.#{precision}f", self.to_f))
   end
+
+  # def display(*args)
+  #   if(self == 0)
+  #     return "-"
+  #   else
+  #     return self.to_s
+  #   end
+  # end
 
 end
 # END OF CLASS Integer
@@ -94,8 +109,25 @@ class Float
   # avec en argument le nombre de chiffre apres la virgule
   alias_method :orig_to_s, :to_s
 
-  def display(precision=nil)
-    return "-" if ((-0.01 < self) && (self < 0.01))
+  
+  #affiche un float avec options
+  # Options:
+  # - display() : precision choisie dans Settings, '-' si valeure = 0,0
+  # - display(:with_zero => true) : '0.0' si valeure = 0,0
+  # - display(2) : 2 chiffres apres la virgule, ecrase les Settings
+  # - display(2, :with_zero => true) : 2 chiffres apres la virgule, ecrase les Settings et 0.0 si valeur=0
+
+  def display(*args)
+    precision = args[1]
+    options = args.extract_options!
+    
+    if ((-0.01 < self) && (self < 0.01))
+      if options[:with_zero]
+        return (sprintf("%.#{precision}f", self.to_f))
+      else
+        return "-"
+      end 
+    end
     # ligne suivante commentee pour forcer les Integer a s'afficher avec precision apres virgule
     # return self.to_i if (self == self.to_i)
     

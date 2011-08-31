@@ -116,40 +116,42 @@ class Calculate < ActiveRecord::Base
   end
 
   def run_produits
-    for putoproduit in @putoproduits
-      for col in @cols
-        #valeur ha et total pour chaque col affecté a la pulve
-        @res.set_line(@sid, @c, col.id, :putoproduits, :all, putoproduit.id, :ha, putoproduit.get_cout_ha_col(col))
-        @res.set_line(@sid, @c, col.id, :putoproduits, :all, putoproduit.id, :total, putoproduit.get_cout_total_col(col))
-      end
+    unless @putoproduits.nil?
+      for putoproduit in @putoproduits
+        for col in @cols
+          #valeur ha et total pour chaque col affecté a la pulve
+          @res.set_line(@sid, @c, col.id, :putoproduits, :all, putoproduit.id, :ha, putoproduit.get_cout_ha_col(col))
+          @res.set_line(@sid, @c, col.id, :putoproduits, :all, putoproduit.id, :total, putoproduit.get_cout_total_col(col))
+        end
 
-      datas = { 
-        :id => putoproduit.id, 
-        :name => putoproduit.produit.name, 
-        :category_name => putoproduit.category.name, 
-        :cout_ha => putoproduit.get_cout_ha, 
-        :user_id => putoproduit.pulve.user_id,
-        :cout_total => putoproduit.get_cout_total, 
-        :date => putoproduit.pulve.date, 
-        :parcelles_length => putoproduit.pulve.parcelles.length, 
-        :sum_surfaces => putoproduit.pulve.sum_surfaces }
+        datas = { 
+          :id => putoproduit.id, 
+          :name => putoproduit.produit.name, 
+          :category_name => putoproduit.category.name, 
+          :cout_ha => putoproduit.get_cout_ha, 
+          :user_id => putoproduit.pulve.user_id,
+          :cout_total => putoproduit.get_cout_total, 
+          :date => putoproduit.pulve.date, 
+          :parcelles_length => putoproduit.pulve.parcelles.length, 
+          :sum_surfaces => putoproduit.pulve.sum_surfaces }
     
-      @res.set_saison_line_datas(@sid, :putoproduits, putoproduit.id, datas)
+        @res.set_saison_line_datas(@sid, :putoproduits, putoproduit.id, datas)
 
-      # total du pulve
-      @res.set_saison_line(@sid, :putoproduits, :all, putoproduit.id, :ha, putoproduit.get_cout_ha_for_saison(@surface_of_saison))
-      @res.set_saison_line(@sid, :putoproduits, :all, putoproduit.id, :total, putoproduit.get_cout_total)
+        # total du pulve
+        @res.set_saison_line(@sid, :putoproduits, :all, putoproduit.id, :ha, putoproduit.get_cout_ha_for_saison(@surface_of_saison))
+        @res.set_saison_line(@sid, :putoproduits, :all, putoproduit.id, :total, putoproduit.get_cout_total)
 
-      #total des produits
-      # FIXME Remplacer pulve.get_cout_ha_for_saison(@surface_of_saison) PAR PUTOPRODUIT...
-      @res.add_other_line_for_saison(@sid, :resultats, :total_putoproduits, :ha, putoproduit.get_cout_ha_for_saison(@surface_of_saison))      
-      @res.add_other_line_for_saison(@sid, :resultats, :total_putoproduits, :total, putoproduit.get_cout_total)
+        #total des produits
+        # FIXME Remplacer pulve.get_cout_ha_for_saison(@surface_of_saison) PAR PUTOPRODUIT...
+        @res.add_other_line_for_saison(@sid, :resultats, :total_putoproduits, :ha, putoproduit.get_cout_ha_for_saison(@surface_of_saison))      
+        @res.add_other_line_for_saison(@sid, :resultats, :total_putoproduits, :total, putoproduit.get_cout_total)
     
-      #totaux par categorie de produits
-      for cat in Category.putoproduits
-        if (putoproduit.produit.category_id == cat.id)
-          @res.add_saison_line(@sid, :putoproduits, :category, cat.id, :ha, putoproduit.get_cout_ha_for_saison(@surface_of_saison))
-          @res.add_saison_line(@sid, :putoproduits, :category, cat.id, :total, putoproduit.get_cout_total)
+        #totaux par categorie de produits
+        for cat in Category.putoproduits
+          if (putoproduit.produit.category_id == cat.id)
+            @res.add_saison_line(@sid, :putoproduits, :category, cat.id, :ha, putoproduit.get_cout_ha_for_saison(@surface_of_saison))
+            @res.add_saison_line(@sid, :putoproduits, :category, cat.id, :total, putoproduit.get_cout_total)
+          end
         end
       end
     end
@@ -317,24 +319,26 @@ class Calculate < ActiveRecord::Base
       end
     end
     
-    for putoproduit in @putoproduits
-      for col in @cols
-        cout_ha = @res.get_line(@sid, @c, col.id, :putoproduits, :all, putoproduit.id, :ha)
-        cout_total = @res.get_line(@sid, @c, col.id, :putoproduits, :all, putoproduit.id, :total)
-        #somme des putoproduits par col
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_putoproduits, :ha, cout_ha)
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_putoproduits, :total, cout_total)     
-        #total des couts par col
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, cout_ha)
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, cout_total)
-        #total des benefs par col
-        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-cout_ha))
-        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-cout_total))
-        #totaux par categorie de putoproduits
-        for cat in Category.putoproduits
-          if (putoproduit.produit.category_id == cat.id)
-            @res.add_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :ha, cout_ha)
-            @res.add_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :total, cout_total)
+    unless @putoproduits.nil?
+      for putoproduit in @putoproduits
+        for col in @cols
+          cout_ha = @res.get_line(@sid, @c, col.id, :putoproduits, :all, putoproduit.id, :ha)
+          cout_total = @res.get_line(@sid, @c, col.id, :putoproduits, :all, putoproduit.id, :total)
+          #somme des putoproduits par col
+          @res.add_other_line(@sid, @c, col.id, :resultats, :total_putoproduits, :ha, cout_ha)
+          @res.add_other_line(@sid, @c, col.id, :resultats, :total_putoproduits, :total, cout_total)     
+          #total des couts par col
+          @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, cout_ha)
+          @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, cout_total)
+          #total des benefs par col
+          @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-cout_ha))
+          @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-cout_total))
+          #totaux par categorie de putoproduits
+          for cat in Category.putoproduits
+            if (putoproduit.produit.category_id == cat.id)
+              @res.add_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :ha, cout_ha)
+              @res.add_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :total, cout_total)
+            end
           end
         end
       end

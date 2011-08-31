@@ -27,7 +27,7 @@ class Typeculture < ActiveRecord::Base
   def surface
     surfaces=0
     Parcelle.find_by_saison(:all).each do |parcelle|
-      if self.parcelles.find(:all, :conditions => {:saison_id =>  Application::SAISON}).include?(parcelle)
+      if self.parcelles.find(:all, :conditions => {:saison_id =>  Application::SAISON_ID}).include?(parcelle)
         surfaces+=parcelle.surface
       end
     end
