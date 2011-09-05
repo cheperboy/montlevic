@@ -1,7 +1,6 @@
 # TODO
 # -> modifier les labours de chaque parcelle
 
-
 # Upcategories
 cat_pulve = Upcategory.find_by_name('pulve')
 cat_facture = Upcategory.find_by_name('facture')

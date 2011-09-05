@@ -10,30 +10,56 @@ class Application < ActiveRecord::Base
   # HEADER_VALUE = 1
   # HEADER_UNIT = 2
   # HEADER_FILTER = 3
+  # HEADER_TYPE = 4
+  # HEADER_TRI = 5
+  # HEADER_TRI_KEY = 6
   
-  LABOUR_HEAD = [
-  	['star', 'star', ''], 
-  	['adu', 'adu', ''], 
-  	['id', 'id', ''], 
-  	['typecultures', 'Cultures', ''], 
-  	['category_name', 'categorie', ''], 
-  	['user_name', 'Presta', ''], 
-  	['name', 'nom', ''], 
-  	['cout_ha_passage', 'Cout Ha', '€/Ha'], 
-  	['print_date', 'date', '']]
+  LABOUR_HEAD = 
+  [
+    # KEY               VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
+   	['star',            'star',       '',     true,         :check_box,   true,   'star'            ], 
+   	['adu',             'adu',        '',     true,         :check_box,   true,   'adu'             ], 
+   	['id',              'id',         '',     false,        false,        true,   'id'              ], 
+   	['typecultures',    'Cultures',   '',     false,        false,        false,  ''                ], 
+  	['category_name',   'categorie',  '',     false,        false,        true,   'category_id'     ], 
+   	['user_name',       'Presta',     '',     false,        :text_field,  true,   'user_id'         ], 
+    ['name',            'nom',        '',     true,         :text_field,  true,   'name'            ], 
+  	['cout_ha_passage', 'Cout Ha',    '€/Ha', false,        false,        true,   'cout_ha_passage' ],
+   	['print_date',      'date',       '',     false,        true,         true,   'date'            ],
+   	['get_desc_popup',  '?',          '',     false,        true,         true,   '"desc"'          ]
+  ]
   
-  PULVE_HEAD = [
-   	['star', 'star', '', true, :check_box], 
-   	['adu', 'adu', '', true, :check_box], 
-   	['id', 'id', '', false], 
-   	['typecultures', 'Cultures', '', false], 
-    ['print_produits', 'Produits', '', :text_field], 
-   	['user_name', 'Presta', '', false, :text_field], 
-   	['name', 'nom', '', true, :text_field], 
-   	['sum_surfaces', 'surface', 'ha', true, :text_field], 
-   	['get_cout_ha', 'Cout Ha', '€/ha', false], 
-   	['print_date', 'date', '', false],
-   	['get_desc_popup', '', '', false]]
+  PULVE_HEAD = 
+  [
+    # KEY               VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
+   	['star',            'star',       '',     true,         :check_box,   true,   'star'    ], 
+   	['adu',             'adu',        '',     true,         :check_box,   true,   'adu'     ], 
+   	['id',              'id',         '',     false,        false,        true,   'id'      ], 
+   	['typecultures',    'Cultures',   '',     false,        false,        false,  ''        ], 
+    ['print_produits',  'Produits',   '',     :text_field,  false,        false,  ''        ], 
+   	['user_name',       'Presta',     '',     false,        :text_field,  true,   'user_id' ], 
+    ['name',            'nom',        '',     true,         :text_field,  true,   'name'    ], 
+   	['sum_surfaces',    'surface',    'ha',   true,         :text_field,  false,  ''        ], 
+   	['get_cout_ha',     'Cout Ha',    '€/ha', false,        false,        false,  ''        ], 
+   	['print_date',      'date',       '',     false,        true,         true,   'date'    ],
+   	['get_desc_popup',  '?',          '',     false,        true,         true,   '"desc"'  ]
+  ]
+
+  FACTURE_HEAD = [
+  	['star',            'star',       ''], 
+  	['adu',             'adu',        ''], 
+  	['id',              'id',         ''], 
+  	['category_name',   'cat',        ''], 
+  	['factcat_name',    'class',      ''], 
+  	['print_factype',   'compta',     ''], 
+  	['type',            'type',       ''], 
+  	['user_name',       'Presta', ''], 
+  	['name',            'nom', ''], 
+  	['cout',            'Cout', '€'], 
+    ['ref_client',      'Ref Client', '€'], 
+    ['ref',             'Ref', '€'], 
+  	['print_date',      'date', '']]
+
 
    PRODUIT_HEAD = [
     ['star', 'star', '', true, :check_box], 
@@ -50,21 +76,6 @@ class Application < ActiveRecord::Base
     ['get_prix_unitaire_unit', '', '', false],
     ['number_of_use', '', '', false]
    	]
-
-  FACTURE_HEAD = [
-  	['star', 'star', ''], 
-  	['adu', 'adu', ''], 
-  	['id', 'id', ''], 
-  	['category_name', 'cat', ''], 
-  	['factcat_name', 'class', ''], 
-  	['print_factype', 'compta', ''], 
-  	['type', 'type', ''], 
-  	['user_name', 'Presta', ''], 
-  	['name', 'nom', ''], 
-  	['cout', 'Cout', '€'], 
-    # ['ref_client', 'Ref Client, '€'], 
-    # ['ref', 'Ref', '€'], 
-  	['print_date', 'date', '']]
 
   
   # Used in Print.rb

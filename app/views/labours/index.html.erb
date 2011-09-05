@@ -4,7 +4,7 @@
 
 <br /><br />
 
-<%= draw_table(Application::LABOUR_HEAD, @labours, print_stars=true) %>
+<%= draw_table_with_find(Application::LABOUR_HEAD, 	@labours, 	'labours', 'index', params) %>
 
 
 

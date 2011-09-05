@@ -29,10 +29,22 @@ namespace :data do
     sh %{rake db:seed}
   end
 
+  desc "seed database from file saison_2010_2011.rb"
+  task :saison_2011 => :environment do 
+    file = File.join(Rails.root, 'db', 'datas', 'saison_2010_2011.rb')
+    load(file) if File.exist?(file)
+  end
+
+  desc "seed database from file saison_2009_2010.rb"
+  task :saison_2010 => :environment do 
+    file = File.join(Rails.root, 'db', 'datas', 'saison_2009_2010.rb')
+    load(file) if File.exist?(file)
+  end
+
   desc "seed database from file seeds.rb : MY_FILE=seeds rake seed_from_file_bis"
-  task :seed_from_file => :environment do 
+  task :from_file => :environment do 
     FILE = ENV["MY_FILE"]
-    file = File.join(Rails.root, 'db', FILE)
+    file = File.join(Rails.root, 'datas', FILE)
     load(file) if File.exist?(file)
   end
 

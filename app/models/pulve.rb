@@ -31,16 +31,6 @@ class Pulve < Charge
   validates_numericality_of :cout_ha_passage, :message => "cout ha passage doit etre un nombre"
 
 # ----- Finders -----
-
-  # named_scope :with_star,
-  #             {:conditions => ["star = ?", 1]}
-
-  def self.find_with_saison(*args) 
-    with_scope(:find => {:conditions => ["saison_id = ?", Setting.find(:first).saison_id]}) do 
-      find(*args)
-    end
-  end
-
   def self.with_star
     with_scope(:find => {:conditions => ["user_id = 2"]}) do
       yield
@@ -212,20 +202,4 @@ class Pulve < Charge
     return out
   end
 
-  def get_desc_popup
-    out = ""
-    unless self.desc.eql?("")
-      out +='
-      <a href="" class="popup_desc">|?|<span>
-      '+ self.desc + '
-      </span>
-      </a>
-      '
-    end
-    return out
-  end
-  # <a href="'+ pulve_path(pulve) +'" class="popup_desc"><img src="/images/img-voir.png" border="0"><span>
-  # '+ pulve.desc + '
-  # </span>
-  # </a>
 end

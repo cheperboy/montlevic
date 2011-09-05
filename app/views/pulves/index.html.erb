@@ -4,11 +4,12 @@
 <br />
 
 <br />
+<%= draw_table_with_find(Application::PULVE_HEAD, @pulves, 'pulves', 'index', params) %>
+
 <!-- @search_params.to_s ; <%#= @search_params.to_s %>
 <br />
 params.inspect : <%#= params.inspect %>
 <br /> -->
-<%= draw_table_with_find(Application::PULVE_HEAD, @pulves, 'pulves', 'index', params) %>
 <%#= draw_table(Application::PULVE_HEAD, @pulves) %>
 
 

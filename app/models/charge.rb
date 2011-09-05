@@ -14,6 +14,12 @@ class Charge < ActiveRecord::Base
     return true
   end
 
+# Finders
+  def self.find_with_saison(*args) 
+    with_scope(:find => {:conditions => ["saison_id = ?", Application::SAISON_ID]}) do 
+      find(*args)
+    end
+  end
 
   # ----- Getters -----
 
@@ -208,5 +214,24 @@ class Charge < ActiveRecord::Base
     end
     return(surfaces * self.get_cout_ha_typeculture(typeculture))
   end
+  
+  # Affichage
+  
+  #popup description
+  def get_desc_popup
+    url = self.class.to_s.downcase.pluralize + '/' + self.id.to_s
+    out = ""
+    unless self.desc.eql?("")
+      out +="
+      <a href='"+ url +"' class='popup_desc'><img src='/images/img-info.png' border='0'><span>
+      "+ self.desc + "
+      </span>
+      </a>
+      "
+    end
+    return out
+  end
+  
+  
   
 end

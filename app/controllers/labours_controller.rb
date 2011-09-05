@@ -2,7 +2,10 @@ class LaboursController < ApplicationController
   # GET /labours
   # GET /labours.xml
   def index
-    @labours = Labour.find_by_saison(:all)
+    @labours = Labour.find_with_saison(:all, :order => :id) 
+    if params[:tri]
+      @labours = Labour.find_with_saison(:all, :order => params[:tri].to_sym) 
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @labours }
