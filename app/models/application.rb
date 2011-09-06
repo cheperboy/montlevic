@@ -46,19 +46,21 @@ class Application < ActiveRecord::Base
   ]
 
   FACTURE_HEAD = [
-  	['star',            'star',       ''], 
-  	['adu',             'adu',        ''], 
-  	['id',              'id',         ''], 
+    # KEY               VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
+  	['star',            'star',       '',     true,         :check_box,   true,   'star'    ], 
+  	['adu',             'adu',        '',     true,         :check_box,   true,   'adu'     ],
+   	['id',              'id',         '',     false,        false,        true,   'id'      ], 
+    # ['typecultures',    'Cultures',   '',     false,        false,        false,  ''        ], 
   	['category_name',   'cat',        ''], 
   	['factcat_name',    'class',      ''], 
   	['print_factype',   'compta',     ''], 
   	['type',            'type',       ''], 
-  	['user_name',       'Presta', ''], 
-  	['name',            'nom', ''], 
-  	['cout',            'Cout', '€'], 
-    ['ref_client',      'Ref Client', '€'], 
-    ['ref',             'Ref', '€'], 
-  	['print_date',      'date', '']]
+  	['user_name',       'Presta',     ''], 
+  	['name',            'nom',        ''], 
+  	['cout',            'Cout',       '€'], 
+    ['ref_client',      'Ref Client', ''], 
+    ['ref',             'Ref',        ''], 
+  	['print_date',      'date',       '']]
 
 
    PRODUIT_HEAD = [

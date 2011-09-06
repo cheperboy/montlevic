@@ -78,9 +78,11 @@
 		<td class=left></td>
 	</tr>
 <%- quantity = 0 -%>
+<%- surface = 0 -%>
 <%- @produit.pulves.each do |pulve| -%>
 	<%- putoproduit = @produit.putoproduits.find_by_pulve_id(pulve.id) -%>
 	<% quantity += (putoproduit.dosage * pulve.sum_surfaces) %>
+	<% surface += (pulve.sum_surfaces) %>
 	<tr>
 		<td><%=h pulve.date %></td>
 		<td><%=h pulve.name %></td>
@@ -94,7 +96,7 @@
 	<td></td>
 	<td></td>
 	<td></td>
-	<td></td>
+	<td><%=h surface %> <%=h ha %></td>
 	<td><%=h quantity %> <%=h @produit.unit %></td>
 	<td></td>
 </tr>

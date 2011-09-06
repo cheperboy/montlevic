@@ -2,20 +2,12 @@ class PulvesController < ApplicationController
   # GET /pulves
   # GET /pulves.xml
   def index
- #   @pulves = Pulve.find_by_saison(:all)
-# TODO onglet verif saisie donnees : verifier que les pulves qui ont un prix/L sont lies a une facture
-
-    # @pulves = Pulve.find_by_saison(:all, :order => :id) do
-    #   saison = Setting.find(:first).saison_id
-    #   name.contains? params[:filter][:name] if params[:filter] && params[:filter][:name]
-    #   # category.name.contains? 'i'
-    #   star == 1 if ((params[:filter]) && (params[:filter][:star]))
-    #   adu == 1  if params[:filter] && params[:filter][:adu]
-    # end
     @pulves = Pulve.find_with_saison(:all, :order => :id) 
     if params[:tri]
       @pulves = Pulve.find_with_saison(:all, :order => params[:tri].to_sym) 
     end
+    @sum_all_surfaces = 0
+    @pulves.each { |pulve| @sum_all_surfaces += pulve.sum_surfaces}
     respond_to do |format|
       format.html
     end

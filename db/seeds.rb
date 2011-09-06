@@ -36,6 +36,7 @@ if SEEDS_BASIC
     { :name => 'batiments', :upcategory => facture}, 
     { :name => 'deplacement', :upcategory => facture}, 
     { :name => 'frais de gestion', :upcategory => facture },
+    { :name => 'service agricole', :upcategory => facture },
 
     { :name => 'divers', :upcategory => pulve },
     { :name => 'azote', :upcategory => pulve },
@@ -108,6 +109,8 @@ if SEEDS_BASIC
     {:name => "La Poste"},
     {:name => "Brico Depot"},
     {:name => "divers"},
+    {:name => "Auroy"},
+    {:name => "Bernard Peres"},
     {:name => "Bricomarche"},
     {:name => "Aucun"}
   ])

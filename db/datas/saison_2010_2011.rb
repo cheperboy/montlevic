@@ -17,13 +17,23 @@ cat_semis = Category.find_by_name('semis')
 cat_oligo = Category.find_by_name('oligo')
 cat_soufre = Category.find_by_name('soufre')
 cat_desherbant = Category.find_by_name('desherbant')
+cat_moisson = Category.find_by_name('moisson')
 cat_divers = Category.find_by_name('divers')
+
+# Categories - labours
+cat_covercrop = Category.find_by_name('covercrop')
+
+# Categories - factures
+cat_presta_agri = Category.find_by_name('service agricole')
 
 cat_phyto = Category.find_by_name('produits phyto')
 
 #Users
 trochet = User.find_by_name('Trochet')
+renaud = User.find_by_name('Renaud')
 dauger = User.find_by_name('Dauger')
+auroy = User.find_by_name('Auroy')
+bernard_peres = User.find_by_name('Bernard Peres')
 
 #Typecultures
 ble = Typeculture.find_by_name("Ble")
@@ -36,6 +46,8 @@ typeculture = Typeculture.find(:first)
 
 # Factypes
 factype_diff = Factype.find_by_name("diff")
+factype_null = Factype.find_by_name("null")
+factype_total = Factype.find_by_name("total")
 
 # Factcat
 factcat_agri = Factcat.find_by_name("agri")
@@ -84,36 +96,18 @@ zone = Zone.find(5)
 parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => tournesol, :surface => zone.surface )
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
-zonetopa = Zonetopa.find(:first)
-parcelle = Parcelle.find(:first)
-zone = Zone.find(:first)
+#set variables parcelles cultures
+parcelles_ble = []
+parcelles_ble << saison_2010_2011.parcelles.find_by_name('Mitant')
+parcelles_ble << saison_2010_2011.parcelles.find_by_name('Bons Pains')
+parcelles_ble << saison_2010_2011.parcelles.find_by_name('Pont des champs')
+parcelles_ble << saison_2010_2011.parcelles.find_by_name('Aeromodelisme')
 
-# ----- FIXTURES -----
-factureA = Debit.create!(:name => 'FIXTURE', 
-                          :cout => 1000, 
-                          :user => User.find(:first),
-                          :factype => Factype.find_by_name("diff"),
-                          :factcat => Factcat.find_by_name("agri"),
-                          :saison => saison_2010_2011,
-                          :date => '2011-01-01',
-                          :desc => "from seeds",
-                          :category => Category.find_by_name('deplacement'))
+# FIN PARCELLES
 
-labourA = Labour.create!(  :name => 'FIXTURE', 
-                         :cout_ha_passage => 10, 
-                         :user => User.find(:first),
-                         :saison => saison_2010_2011,
-                         :date => '2011-01-01',
-                         :desc => "from seeds",
-                         :category => Category.find_by_name('covercrop'))
 
-pulveA = Pulve.create!( :name => 'FIXTURE', 
-                       :cout_ha_passage => 0,
-                       :user => User.find(:first),
-                       :saison => saison_2010_2011,
-                       :date => '2011-01-01',
-                       :desc => "from seeds"
-)
+
+
 
 # PRODUITS - (Generation automatique xls)
 altigo = Produit.create!(:name => 'Altigo', :unit =>'kg', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
@@ -146,7 +140,7 @@ mas91 = Produit.create!(:name => 'MAS 91', :unit =>'L', :category => cat_divers,
 novrel = Produit.create!(:name => 'Novrel', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
 ovation = Produit.create!(:name => 'Ovation', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
 paledor = Produit.create!(:name => 'Paledor', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
-picobore = Produit.create!(:name => 'Picobore', :unit =>'kg', :category => cat_oligo, :saison => saison_2010_2011, :desc => '')
+picabore = Produit.create!(:name => 'Picabore', :unit =>'kg', :category => cat_oligo, :saison => saison_2010_2011, :desc => '')
 picosolo = Produit.create!(:name => 'Picosolo', :unit =>'kg', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
 pr = Produit.create!(:name => 'Pr', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
 proca = Produit.create!(:name => 'Proca', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
@@ -162,6 +156,9 @@ traxos = Produit.create!(:name => 'Traxos', :unit =>'L', :category => cat_desher
 vip = Produit.create!(:name => 'Vip', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
 zero2030 = Produit.create!(:name => '0-20-30', :unit =>'kg', :category => cat_engrais, :saison => saison_2010_2011, :desc => '')
 zero2525 = Produit.create!(:name => '0-25-25', :unit =>'kg', :category => cat_engrais, :saison => saison_2010_2011, :desc => '')
+nuvagrain = Produit.create!(:name => 'Nuvagrain', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+karate = Produit.create!(:name => 'Kaka', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+
 
 
 
@@ -172,14 +169,14 @@ zero2525 = Produit.create!(:name => '0-25-25', :unit =>'kg', :category => cat_en
 facture = Debit.create!(:name => 'Sacs B.B Adivalor', :date => '2010-11-30', :cout => 2.5, :ref_client => '01-2010-1187', :ref => '001', :user => dauger, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => '1 sac big bag',:saison => saison_2010_2011, :star => 0)
 facture = Debit.create!(:name => 'Super 45% BB', :date => '2011-01-21', :cout => 3069, :ref_client => '01-2010-1429', :ref => '002', :user => dauger, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => '',:saison => saison_2010_2011, :star => 0)
 protofacture = Protofacture.create!(:facture => facture, :produit => super45, :prix => 46.5, :quantite => 66, :saison => saison_2010_2011)
-facture = Debit.create!(:name => 'engrais 0-20-30', :date => '2011-01-24', :cout => 1260.80, :ref_client => '01-2011-1448', :ref => '003', :user => dauger, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => '',:saison => saison_2010_2011, :star => 0)
+facture = Debit.create!(:name => 'engrais 0-20-30', :date => '2011-01-24', :cout => 1260.8, :ref_client => '01-2011-1448', :ref => '003', :user => dauger, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => '',:saison => saison_2010_2011, :star => 0)
 protofacture = Protofacture.create!(:facture => facture, :produit => zero2030, :prix => 39.4, :quantite => 32, :saison => saison_2010_2011)
 facture = Debit.create!(:name => 'Sacs B.B Adivalor', :date => '2011-04-30', :cout => 5, :ref_client => '01-2010-2593', :ref => '004', :user => dauger, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => '2 sac big bag',:saison => saison_2010_2011, :star => 0)
 facture = Debit.create!(:name => 'engrais 0-20-30', :date => '2011-03-29', :cout => 2000, :ref_client => '01-2010-1982', :ref => '005', :user => dauger, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => '',:saison => saison_2010_2011, :star => 0)
 protofacture = Protofacture.create!(:facture => facture, :produit => zero2030, :prix => 40, :quantite => 50, :saison => saison_2010_2011)
 facture = Debit.create!(:name => 'Semance Campus', :date => '2011-03-11', :cout => 11710.55, :ref_client => '01-2010-1767', :ref => '006', :user => dauger, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => '',:saison => saison_2010_2011, :star => 1)
 protofacture = Protofacture.create!(:facture => facture, :produit => campus, :prix => 142, :quantite => 7, :saison => saison_2010_2011)
-facture = Debit.create!(:name => 'produits phyto 1', :date => '2011-03-11', :cout => 4402.20, :ref_client => '01-2010-1767', :ref => '007', :user => dauger, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => 'pas de prix HT. Verifier la somme.',:saison => saison_2010_2011, :star => 1)
+facture = Debit.create!(:name => 'produits phyto 1', :date => '2011-03-11', :cout => 4402.2, :ref_client => '01-2010-1767', :ref => '007', :user => dauger, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => 'pas de prix HT. Verifier la somme.',:saison => saison_2010_2011, :star => 1)
 protofacture = Protofacture.create!(:facture => facture, :produit => amistar_xtra, :prix => 43.9, :quantite => 10, :saison => saison_2010_2011)
 protofacture = Protofacture.create!(:facture => facture, :produit => cline, :prix => 20.9, :quantite => 15, :saison => saison_2010_2011)
 protofacture = Protofacture.create!(:facture => facture, :produit => pulsar, :prix => 56.6, :quantite => 10, :saison => saison_2010_2011)
@@ -219,7 +216,7 @@ protofacture = Protofacture.create!(:facture => facture, :produit => folyr, :pri
 protofacture = Protofacture.create!(:facture => facture, :produit => paledor, :prix => 61.8, :quantite => 2, :saison => saison_2010_2011)
 protofacture = Protofacture.create!(:facture => facture, :produit => altigo, :prix => 63.8, :quantite => 2, :saison => saison_2010_2011)
 protofacture = Protofacture.create!(:facture => facture, :produit => pr, :prix => 23.47, :quantite => 7, :saison => saison_2010_2011)
-facture = Debit.create!(:name => 'produits phyto 5', :date => '2010-09-27', :cout => 4907.40, :ref_client => '01-2010-471', :ref => '013', :user => dauger, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => '',:saison => saison_2010_2011, :star => 0)
+facture = Debit.create!(:name => 'produits phyto 5', :date => '2010-09-27', :cout => 4907.4, :ref_client => '01-2010-471', :ref => '013', :user => dauger, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => '',:saison => saison_2010_2011, :star => 0)
 #protofacture = Protofacture.create!(:facture => facture, :produit => dactyle, :prix => 5.2, :quantite => 130, :saison => saison_2010_2011)
 #protofacture = Protofacture.create!(:facture => facture, :produit => anglais_calibra, :prix => 2.9, :quantite => 120, :saison => saison_2010_2011)
 #protofacture = Protofacture.create!(:facture => facture, :produit => italie_turtetra, :prix => 1.7, :quantite => 100, :saison => saison_2010_2011)
@@ -231,21 +228,77 @@ facture = Debit.create!(:name => 'produits phyto 5', :date => '2010-09-27', :cou
 protofacture = Protofacture.create!(:facture => facture, :produit => ovation, :prix => 139.5, :quantite => 1, :saison => saison_2010_2011)
 protofacture = Protofacture.create!(:facture => facture, :produit => colzamid, :prix => 19.3, :quantite => 30, :saison => saison_2010_2011)
 protofacture = Protofacture.create!(:facture => facture, :produit => springbok, :prix => 25.9, :quantite => 40, :saison => saison_2010_2011)
+facture = Debit.create!(:name => 'produits phyto 6', :date => '2010-09-30', :cout => 246, :ref_client => '01-2010-689', :ref => '014', :user => dauger, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => '',:saison => saison_2010_2011, :star => 0)
+#protofacture = Protofacture.create!(:facture => facture, :produit => aubisque, :prix => 3.7, :quantite => 10, :saison => saison_2010_2011)
+protofacture = Protofacture.create!(:facture => facture, :produit => chardol, :prix => 7.85, :quantite => 10, :saison => saison_2010_2011)
+protofacture = Protofacture.create!(:facture => facture, :produit => chardol, :prix => 7.85, :quantite => 10, :saison => saison_2010_2011)
+protofacture = Protofacture.create!(:facture => facture, :produit => huile, :prix => 2.6, :quantite => 20, :saison => saison_2010_2011)
+facture = Debit.create!(:name => 'vitavax + BB', :date => '2010-10-20', :cout => 746.58, :ref_client => '22269', :ref => '015', :user => renaud, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => 'vitavax + Big BagsBB : 8x9,41=75,24€ à répartir',:saison => saison_2010_2011, :star => 0)
+#protofacture = Protofacture.create!(:facture => facture, :produit => vitavax, :prix => 10.05, :quantite => 66.8, :saison => saison_2010_2011)
+facture = Debit.create!(:name => 'Fury 5L', :date => '2011-03-31', :cout => 163.7, :ref_client => 'FCT-1305', :ref => '016', :user => auroy, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => '',:saison => saison_2010_2011, :star => 0)
+protofacture = Protofacture.create!(:facture => facture, :produit => fury, :prix => 32.74, :quantite => 5, :saison => saison_2010_2011)
+facture = Debit.create!(:name => 'Picabore + Challenge', :date => '2011-02-28', :cout => 1221.81, :ref_client => '24302', :ref => '017', :user => renaud, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => '',:saison => saison_2010_2011, :star => 1)
+protofacture = Protofacture.create!(:facture => facture, :produit => picabore, :prix => 2.1, :quantite => 40, :saison => saison_2010_2011)
+protofacture = Protofacture.create!(:facture => facture, :produit => challenge, :prix => 18.96, :quantite => 60, :saison => saison_2010_2011)
+protofacture = Protofacture.create!(:facture => facture, :produit => challenge, :prix => 1.2, :quantite => 60, :saison => saison_2010_2011)
+facture = Debit.create!(:name => 'produits phyto 7', :date => '2011-06-28', :cout => 389.9, :ref_client => 'FCC-1629', :ref => '018', :user => auroy, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => 'produits + Bib Bag 1,50x1,60 : 10x10=100€ a répartir',:saison => saison_2010_2011, :star => 0)
+protofacture = Protofacture.create!(:facture => facture, :produit => nuvagrain, :prix => 36, :quantite => 5, :saison => saison_2010_2011)
+protofacture = Protofacture.create!(:facture => facture, :produit => karate, :prix => 109.9, :quantite => 1, :saison => saison_2010_2011)
+facture = Debit.create!(:name => 'nuvagrain', :date => '2010-07-10', :cout => 51.26, :ref_client => 'FCC-44', :ref => '019', :user => auroy, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => '',:saison => saison_2010_2011, :star => 0)
+
+facture = Debit.create!(:name => 'semis tournesol', :date => '2011-03-27', :cout => 260, :ref_client => '015-2011', :ref => '020', :user => bernard_peres, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '20ha x 13€/ha = 260€',:saison => saison_2010_2011, :star => 1)
+
+reportable = Reportable.create!(:name => 'facture 19', :date => '2011-01-30', :cout => 3537.5, :ref_client => '19', :ref => '021', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Pulvérisation', :date => '2011-01-30', :cout => 955, :ref_client => '19', :ref => '021', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '95,5Ha x 10€ = 955€',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Broyage haies', :date => '2011-01-30', :cout => 456, :ref_client => '19', :ref => '021', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '12h x 38€ = 456€',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Broyage horizontal', :date => '2011-01-30', :cout => 297.5, :ref_client => '19', :ref => '021', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '8h50 x 35€/h = 297,5',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Semis Colza et Blé', :date => '2011-01-30', :cout => 1829, :ref_client => '19', :ref => '021', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '59ha x 31€/ha = 1829€',:saison => saison_2010_2011, :star => 0)
+
+reportable = Reportable.create!(:name => 'facture 18', :date => '2011-01-30', :cout => 3515, :ref_client => '18', :ref => '022', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Roulage', :date => '2011-01-30', :cout => 465, :ref_client => '18', :ref => '022', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '15h30 x 30€/h = 465€',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Cover-crop', :date => '2011-01-30', :cout => 2240, :ref_client => '18', :ref => '022', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '64h x 35€/h = 2240€',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Vibro', :date => '2011-01-30', :cout => 810, :ref_client => '18', :ref => '022', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '81ha x 10€ = 810€',:saison => saison_2010_2011, :star => 0)
+
+reportable = Reportable.create!(:name => 'facture 20', :date => '2011-01-30', :cout => 2950, :ref_client => '20', :ref => '023', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Labour + Herse', :date => '2011-01-30', :cout => 2830, :ref_client => '20', :ref => '023', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '(semis prairies)',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Epandage chaux', :date => '2011-01-30', :cout => 120, :ref_client => '20', :ref => '023', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
+
+reportable = Reportable.create!(:name => 'facture 24', :date => '2011-07-19', :cout => 5790, :ref_client => '24', :ref => '024', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Epandage engrais', :date => '2011-07-19', :cout => 2520, :ref_client => '24', :ref => '024', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '252 ha x 10€ = 2520€',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Pulvérisation cultures', :date => '2011-07-19', :cout => 2850, :ref_client => '24', :ref => '024', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '285 ha x 10€ = 2850€',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'tours de champs', :date => '2011-07-19', :cout => 120, :ref_client => '24', :ref => '024', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '4h x 30€/h = 120€ (desherbage)',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'semis tournesol', :date => '2011-07-19', :cout => 300, :ref_client => '24', :ref => '024', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '20ha x 15€/ha = 300€ (Semis tournesol Tracteur)',:saison => saison_2010_2011, :star => 0)
+
+reportable = Reportable.create!(:name => 'facture 25', :date => '2011-07-19', :cout => 226.4, :ref_client => '25', :ref => '025', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Vibro', :date => '2011-07-19', :cout => 200, :ref_client => '25', :ref => '025', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '20ha x 10€ = 200€',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Orge', :date => '2011-07-19', :cout => 26.4, :ref_client => '25', :ref => '025', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '150kg x 176€/t = 26,40€',:saison => saison_2010_2011, :star => 0)
+
+reportable = Reportable.create!(:name => 'facture 50', :date => '2010-11-07', :cout => 6986, :ref_client => '50', :ref => '026', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Moissonnage Blé colza, Tournesol', :date => '2010-11-07', :cout => 6375, :ref_client => '50', :ref => '026', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '85ha x 75€/ha = 6375€',:saison => saison_2010_2011, :star => 0)
+facture = Report.create!(:reportable => reportable, :name => 'Transport Céréales', :date => '2010-11-07', :cout => 611, :ref_client => '50', :ref => '026', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '13 voyages x 47€ = 611€',:saison => saison_2010_2011, :star => 0)
+
+facture = Debit.create!(:name => 'facture 14 : Pressage', :date => '2010-11-10', :cout => 3312, :ref_client => '14', :ref => '027', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_presta_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
 
 
 
 
+# ne pas supprimer
+# Ajouter moisson sur parcelles de colza
+moisson_colza = Labour.create!(:name => 'moisson colza', :cout_ha_passage => 30, :user => trochet, :saison => saison_2010_2011, :date => '2010-05-01', :star => 0, :category => cat_moisson, :desc => 'date inconnue')
+moisson_tournesol = Labour.create!(:name => 'moisson tournesol', :cout_ha_passage => 30, :user => trochet, :saison => saison_2010_2011, :date => '2010-05-01', :star => 0, :category => cat_moisson, :desc => 'date inconnue')
+moisson_ble = Labour.create!(:name => 'moisson ble', :cout_ha_passage => 30, :user => trochet, :saison => saison_2010_2011, :date => '2010-05-01', :star => 0, :category => cat_moisson, :desc => 'date inconnue')
 
 
 
-# PULVES - (generation automatique xls)
+# PULVES & LABOURS - (generation automatique xls)
 
  # Les Vallées - Tournesol - 11Ha
-pulves = nil
+
 pulves = []
-pulve = Pulve.create!(:name => 'Glyphosate', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2011-03-11', :star => 1, :desc => 'verifier les date (2010 ou 2011?).</br>verifier le dosage huile.')
+labours = []
+pulve = Pulve.create!(:name => 'Glyphosate', :cout_ha_passage => 23, :user => trochet, :saison => saison_2010_2011, :date => '2011-03-11', :star => 1, :desc => 'verifier les date (2010 ou 2011?).</br>verifier le dosage huile.')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => glyphosate, :dosage => 2, :saison => saison_2010_2011)
-putoproduit = Putoproduit.create!(:pulve => pulve, :produit => huile, :dosage => 99, :saison => saison_2010_2011)
+putoproduit = Putoproduit.create!(:pulve => pulve, :produit => huile, :dosage => 1, :saison => saison_2010_2011)
 pulves << pulve
 pulve = Pulve.create!(:name => 'Engrais 0-20-30', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2011-03-20', :star => 0, :desc => '')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => zero2030, :dosage => 250, :saison => saison_2010_2011)
@@ -264,26 +317,26 @@ pulve = Pulve.create!(:name => 'pulsar', :cout_ha_passage => 10, :user => troche
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => pulsar, :dosage => 0.68182, :saison => saison_2010_2011)
 pulves << pulve
 
-labours = Labour.create!([
- {:name => 'moisson', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2009-01-01',
- :desc => "", :category => Category.find_by_name('moisson')} ])
+labour = Labour.create!(:name => 'déchaumage blé - 1', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-05-01', :star => 0, :category => cat_covercrop, :desc => 'date inconnue')
+labours << labour
+labours << moisson_tournesol
+
 parcelle = saison_2010_2011.parcelles.find_by_name('Vallees')
-pulves.each do |pulve|
-  putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)
-end
-labours.each do |labour|
-  labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)
-end
+labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
+pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
 
 
 
 
  # Champ du milieu - Tournesol - 9Ha
-pulves = nil
+
 pulves = []
+labours = []
+
+
 pulve = Pulve.create!(:name => 'Glyphosate', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2011-03-11', :star => 1, :desc => 'verifier les date (2010 ou 2011?).</br>verifier le dosage huile.')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => glyphosate, :dosage => 2, :saison => saison_2010_2011)
-putoproduit = Putoproduit.create!(:pulve => pulve, :produit => huile, :dosage => 99, :saison => saison_2010_2011)
+putoproduit = Putoproduit.create!(:pulve => pulve, :produit => huile, :dosage => 1, :saison => saison_2010_2011)
 pulves << pulve
 pulve = Pulve.create!(:name => 'Engrais 0-20-30', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2011-03-20', :star => 0, :desc => '')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => zero2030, :dosage => 250, :saison => saison_2010_2011)
@@ -294,22 +347,26 @@ pulves << pulve
 pulve = Pulve.create!(:name => 'Challenge', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2011-04-11', :star => 0, :desc => '')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => challenge, :dosage => 4, :saison => saison_2010_2011)
 pulves << pulve
-labours = Labour.create!([
- {:name => 'moisson', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2009-01-01',
- :desc => "", :category => Category.find_by_name('moisson')} ])
+
+
 parcelle = saison_2010_2011.parcelles.find_by_name('Champ du Milieu')
-pulves.each do |pulve|
-  putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)
-end
-labours.each do |labour|
-  labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)
-end
+labours << moisson_tournesol
+labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
+pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
+
+
+
+
+
 
 
  # Basse-cour - Colza - 2Ha
-pulves = nil
+
 pulves = []
-pulve = Pulve.create!(:name => 'Semis', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-08-31', :star => 0, :desc => '')
+labours = []
+
+
+pulve = Pulve.create!(:name => 'Semis', :cout_ha_passage => 31, :user => trochet, :saison => saison_2010_2011, :date => '2010-08-31', :star => 0, :desc => '')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => catalino, :dosage => 3.5, :saison => saison_2010_2011)
 pulves << pulve
 pulve = Pulve.create!(:name => 'colzamid', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-08-31', :star => 0, :desc => '')
@@ -345,8 +402,8 @@ pulve = Pulve.create!(:name => 'chrono', :cout_ha_passage => 10, :user => troche
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => chrono, :dosage => 1.25, :saison => saison_2010_2011)
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => lontrel, :dosage => 1, :saison => saison_2010_2011)
 pulves << pulve
-pulve = Pulve.create!(:name => 'picobore', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2011-03-20', :star => 0, :desc => '')
-putoproduit = Putoproduit.create!(:pulve => pulve, :produit => picobore, :dosage => 2.5, :saison => saison_2010_2011)
+pulve = Pulve.create!(:name => 'picabore', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2011-03-20', :star => 0, :desc => '')
+putoproduit = Putoproduit.create!(:pulve => pulve, :produit => picabore, :dosage => 2.5, :saison => saison_2010_2011)
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => proteus, :dosage => 0.5, :saison => saison_2010_2011)
 pulves << pulve
 pulve = Pulve.create!(:name => 'Surnog', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2011-04-02', :star => 0, :desc => '')
@@ -356,22 +413,26 @@ pulve = Pulve.create!(:name => 'amistar_xtra', :cout_ha_passage => 10, :user => 
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => amistar_xtra, :dosage => 0.75, :saison => saison_2010_2011)
 pulves << pulve
 
-labours = Labour.create!([
- {:name => 'moisson', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2009-01-01',
- :desc => "", :category => Category.find_by_name('moisson')} ])
+
+
+labours << moisson_colza
+
 parcelle = saison_2010_2011.parcelles.find_by_name('Basse-cour')
-pulves.each do |pulve|
-  putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)
-end
-labours.each do |labour|
-  labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)
-end
+labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
+pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
+
+
+
+
 
 
  # Derierre - Colza - 14Ha
-pulves = nil
+
 pulves = []
-pulve = Pulve.create!(:name => 'Semis', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-08-30', :star => 1, :desc => 'dosage reel = 3.5Kg/Ha.</br>Selection Ovation au milieu entre les deux poteaux, voir plan)')
+labours = []
+
+
+pulve = Pulve.create!(:name => 'Semis', :cout_ha_passage => 31, :user => trochet, :saison => saison_2010_2011, :date => '2010-08-30', :star => 1, :desc => 'dosage reel = 3.5Kg/Ha.</br>Selection Ovation au milieu entre les deux poteaux, voir plan)')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => catalino, :dosage => 2, :saison => saison_2010_2011)
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => ovation, :dosage => 1.5, :saison => saison_2010_2011)
 pulves << pulve
@@ -405,8 +466,8 @@ pulve = Pulve.create!(:name => 'chrono', :cout_ha_passage => 10, :user => troche
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => chrono, :dosage => 0.714, :saison => saison_2010_2011)
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => lontrel, :dosage => 0.571, :saison => saison_2010_2011)
 pulves << pulve
-pulve = Pulve.create!(:name => 'picobore', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2011-03-24', :star => 0, :desc => '')
-putoproduit = Putoproduit.create!(:pulve => pulve, :produit => picobore, :dosage => 2.5, :saison => saison_2010_2011)
+pulve = Pulve.create!(:name => 'picabore', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2011-03-24', :star => 0, :desc => '')
+putoproduit = Putoproduit.create!(:pulve => pulve, :produit => picabore, :dosage => 2.5, :saison => saison_2010_2011)
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => proteus, :dosage => 0.5, :saison => saison_2010_2011)
 pulves << pulve
 pulve = Pulve.create!(:name => 'Surnog', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2011-04-02', :star => 0, :desc => '')
@@ -417,24 +478,27 @@ putoproduit = Putoproduit.create!(:pulve => pulve, :produit => amistar_xtra, :do
 pulves << pulve
 
 
-labours = Labour.create!([
- {:name => 'moisson', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2009-01-01',
- :desc => "", :category => Category.find_by_name('moisson')} ])
+labours << moisson_colza
 parcelle = saison_2010_2011.parcelles.find_by_name('Derierre')
-pulves.each do |pulve|
-  putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)
-end
-labours.each do |labour|
-  labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)
-end
+labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
+pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
+
+
+
+
+
+
 
  # Pont des Champs - Blé - 10Ha
-pulves = nil
+
 pulves = []
+labours = []
+
+
 pulve = Pulve.create!(:name => 'glyphosate', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-10-01', :star => 0, :desc => '')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => glyphosate, :dosage => 5, :saison => saison_2010_2011)
 pulves << pulve
-pulve = Pulve.create!(:name => 'semis', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-10-22', :star => 0, :desc => 'dosage réel=180.</br>début Richepin, fin PR.</br>N°43')
+pulve = Pulve.create!(:name => 'semis', :cout_ha_passage => 31, :user => trochet, :saison => saison_2010_2011, :date => '2010-10-22', :star => 0, :desc => 'dosage réel=180.</br>début Richepin, fin PR.</br>N°43')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => richepain, :dosage => 90, :saison => saison_2010_2011)
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => pr, :dosage => 90, :saison => saison_2010_2011)
 pulves << pulve
@@ -468,25 +532,28 @@ putoproduit = Putoproduit.create!(:pulve => pulve, :produit => ariane, :dosage =
 pulves << pulve
 
 
-labours = Labour.create!([
- {:name => 'moisson', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2009-01-01',
- :desc => "", :category => Category.find_by_name('moisson')} ])
+labours << moisson_ble
 parcelle = saison_2010_2011.parcelles.find_by_name('Pont des champs')
-pulves.each do |pulve|
-  putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)
-end
-labours.each do |labour|
-  labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)
-end
+labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
+pulves.each { |pulve|  putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
+
+
+
+
+
+
 
  # aeromodelisme - Blé - 14Ha
-pulves = nil
+
 pulves = []
+labours = []
+
+
 pulve = Pulve.create!(:name => 'glyphosate', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-09-30', :star => 0, :desc => '')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => glyphosate, :dosage => 2, :saison => saison_2010_2011)
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => chardol, :dosage => 0.6, :saison => saison_2010_2011)
 pulves << pulve
-pulve = Pulve.create!(:name => 'semis', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-10-20', :star => 0, :desc => 'dosage reel 175kg/Ha.</br>N°42.')
+pulve = Pulve.create!(:name => 'semis', :cout_ha_passage => 31, :user => trochet, :saison => saison_2010_2011, :date => '2010-10-20', :star => 0, :desc => 'dosage reel 175kg/Ha.</br>N°42.')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => pr, :dosage => 87.5, :saison => saison_2010_2011)
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => paledor, :dosage => 87.5, :saison => saison_2010_2011)
 pulves << pulve
@@ -519,25 +586,28 @@ putoproduit = Putoproduit.create!(:pulve => pulve, :produit => bravo_elite, :dos
 pulves << pulve
 
 
-labours = Labour.create!([
- {:name => 'moisson', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2009-01-01',
- :desc => "", :category => Category.find_by_name('moisson')} ])
+
+labours << moisson_ble
 parcelle = saison_2010_2011.parcelles.find_by_name('Aeromodelisme')
-pulves.each do |pulve|
-  putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)
-end
-labours.each do |labour|
-  labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)
-end
+labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
+pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
+
+
+
+
+
 
  # Mitant - Blé - 5 Ha
-pulves = nil
+
 pulves = []
+labours = []
+
+
 pulve = Pulve.create!(:name => 'glyphosate', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-09-30', :star => 0, :desc => '')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => glyphosate, :dosage => 2, :saison => saison_2010_2011)
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => chardol, :dosage => 0.6, :saison => saison_2010_2011)
 pulves << pulve
-pulve = Pulve.create!(:name => 'semis', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-10-21', :star => 0, :desc => 'dosage reel 165kg/Ha.</br>(Voir plan?)')
+pulve = Pulve.create!(:name => 'semis', :cout_ha_passage => 31, :user => trochet, :saison => saison_2010_2011, :date => '2010-10-21', :star => 0, :desc => 'dosage reel 165kg/Ha.</br>(Voir plan?)')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => pr, :dosage => 55, :saison => saison_2010_2011)
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => paledor, :dosage => 55, :saison => saison_2010_2011)
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => altigo, :dosage => 55, :saison => saison_2010_2011)
@@ -570,25 +640,28 @@ putoproduit = Putoproduit.create!(:pulve => pulve, :produit => bravo_elite, :dos
 pulves << pulve
 
 
-labours = Labour.create!([
- {:name => 'moisson', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2009-01-01',
- :desc => "", :category => Category.find_by_name('moisson')} ])
+labours << moisson_ble
 parcelle = saison_2010_2011.parcelles.find_by_name('Mitant')
-pulves.each do |pulve|
-  putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)
-end
-labours.each do |labour|
-  labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)
-end
+labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
+pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
+
+
+
+
+
+
 
  # Bruneau - Blé - 14 Ha
-pulves = nil
+
 pulves = []
+labours = []
+
+
 pulve = Pulve.create!(:name => 'glyphosate', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-09-30', :star => 0, :desc => '')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => glyphosate, :dosage => 2, :saison => saison_2010_2011)
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => chardol, :dosage => 0.6, :saison => saison_2010_2011)
 pulves << pulve
-pulve = Pulve.create!(:name => 'semis', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-10-21', :star => 0, :desc => 'dosage reel 171kg/Ha.</br>(Richepain au Tour?)</br>N°42')
+pulve = Pulve.create!(:name => 'semis', :cout_ha_passage => 31, :user => trochet, :saison => saison_2010_2011, :date => '2010-10-21', :star => 0, :desc => 'dosage reel 171kg/Ha.</br>(Richepain au Tour?)</br>N°42')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => richepain, :dosage => 85.5, :saison => saison_2010_2011)
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => paledor, :dosage => 85.5, :saison => saison_2010_2011)
 pulves << pulve
@@ -615,16 +688,42 @@ pulve = Pulve.create!(:name => 'Bravo Elite', :cout_ha_passage => 10, :user => t
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => bravo_elite, :dosage => 1.4, :saison => saison_2010_2011)
 pulves << pulve
 
-
-labours = Labour.create!([
- {:name => 'moisson', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2009-01-01',
- :desc => "", :category => Category.find_by_name('moisson')} ])
+labours << moisson_ble
 parcelle = saison_2010_2011.parcelles.find_by_name('Bruneau')
-pulves.each do |pulve|
-  putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)
-end
-labours.each do |labour|
-  labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)
-end
+labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
+pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
 
+
+
+# Ajouter ces 3 labours pour toutes les parcelles de blé, colza et tournesol
+
+pulves = []
+labours = []
+
+# labour = Labour.create!(:name => 'déchaumage blé - 1', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-05-01', :star => 0, :category => cat_covercrop, :desc => 'date inconnue')
+# labours << labour
+# labour = Labour.create!(:name => 'déchaumage blé - 2', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-05-02', :star => 0, :category => cat_covercrop, :desc => 'date inconnue')
+# labours << labour
+# labour = Labour.create!(:name => 'déchaumage blé - 3', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-05-03', :star => 0, :category => cat_covercrop, :desc => 'date inconnue')
+# labours << labour
+
+# Ajouter moisson sur parcelles de tournesol
+
+# pulves = []
+# labours = []
+# 
+# labour = Labour.create!(:name => 'moisson tournesol', :cout_ha_passage => 30, :user => trochet, :saison => saison_2010_2011, :date => '2010-05-01', :star => 0, :category => cat_moisson, :desc => 'date inconnue')
+# 
+
+
+
+
+
+
+
+
+
+
+
+# FIN PULVES & LABOURS
 # FIN PULVES - generation automatique de code
