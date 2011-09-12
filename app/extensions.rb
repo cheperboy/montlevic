@@ -118,12 +118,13 @@ class Float
   # - display(2, :with_zero => true) : 2 chiffres apres la virgule, ecrase les Settings et 0.0 si valeur=0
 
   def display(*args)
-    precision = args[1]
+    precision = args[1].to_s
     options = args.extract_options!
     
     if ((-0.01 < self) && (self < 0.01))
       if options[:with_zero]
         return (sprintf("%.#{precision}f", self.to_f))
+        # return (sprintf("%.02f", self.to_f))
       else
         return "-"
       end 

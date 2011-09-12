@@ -34,7 +34,21 @@ class FacturesController < ApplicationController
   end
 
   def index
-    @factures = Facture.find_by_saison(:all, :order => 'ref DESC')
+    @factures = Facture.find_with_saison(:all, :order => :id) 
+    if params[:tri]
+      @factures = Facture.find_with_saison(:all, :order => params[:tri].to_sym) 
+    end
+# calcul des sommes 
+    @total_cout = 0
+    @total_diff = 0
+    @factures.each do |facture|
+      if facture.class != Reportable
+        @total_cout += facture.cout 
+        if facture.comptable_diff?
+          @total_diff += facture.cout 
+        end
+      end
+    end
     respond_to do |format|
       format.html
     end

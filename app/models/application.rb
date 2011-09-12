@@ -16,68 +16,74 @@ class Application < ActiveRecord::Base
   
   LABOUR_HEAD = 
   [
-    # KEY               VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
-   	['star',            'star',       '',     true,         :check_box,   true,   'star'            ], 
-   	['adu',             'adu',        '',     true,         :check_box,   true,   'adu'             ], 
-   	['id',              'id',         '',     false,        false,        true,   'id'              ], 
-   	['typecultures',    'Cultures',   '',     false,        false,        false,  ''                ], 
-  	['category_name',   'categorie',  '',     false,        false,        true,   'category_id'     ], 
-   	['user_name',       'Presta',     '',     false,        :text_field,  true,   'user_id'         ], 
-    ['name',            'nom',        '',     true,         :text_field,  true,   'name'            ], 
-  	['cout_ha_passage', 'Cout Ha',    '€/Ha', false,        false,        true,   'cout_ha_passage' ],
-   	['print_date',      'date',       '',     false,        true,         true,   'date'            ],
-   	['get_desc_popup',  '?',          '',     false,        true,         true,   '"desc"'          ]
+    # KEY                       VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
+   	['star',                    'star',       '',     true,         :check_box,   true,   'star'            ], 
+   	['adu',                     'adu',        '',     true,         :check_box,   true,   'adu'             ], 
+   	['id',                      'id',         '',     false,        false,        true,   'id'              ], 
+   	['typecultures',            'Cultures',   '',     false,        false,        false,  ''                ], 
+  	['category_name',           'categorie',  '',     false,        false,        true,   'category_id'     ], 
+   	['user_name',               'Presta',     '',     false,        :text_field,  true,   'user_id'         ], 
+    ['name',                    'nom',        '',     true,         :text_field,  true,   'name'            ], 
+  	['cout_ha_passage',         'Cout Ha',    '€/Ha', false,        false,        true,   'cout_ha_passage' ],
+  	['get_cout_total',          'Cout Total', '€',    false,        false,        false,  ''                ],
+   	['print_date',              'date',       '',     false,        true,         true,   'date'            ],
+   	['get_desc_popup',          '?',          '',     false,        true,         true,   '"desc"'          ]
   ]
   
   PULVE_HEAD = 
   [
-    # KEY               VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
-   	['star',            'star',       '',     true,         :check_box,   true,   'star'    ], 
-   	['adu',             'adu',        '',     true,         :check_box,   true,   'adu'     ], 
-   	['id',              'id',         '',     false,        false,        true,   'id'      ], 
-   	['typecultures',    'Cultures',   '',     false,        false,        false,  ''        ], 
-    ['print_produits',  'Produits',   '',     :text_field,  false,        false,  ''        ], 
-   	['user_name',       'Presta',     '',     false,        :text_field,  true,   'user_id' ], 
-    ['name',            'nom',        '',     true,         :text_field,  true,   'name'    ], 
-   	['sum_surfaces',    'surface',    'ha',   true,         :text_field,  false,  ''        ], 
-   	['get_cout_ha',     'Cout Ha',    '€/ha', false,        false,        false,  ''        ], 
-   	['print_date',      'date',       '',     false,        true,         true,   'date'    ],
-   	['get_desc_popup',  '?',          '',     false,        true,         true,   '"desc"'  ]
+    # KEY                       VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
+   	['star',                    'star',       '',     true,         :check_box,   true,   'star'    ], 
+   	['adu',                     'adu',        '',     true,         :check_box,   true,   'adu'     ], 
+   	['id',                      'id',         '',     false,        false,        true,   'id'      ], 
+   	['typecultures',            'Cultures',   '',     false,        false,        false,  ''        ], 
+    ['print_produits',          'Produits',   '',     :text_field,  false,        false,  ''        ], 
+   	['user_name',               'Presta',     '',     false,        :text_field,  true,   'user_id' ], 
+    ['name',                    'nom',        '',     true,         :text_field,  true,   'name'    ], 
+   	['sum_surfaces',            'surface',    'ha',   true,         :text_field,  false,  ''        ], 
+   	['get_cout_ha',             'Cout Ha',    '€/ha', false,        false,        false,  ''        ], 
+   	['get_cout_total_passage',  'passage',    '€',    false,        false,        false,  ''        ], 
+   	['get_cout_total_produits', 'produits',   '€',    false,        false,        false,  ''        ], 
+   	['print_date',              'date',       '',     false,        true,         true,   'date'    ],
+   	['get_desc_popup',          '?',          '',     false,        true,         true,   '"desc"'  ]
   ]
 
-  FACTURE_HEAD = [
-    # KEY               VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
-  	['star',            'star',       '',     true,         :check_box,   true,   'star'    ], 
-  	['adu',             'adu',        '',     true,         :check_box,   true,   'adu'     ],
-   	['id',              'id',         '',     false,        false,        true,   'id'      ], 
-    # ['typecultures',    'Cultures',   '',     false,        false,        false,  ''        ], 
-  	['category_name',   'cat',        ''], 
-  	['factcat_name',    'class',      ''], 
-  	['print_factype',   'compta',     ''], 
-  	['type',            'type',       ''], 
-  	['user_name',       'Presta',     ''], 
-  	['name',            'nom',        ''], 
-  	['cout',            'Cout',       '€'], 
-    ['ref_client',      'Ref Client', ''], 
-    ['ref',             'Ref',        ''], 
-  	['print_date',      'date',       '']]
+  FACTURE_HEAD = 
+  [
+    # KEY                       VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
+  	['star',                    'star',       '',     true,         :check_box,   true,   'star'        ], 
+  	['adu',                     'adu',        '',     true,         :check_box,   true,   'adu'         ],
+   	['id',                      'id',         '',     false,        false,        true,   'id'          ], 
+  # ['typecultures',            'Cultures',   '',     false,        false,        false,  ''            ], 
+  	['category_name',           'Categorie',  '',     false,        false,        true,   'category_id' ],
+  	['factcat_name',            'class',      '',     false,        false,        true,   'factcat_id'  ], 
+  	['print_factype',           'compta',     '',     false,        false,        true,   'factype_id'  ],
+  	['type',                    'type',       '',     false,        false,        true,   'type_id'     ],
+  	['user_name',               'Presta',     '',     false,        false,        true,   'user_id'     ],
+  	['name',                    'nom',        '',     false,        false,        true,   'name'        ],
+  	['cout',                    'Cout',       '€',    false,        false,        true,   'cout'        ],
+    ['ref_client',              'Ref Client', '',     false,        false,        true,   'ref_client'  ],
+    ['ref',                     'Ref',        '',     false,        false,        true,   'ref'         ], 
+  	['print_date',              'date',       '',     false,        false,        true,   'date'        ]
+  ]
 
-
-   PRODUIT_HEAD = [
-    ['star', 'star', '', true, :check_box], 
-    ['adu', 'adu', '', true, :check_box], 
-    ['stock_lower_than_used_display', 'S', '', true], 
-   	['id', 'id', '', false], 
-   	['category_name', 'categorie', '', false, :text_field], 
-   	['name', 'nom', '', true, :text_field], 
-   	['get_quantite', 'Quantite', '', false], 
-   	['unit', '', '', false],
-    # ['get_stock', 'Stock', '', false], 
-    # ['unit', '', '', false],
-    ['get_prix_unitaire', 'Prix', '', false], 
-    ['get_prix_unitaire_unit', '', '', false],
-    ['number_of_use', '', '', false]
-   	]
+  PRODUIT_HEAD = 
+  [
+    # KEY                       VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
+    ['star',                    'star',       '',     true,         :check_box,  true,    'star'        ],
+    ['adu',                     'adu',        '',     true,         :check_box,  true,    'adu'         ],
+    ['stock_vs_used_pp',        'S',          '',     true,         false,        false,  ''            ],
+   	['id',                      'id',         '',     false,        false,        true,   'id'          ],
+   	['category_name',           'categorie',  '',     false,        :text_field, true,    'category_id' ],
+   	['name',                    'nom',        '',     true,         :text_field, true,    'name'        ],
+   	['get_quantite',            'Quantite',   '',     false,        false,        true,   'quantity'    ],
+   	['unit',                    '',           '',     false,        false,        true,   'unit'        ],
+    ['get_stock',               'Stock',      '',     false,        false,        false,  ''            ], 
+    ['get_cout_total',          'Achat',      '€',    false,        false,        false,  ''            ], 
+    ['get_prix_unitaire',       'Prix',       '',     false,        false,        false,  ''            ],
+    ['get_prix_unitaire_unit',  '',           '',     false,        false,        false,  ''            ], 
+    ['number_of_use',           '',           '',     false,        false,        false,  ''            ]
+  ]
 
   
   # Used in Print.rb

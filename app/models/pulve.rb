@@ -57,7 +57,7 @@ class Pulve < Charge
   def get_cout_total_passage # prestation seulement
     return (self.get_cout_ha_passage * self.sum_surfaces)
   end
-  
+
   def get_cout_ha # prestation + produits
     return (self.cout_ha_passage + self.get_cout_ha_produits)
   end

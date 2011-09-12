@@ -10,8 +10,8 @@
 		<td><%=h @produit.category.name %></td>
 	</tr>
 	<tr>
-		<td>Prix du littre/Kg : </td>
-		<td><%=h @produit.get_prix_unitaire.display %> <%=h @produit.get_prix_unitaire_unit %></td>
+		<td>Prix unitaire : </td>
+		<td><%=h @produit.get_prix_unitaire %> <%=h @produit.get_prix_unitaire_unit %></td>
 	</tr>
 	<tr>
 		<td>Prix total: </td>
@@ -33,17 +33,17 @@
 	<tr>
 		<td>Stock initial</td>
 		<td><%=h @produit.get_quantite %> <%=h @produit.unit %></td>
-		<td><%=h (@produit.get_quantite * @produit.get_prix_unitaire).display %> <%=h euro %></td>
+		<td><%=h (@produit.get_quantite * @produit.get_prix_unitaire).display(:with_zero => true) %> <%=h euro %></td>
 	</tr>
 	<tr>
 		<td>Consommé</td>
 		<td><%=h @produit.get_used_quantite %> <%=h @produit.unit %></td>
-		<td><%=h (@produit.get_used_quantite * @produit.get_prix_unitaire).display %> <%=h euro %></td>
+		<td><%=h (@produit.get_used_quantite * @produit.get_prix_unitaire).display(:with_zero => true) %> <%=h euro %></td>
 	</tr>
 	<tr>
 		<td>Stock final</td>
-		<td><%=h (@produit.get_quantite - @produit.get_used_quantite).display %> <%=h @produit.unit %></td>
-		<td><%=h ((@produit.get_quantite - @produit.get_used_quantite) * @produit.get_prix_unitaire).display %> <%=h euro %></td>
+		<td><%=h (@produit.get_quantite - @produit.get_used_quantite).display(:with_zero => true) %> <%=h @produit.unit %></td>
+		<td><%=h ((@produit.get_quantite - @produit.get_used_quantite) * @produit.get_prix_unitaire).display(:with_zero => true) %> <%=h euro %></td>
 	</tr>
 </table>
 
@@ -52,15 +52,21 @@
 	<table class=table_data>
 		<tr class=bold>
 			<td>Date</td>
-			<td>Nom (cout)</td>
-			<td>Prix du produit</td>
+			<td>Ref</td>
+			<td>Nom</td>
+			<td>Quantite</td>
+			<td>Prix unitaire</td>
+			<td>Cout</td>
 			<td></td>
 		</tr>
 		<%- @produit.protofactures.each do |protofacture| -%>
 		<tr>
 			<td><%=h protofacture.facture.date.to_s %></td>
-			<td><%=h protofacture.facture.name %> (<%=h protofacture.facture.cout %>  €)</td>
-			<td><%=h protofacture.prix %>  €</td>
+			<td><%=h protofacture.facture.ref %></td>
+			<td><%=h protofacture.facture.name %></td>
+			<td><%=h protofacture.quantite %></td>
+			<td><%=h protofacture.prix %></td>
+			<td><%=h protofacture.prix * protofacture.quantite %> <%= euro %></td>
 			<td><%= link_to image_tag('img-voir.png'), :controller => "factures", :action => "show", :id => protofacture.facture %></td>
 		</tr>
 	<%- end -%>

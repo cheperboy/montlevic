@@ -1,4 +1,7 @@
-<% title "Liste des factures" %>
+<% title "Factures" %>
+somme des factures : <%= @total_cout %> <%= euro %><br>
+somme des diff : <%= @total_diff %> <%= euro %><br>
+<br>
 | <%= link_to 'Nouvelle facture', new_facture_path %> | 
 <%= link_to 'Reports', {:controller => :factures, :action=> :reports} %> | 
 <%= link_to 'Nouveau Report', {:controller => :factures, :action=> :new_report} %> |

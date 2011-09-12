@@ -51,10 +51,15 @@ class Produit < ActiveRecord::Base
     
   # ----- Calculs -----  
   def get_prix_unitaire
+    sum_cout = 0
+    sum_quantite = 0
     prix_unitaire = 0
-    unless self.protofactures.count == 0
-      self.protofactures.each {|protofac| prix_unitaire += protofac.prix / protofac.quantite}
-      prix_unitaire = prix_unitaire / self.protofactures.count
+    unless self.protofactures.count == 0      
+      self.protofactures.each do |protofac| 
+        sum_cout += protofac.prix * protofac.quantite
+        sum_quantite += protofac.quantite
+      end
+      prix_unitaire = sum_cout / sum_quantite      
     end
     return prix_unitaire
   end
@@ -83,7 +88,7 @@ class Produit < ActiveRecord::Base
   def get_cout_total
     cout_total = 0
     unless self.protofactures.count.eql?(0)
-      self.protofactures.each {|protofac| cout_total += protofac.prix}
+      self.protofactures.each {|protofac| cout_total += protofac.prix * protofac.quantite}
       cout_total
     end
   end
@@ -123,11 +128,11 @@ class Produit < ActiveRecord::Base
   end  
   
   # ----- Verif -----
-  def stock_lower_than_used?
+  def stock_vs_used?
     return (get_quantite < get_used_quantite)
   end
-  def stock_lower_than_used_display
-    if stock_lower_than_used?
+  def stock_vs_used_pp
+    if stock_vs_used?
       return "X"
     end
   end     

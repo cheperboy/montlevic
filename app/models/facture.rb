@@ -82,7 +82,6 @@ class Facture < Charge
   end
 
   def self.find_by_saison(*args)
-
     with_scope(:find => { :conditions => ["saison_id = ?", Setting.find(:first).saison_id],
                           :order => :category_id}) do
         find(*args)

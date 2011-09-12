@@ -38,7 +38,7 @@ class ProduitsController < ApplicationController
   def index
     @produits = Produit.find_by_saison(:all, :order => 'category_id DESC')
     # @produits.each do |produit|
-    #   if produit.stock_lower_than_used?
+    #   if produit.stock_vs_used?
     #     produit.protofactures.first.quantite = produit.get_used_quantite
     #     produit.save
     #   end
