@@ -1,8 +1,0 @@
-
-export db local to file
-pg_dump --no-acl --no-owner -h localhost -U postgres comptagri_dev > export/export_2.sql
-
-import db local from file
-su -l postgres
-psql -d comptagri_dev -f /Users/matthieu/RubyOnRails/Workspace/montlevic/export/export_2.sql 
-

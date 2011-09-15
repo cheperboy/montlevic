@@ -108,7 +108,7 @@ parcelles_colza << saison_2010_2011.parcelles.find_by_name('Basse-cour')
 parcelles_colza << saison_2010_2011.parcelles.find_by_name('Derierre')
 
 parcelles_tournesol = []
-parcelles_tournesol << saison_2010_2011.parcelles.find_by_name('Champ du milieu')
+parcelles_tournesol << saison_2010_2011.parcelles.find_by_name('Champ du Milieu')
 parcelles_tournesol << saison_2010_2011.parcelles.find_by_name('Vallees')
 
 parcelles_jachere = []

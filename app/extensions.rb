@@ -77,30 +77,20 @@ class Integer
     precision = args[1]
     options = args.extract_options!
     
-    if (self == 0)
+    if (self.eql?(0))
       unless options[:with_zero]
         return "-"
       end 
     end
-    unless precision != nil
+    if precision.nil?
       precision = Setting::FLOAT_PRECISION
+      precision = 1
     end
     return (sprintf("%.#{precision}f", self.to_f))
   end
-
-  # def display(*args)
-  #   if(self == 0)
-  #     return "-"
-  #   else
-  #     return self.to_s
-  #   end
-  # end
-
 end
 # END OF CLASS Integer
-
 class Float
-
   def almost_eql?(value, threshold = 2)
    ((self - value).abs < threshold)
   end
@@ -108,17 +98,14 @@ class Float
   # redefinition de la methode to_s 
   # avec en argument le nombre de chiffre apres la virgule
   alias_method :orig_to_s, :to_s
-
-  
   #affiche un float avec options
   # Options:
   # - display() : precision choisie dans Settings, '-' si valeure = 0,0
   # - display(:with_zero => true) : '0.0' si valeure = 0,0
   # - display(2) : 2 chiffres apres la virgule, ecrase les Settings
   # - display(2, :with_zero => true) : 2 chiffres apres la virgule, ecrase les Settings et 0.0 si valeur=0
-
   def display(*args)
-    precision = args[1].to_s
+    precision = args[1]
     options = args.extract_options!
     
     if ((-0.01 < self) && (self < 0.01))
@@ -133,10 +120,13 @@ class Float
     # return self.to_i if (self == self.to_i)
     
     #this dont work - see surface dans une des cases header
-    unless precision != nil
+    if precision.nil?
       precision = Setting::FLOAT_PRECISION
+      precision = 1
     end
+    Rails.logger.error "TEST LOGGER FROM OUTSIDE"
     return (sprintf("%.#{precision}f", self.to_f))
+    # return (precision.to_s)
   end
 
   def to_s(arg = nil)

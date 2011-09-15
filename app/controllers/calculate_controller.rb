@@ -64,9 +64,9 @@ class CalculateController < ApplicationController
     model = Typeculture
     @show = Hash.new()
     @show[:cout_total] = true
-    @show[:cout_ha] = true
-    @show[:pulves] = true
-    @show[:labours] = true
+    @show[:cout_ha] = false
+    @show[:pulves] = false
+    @show[:labours] = false
     @show[:total_type] = true
     @show[:total_cat] = true
     @show[:date_surface] = true

@@ -4,7 +4,7 @@ class LaboursController < ApplicationController
   def index
     @labours = Labour.find_with_saison(:all, :order => :id) 
     if params[:tri]
-      @labours = Labour.find_with_saison(:all, :order => params[:tri].to_sym) 
+      @labours = Labour.find_with_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}")  
     end
     respond_to do |format|
       format.html # index.html.erb

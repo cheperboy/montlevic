@@ -1,0 +1,23 @@
+Dump local db to file:
+> pg_dump --no-acl --no-owner -h localhost -U postgres comptagri_dev > export/export_xxx.sql
+ou 
+> pg_dump -Fc --no-acl --no-owner -h localhost -U postgres comptagri_dev > export/export_xxx.sql
+ou
+> pg_dump -h localhost -U postgres comptagri_dev
+
+
+import db from file (local)
+> psql -d NOM_DB -f export/export_xxx.sql 
+
+
+charger le dump local vers le serveur:
+cette operation ecrase toutes les donnees du serveur.
+heroku pgbackups:restore SHARED_DATABASE 'https://s3.amazonaws.com/comptagri/export_12-sept-2011.sql'
+
+
+
+
+--
+le dump de Navicat semble plus propre. mais la commande "psql" permet d'inserer sans probleme l'un ou l'autre des dump (Navicat ou pg_dump)
+le dump Navicat ne fonctionne pas sur heroku.
+

@@ -34,68 +34,75 @@ module ApplicationHelper
     return "€/#{ha}"
   end
 
-  def draw_table_with_find(headers, elements, controller, action, search)
+  def select_tag_collection(collection, name)
+    out ="<select id='#{name}' name='#{name}'>"
+    
+    out ="</select>"
+    
+  end  
+    
+  def draw_table_with_find(headers, elements, controller, action, search_params)
     head_size = headers.count
     link_size = 3
     out = ""
-    #Formulaire de tri
+    # Action a choix multiple
     out += form_tag :action => 'index'
-    out += submit_tag :'Trier'
+    out += submit_tag :'Action'
     out += '<table class="table_list">'
+    
+    if elements.first.class.eql?(Pulve)
+      out += label :facture_id, "facture : "
+    	unless Facture.find_by_saison(:first).nil?
+        out += select_tag :facture_id, options_for_select(Facture.find_by_saison(:all), params[:facture_id])
+        out += select_tag(:operator, options_for_select(%w{ + - * / }, params[:operati]))
+      end
+    end
     
     #Head - TH
     out += '<tr>'
+    out += "<td></td>"
     headers.each do |header|
-      out += '<td class="list-elt-left"><b>'    
+      out += '<td class="list-elt-left"><b>'
       if header[HEADER_TRI] && header[HEADER_TRI] == true
-        out += link_to header[HEADER_VALUE].to_s, { :action => "index", :tri => header[HEADER_TRI_KEY].to_s} 
+        # on determine le sens de tri ASC ou DESC
+        sens = 'ASC'
+        if ((search_params[:tri] == header[HEADER_TRI_KEY]) && (search_params[:sens] == 'ASC'))
+          sens = 'DESC'
+        end
+        # ajout du lien (header de colonne)
+        out += link_to header[HEADER_VALUE].to_s, { :action => "index",
+                                                    :tri => header[HEADER_TRI_KEY].to_s,
+                                                    :sens => sens}
       else
         out += header[HEADER_VALUE].to_s 
       end
       out += '</b></td>'
     end
     out += "<td colspan='#{link_size.to_s}'></td>"
-    
-    #Formulaire - tetes de colonnes
-    if nil
-    # out += '<tr>'
-    # headers.each do |header|
-    #   # key = :name ou :star ou :adu ou :cout_produit ... 
-    #   key = header[HEADER_KEY].to_sym       
-    #   # si un filtre est prevu pour cette colonne :
-    #   if header[HEADER_FILTER] == true
-    #     if header[HEADER_TYPE] == :text_field
-    #       state = ''
-    #       state = params[:filter][key].to_s if (params[:filter] && params[:filter][key])
-    #       out += '<td>'
-    #       out += text_field 'filter', header[HEADER_KEY].to_sym, :size => 4, :value => state
-    #       out += '</td>'
-    #     elsif header[HEADER_TYPE] == :check_box
-    #       state = false
-    #       state = true if ((params[:filter]) && (params[:filter][key]))
-    #       name = 'filter[' + header[HEADER_KEY] + ']'
-    #       out += '<td>'
-    #       out += check_box_tag name, value = state, checked = state, options = {:id => 'filter[star]'}
-    #       out += '</td>'
-    #     end
-    #   else
-    #     out += '<td></td>'
-    #   end
-    # end
-    # out += "<td colspan='#{link_size.to_s}'></td>"
-    # out += '</tr>'
-    end
+
+    # logger.error "search_params[:selection] #{search_params[:selection]}"
     #Elements
     elements.each do |element|
       # determination de la class du model pour les liens show/edit/delete
       element_class = element.class.to_s.downcase
       if (element_class == "debit" ||
-          element_class == "diverse" ||
-          element_class == "reportable")
+        element_class == "diverse" ||
+        element_class == "report"  ||
+        element_class == "reportable")
           element_class = "facture"  
       end
       # Premier tr de l'element  
-      out += "<tr class='list-row'>"
+      out += "<tr class='list-row'>"        
+
+      # premier td : case a cocher pour action multiple
+      check_val = false
+      unless search_params[:selection].nil? || search_params[:selection].index(element.id.to_s).nil?
+        check_val = true
+      end
+      out += "<td>"
+      out += check_box_tag "selection[]", element.id, checked = check_val, options = {}
+      out += "</td>"
+      
       headers.each do |header|
         value = element.send(header[HEADER_KEY])
         #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)

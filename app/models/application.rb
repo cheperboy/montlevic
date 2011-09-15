@@ -58,7 +58,7 @@ class Application < ActiveRecord::Base
   	['category_name',           'Categorie',  '',     false,        false,        true,   'category_id' ],
   	['factcat_name',            'class',      '',     false,        false,        true,   'factcat_id'  ], 
   	['print_factype',           'compta',     '',     false,        false,        true,   'factype_id'  ],
-  	['type',                    'type',       '',     false,        false,        true,   'type_id'     ],
+  	['type',                    'type',       '',     false,        false,        true,   'type'     ],
   	['user_name',               'Presta',     '',     false,        false,        true,   'user_id'     ],
   	['name',                    'nom',        '',     false,        false,        true,   'name'        ],
   	['cout',                    'Cout',       '€',    false,        false,        true,   'cout'        ],

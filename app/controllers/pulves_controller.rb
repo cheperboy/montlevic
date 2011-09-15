@@ -1,10 +1,19 @@
 class PulvesController < ApplicationController
   # GET /pulves
   # GET /pulves.xml
+  def multiple_select
+    logger.error params.inspect
+    respond_to do |format|
+      format.html { redirect_to(pulves_url) }
+      format.xml  { head :ok }
+    end
+  end
+  
   def index
+    logger.error params.inspect
     @pulves = Pulve.find_with_saison(:all, :order => :id) 
     if params[:tri]
-      @pulves = Pulve.find_with_saison(:all, :order => params[:tri].to_sym) 
+      @pulves = Pulve.find_with_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
     end
     @sum_all_surfaces = 0
     @pulves.each { |pulve| @sum_all_surfaces += pulve.sum_surfaces}

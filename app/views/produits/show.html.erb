@@ -1,26 +1,24 @@
 <% title "Produit" %>
-
-<table>
+<%= Setting::FLOAT_PRECISION %>
+<table class=table_data>
 	<tr>
-		<td>Nom : </td>
-		<td><%=h @produit.name %></td>
+		<td class=left>Nom</td>
+		<td class=left><b><%= @produit.name %></b></td>
 	</tr>
 	<tr>
-		<td>Categorie : </td>
-		<td><%=h @produit.category.name %></td>
+		<td class=left>Categorie</td>
+		<td class=left><b><%=h @produit.category.name %></b></td>
 	</tr>
 	<tr>
-		<td>Prix unitaire : </td>
-		<td><%=h @produit.get_prix_unitaire %> <%=h @produit.get_prix_unitaire_unit %></td>
+		<td class=left>Prix unitaire</td>
+		<td class=right><b><%=h @produit.get_prix_unitaire.display(3) %> <%=h @produit.get_prix_unitaire_unit %></b></td>
 	</tr>
+<% unless @produit.desc.eql?('') %>
 	<tr>
-		<td>Prix total: </td>
-		<td><%=h @produit.get_cout_total %> €</td>
-	</tr>
-	<tr>
-		<td>Description : </td>
+		<td>Description</td>
 		<td><p><%=h @produit.desc %></p></td>
 	</tr>
+<% end %>
 </table>
 
 <h3>Stock</h3>
@@ -32,18 +30,18 @@
 	</tr>
 	<tr>
 		<td>Stock initial</td>
-		<td><%=h @produit.get_quantite %> <%=h @produit.unit %></td>
-		<td><%=h (@produit.get_quantite * @produit.get_prix_unitaire).display(:with_zero => true) %> <%=h euro %></td>
+		<td class=right><%=h @produit.get_quantite.display(2) %> <%=h @produit.unit %></td>
+		<td class=right><%=h (@produit.get_quantite * @produit.get_prix_unitaire).display(:with_zero => true) %> <%=h euro %></td>
 	</tr>
 	<tr>
 		<td>Consommé</td>
-		<td><%=h @produit.get_used_quantite %> <%=h @produit.unit %></td>
-		<td><%=h (@produit.get_used_quantite * @produit.get_prix_unitaire).display(:with_zero => true) %> <%=h euro %></td>
+		<td class=right><%=h @produit.get_used_quantite.display(2) %> <%=h @produit.unit %></td>
+		<td class=right><%=h (@produit.get_used_quantite * @produit.get_prix_unitaire).display(:with_zero => true) %> <%=h euro %></td>
 	</tr>
 	<tr>
 		<td>Stock final</td>
-		<td><%=h (@produit.get_quantite - @produit.get_used_quantite).display(:with_zero => true) %> <%=h @produit.unit %></td>
-		<td><%=h ((@produit.get_quantite - @produit.get_used_quantite) * @produit.get_prix_unitaire).display(:with_zero => true) %> <%=h euro %></td>
+		<td class=right><%=h (@produit.get_quantite - @produit.get_used_quantite).to_f.display(:with_zero => true) %> <%=h @produit.unit %></td>
+		<td class=right><%=h ((@produit.get_quantite - @produit.get_used_quantite) * @produit.get_prix_unitaire).display(:with_zero => true) %> <%=h euro %></td>
 	</tr>
 </table>
 
@@ -64,9 +62,9 @@
 			<td><%=h protofacture.facture.date.to_s %></td>
 			<td><%=h protofacture.facture.ref %></td>
 			<td><%=h protofacture.facture.name %></td>
-			<td><%=h protofacture.quantite %></td>
-			<td><%=h protofacture.prix %></td>
-			<td><%=h protofacture.prix * protofacture.quantite %> <%= euro %></td>
+			<td class=right><%=h protofacture.quantite.display %> <%=h @produit.unit %></td>
+			<td class=right><%=h protofacture.prix.display %> <%= euro %>/<%=h @produit.unit %></td>
+			<td class=right><%=h (protofacture.prix * protofacture.quantite).display %> <%= euro %></td>
 			<td><%= link_to image_tag('img-voir.png'), :controller => "factures", :action => "show", :id => protofacture.facture %></td>
 		</tr>
 	<%- end -%>
@@ -92,9 +90,9 @@
 	<tr>
 		<td><%=h pulve.date %></td>
 		<td><%=h pulve.name %></td>
-		<td><%=h putoproduit.dosage.display %> <%=h @produit.unit %>/<%=h ha %></td>
-		<td><%=h (pulve.sum_surfaces).display %> Ha</td>
-		<td><%=h (putoproduit.dosage * pulve.sum_surfaces).display %> <%=h @produit.unit %></td>
+		<td class=right><%=h putoproduit.dosage.display %> <%=h @produit.unit %>/<%=h ha %></td>
+		<td class=right><%=h (pulve.sum_surfaces).display %> Ha</td>
+		<td class=right><%=h (putoproduit.dosage * pulve.sum_surfaces).display %> <%=h @produit.unit %></td>
 		<td><%= link_to image_tag('img-voir.png'), :controller => "pulves", :action => "show", :id => pulve %></td>
 	</tr>
 <%- end -%>
@@ -102,8 +100,8 @@
 	<td></td>
 	<td></td>
 	<td></td>
-	<td><%=h surface %> <%=h ha %></td>
-	<td><%=h quantity %> <%=h @produit.unit %></td>
+	<td class=right><b><%=h surface.display %> <%=h ha %></b></td>
+	<td class=right><b><%=h quantity.display %> <%=h @produit.unit %></b></td>
 	<td></td>
 </tr>
 </table>

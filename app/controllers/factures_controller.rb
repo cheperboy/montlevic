@@ -36,7 +36,7 @@ class FacturesController < ApplicationController
   def index
     @factures = Facture.find_with_saison(:all, :order => :id) 
     if params[:tri]
-      @factures = Facture.find_with_saison(:all, :order => params[:tri].to_sym) 
+      @factures = Facture.find_with_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
     end
 # calcul des sommes 
     @total_cout = 0
