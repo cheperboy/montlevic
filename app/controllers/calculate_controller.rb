@@ -64,12 +64,12 @@ class CalculateController < ApplicationController
     model = Typeculture
     @show = Hash.new()
     @show[:cout_total] = true
-    @show[:cout_ha] = false
+    @show[:cout_ha] = true
     @show[:pulves] = false
-    @show[:labours] = false
+    @show[:labours] = true
     @show[:total_type] = true
     @show[:total_cat] = true
-    @show[:date_surface] = true
+    @show[:date_surface] = false
     
     if request.post?
       model = params[:column].camelize.constantize unless params[:column].nil?
@@ -89,8 +89,15 @@ class CalculateController < ApplicationController
         @show[:total_cat] = params[:show]['total_cat'] unless params[:show]['total_cat'].nil?
       end
     end
-    @colonnes = model.find_for_saison()
     @saison = Saison.find(session[:current_saison_id])
+    @colonnes = model.find_for_saison()
+    if model.eql?(Parcelle)
+      typeculture = Typeculture.find_by_name("Ble")
+      @colonnes = @saison.parcelles.find( :all,
+                                          :conditions => ["typeculture_id = ?", typeculture],
+                                          :order => :typeculture_id
+                                        )
+    end
     @labours = @saison.labours
     @pulves = @saison.pulves
     @produits = @saison.produits

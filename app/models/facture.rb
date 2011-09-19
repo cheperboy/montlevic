@@ -221,7 +221,7 @@ class Facture < Charge
   # Somme des produits associes.meme ceux qui n'ont pas ete utilises lors de traitements.
   def sum_putoproduits_associated
     sum = 0
-    self.protofactures.each { |protofacture| sum += protofacture.prix }
+    self.protofactures.each { |protofacture| sum += protofacture.prix * protofacture.quantite }
     sum
   end
   

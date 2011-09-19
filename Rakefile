@@ -41,6 +41,12 @@ namespace :data do
     load(file) if File.exist?(file)
   end
 
+  desc "seed database from file test.rb"
+  task :test => :environment do 
+    file = File.join(Rails.root, 'db', 'datas', 'test.rb')
+    load(file) if File.exist?(file)
+  end
+
   desc "seed database from file seeds.rb : MY_FILE=seeds rake seed_from_file_bis"
   task :from_file => :environment do 
     FILE = ENV["MY_FILE"]

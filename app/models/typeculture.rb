@@ -25,13 +25,13 @@ class Typeculture < ActiveRecord::Base
   end
   
   def surface
-    surfaces=0
-    Parcelle.find_by_saison(:all).each do |parcelle|
-      if self.parcelles.find(:all, :conditions => {:saison_id =>  Application::SAISON_ID}).include?(parcelle)
-        surfaces+=parcelle.surface
-      end
-    end
-    return surfaces
+    surfaces = 0
+    self.parcelles.find_by_saison(:all).each {|parcelle| surfaces += parcelle.surface}
+    surfaces
+  end
+    
+  def parcelles_count
+    return self.parcelles.find_by_saison(:all).count
   end
     
 end

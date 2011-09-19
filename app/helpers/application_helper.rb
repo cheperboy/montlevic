@@ -50,17 +50,21 @@ module ApplicationHelper
     out += submit_tag :'Action'
     out += '<table class="table_list">'
     
-    if elements.first.class.eql?(Pulve)
-      out += label :facture_id, "facture : "
-    	unless Facture.find_by_saison(:first).nil?
-        out += select_tag :facture_id, options_for_select(Facture.find_by_saison(:all), params[:facture_id])
-        out += select_tag(:operator, options_for_select(%w{ + - * / }, params[:operati]))
-      end
-    end
+    # CHECKKBOX A SUPPRIMER
+    # if elements.first.class.eql?(Pulve)
+    #   out += label :facture_id, "facture : "
+    #   unless Facture.find_by_saison(:first).nil?
+    #     out += select_tag :facture_id, options_for_select(Facture.find_by_saison(:all), params[:facture_id])
+    #     out += select_tag(:operator, options_for_select(%w{ + - * / }, params[:operati]))
+    #   end
+    # end
     
     #Head - TH
     out += '<tr>'
-    out += "<td></td>"
+
+    # CHECKKBOX A SUPPRIMER
+    # out += "<td></td>"
+
     headers.each do |header|
       out += '<td class="list-elt-left"><b>'
       if header[HEADER_TRI] && header[HEADER_TRI] == true
@@ -94,14 +98,15 @@ module ApplicationHelper
       # Premier tr de l'element  
       out += "<tr class='list-row'>"        
 
+      # CHECKKBOX A SUPPRIMER
       # premier td : case a cocher pour action multiple
-      check_val = false
-      unless search_params[:selection].nil? || search_params[:selection].index(element.id.to_s).nil?
-        check_val = true
-      end
-      out += "<td>"
-      out += check_box_tag "selection[]", element.id, checked = check_val, options = {}
-      out += "</td>"
+      # check_val = false
+      # unless search_params[:selection].nil? || search_params[:selection].index(element.id.to_s).nil?
+      #   check_val = true
+      # end
+      # out += "<td>"
+      # out += check_box_tag "selection[]", element.id, checked = check_val, options = {}
+      # out += "</td>"
       
       headers.each do |header|
         value = element.send(header[HEADER_KEY])

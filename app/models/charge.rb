@@ -136,7 +136,7 @@ class Charge < ActiveRecord::Base
     s
   end
   
-  def get_cout_ha_for_saison(surface_of_saison)
+  def get_cout_ha_moyen(surface_of_saison)
     get_cout_total / surface_of_saison
   end
   
@@ -156,11 +156,34 @@ class Charge < ActiveRecord::Base
 
   def get_cout_ha_typeculture(typeculture)
     cout_ha_typeculture = 0
-    if (all_parcelles? || self.include_typeculture?(typeculture))
+    p = 1
+    # toutes les parcelles sont associees a cette charge
+    if all_parcelles?
+      
       cout_ha_typeculture = self.get_cout_ha
+      
+    # un certain nombre de parcelles sont associees a cette charge
+    elsif self.include_typeculture?(typeculture)
+      #pour chaque parcelle de cette charge...
+      self.parcelles.each do |parcelle|
+        # ...qui est du meme type de culture que celui voulu
+        if parcelle.typeculture.eql?(typeculture)
+          p += 1
+          # on pondere le cout_ha comme suit : (surface de la parcelle / surface du typeculture)
+          cout_ha_typeculture += self.get_cout_ha * parcelle.surface / typeculture.surface
+        end
+      end
     end
-    return cout_ha_typeculture
+    return (cout_ha_typeculture / p)
   end
+
+  # def get_cout_ha_typeculture(typeculture)
+  #   cout_ha_typeculture = 0
+  #   if (all_parcelles? || self.include_typeculture?(typeculture))
+  #     cout_ha_typeculture = self.get_cout_ha
+  #   end
+  #   return cout_ha_typeculture
+  # end
 
   def get_cout_ha_zone(zone)
     cout_ha_zone = 0
@@ -206,7 +229,7 @@ class Charge < ActiveRecord::Base
 
     #cas ou il y a 1 ou plusieurs parcelles associees
     else
-      typeculture.parcelles.each do |parcelle|
+      typeculture.parcelles.find_by_saison(:all).each do |parcelle|
         if self.parcelles.include?(parcelle)
           surfaces+=parcelle.surface
         end

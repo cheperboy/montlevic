@@ -42,8 +42,9 @@ class Produit < ActiveRecord::Base
     produits = saison.produits.find(:all, :order => :category_id)
   end
 
-  def self.find_by_saison(*args)
-    with_scope(:find => { :conditions => ["saison_id = ?", Setting.find(:first).saison_id],
+  # Finders
+    def self.find_by_saison(*args)
+    with_scope(:find => { :conditions => ["saison_id = ?", Application::SAISON_ID],
                           :order => :category_id}) do
         find(*args)
       end

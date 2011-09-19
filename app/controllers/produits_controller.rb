@@ -36,7 +36,10 @@ class ProduitsController < ApplicationController
   end
 
   def index
-    @produits = Produit.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
+    @produits = Produit.find_by_saison(:all, :order => :category_id) 
+    if params[:tri]
+      @produits = Produit.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
+    end
     # @produits.each do |produit|
     #   if produit.stock_vs_used?
     #     produit.protofactures.first.quantite = produit.get_used_quantite
