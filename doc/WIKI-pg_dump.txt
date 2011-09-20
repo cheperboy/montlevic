@@ -18,6 +18,6 @@ heroku pgbackups:restore SHARED_DATABASE 'https://s3.amazonaws.com/comptagri/exp
 
 
 --
-le dump de Navicat semble plus propre. mais la commande "psql" permet d'inserer sans probleme l'un ou l'autre des dump (Navicat ou pg_dump)
+le dump de Navicat semble plus propre. la commande "psql" permet d'inserer sans probleme l'un ou l'autre des dump en local (Navicat ou pg_dump)
 le dump Navicat ne fonctionne pas sur heroku.
 

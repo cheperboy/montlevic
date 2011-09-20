@@ -53,7 +53,7 @@ factype_total = Factype.find_by_name("total")
 factcat_agri = Factcat.find_by_name("agri")
 
 #Saison
-saison_test = Saison.create!(:name => "2010/2011", :year => "2010")
+saison_test = Saison.create!(:name => "TEST", :year => "2010")
 Setting.find(:first).update_attribute(:saison_id,	saison_test.id )
 
 
@@ -96,7 +96,7 @@ parcelles_colza << saison_test.parcelles.find_by_name('parcelleC2')
 
 
 # PRODUITS - (Generation automatique xls)
-karate = Produit.create!(:name => 'Karate', :unit =>'L', :category => cat_divers, :saison => saison_test, :desc => '')
+karate = Produit.create!(:name => 'Karateka', :unit =>'L', :category => cat_divers, :saison => saison_test, :desc => '')
 
 
 
@@ -104,6 +104,6 @@ karate = Produit.create!(:name => 'Karate', :unit =>'L', :category => cat_divers
 # FACTURES - from xls
 
 facture = Debit.create!(:name => 'produits phyto 1', :date => '2011-03-11', :cout => 2000, :ref_client => '01-2010-1767', :ref => '007', :user => dauger, :factype => factype_diff,:factcat => factcat_agri,:category => cat_phyto, :desc => 'pas de prix HT. Verifier la somme.',:saison => saison_test, :star => 1)
-protofacture = Protofacture.create!(:facture => facture, :produit => karate, :prix => 200, :quantite => 10, :saison => saison_test)
+protofacture = Protofacture.create!(:facture => facture, :produit => karate, :prix_unit => 200, :quantite => 10, :saison => saison_test)
 
 

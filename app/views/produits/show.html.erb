@@ -63,8 +63,8 @@
 			<td><%=h protofacture.facture.ref %></td>
 			<td><%=h protofacture.facture.name %></td>
 			<td class=right><%=h protofacture.quantite.display %> <%=h @produit.unit %></td>
-			<td class=right><%=h protofacture.prix.display %> <%= euro %>/<%=h @produit.unit %></td>
-			<td class=right><%=h (protofacture.prix * protofacture.quantite).display %> <%= euro %></td>
+			<td class=right><%=h protofacture.prix_unit.display %> <%= euro %>/<%=h @produit.unit %></td>
+			<td class=right><%=h (protofacture.prix_unit * protofacture.quantite).display %> <%= euro %></td>
 			<td><%= link_to image_tag('img-voir.png'), :controller => "factures", :action => "show", :id => protofacture.facture %></td>
 		</tr>
 	<%- end -%>

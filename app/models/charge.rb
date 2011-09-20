@@ -154,36 +154,36 @@ class Charge < ActiveRecord::Base
     return cout_ha_parcelle
   end
 
-  def get_cout_ha_typeculture(typeculture)
-    cout_ha_typeculture = 0
-    p = 1
-    # toutes les parcelles sont associees a cette charge
-    if all_parcelles?
-      
-      cout_ha_typeculture = self.get_cout_ha
-      
-    # un certain nombre de parcelles sont associees a cette charge
-    elsif self.include_typeculture?(typeculture)
-      #pour chaque parcelle de cette charge...
-      self.parcelles.each do |parcelle|
-        # ...qui est du meme type de culture que celui voulu
-        if parcelle.typeculture.eql?(typeculture)
-          p += 1
-          # on pondere le cout_ha comme suit : (surface de la parcelle / surface du typeculture)
-          cout_ha_typeculture += self.get_cout_ha * parcelle.surface / typeculture.surface
-        end
-      end
-    end
-    return (cout_ha_typeculture / p)
-  end
-
   # def get_cout_ha_typeculture(typeculture)
   #   cout_ha_typeculture = 0
-  #   if (all_parcelles? || self.include_typeculture?(typeculture))
+  #   parcelles_count = 1
+  #   # toutes les parcelles sont associees a cette charge
+  #   if all_parcelles?
+  #     
   #     cout_ha_typeculture = self.get_cout_ha
+  #     
+  #   # un certain nombre de parcelles sont associees a cette charge
+  #   elsif self.include_typeculture?(typeculture)
+  #     #pour chaque parcelle de cette charge...
+  #     self.parcelles.each do |parcelle|
+  #       # ...qui est du meme type de culture que celui voulu
+  #       if parcelle.typeculture.eql?(typeculture)
+  #         parcelles_count += 1
+  #         # on pondere le cout_ha comme suit : (surface de la parcelle / surface du typeculture)
+  #         cout_ha_typeculture += self.get_cout_ha * parcelle.surface / typeculture.surface
+  #       end
+  #     end
   #   end
-  #   return cout_ha_typeculture
+  #   return (cout_ha_typeculture / parcelles_count)
   # end
+  
+  def get_cout_ha_typeculture(typeculture)
+    cout_ha_typeculture = 0
+    if (all_parcelles? || self.include_typeculture?(typeculture))
+      cout_ha_typeculture = self.get_cout_ha
+    end
+    return cout_ha_typeculture
+  end
 
   def get_cout_ha_zone(zone)
     cout_ha_zone = 0

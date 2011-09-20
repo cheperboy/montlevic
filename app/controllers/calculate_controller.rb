@@ -94,7 +94,7 @@ class CalculateController < ApplicationController
     if model.eql?(Parcelle)
       typeculture = Typeculture.find_by_name("Ble")
       @colonnes = @saison.parcelles.find( :all,
-                                          :conditions => ["typeculture_id = ?", typeculture],
+                                          # :conditions => ["typeculture_id = ?", typeculture],
                                           :order => :typeculture_id
                                         )
     end
@@ -102,7 +102,7 @@ class CalculateController < ApplicationController
     @pulves = @saison.pulves
     @produits = @saison.produits
     @putoproduits = @saison.putoproduits
-    @factures = @saison.factures.find(:all, :order => :cout)
+    @factures = @saison.factures.find(:all, :order => :id)
     @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Factcat.all
     @labour_categories = Category.labours

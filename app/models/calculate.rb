@@ -87,17 +87,18 @@ class Calculate < ActiveRecord::Base
     for labour in @labours
       for col in @cols
         #valeur ha et total pour chaque col affecté au labour
+        # set_cell
         @res.set_line(@sid, @c, col.id, :labours, :all, labour.id, :ha, labour.get_cout_ha_col(col))
         @res.set_line(@sid, @c, col.id, :labours, :all, labour.id, :total, labour.get_cout_total_col(col))
       end
-      
- 
+
       datas = { :id => labour.id, :name => labour.name, :category_id => labour.category_id, :category_name => labour.category.name,
                 :ha_passage => labour.cout_ha_passage, :user_id => labour.user_id, :factures_assoc => labour.factures_assoc?,
                 :date => labour.date, :parcelles_length => labour.parcelles.length, :surface_total => labour.sum_surfaces }
            
       @res.set_saison_line_datas(@sid, :labours, labour.id, datas)
 
+    # 1- Total SAISON
       # cout total/ha du labour du point de vue saison
       cout_ha_for_saison = labour.get_cout_ha_moyen(@surface_of_saison)
       cout_total = labour.get_cout_total
@@ -117,6 +118,10 @@ class Calculate < ActiveRecord::Base
           @res.add_saison_line(@sid, :labours, :category, cat.id, :total, cout_total)
          end
       end
+    # 2- Total COLONNE
+    
+    
+    
     end
   end
 
@@ -300,181 +305,168 @@ class Calculate < ActiveRecord::Base
   end
 
   #TOTAUX PAR COLONNE
-  def run_totaux    
-    for labour in @labours
-      for col in @cols
-        cout_ha = @res.get_line(@sid, @c, col.id, :labours, :all, labour.id, :ha)
-        cout_total = @res.get_line(@sid, @c, col.id, :labours, :all, labour.id, :total)  
-        #somme des labours par col
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_labours, :ha, cout_ha)
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_labours, :total, cout_total)     
-        #total des couts par col
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, cout_ha)
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, cout_total)
-        #total des benefs par col
-        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-cout_ha))
-        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-cout_total))
-        #totaux par categorie de labour
+  def run_totaux
+
+    # LABOURS
+    for col in @cols
+      sum_total = 0
+      total_labour = 0
+      # somme de toutes les cellules Labour d'une colonne 
+      for labour in @labours         
+        #valeur totale du Labour pour cette colonne
+        total_labour = @res.get_line(@sid, @c, col.id, :labours, :all, labour.id, :total)
+        sum_total += total_labour
         for cat in Category.labours
           if (labour.category_id == cat.id)
-            @res.add_line(@sid, @c, col.id, :labours, :category, cat.id, :ha, cout_ha)
-            @res.add_line(@sid, @c, col.id, :labours, :category, cat.id, :total, cout_total)
+            # valeur totale du labour pour cette categorie
+            @res.add_line(@sid, @c, col.id, :labours, :category, cat.id, :total, total_labour)
           end
+        end        
+      end
+      #somme des labours par col
+      @res.set_other_line(@sid, @c, col.id, :resultats, :total_labours, :total, sum_total)     
+      @res.set_other_line(@sid, @c, col.id, :resultats, :total_labours, :ha, sum_total/col.surface)
+      #total des couts par col
+      @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, sum_total)
+      @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, sum_total/col.surface)
+      #total des benefs par col
+      @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
+      @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
+      #totaux par categorie de labour
+      for cat in Category.labours
+        cout_total = @res.get_line(@sid, @c, col.id, :labours, :category, cat.id, :total)
+        @res.set_line(@sid, @c, col.id, :labours, :category, cat.id, :ha, cout_total/col.surface)
+      end        
+    end
+    
+    # PUTOPRODUITS
+    unless @putoproduits.nil?
+      for col in @cols
+        sum_total = 0
+        total = 0
+        # somme de toutes les cellules Produit d'une colonne 
+        for putoproduit in @putoproduits       
+          #valeur totale du produits pour cette colonne
+          total = @res.get_line(@sid, @c, col.id, :putoproduits, :all, putoproduit.id, :total)
+          sum_total += total
+          for cat in Category.pulves
+            if (putoproduit.produit.category_id == cat.id)
+              # valeur totale du produit pour cette categorie
+              @res.add_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :total, total)
+            end
+          end
+        end
+        #somme des produits par col
+        @res.set_other_line(@sid, @c, col.id, :resultats, :total_putoproduits, :total, sum_total)     
+        @res.set_other_line(@sid, @c, col.id, :resultats, :total_putoproduits, :ha, sum_total/col.surface)
+        #total des couts par col
+        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, sum_total)
+        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, sum_total/col.surface)
+        #total des benefs par col
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
+        #totaux par categorie de labour
+        for cat in Category.pulves
+          cout_total = @res.get_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :total)
+          @res.set_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :ha, cout_total/col.surface)
+        end        
+      end
+    end
+    
+    # PULVES
+    unless @pulves.nil?
+      for col in @cols
+        sum_total = 0
+        total = 0
+        # somme de toutes les cellules Pulve d'une colonne 
+        for pulve in @pulves       
+          #valeur totale du pulve pour cette colonne
+          total = @res.get_line(@sid, @c, col.id, :pulves, :all, pulve.id, :total)
+          sum_total += total
+        end
+        #somme des produits par col
+        @res.set_other_line(@sid, @c, col.id, :resultats, :total_pulves, :total, sum_total)     
+        @res.set_other_line(@sid, @c, col.id, :resultats, :total_pulves, :ha, sum_total/col.surface)
+        #total des couts par col
+        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, sum_total)
+        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, sum_total/col.surface)
+        #total des benefs par col
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
+        #totaux par categorie de labour
+        for cat in Category.pulves
+          cout_total = @res.get_line(@sid, @c, col.id, :pulves, :category, cat.id, :total)
+          @res.set_line(@sid, @c, col.id, :pulves, :category, cat.id, :ha, cout_total/col.surface)
         end        
       end
     end
     
     unless @putoproduits.nil?
-      for putoproduit in @putoproduits
-        for col in @cols
-          cout_ha = @res.get_line(@sid, @c, col.id, :putoproduits, :all, putoproduit.id, :ha)
-          cout_total = @res.get_line(@sid, @c, col.id, :putoproduits, :all, putoproduit.id, :total)
-          #somme des putoproduits par col
-          @res.add_other_line(@sid, @c, col.id, :resultats, :total_putoproduits, :ha, cout_ha)
-          @res.add_other_line(@sid, @c, col.id, :resultats, :total_putoproduits, :total, cout_total)     
-          #total des couts par col
-          @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, cout_ha)
-          @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, cout_total)
-          #total des benefs par col
-          @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-cout_ha))
-          @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-cout_total))
-          #totaux par categorie de putoproduits
-          for cat in Category.putoproduits
-            if (putoproduit.produit.category_id == cat.id)
-              @res.add_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :ha, cout_ha)
-              @res.add_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :total, cout_total)
+      for col in @cols
+        sum_total = 0
+        total = 0
+        # somme de toutes les cellules facture d'une colonne 
+        for facture in @factures       
+          #valeur totale de la facture pour cette colonne
+          total = @res.get_line(@sid, @c, col.id, :factures, :all, facture.id, :total)
+          sum_total += total
+          for factcat in self.types_facture
+            if (facture.factcat_id == factcat.id)
+              @res.add_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :total, total)
+            end
+          end
+          for cat in Category.factures
+            if (facture.category_id == cat.id)
+              # valeur totale de la facture pour cette categorie
+              @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :total, total)
             end
           end
         end
-      end
-    end
-    
-    for col in @cols
-      sum_ha = 0
-      sum_total = 0
-      for pulve in @pulves
-        cout_ha = @res.get_line(@sid, @c, col.id, :pulves, :all, pulve.id, :ha)
-        cout_total = @res.get_line(@sid, @c, col.id, :pulves, :all, pulve.id, :total)
-        # somme de toutes les cellules Pulve d'une colonne 
-        sum_ha += cout_ha
-        sum_total += cout_total
-        
-        #somme des putoproduits par col
-        @res.set_other_line(@sid, @c, col.id, :resultats, :total_pulves, :total, sum_total)     
-        @res.set_other_line(@sid, @c, col.id, :resultats, :total_pulves, :ha, sum_total/col.surface)
+        #somme des produits par col
+        @res.set_other_line(@sid, @c, col.id, :resultats, :total_factures, :total, sum_total)     
+        @res.set_other_line(@sid, @c, col.id, :resultats, :total_factures, :ha, sum_total/col.surface)
         #total des couts par col
-        @res.set_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, sum_total)     
-        @res.set_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, sum_total/col.surface)
+        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, sum_total)
+        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, sum_total/col.surface)
         #total des benefs par col
-        @res.set_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))     
-        @res.set_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
-      end
-    end
-    
-    # ancien calcul
-    total_pulves = []
-    total_pulves_ha = []
-    for pulve in @pulves
-      for col in @cols
-        total_pulves[col.id] = 0   
-        total_pulves_ha[col.id] = 0
-      end
-    end
-    for pulve in @pulves
-      for col in @cols
-        cout_ha = @res.get_line(@sid, @c, col.id, :pulves, :all, pulve.id, :ha)
-        cout_total = @res.get_line(@sid, @c, col.id, :pulves, :all, pulve.id, :total)
-        #somme des putoproduits par col
-        total_pulves[col.id] += cout_total   
-        total_pulves_ha[col.id] += cout_ha
-      end
-    end
-    logger.error "TOTAL PULVES"
-    for col in @cols
-      nou = @res.get_other_line(@sid, @c, col.id, :resultats, :total_pulves, :total) 
-      nouha = @res.get_other_line(@sid, @c, col.id, :resultats, :total_pulves, :ha) 
-      logger.error "#{col.name} tot\t old:#{total_pulves[col.id]}\t new:#{nou}"
-      logger.error "#{col.name} ha \t old:#{total_pulves_ha[col.id]}\t new:#{nouha}"
-    end
-    
-    
-
-    # for pulve in @pulves
-    #   for col in @cols
-    #     cout_ha = @res.get_line(@sid, @c, col.id, :pulves, :all, pulve.id, :ha)
-    #     cout_total = @res.get_line(@sid, @c, col.id, :pulves, :all, pulve.id, :total)
-    #     #somme des putoproduits par col
-    #     @res.add_other_line(@sid, @c, col.id, :resultats, :total_pulves, :ha, cout_ha)
-    #     @res.add_other_line(@sid, @c, col.id, :resultats, :total_pulves, :total, cout_total)     
-    #     #total des couts par col
-    #     @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, cout_ha)
-    #     @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, cout_total)
-    #     #total des benefs par col
-    #     @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-cout_ha))
-    #     @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-cout_total))
-    #   end
-    # end
-    #AJOUT POUR MOY
-    # for col in @cols
-    #   if col.class.eql?(Typeculture)
-    #     moyenne = @res.get_other_line(@sid, @c, col.id, :resultats, :total_pulves, :total) / col.surface  
-    #     @res.set_other_line(@sid, @c, col.id, :resultats, :total_pulves, :ha, moyenne)
-    #     # moyenne = @res.get_other_line(@sid, @c, col.id, :resultats, :total_charges, :total) / col.parcelles_count  
-    #     # @res.set_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, 2)
-    #     # moyenne = @res.get_other_line(@sid, @c, col.id, :resultats, :benef, :total) / col.parcelles_count  
-    #     # @res.set_other_line(@sid, @c, col.id, :resultats, :benef, :ha, 2)
-    #   end
-    # end
-    
-    for facture in @factures
-      for col in @cols
-        cout_ha = @res.get_line(@sid, @c, col.id, :factures, :all, facture.id, :ha)
-        cout_total = @res.get_line(@sid, @c, col.id, :factures, :all, facture.id, :total)        
-        #somme des factures par col
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_factures, :ha, cout_ha)
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_factures, :total, cout_total)
-        #somme des couts par col (labours + pulves +factures)
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, cout_ha)
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, cout_total)
-        #total des benefs par col (ventes - charges)
-        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-cout_ha))
-        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-cout_total))
-        #totaux par types de factures
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
+        #totaux par categorie de labour
         for factcat in self.types_facture
           if (facture.factcat_id == factcat.id)
-            @res.add_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :ha, cout_ha)
-            @res.add_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :total, cout_total)
+            cout_total = @res.get_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :total)
+            @res.set_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :ha, cout_total/col.surface)
           end
         end
-        #totaux par categorie de factures
         for cat in Category.factures
-          if (facture.category_id == cat.id)
-            @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :ha, cout_ha)
-            @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :total, cout_total)
-          end
-        end
-      end    
+          cout_total = @res.get_line(@sid, @c, col.id, :factures, :category, cat.id, :total)
+          @res.set_line(@sid, @c, col.id, :factures, :category, cat.id, :ha, cout_total/col.surface)
+        end        
+      end
     end
-
-    for vente in @ventes
+    
+    #VENTES
+    unless @ventes.nil?
       for col in @cols
-        cout_ha = @res.get_line(@sid, @c, col.id, :ventes, :all, vente.id, :ha)
-        cout_total = @res.get_line(@sid, @c, col.id, :ventes, :all, vente.id, :total)
-        #somme des ventes par col
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_ventes, :ha, cout_ha)
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_ventes, :total, cout_total)
-
-        #total des benefs par col
-        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (cout_ha))
-        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (cout_total))
-      
-        #totaux par categorie de vente
-        for cat in Category.ventes
-          if (vente.category_id == cat.id)
-            @res.add_line(@sid, @c, col.id, :ventes, :category, cat.id, :ha, cout_ha)
-            @res.add_line(@sid, @c, col.id, :ventes, :category, cat.id, :total, cout_total)
-          end
+        sum_total = 0
+        total = 0
+        # somme de toutes les cellules Pulve d'une colonne 
+        for vente in @ventes       
+          #valeur totale du pulve pour cette colonne
+          total = @res.get_line(@sid, @c, col.id, :ventes, :all, vente.id, :total)
+          sum_total += total
         end
+        #somme des produits par col
+        @res.set_other_line(@sid, @c, col.id, :resultats, :total_ventes, :total, sum_total)     
+        @res.set_other_line(@sid, @c, col.id, :resultats, :total_ventes, :ha, sum_total/col.surface)
+        #total des benefs par col
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, sum_total)
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, sum_total/col.surface)
+        #totaux par categorie de labour
+        for cat in Category.ventes
+          cout_total = @res.get_line(@sid, @c, col.id, :ventes, :category, cat.id, :total)
+          @res.set_line(@sid, @c, col.id, :ventes, :category, cat.id, :ha, cout_total/col.surface)
+        end        
       end
     end
     

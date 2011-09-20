@@ -57,7 +57,7 @@ class Produit < ActiveRecord::Base
     prix_unitaire = 0
     unless self.protofactures.count == 0      
       self.protofactures.each do |protofac| 
-        sum_cout += protofac.prix * protofac.quantite
+        sum_cout += protofac.prix_unit * protofac.quantite
         sum_quantite += protofac.quantite
       end
       prix_unitaire = sum_cout / sum_quantite      
@@ -89,7 +89,7 @@ class Produit < ActiveRecord::Base
   def get_cout_total
     cout_total = 0
     unless self.protofactures.count.eql?(0)
-      self.protofactures.each {|protofac| cout_total += protofac.prix * protofac.quantite}
+      self.protofactures.each {|protofac| cout_total += protofac.prix_unit * protofac.quantite}
       cout_total
     end
   end

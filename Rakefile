@@ -54,44 +54,32 @@ namespace :data do
     load(file) if File.exist?(file)
   end
 
-  # desc "seed local db with file [filename].rb"
-  # task :seed_from_file, [:filename] => [] do |t, args|
-  #   # args.with_defaults( :filename => "seed_xxxx.rb")
-  #   unless args.filename.nil?
-  #     puts "seeding #{args.filename}.rb"
-  #     file = File.join(Rails.root, 'db', 'seeds.rb')
-  #     load(file) if File.exist?(file)
-  #   else
-  #     puts "filename empty"
-  #   end
-  # end
 end
   
 namespace :db do  
-  desc "dump local db [db,filename]"
-  task :dump_local, [:db, :filename] => [] do |t, args|
-    directory "test/local"
-    t = Time.now.to_a
-    timestamp = "#{t[5]}/#{t[4]}/#{t[3]}"
-    args.with_defaults( :db => "comptagri")
-    args.with_defaults( :filename => "local_#{args.db}_#{timestamp}.dump")
-    puts "dump database #{args.db} into  #{args.filename}"
-    sh %{ pg_dump -Fc --no-acl --no-owner -h localhost -U postgres #{args.db} > #{args.filename}}      
-  end
+  # desc "dump local db [db,filename]"
+  # task :dump_local_old, [:db, :filename] => [] do |t, args|
+  #   directory "test/local"
+  #   t = Time.now.to_a
+  #   timestamp = "#{t[5]}/#{t[4]}/#{t[3]}"
+  #   args.with_defaults( :db => "comptagri_dev")
+  #   args.with_defaults( :filename => "local_#{args.db}_#{timestamp}.sql")
+  #   puts "dump database #{args.db} into  #{args.filename}"
+  #   sh %{ cat pg_dump -Fc --no-acl --no-owner -h localhost -U postgres #{args.db} > #{args.filename}}      
+  #   sh %{ pg_dump -Fc --no-acl --no-owner -h localhost -U postgres #{args.db} > #{args.filename}}      
+  # end
 
-  task :get_timestamp do
-    puts "time: #{Time.now.to_s}"
+  desc "dump local db comptagri_dev"
+  task :dump_local => :environment do 
     t = Time.now.to_a
-    timestamp = "#{t[5]}/#{t[4]}/#{t[3]}/#{t[2]}h#{t[1]}m#{t[0]}s"
-    puts "timestamp: #{timestamp}"
+    timestamp = "#{t[5]}-#{t[4]}-#{t[3]}-#{t[2]}h#{t[1]}m#{t[0]}s"
+    db = "comptagri_dev"
+    filename = "doc/export/local_#{db}_#{timestamp}.sql"
+    puts "dump database #{db} into #{filename}"
+    command = "pg_dump -v --no-acl --no-owner -h localhost -U postgres #{db} > #{filename}"
+    sh %{ #{command} }
+    # sh %{ echo '#{command}' > #{filename} }
   end
-    
-  # task :push_db, [:first_arg, :second_arg] do |args|
-  #   # args.with_defaults(:first_arg => "Foo", :last_arg => "Bar")
-  #   puts "First argument was: #{args.first_arg}"
-  #   puts "Second argument was: #{args.second_arg}"    
-  #   
-    # sh %{ heroku pgbackups:restore --app montlevic DATABASE 'https://s3.amazonaws.com/comptagri/db_produits_ok.dump' }      
-  # end  
+  
 end
 

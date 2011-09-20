@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer  "saison_id"
     t.integer  "produit_id"
     t.integer  "facture_id"
-    t.float    "prix"
+    t.float    "prix_unit"
     t.float    "quantite"
     t.datetime "created_at"
     t.datetime "updated_at"

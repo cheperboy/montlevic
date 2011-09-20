@@ -25,16 +25,16 @@
 		</tr>
 		<%- total_prix = 0 -%>
 		<%- @facture.protofactures.each do |protofacture| -%>
-			<%- total_prix += protofacture.quantite * protofacture.prix -%>
+			<%- total_prix += protofacture.quantite * protofacture.prix_unit -%>
 		<tr>
 			<td><%=h protofacture.produit.category.name %></td>
 			<td><%=h protofacture.produit.name %></td>
-			<td class=right><%=h (protofacture.prix).display %> €/<%=h protofacture.produit.unit %></td>
+			<td class=right><%=h (protofacture.prix_unit).display %> €/<%=h protofacture.produit.unit %></td>
 			<td class=right><%=h protofacture.quantite.display %> <%=h protofacture.produit.unit %></td>
-			<td class=right><%=h (protofacture.quantite * protofacture.prix).display %> <%= euro %></td>
+			<td class=right><%=h (protofacture.quantite * protofacture.prix_unit).display %> <%= euro %></td>
 		<%- if @show_used -%>
 			<td class=right><%=h protofacture.quantite.display %> <%=h protofacture.produit.unit %></td>
-			<td class=right><%=h (protofacture.quantite * protofacture.prix).display %> <%= euro %></td>
+			<td class=right><%=h (protofacture.quantite * protofacture.prix_unit).display %> <%= euro %></td>
 		<%- end -%>
 			<td><%= link_to image_tag('img-voir.png'), :controller => "produits", :action => "show", :id => protofacture.produit %></td>
 		</tr>

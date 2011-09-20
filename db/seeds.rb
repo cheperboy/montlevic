@@ -126,9 +126,6 @@ if SEEDS_BASIC
 end # if SEEDS_BASIC
 
 zones = Zone.create!([
-  {:name => "zoneA",            :surface => 10},     # a supprimer
-  {:name => "zoneB",            :surface => 100},    # a supprimer
-  {:name => "zoneC",            :surface => 200},    # a supprimer
   {:name => "Bruneau",          :surface => 14},    #/1/
   {:name => "Mitant",           :surface => 5},     #/2/     
   {:name => "La Rue",           :surface => 46.55}, #/3/
@@ -147,6 +144,9 @@ zones = Zone.create!([
 
   {:name => "Reserve",          :surface => 2.55},  #/15/
   {:name => "Lavernier",        :surface => 0.75},  #/16/
-  {:name => "Le Bourg-1",       :surface => 0.52}   #/17/
+  {:name => "Le Bourg-1",       :surface => 0.52},   #/17/
+  {:name => "zoneA",            :surface => 10},     # a supprimer
+  {:name => "zoneB",            :surface => 100},    # a supprimer
+  {:name => "zoneC",            :surface => 200}    # a supprimer
 ])
 

@@ -12,6 +12,32 @@ class Saison < ActiveRecord::Base
   has_many :putoproduits
 
   has_one :setting    
+
+  # positionne le champ Protofac.quantite_restante de chaque produit de la saison.
+  def update_prduit_restant
+  # Produit : p
+  # p.used_quantity : quantite utilisee
+  # p.quantite : quantite totale achetee (somme des factures)
+  # protofac.get_quantite = protofac.prix_unit_unitaire * protofac.quantite
+  # 
+  # Init:
+  # produit_restant = produit.quantite_initiale
+    produit_used = produit.get_used_quantity
+  # 
+  # Algo:
+    saison.produits.each do |produit|
+      produit.protofactures.each do |protofac|
+        if protofac.get_quantite <= produit_used
+          protofac.set_quantite_restante(0)
+        else
+          protofac.set_quantite_restante(produit_used)
+        end
+        produit_used -= protofac.get_quantite
+        produit_used = 0 if produit_used < 0
+      end
+    end
+    
+  end
   
   # retourne les id des pulves des parcelles de la saison (ou nil)
   def putoproduits
