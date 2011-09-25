@@ -84,7 +84,6 @@ class Integer
     end
     if precision.nil?
       precision = Setting::FLOAT_PRECISION
-      precision = 1
     end
     return (sprintf("%.#{precision}f", self.to_f))
   end
@@ -105,28 +104,18 @@ class Float
   # - display(2) : 2 chiffres apres la virgule, ecrase les Settings
   # - display(2, :with_zero => true) : 2 chiffres apres la virgule, ecrase les Settings et 0.0 si valeur=0
   def display(*args)
-    precision = args[1]
+    # Rails.logger.error "Setting::FLOAT_PRECISION: #{Setting::FLOAT_PRECISION.to_s}"
     options = args.extract_options!
-    
+    precision = Setting::FLOAT_PRECISION
+    precision = args[0] unless args[0].nil?
     if ((-0.01 < self) && (self < 0.01))
       if options[:with_zero]
         return (sprintf("%.#{precision}f", self.to_f))
-        # return (sprintf("%.02f", self.to_f))
       else
         return "-"
       end 
     end
-    # ligne suivante commentee pour forcer les Integer a s'afficher avec precision apres virgule
-    # return self.to_i if (self == self.to_i)
-    
-    #this dont work - see surface dans une des cases header
-    if precision.nil?
-      precision = Setting::FLOAT_PRECISION
-      precision = 1
-    end
-    Rails.logger.error "TEST LOGGER FROM OUTSIDE"
     return (sprintf("%.#{precision}f", self.to_f))
-    # return (precision.to_s)
   end
 
   def to_s(arg = nil)

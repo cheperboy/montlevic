@@ -120,56 +120,107 @@ parcelles_jachere << saison_2010_2011.parcelles.find_by_name('Feuillets 3')
 
 
 
+# # PRODUITS - (Generation automatique xls)
+# altigo = Produit.create!(:name => 'Altigo', :unit =>'kg', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+# amistar_xtra = Produit.create!(:name => 'Amistar Xtra', :unit =>'L', :category => cat_fongicide, :saison => saison_2010_2011, :desc => '')
+# ariane = Produit.create!(:name => 'Ariane', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+# autan = Produit.create!(:name => 'Autan', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+# azomag = Produit.create!(:name => 'Azomag', :unit =>'kg', :category => cat_soufre, :saison => saison_2010_2011, :desc => '')
+# azomag20 = Produit.create!(:name => 'Azomag20', :unit =>'kg', :category => cat_soufre, :saison => saison_2010_2011, :desc => '')
+# azote = Produit.create!(:name => 'Azote', :unit =>'L', :category => cat_azote, :saison => saison_2010_2011, :desc => '')
+# bravo_elite = Produit.create!(:name => 'Bravo Elite', :unit =>'L', :category => cat_fongicide, :saison => saison_2010_2011, :desc => '')
+# campo = Produit.create!(:name => 'Campo', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+# campus = Produit.create!(:name => 'Campus', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+# catalino = Produit.create!(:name => 'Catalino', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+# celtic = Produit.create!(:name => 'Celtic', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+# challenge = Produit.create!(:name => 'Challenge', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+# chardol = Produit.create!(:name => 'Chardol', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+# chrono = Produit.create!(:name => 'Chrono', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+# cline = Produit.create!(:name => 'Cline', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+# colzamid = Produit.create!(:name => 'Colzamid', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+# comet_player = Produit.create!(:name => 'Comet Player', :unit =>'L', :category => cat_fongicide, :saison => saison_2010_2011, :desc => '')
+# cp151515 = Produit.create!(:name => '15-15-15', :unit =>'kg', :category => cat_engrais, :saison => saison_2010_2011, :desc => '')
+# folyr = Produit.create!(:name => 'Folyr', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+# fury = Produit.create!(:name => 'Fury', :unit =>'L', :category => cat_insecticide, :saison => saison_2010_2011, :desc => '')
+# glifonet = Produit.create!(:name => 'Glifonet', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+# harmony = Produit.create!(:name => 'Harmony', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+# huile = Produit.create!(:name => 'Huile', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+# imperio = Produit.create!(:name => 'Imperio', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+# karate = Produit.create!(:name => 'Karate', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+# lontrel = Produit.create!(:name => 'Lontrel', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+# mas91 = Produit.create!(:name => 'MAS 91', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+# novrel = Produit.create!(:name => 'Novrel', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+# nuvagrain = Produit.create!(:name => 'Nuvagrain', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+# ovation = Produit.create!(:name => 'Ovation', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+# paledor = Produit.create!(:name => 'Paledor', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+# picabore = Produit.create!(:name => 'Picabore', :unit =>'kg', :category => cat_oligo, :saison => saison_2010_2011, :desc => '')
+# picosolo = Produit.create!(:name => 'Picosolo', :unit =>'kg', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+# pr = Produit.create!(:name => 'Pr', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+# proca = Produit.create!(:name => 'Proca', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+# proteus = Produit.create!(:name => 'Proteus', :unit =>'L', :category => cat_insecticide, :saison => saison_2010_2011, :desc => '')
+# pulsar = Produit.create!(:name => 'Pulsar', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+# radar = Produit.create!(:name => 'Radar', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+# richepain = Produit.create!(:name => 'Richepain', :unit =>'kg', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+# spartan = Produit.create!(:name => 'spartan', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+# springbok = Produit.create!(:name => 'Springbok', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+# stratos = Produit.create!(:name => 'Stratos', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+# super45 = Produit.create!(:name => 'Super45', :unit =>'kg', :category => cat_engrais, :saison => saison_2010_2011, :desc => '')
+# surnog = Produit.create!(:name => 'Surnog', :unit =>'L', :category => cat_fongicide, :saison => saison_2010_2011, :desc => '')
+# traxos = Produit.create!(:name => 'Traxos', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+# vip = Produit.create!(:name => 'Vip', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+# zero2030 = Produit.create!(:name => '0-20-30', :unit =>'kg', :category => cat_engrais, :saison => saison_2010_2011, :desc => '')
+# zero2525 = Produit.create!(:name => '0-25-25', :unit =>'kg', :category => cat_engrais, :saison => saison_2010_2011, :desc => '')
+
 # PRODUITS - (Generation automatique xls)
-altigo = Produit.create!(:name => 'Altigo', :unit =>'kg', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
-amistar_xtra = Produit.create!(:name => 'Amistar Xtra', :unit =>'L', :category => cat_fongicide, :saison => saison_2010_2011, :desc => '')
-ariane = Produit.create!(:name => 'Ariane', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
-autan = Produit.create!(:name => 'Autan', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
-azomag = Produit.create!(:name => 'Azomag', :unit =>'kg', :category => cat_soufre, :saison => saison_2010_2011, :desc => '')
-azomag20 = Produit.create!(:name => 'Azomag20', :unit =>'kg', :category => cat_soufre, :saison => saison_2010_2011, :desc => '')
-azote = Produit.create!(:name => 'Azote', :unit =>'L', :category => cat_azote, :saison => saison_2010_2011, :desc => '')
-bravo_elite = Produit.create!(:name => 'Bravo Elite', :unit =>'L', :category => cat_fongicide, :saison => saison_2010_2011, :desc => '')
-campo = Produit.create!(:name => 'Campo', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
-campus = Produit.create!(:name => 'Campus', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
-catalino = Produit.create!(:name => 'Catalino', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+azote = Produit.create!(:name => 'Azote', :unit =>'kg', :category => cat_azote, :saison => saison_2010_2011, :desc => '')
+ariane = Produit.create!(:name => 'Ariane', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
 celtic = Produit.create!(:name => 'Celtic', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
 challenge = Produit.create!(:name => 'Challenge', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
 chardol = Produit.create!(:name => 'Chardol', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
 chrono = Produit.create!(:name => 'Chrono', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
 cline = Produit.create!(:name => 'Cline', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
 colzamid = Produit.create!(:name => 'Colzamid', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
-comet_player = Produit.create!(:name => 'Comet Player', :unit =>'L', :category => cat_fongicide, :saison => saison_2010_2011, :desc => '')
-cp151515 = Produit.create!(:name => '15-15-15', :unit =>'kg', :category => cat_engrais, :saison => saison_2010_2011, :desc => '')
 folyr = Produit.create!(:name => 'Folyr', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
-fury = Produit.create!(:name => 'Fury', :unit =>'L', :category => cat_insecticide, :saison => saison_2010_2011, :desc => '')
 glifonet = Produit.create!(:name => 'Glifonet', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
-harmony = Produit.create!(:name => 'Harmony', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
-huile = Produit.create!(:name => 'Huile', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
-imperio = Produit.create!(:name => 'Imperio', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
-karate = Produit.create!(:name => 'Karate', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
-lontrel = Produit.create!(:name => 'Lontrel', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
-mas91 = Produit.create!(:name => 'MAS 91', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
-novrel = Produit.create!(:name => 'Novrel', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
-nuvagrain = Produit.create!(:name => 'Nuvagrain', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
-ovation = Produit.create!(:name => 'Ovation', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
-paledor = Produit.create!(:name => 'Paledor', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
-picabore = Produit.create!(:name => 'Picabore', :unit =>'kg', :category => cat_oligo, :saison => saison_2010_2011, :desc => '')
 picosolo = Produit.create!(:name => 'Picosolo', :unit =>'kg', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
-pr = Produit.create!(:name => 'Pr', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
-proca = Produit.create!(:name => 'Proca', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
-proteus = Produit.create!(:name => 'Proteus', :unit =>'L', :category => cat_insecticide, :saison => saison_2010_2011, :desc => '')
 pulsar = Produit.create!(:name => 'Pulsar', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
-radar = Produit.create!(:name => 'Radar', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
-richepain = Produit.create!(:name => 'Richepain', :unit =>'kg', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
-spartan = Produit.create!(:name => 'spartan', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
 springbok = Produit.create!(:name => 'Springbok', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
-stratos = Produit.create!(:name => 'Stratos', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
-super45 = Produit.create!(:name => 'Super45', :unit =>'kg', :category => cat_engrais, :saison => saison_2010_2011, :desc => '')
-surnog = Produit.create!(:name => 'Surnog', :unit =>'L', :category => cat_fongicide, :saison => saison_2010_2011, :desc => '')
 traxos = Produit.create!(:name => 'Traxos', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
-vip = Produit.create!(:name => 'Vip', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+huile = Produit.create!(:name => 'Huile', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+karate = Produit.create!(:name => 'Karate', :unit =>'L', :category => cat_insecticide, :saison => saison_2010_2011, :desc => '')
+mas91 = Produit.create!(:name => 'MAS 91', :unit =>'L', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+nuvagrain = Produit.create!(:name => 'Nuvagrain', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+proca = Produit.create!(:name => 'proca', :unit =>'L', :category => cat_fongicide, :saison => saison_2010_2011, :desc => '')
+radar = Produit.create!(:name => 'Radar', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+richepain = Produit.create!(:name => 'Richepain', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+spartan = Produit.create!(:name => 'spartan', :unit =>'L', :category => cat_divers, :saison => saison_2010_2011, :desc => '')
+stratos = Produit.create!(:name => 'Stratos', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+vip = Produit.create!(:name => 'Vip', :unit =>'L', :category => cat_desherbant, :saison => saison_2010_2011, :desc => '')
+cp151515 = Produit.create!(:name => '15-15-15', :unit =>'kg', :category => cat_engrais, :saison => saison_2010_2011, :desc => '')
+super45 = Produit.create!(:name => 'Super45', :unit =>'kg', :category => cat_engrais, :saison => saison_2010_2011, :desc => '')
 zero2030 = Produit.create!(:name => '0-20-30', :unit =>'kg', :category => cat_engrais, :saison => saison_2010_2011, :desc => '')
 zero2525 = Produit.create!(:name => '0-25-25', :unit =>'kg', :category => cat_engrais, :saison => saison_2010_2011, :desc => '')
+amistar_xtra = Produit.create!(:name => 'Amistar Xtra', :unit =>'L', :category => cat_fongicide, :saison => saison_2010_2011, :desc => '')
+bravo_elite = Produit.create!(:name => 'Bravo Elite', :unit =>'L', :category => cat_fongicide, :saison => saison_2010_2011, :desc => '')
+comet_player = Produit.create!(:name => 'Comet Player', :unit =>'L', :category => cat_fongicide, :saison => saison_2010_2011, :desc => '')
+surnog = Produit.create!(:name => 'Surnog', :unit =>'L', :category => cat_fongicide, :saison => saison_2010_2011, :desc => '')
+fury = Produit.create!(:name => 'Fury', :unit =>'L', :category => cat_insecticide, :saison => saison_2010_2011, :desc => '')
+proteus = Produit.create!(:name => 'Proteus', :unit =>'L', :category => cat_insecticide, :saison => saison_2010_2011, :desc => '')
+picabore = Produit.create!(:name => 'Picabore', :unit =>'kg', :category => cat_oligo, :saison => saison_2010_2011, :desc => '')
+altigo = Produit.create!(:name => 'Altigo', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+autan = Produit.create!(:name => 'Autan', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+campo = Produit.create!(:name => 'Campo', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+campus = Produit.create!(:name => 'Campus', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+catalino = Produit.create!(:name => 'Catalino', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+harmony = Produit.create!(:name => 'Harmony', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+imperio = Produit.create!(:name => 'Imperio', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+lontrel = Produit.create!(:name => 'Lontrel', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+novrel = Produit.create!(:name => 'Novrel', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+ovation = Produit.create!(:name => 'Ovation', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+paledor = Produit.create!(:name => 'Paledor', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+pr = Produit.create!(:name => 'Pr', :unit =>'kg', :category => cat_semis, :saison => saison_2010_2011, :desc => '')
+azomag = Produit.create!(:name => 'Azomag', :unit =>'kg', :category => cat_soufre, :saison => saison_2010_2011, :desc => '')
+azomag20 = Produit.create!(:name => 'Azomag20', :unit =>'kg', :category => cat_soufre, :saison => saison_2010_2011, :desc => '')
 
 
 
@@ -263,45 +314,36 @@ protofacture = Protofacture.create!(:facture => facture, :produit => challenge, 
 protofacture = Protofacture.create!(:facture => facture, :produit => challenge, :prix_unit => 1.2, :quantite => 60, :saison => saison_2010_2011)
 
 
-reportable = Reportable.create!(:name => 'facture 19', :date => '2011-01-30', :cout => 3537.5, :ref_client => '19', :ref => '021', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
+reportable = Reportable.create!(:name => 'facture 19', :date => '2011-01-30', :cout => 3537.5, :ref_client => '19', :ref => '021', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Pulvérisation', :date => '2011-01-30', :cout => 955, :ref_client => '19', :ref => '021', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '95,5Ha x 10€ = 955€',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Broyage haies', :date => '2011-01-30', :cout => 456, :ref_client => '19', :ref => '021', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '12h x 38€ = 456€',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Broyage horizontal', :date => '2011-01-30', :cout => 297.5, :ref_client => '19', :ref => '021', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '8h50 x 35€/h = 297,5',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Semis Colza et Blé', :date => '2011-01-30', :cout => 1829, :ref_client => '19', :ref => '021', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '59ha x 31€/ha = 1829€',:saison => saison_2010_2011, :star => 0)
 
-reportable = Reportable.create!(:name => 'facture 18', :date => '2011-01-30', :cout => 3515, :ref_client => '18', :ref => '022', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
+reportable = Reportable.create!(:name => 'facture 18', :date => '2011-01-30', :cout => 3515, :ref_client => '18', :ref => '022', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Roulage', :date => '2011-01-30', :cout => 465, :ref_client => '18', :ref => '022', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '15h30 x 30€/h = 465€',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Cover-crop', :date => '2011-01-30', :cout => 2240, :ref_client => '18', :ref => '022', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '64h x 35€/h = 2240€',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Vibro', :date => '2011-01-30', :cout => 810, :ref_client => '18', :ref => '022', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '81ha x 10€ = 810€',:saison => saison_2010_2011, :star => 0)
 
-reportable = Reportable.create!(:name => 'facture 20', :date => '2011-01-30', :cout => 2950, :ref_client => '20', :ref => '023', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
+reportable = Reportable.create!(:name => 'facture 20', :date => '2011-01-30', :cout => 2950, :ref_client => '20', :ref => '023', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Labour + Herse', :date => '2011-01-30', :cout => 2830, :ref_client => '20', :ref => '023', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '(semis prairies)',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Epandage chaux', :date => '2011-01-30', :cout => 120, :ref_client => '20', :ref => '023', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
 
-reportable = Reportable.create!(:name => 'facture 24', :date => '2011-07-19', :cout => 5790, :ref_client => '24', :ref => '024', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
+reportable = Reportable.create!(:name => 'facture 24', :date => '2011-07-19', :cout => 5790, :ref_client => '24', :ref => '024', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Epandage engrais', :date => '2011-07-19', :cout => 2520, :ref_client => '24', :ref => '024', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '252 ha x 10€ = 2520€',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Pulvérisation cultures', :date => '2011-07-19', :cout => 2850, :ref_client => '24', :ref => '024', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '285 ha x 10€ = 2850€',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'tours de champs', :date => '2011-07-19', :cout => 120, :ref_client => '24', :ref => '024', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '4h x 30€/h = 120€ (desherbage)',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'semis tournesol', :date => '2011-07-19', :cout => 300, :ref_client => '24', :ref => '024', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '20ha x 15€/ha = 300€ (Semis tournesol Tracteur)',:saison => saison_2010_2011, :star => 0)
 
-reportable = Reportable.create!(:name => 'facture 25', :date => '2011-07-19', :cout => 226.4, :ref_client => '25', :ref => '025', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
+reportable = Reportable.create!(:name => 'facture 25', :date => '2011-07-19', :cout => 226.4, :ref_client => '25', :ref => '025', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Vibro', :date => '2011-07-19', :cout => 200, :ref_client => '25', :ref => '025', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '20ha x 10€ = 200€',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Orge', :date => '2011-07-19', :cout => 26.4, :ref_client => '25', :ref => '025', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '150kg x 176€/t = 26,40€',:saison => saison_2010_2011, :star => 0)
 
-reportable = Reportable.create!(:name => 'facture 50', :date => '2010-11-07', :cout => 6986, :ref_client => '50', :ref => '026', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
+reportable = Reportable.create!(:name => 'facture 50', :date => '2010-11-07', :cout => 6986, :ref_client => '50', :ref => '026', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Moissonnage Blé colza, Tournesol', :date => '2010-11-07', :cout => 6375, :ref_client => '50', :ref => '026', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '85ha x 75€/ha = 6375€',:saison => saison_2010_2011, :star => 0)
 facture = Report.create!(:reportable => reportable, :name => 'Transport Céréales', :date => '2010-11-07', :cout => 611, :ref_client => '50', :ref => '026', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '13 voyages x 47€ = 611€',:saison => saison_2010_2011, :star => 0)
 
-facture = Debit.create!(:name => 'facture 14 : Pressage', :date => '2010-11-10', :cout => 3312, :ref_client => '14', :ref => '027', :user => trochet, :factype => factype_null,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
-
-
-
-
-
-
-
-
-
+facture = Debit.create!(:name => 'facture 14 : Pressage', :date => '2010-11-10', :cout => 3312, :ref_client => '14', :ref => '027', :user => trochet, :factype => factype_diff,:factcat => factcat_agri,:category => cat_service_agri, :desc => '',:saison => saison_2010_2011, :star => 0)
 
 
 
@@ -337,9 +379,9 @@ pulves << pulve
 pulve = Pulve.create!(:name => 'pulsar', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2011-05-20', :star => 0, :desc => '1,25 L/Ha sur 6Ha</br>=> 1,25 x 6 / 11</br>=> 0,68182')
 putoproduit = Putoproduit.create!(:pulve => pulve, :produit => pulsar, :dosage => 0.68182, :saison => saison_2010_2011)
 pulves << pulve
-
-labour = Labour.create!(:name => 'déchaumage blé - 1', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-05-01', :star => 0, :category => cat_covercrop, :desc => 'date inconnue')
-labours << labour
+# 
+# labour = Labour.create!(:name => 'déchaumage blé - 1', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-05-01', :star => 0, :category => cat_covercrop, :desc => 'date inconnue')
+# labours << labour
 
 parcelle = saison_2010_2011.parcelles.find_by_name('Vallees')
 labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
@@ -749,5 +791,7 @@ parcelles_colza.each do |parcelle|
 end
 
 
+# Mise a jour des Stocks
+saison_2010_2011.update_protofacture_stock
 
 

@@ -165,6 +165,10 @@ class Facture < Charge
     return (self.factype_id == Factype.find_by_name('total').id)  
   end
   
+  def category?(cat)
+    return (self.category.name == cat)  
+  end
+  
   #somme les contribition des labour d'une facture
   #c'est-a-dire les champs 'value' des labtofactures associés 
   def sum_labours
@@ -177,56 +181,37 @@ class Facture < Charge
     return val
   end
   
-  # Somme des produits associes. uniquement les produits reellement utilises lors de traitements.
-  def sum_putoproduits_used2
+  def sum_putoproduits_stock
     sum = 0
-    self.produits.each do |produit|
-      produit.pulves.each do |pulve|
-        putoproduit = pulve.putoproduits.find_by_produit_id(produit.id)
-        sum += putoproduit.dosage * produit.get_prix_unitaire * pulve.sum_surfaces      
-      end
-
-      # si le produit est compose de plusieurs factures, il faut associer "virtuellement" la valeur sum a chaque facture, 
-      # en commencant par la plus ancienne. lorsqu'on arrive a "self" on obtient la quantite de produit utilise et imputable a cette facture (a self)
-      if produit.factures.count > 1 #TODO limiter aux factures de la saison
-        produit.factures.each do |facture| #TODO limiter aux factures de la saison
-          if facture.id.eql?(self.id)
-            return(sum)
-          else
-            protofacture = facture.protofactures.find_by_produit_id(produit.id)
-            sum -= protofacture.value
-            sum
-          end
-        end
-      else
-       return(sum)
-      end
-    end
-    return sum
+    self.protofactures.each { |p| sum += p.prix_unit * p.stock }
+    sum
   end
   
-  # Somme des produits associes. uniquement les produits reellement utilises lors de traitements.
-  # TODO : ATTENTION cette methode est correcte uniquement si les produits ne sont associes qu'a une seule facture
   def sum_putoproduits_used
     sum = 0
-    self.produits.each do |produit|
-      produit.pulves.each do |pulve|
-        putoproduit = pulve.putoproduits.find_by_produit_id(produit.id)
-        sum += putoproduit.dosage * produit.get_prix_unitaire * pulve.sum_surfaces      
-      end
-    end
-    return sum
+    self.protofactures.each { |p| sum += p.prix_unit * (p.quantite - p.stock) }
+    sum
   end
   
   # Somme des produits associes.meme ceux qui n'ont pas ete utilises lors de traitements.
   def sum_putoproduits_associated
+    # TODO URGENT facture 46 la valeur renvoyee est fausse
     sum = 0
-    self.protofactures.each { |protofacture| sum += protofacture.prix_unit * protofacture.quantite }
+    logger.error "facture : #{self.id}"
+    self.protofactures.each do |p| 
+      logger.error "produit #{p.produit.name}"
+      logger.error "\tquantite: #{p.quantite}"
+      logger.error "\tused: #{p.get_used}"
+      logger.error "\tstock: #{p.quantite - p.get_used}"
+      sum += p.prix_unit * p.quantite
+    end
+    logger.error "\tsum_putoproduits_associated : #{sum}"
     sum
   end
   
+  # remplacer sum_putoproduits_used par sum_putoproduits_associated pour comptabiliser aussi les produits utilises
   def sum_charges
-    return (self.sum_pulves + self.sum_putoproduits_associated + sum_labours)
+    return (self.sum_pulves + self.sum_putoproduits_stock + sum_labours)
   end
   
   def sum_reports
@@ -246,8 +231,10 @@ class Facture < Charge
     if (self.comptable_null?)
       return (0)
     elsif (self.comptable_diff?)
+      return (0) if (Setting::FACTURE_PRESTA_TO_NULL.eql?(true) && self.category.name.eql?("service agricole"))
+      return (0) if Setting::FACTURE_DIFF_TO_NULL.eql?(true)
       return (self.cout - self.sum_charges)
-    elsif  (self.comptable_total?)
+    elsif (self.comptable_total?)
       return (self.cout)
     end
   end

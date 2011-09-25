@@ -1,33 +1,59 @@
 
 <% form_for(@setting) do |f| %>
   <%= f.error_messages %>
+
+
+<%= f.submit "Enregistrer Les Parametres" %>
+
+<br><br><br>
+
+<fieldset>
+	<legend>Choix Saison</legend>
+	<table>
+		<tr>
+			<td><%= f.label :saison_id, "Saison : " %></td>
+			<td><%= f.collection_select (:saison_id, Saison.find(:all), :id, :name ) %></td>
+		</tr>  
+	</table>
+</fieldset>
+<fieldset>
+	<legend>Options d'affichage</legend>
+	<table>
+		<tr>
+			<td><%= f.label :value_parcelle, "Detail parcelle : " %></td>
+			<td><%= f.check_box(:value_parcelle) %></td>
+		</tr>
+		<tr>
+			<td><%= f.label :detail_desc, "Detail description pour l'affichage: " %></td>
+			<td><%= f.check_box(:detail_desc) %></td>
+		</tr>  
+		<tr>
+			<td><%= f.label :detail_ref, "Detail reference pour l'affichage: " %></td>
+			<td><%= f.check_box(:detail_ref) %></td>
+		</tr>  
+		<tr>
+			<td><%= f.label :float_precision, "Nombre de chiffre après la virgule (0, 1, 2, ou 3): " %></td>
+			<td><%= f.text_field :float_precision %></td>
+		</tr>  
+		<tr>
+			<td><%= f.label :text_area_size, "Taille par defaut d'une zone de texte : " %></td>
+			<td><%= f.text_field :text_area_size %></td>
+		</tr>  
+	</table>
+</fieldset>
+
+<fieldset>
+	<legend>Comptabilisation des facture</legend>
 <table>
-<tr>
-	<td><%= f.label :saison_id, "Saison : " %></td>
-	<td><%= f.collection_select (:saison_id, Saison.find(:all), :id, :name ) %></td>
-</tr>  
-<tr>
-	<td><%= f.label :value_parcelle, "Detail parcelle : " %></td>
-	<td><%= f.check_box(:value_parcelle) %></td>
-</tr>
-<tr>
-	<td><%= f.label :detail_desc, "Detail description pour l'affichage: " %></td>
-	<td><%= f.check_box(:detail_desc) %></td>
-</tr>  
-<tr>
-	<td><%= f.label :detail_ref, "Detail reference pour l'affichage: " %></td>
-	<td><%= f.check_box(:detail_ref) %></td>
-</tr>  
-<tr>
-	<td><%= f.label :float_precision, "Nombre de chiffre après la virgule (0, 1, 2, ou 3): " %></td>
-	<td><%= f.text_field :float_precision %></td>
-</tr>  
-<tr>
-	<td><%= f.label :text_area_size, "Taille par defaut d'une zone de texte : " %></td>
-	<td><%= f.text_field :text_area_size %></td>
-</tr>  
+	<tr>
+		<td><%= f.label :facture_diff_to_null, "Ne pas comptabiliser le reste des facture 'diff'" %></td>
+		<td><%= f.check_box(:facture_diff_to_null) %></td>
+	</tr>  
+	<tr>
+		<td><%= f.label :facture_presta_to_null, "Ne pas comptabiliser les facture 'Prestation Agricole'" %></td>
+		<td><%= f.check_box(:facture_presta_to_null) %></td>
+	</tr>  
 </table>
-</p>
-<%= f.submit "Enregistrer" %>
-</p>
+</fieldset>
+	
 <% end -%>

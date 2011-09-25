@@ -2,7 +2,7 @@ class PulvesController < ApplicationController
   # GET /pulves
   # GET /pulves.xml
   def multiple_select
-    logger.error params.inspect
+    # logger.error params.inspect
     respond_to do |format|
       format.html { redirect_to(pulves_url) }
       format.xml  { head :ok }

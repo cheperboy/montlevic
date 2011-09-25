@@ -1,7 +1,7 @@
 /* Begin : Table Datas : Category, Zone, Parcelle, User, ... */
 
 
-.table_data { border-collapse:collapse }
+.table_data { border-collapse:collapse; }
 .table_data { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
 .table_data th{ 
 	border:1px solid grey; 
@@ -73,7 +73,7 @@ padding-left: 0px;
 
 /* Begin : Table print */
 
-.table_print { border-collapse:collapse }
+.table_print { border-collapse:collapse; }
 .table_print { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
 
 .table_print td, th, tr { 

@@ -14,11 +14,15 @@
 </tr>
 <tr>
 	<td>Cout : </td>
-	<td><%= @facture.cout %> euros</td>
+	<td><%= @facture.cout.display(:with_zero => true) %> <%= euro %></td>
 </tr>
 <tr>
 	<td>Ref perso : </td>
 	<td><%= @facture.ref %></td>
+</tr>
+<tr>
+	<td>Ref client : </td>
+	<td><%= @facture.ref_client %></td>
 </tr>
 <tr>
 	<td>Classement : </td>

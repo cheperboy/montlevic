@@ -8,12 +8,14 @@ SAISON_2009_2010 = false
 #===== SEEDS_BASIC ========
 if SEEDS_BASIC
   setting = Setting.create!(
-  :saison_id => 1, 
-  :float_precision => 1, 
-  :value_parcelle => false, 
-  :detail_desc => false, 
-  :detail_ref => false,
-  :text_area_size => '25x6')
+    :saison_id => 1, 
+    :float_precision => 0, 
+    :value_parcelle => false, 
+    :detail_desc => false, 
+    :detail_ref => false,
+    :text_area_size => '25x6',
+    :facture_diff_to_null => false,
+    :facture_presta_to_null => false)
 
   upcategories = Upcategory.create!([
     { :name => 'facture'}, 

@@ -71,11 +71,11 @@ class Produit < ActiveRecord::Base
       self.protofactures.each {|protofac| total += protofac.quantite}
     end
     return total
-  end  
+  end
 
   def get_used_quantite
     used = 0
-    self.pulves.each do |pulve| 
+    self.pulves.each do |pulve|
       putoproduit = self.putoproduits.find_by_pulve_id(pulve.id)
       used += putoproduit.dosage * pulve.sum_surfaces
     end

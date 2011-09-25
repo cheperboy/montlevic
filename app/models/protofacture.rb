@@ -18,4 +18,12 @@ class Protofacture < ActiveRecord::Base
     self.saison ||= Application::SAISON
   end
   
+  def get_used
+    if stock > quantite
+      logger.error " !!! ERROR !!! protofacture.rb : protofac #{self.id} (#{self.produit.name}, facture #{facture.id})"
+      logger.error "quantite: #{self.quantite}\tstock: #{self.stock}"
+    end
+    return (quantite - stock)
+  end
+  
 end

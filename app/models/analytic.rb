@@ -33,7 +33,7 @@ class Analytic < ActiveRecord::Base
     self.lines_type_sections[:pulves] = [:all, :category]
     self.lines_type_sections[:labours] = [:all, :category]
     self.lines_type_sections[:ventes] = [:all, :category]
-    self.lines_type_sections[:factures] = [:all, :category, :factcat]
+    self.lines_type_sections[:factures] = [:all, :category, :factcat, :produits]
     # end of init iterators
     
     self.saisons = []
@@ -178,7 +178,6 @@ class Analytic < ActiveRecord::Base
         self.saisons[saison.id][line_type][:all][line.id] = {} 
         self.saisons[saison.id][line_type][:all][line.id][:ha] = 0
         self.saisons[saison.id][line_type][:all][line.id][:total] = 0
-        # TODO remplacer line.name par {} pour y stocker les champs de la db
         self.saisons[saison.id][line_type][:all][line.id][:data] = {}
       end
     end
@@ -189,6 +188,16 @@ class Analytic < ActiveRecord::Base
         self.saisons[saison.id][line_type][:factcat][factcat.id][:total] = 0
         self.saisons[saison.id][line_type][:factcat][factcat.id][:name] = factcat.name
       end 
+      # Init lines_type_sections produits (stock, used, ..) for Facture (for saison colone only)
+      self.saisons[saison.id][line_type][:produits][:stock] = {}
+      self.saisons[saison.id][line_type][:produits][:quantite] = {}
+      self.saisons[saison.id][line_type][:produits][:used] = {}
+      self.saisons[saison.id][line_type][:produits][:stock][:total] = 0 
+      self.saisons[saison.id][line_type][:produits][:stock][:ha] = 0
+      self.saisons[saison.id][line_type][:produits][:quantite][:total] = 0
+      self.saisons[saison.id][line_type][:produits][:quantite][:ha] = 0
+      self.saisons[saison.id][line_type][:produits][:used][:total] = 0
+      self.saisons[saison.id][line_type][:produits][:used][:ha] = 0
     end    
   end
 

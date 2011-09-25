@@ -11,7 +11,7 @@
 	</tr>
 	<tr>
 		<td class=left>Prix unitaire</td>
-		<td class=right><b><%=h @produit.get_prix_unitaire.display(3) %> <%=h @produit.get_prix_unitaire_unit %></b></td>
+		<td class=right><b><%=h @produit.get_prix_unitaire.display(2) %> <%=h @produit.get_prix_unitaire_unit %></b></td>
 	</tr>
 <% unless @produit.desc.eql?('') %>
 	<tr>
@@ -30,12 +30,12 @@
 	</tr>
 	<tr>
 		<td>Stock initial</td>
-		<td class=right><%=h @produit.get_quantite.display(2) %> <%=h @produit.unit %></td>
+		<td class=right><%=h @produit.get_quantite.display() %> <%=h @produit.unit %></td>
 		<td class=right><%=h (@produit.get_quantite * @produit.get_prix_unitaire).display(:with_zero => true) %> <%=h euro %></td>
 	</tr>
 	<tr>
 		<td>Consommé</td>
-		<td class=right><%=h @produit.get_used_quantite.display(2) %> <%=h @produit.unit %></td>
+		<td class=right><%=h @produit.get_used_quantite.display() %> <%=h @produit.unit %></td>
 		<td class=right><%=h (@produit.get_used_quantite * @produit.get_prix_unitaire).display(:with_zero => true) %> <%=h euro %></td>
 	</tr>
 	<tr>
@@ -53,18 +53,24 @@
 			<td>Ref</td>
 			<td>Nom</td>
 			<td>Quantite</td>
+			<td>Used</td>
+			<td>Stock</td>
 			<td>Prix unitaire</td>
 			<td>Cout</td>
 			<td></td>
 		</tr>
-		<%- @produit.protofactures.each do |protofacture| -%>
+		<%- @produit.protofactures.find(:all, :order => :facture_id).each do |protofacture| -%>
 		<tr>
 			<td><%=h protofacture.facture.date.to_s %></td>
 			<td><%=h protofacture.facture.ref %></td>
 			<td><%=h protofacture.facture.name %></td>
-			<td class=right><%=h protofacture.quantite.display %> <%=h @produit.unit %></td>
-			<td class=right><%=h protofacture.prix_unit.display %> <%= euro %>/<%=h @produit.unit %></td>
-			<td class=right><%=h (protofacture.prix_unit * protofacture.quantite).display %> <%= euro %></td>
+			<td class=right><%=h protofacture.quantite.display(:with_zero => true) %> <%=h @produit.unit %></td>
+			
+			<td class=right><%=h (protofacture.quantite - protofacture.stock).display(:with_zero => true) %> <%=h @produit.unit %></td>
+			<td class=right><%=h protofacture.stock.display(:with_zero => true) %> <%=h @produit.unit %></td>
+
+			<td class=right><%=h protofacture.prix_unit.display(2, :with_zero => true) %> <%= euro %>/<%=h @produit.unit %></td>
+			<td class=right><%=h (protofacture.prix_unit * protofacture.quantite).display(:with_zero => true) %> <%= euro %></td>
 			<td><%= link_to image_tag('img-voir.png'), :controller => "factures", :action => "show", :id => protofacture.facture %></td>
 		</tr>
 	<%- end -%>
@@ -100,8 +106,8 @@
 	<td></td>
 	<td></td>
 	<td></td>
-	<td class=right><b><%=h surface.display %> <%=h ha %></b></td>
-	<td class=right><b><%=h quantity.display %> <%=h @produit.unit %></b></td>
+	<td class=right><b><%=h surface.display() %> <%=h ha %></b></td>
+	<td class=right><b><%=h quantity.display() %> <%=h @produit.unit %></b></td>
 	<td></td>
 </tr>
 </table>

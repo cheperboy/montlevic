@@ -11,10 +11,10 @@ class Saison < ActiveRecord::Base
   has_many :produits
   has_many :putoproduits
 
-  has_one :setting    
+  has_one :setting
 
   # positionne le champ Protofac.quantite_restante de chaque produit de la saison.
-  def update_prduit_restant
+  def update_protofacture_stock
   # Produit : p
   # p.used_quantity : quantite utilisee
   # p.quantite : quantite totale achetee (somme des factures)
@@ -22,22 +22,37 @@ class Saison < ActiveRecord::Base
   # 
   # Init:
   # produit_restant = produit.quantite_initiale
-    produit_used = produit.get_used_quantity
+    
   # 
   # Algo:
-    saison.produits.each do |produit|
-      produit.protofactures.each do |protofac|
-        if protofac.get_quantite <= produit_used
-          protofac.set_quantite_restante(0)
+    self.produits.each do |produit|
+      used_a_deduire = produit.get_used_quantite
+      # logger.error "Produit : #{produit.id}\t #{produit.name}. used : #{used_a_deduire}"
+      produit.protofactures.find(:all, :order => :facture_id).each do |protofac|  
+        # logger.error "\tprotofacture : #{protofac.id}"
+        if used_a_deduire.eql?(0)
+          protofac.stock = protofac.quantite
         else
-          protofac.set_quantite_restante(produit_used)
+          if protofac.quantite <= used_a_deduire
+            # logger.error "\tprotofac.quantite (#{protofac.quantite}) < used_a_deduire (#{used_a_deduire})"
+            protofac.stock = 0
+            # logger.error "\tprotofac.stock = 0"
+            used_a_deduire = used_a_deduire - protofac.quantite
+            # logger.error "\tused_a_deduire(#{used_a_deduire}) -= protofac.quantite(#{protofac.quantite})"
+          else
+            # logger.error "\tprotofac.quantite (#{protofac.quantite}) > used_a_deduire (#{used_a_deduire})"
+            protofac.stock = protofac.quantite - used_a_deduire
+            # logger.error "\tprotofac.stock = used_a_deduire(#{used_a_deduire})"
+            used_a_deduire = 0
+            # logger.error "\tstock=#{used_a_deduire}"
+          end
         end
-        produit_used -= protofac.get_quantite
-        produit_used = 0 if produit_used < 0
-      end
-    end
+        protofac.save!
+      end #produit.protofactures.each
+      
+    end # of saison.produits.each
     
-  end
+  end # of method
   
   # retourne les id des pulves des parcelles de la saison (ou nil)
   def putoproduits

@@ -6,33 +6,33 @@
 		  <tr>
 		    <td>Cout facture : </td>
 		    <td><b></b></td>
-		    <td><b><%= @facture.cout.display %> €</b></td>
+		    <td><b><%= @facture.cout.display(:with_zero => true) %> €</b></td>
 		  </tr>
 		<% if @facture.sum_pulves > 0  %>
 		  <tr>
 		    <td>Pulves : </td>
 		    <td><b>-</b></td>
-		    <td><b><%= @facture.sum_pulves.display %> €</b></td>
+		    <td><b><%= @facture.sum_pulves.display(:with_zero => true) %> €</b></td>
 		  </tr>
 		<% end %>
 		<% if @facture.sum_labours > 0  %>
 		  <tr>
 		    <td>Labours : </td>
 		    <td><b>-</b></td>
-		    <td><b><%= @facture.sum_labours.display %> €</b></td>
+		    <td><b><%= @facture.sum_labours.display(:with_zero => true) %> €</b></td>
 		  </tr>
 		<% end %>
 		<% if @facture.sum_putoproduits_associated > 0  %>
 		  <tr>
 		    <td>Produits : </td>
 		    <td><b>-</b></td>
-		    <td><b><%= @facture.sum_putoproduits_associated.display %> €</b></td>
+		    <td><b><%= @facture.sum_putoproduits_stock.display(:with_zero => true) %> €</b></td>
 		  </tr>
 		<% end %>
 		  <tr>
 		    <td>Valeur comptable de la facture : </td>
 		    <td><b>=</b></td>
-		    <td><b><%= (@facture.cout - @facture.sum_charges).display %> €</b></td>
+		    <td><b><%= (@facture.cout - @facture.sum_charges).display(:with_zero => true) %> €</b></td>
 		  </tr>
 	</table>
 <% elsif @facture.comptable_null?  %>

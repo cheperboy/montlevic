@@ -29,12 +29,12 @@
 		<tr>
 			<td><%=h protofacture.produit.category.name %></td>
 			<td><%=h protofacture.produit.name %></td>
-			<td class=right><%=h (protofacture.prix_unit).display %> €/<%=h protofacture.produit.unit %></td>
+			<td class=right><%=h (protofacture.prix_unit).display(2) %> €/<%=h protofacture.produit.unit %></td>
 			<td class=right><%=h protofacture.quantite.display %> <%=h protofacture.produit.unit %></td>
 			<td class=right><%=h (protofacture.quantite * protofacture.prix_unit).display %> <%= euro %></td>
 		<%- if @show_used -%>
-			<td class=right><%=h protofacture.quantite.display %> <%=h protofacture.produit.unit %></td>
-			<td class=right><%=h (protofacture.quantite * protofacture.prix_unit).display %> <%= euro %></td>
+			<td class=right><%=h protofacture.get_used.display %> <%=h protofacture.produit.unit %></td>
+			<td class=right><%=h (protofacture.get_used * protofacture.prix_unit).display %> <%= euro %></td>
 		<%- end -%>
 			<td><%= link_to image_tag('img-voir.png'), :controller => "produits", :action => "show", :id => protofacture.produit %></td>
 		</tr>
@@ -44,10 +44,10 @@
 			<td></td>
 			<td></td>
 			<td></td>
-			<td class=right><%=h total_prix.display %> <%= euro %></td>
+			<td class=right><%=h total_prix.display(:with_zero => true) %> <%= euro %></td>
 			<%- if @show_used -%>
 				<td class=right></td>
-				<td class=right><%=h @facture.sum_putoproduits_used.display %> <%= euro %></td>
+				<td class=right><%=h @facture.sum_putoproduits_used.display(:with_zero => true) %> <%= euro %></td>
 			<%- end -%>
 			<td></td>
 		</tr>

@@ -219,6 +219,8 @@ class Calculate < ActiveRecord::Base
   end
 
   def run_factures
+    cat_produit_phyto_id = Category.find(2).id
+    logger.error "cat_produit_phyto id: #{cat_produit_phyto_id}, name: #{cat_produit_phyto_id = Category.find(2).name}"
     for facture in @factures
       for col in @cols
         #valeur ha et total pour chaque col
@@ -257,8 +259,18 @@ class Calculate < ActiveRecord::Base
           @res.add_saison_line(@sid, :factures, :category, cat.id, :total, facture.get_cout_total)
         end
       end
+      
+      #synthese des quantites et stocks Produits
+      if (facture.category?('produits phyto'))
+        @res.add_saison_line(@sid, :factures, :produits, :quantite, :total, facture.sum_putoproduits_associated)
+        @res.add_saison_line(@sid, :factures, :produits, :stock, :total, facture.sum_putoproduits_stock)
+        @res.add_saison_line(@sid, :factures, :produits, :used, :total, facture.sum_putoproduits_used)
+      end
     end
-    # cout ha pour la colonne saison
+    logger.error "quantite #{@res.get_saison_line(@sid, :factures, :produits, :quantite, :total)}"
+    logger.error "stock #{@res.get_saison_line(@sid, :factures, :produits, :stock, :total)}"
+    logger.error "used #{@res.get_saison_line(@sid, :factures, :produits, :used, :total)}"
+    # OPTIMIZE cout ha pour la colonne saison
     # pour optimiser la vitesse de traitement, on peu calculer uniquement les cout totaux puis refaire une boucle 
     # (for facture in @factures) pour le calcul du cout ha de saison.
     # cf les lignes suivantes en commentaire
@@ -544,15 +556,6 @@ class Calculate < ActiveRecord::Base
     charges_by_line +=    @res.get_other_line_for_saison(@sid, :resultats, :total_labours, :total)
     charges_by_line +=    @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :total)
     charges_by_line +=    @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
-    
-    # logger.error "charges : #{charges}"
-    # logger.error "charges_by_line : #{charges_by_line}"
-    # logger.error "charges_by_col : #{charges_by_col}"
-    # logger.error "-----"
-    # logger.error "labours + pulves = factures.sum_charges ?"
-    # logger.error "labours #{labours} + pulves #{pulves} = #{labours + pulves}"
-    # logger.error "factures_sum_charges #{factures_sum_charges}"
-
   end
     
 end

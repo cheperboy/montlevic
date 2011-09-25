@@ -3,7 +3,7 @@ class SaisonsController < ApplicationController
   # GET /saisons.xml
   def index
     @saisons = Saison.all
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @saisons }
@@ -14,7 +14,6 @@ class SaisonsController < ApplicationController
   # GET /saisons/1.xml
   def show
     @saison = Saison.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @saison }
@@ -58,7 +57,8 @@ class SaisonsController < ApplicationController
   # PUT /saisons/1.xml
   def update
     @saison = Saison.find(params[:id])
-
+    @saison.update_protofacture_stock
+logger.error "update saison"
     respond_to do |format|
       if @saison.update_attributes(params[:saison])
         flash[:notice] = 'Saison was successfully updated.'

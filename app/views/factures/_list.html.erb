@@ -1,5 +1,67 @@
 <% unless @elements.count == 0 %>
-
 <%= draw_table_with_find(Application::FACTURE_HEAD, @elements, 'factures', 'index', params) %>
-
 <% end %>
+<br>
+<br>
+<br>
+<% upcategory_id = Upcategory.find(:first, :conditions => ["name = ?", "facture"]).id %>
+
+
+
+<table class=table_data>
+<tr class=bold>
+	<td>id</td>
+	<td>name</td>
+	<td>cout</td>
+	<td>get_cout_total</td>
+	<td>sum_charges</td>
+	<td>sum_putoproduits_associated</td>
+	<td>sum_putoproduits_used</td>
+	<td>sum_putoproduits_stock</td>
+</tr>
+
+<% Category.find(:all, :conditions => ["upcategory_id = ?", upcategory_id]).each do |cat| %>
+	<tr class=bold>
+		<td colspan=8>Categorie : <%= cat.name %> (<%= cat.id %>)</td>
+	</tr>
+
+	<% sum = {} %>
+	<% sum[:cout] = 0 %>
+	<% sum[:get_cout_total] = 0 %>
+	<% sum[:sum_charges] = 0 %>
+	<% sum[:sum_putoproduits_associated] = 0 %>
+	<% sum[:sum_putoproduits_used] = 0 %>
+	<% sum[:sum_putoproduits_stock] = 0 %>
+
+	<% cat.factures.find(:all, :conditions => { :saison_id => Application::SAISON_ID }).each do |f| %>
+
+		<% sum[:cout] += f.cout %>
+		<% sum[:get_cout_total] += f.get_cout_total %>
+		<% sum[:sum_charges] += f.sum_charges %>
+		<% sum[:sum_putoproduits_associated] += f.sum_putoproduits_associated %>
+		<% sum[:sum_putoproduits_used] += f.sum_putoproduits_used %>
+		<% sum[:sum_putoproduits_stock] += f.sum_putoproduits_stock %>
+
+		<tr>
+			<td><%= f.id %></td>
+			<td><%= f.name %></td>
+			<td class=right><%= f.cout.display(2, :with_zero => true) %></td>
+			<td class=right><%= f.get_cout_total.display(2, :with_zero => true) %></td>
+			<td class=right><%= f.sum_charges.display(2, :with_zero => true) %></td>
+			<td class=right><%= f.sum_putoproduits_associated %></td>
+			<td class=right><%= f.sum_putoproduits_used.display() %></td>
+			<td class=right><%= f.sum_putoproduits_stock.display() %></td>
+		</tr>
+	<% end %>
+	<tr class=bold>
+		<td></td>
+		<td><%= cat.name %></td>
+		<td><%= sum[:cout].display() %></td>
+		<td><%= sum[:get_cout_total].display() %></td>
+		<td><%= sum[:sum_charges].display() %></td>
+		<td><%= sum[:sum_putoproduits_associated].display() %></td>
+		<td><%= sum[:sum_putoproduits_used].display() %></td>
+		<td><%= sum[:sum_putoproduits_stock].display() %></td>
+	</tr>
+<% end %>
+</table>
