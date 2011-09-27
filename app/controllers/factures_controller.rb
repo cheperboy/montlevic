@@ -244,7 +244,7 @@ class FacturesController < ApplicationController
           format.html { redirect_to(facture_url(@facture.reportable)) }
         else
           flash[:notice] = 'Modification de la facture (' + @facture.class.to_s + ') "' + @facture.name + '" OK.'
-          format.html { render :action => "show" }
+          format.html { redirect_to(facture_url(@facture)) }
         end
       else
         format.html { render :action => "edit" }

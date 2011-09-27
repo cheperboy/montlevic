@@ -59,6 +59,10 @@ class Parcelle < ActiveRecord::Base
     @name_and_culture = name + " - " + typeculture.name + " - " + surface.to_s + " Ha" 
   end
   
+  def name_for_select
+    @name_for_select = "Parcelle :: " + name + " - " + typeculture.name + " - " + surface.to_s + " Ha" 
+  end
+    
   #retourne la somme des surface d'un jeu de parcelles
   def sum_surfaces(parcelles)
     s=0

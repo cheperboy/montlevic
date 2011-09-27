@@ -70,12 +70,12 @@ class Application < ActiveRecord::Base
   PRODUIT_HEAD = 
   [
     # KEY                       VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
-    ['star',                    'star',       '',     true,         :check_box,  true,    'star'        ],
-    ['adu',                     'adu',        '',     true,         :check_box,  true,    'adu'         ],
+    ['star',                    'star',       '',     true,         :check_box,   true,   'star'        ],
+    ['adu',                     'adu',        '',     true,         :check_box,   true,   'adu'         ],
     ['stock_vs_used_pp',        'S',          '',     true,         false,        false,  ''            ],
    	['id',                      'id',         '',     false,        false,        true,   'id'          ],
-   	['category_name',           'categorie',  '',     false,        :text_field, true,    'category_id' ],
-   	['name',                    'nom',        '',     true,         :text_field, true,    'name'        ],
+   	['category_name',           'categorie',  '',     false,        :text_field,  true,   'category_id' ],
+   	['name',                    'nom',        '',     true,         :text_field,  true,   'name'        ],
    	['get_quantite',            'Quantite',   '',     false,        false,        true,   'quantity'    ],
    	['unit',                    '',           '',     false,        false,        true,   'unit'        ],
     ['get_stock',               'Stock',      '',     false,        false,        false,  ''            ], 
@@ -84,7 +84,6 @@ class Application < ActiveRecord::Base
     ['get_prix_unitaire_unit',  '',           '',     false,        false,        false,  ''            ], 
     ['number_of_use',           '',           '',     false,        false,        false,  ''            ]
   ]
-
   
   # Used in Print.rb
   def get_value_or_blank(var, value)

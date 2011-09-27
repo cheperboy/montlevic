@@ -197,15 +197,15 @@ class Facture < Charge
   def sum_putoproduits_associated
     # TODO URGENT facture 46 la valeur renvoyee est fausse
     sum = 0
-    logger.error "facture : #{self.id}"
+    # logger.error "facture : #{self.id}"
     self.protofactures.each do |p| 
-      logger.error "produit #{p.produit.name}"
-      logger.error "\tquantite: #{p.quantite}"
-      logger.error "\tused: #{p.get_used}"
-      logger.error "\tstock: #{p.quantite - p.get_used}"
+      # logger.error "produit #{p.produit.name}"
+      # logger.error "\tquantite: #{p.quantite}"
+      # logger.error "\tused: #{p.get_used}"
+      # logger.error "\tstock: #{p.quantite - p.get_used}"
       sum += p.prix_unit * p.quantite
     end
-    logger.error "\tsum_putoproduits_associated : #{sum}"
+    # logger.error "\tsum_putoproduits_associated : #{sum}"
     sum
   end
   
@@ -232,7 +232,7 @@ class Facture < Charge
       return (0)
     elsif (self.comptable_diff?)
       return (0) if (Setting::FACTURE_PRESTA_TO_NULL.eql?(true) && self.category.name.eql?("service agricole"))
-      return (0) if Setting::FACTURE_DIFF_TO_NULL.eql?(true)
+      return (0) if (Setting::FACTURE_DIFF_TO_NULL.eql?(true) && !self.category.name.eql?("service agricole"))
       return (self.cout - self.sum_charges)
     elsif (self.comptable_total?)
       return (self.cout)

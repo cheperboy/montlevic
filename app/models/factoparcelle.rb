@@ -10,6 +10,7 @@ class Factoparcelle < ActiveRecord::Base
 # Callbacks
   def before_save 
     self.saison ||= Application::SAISON
+    self.value = 1
   end
   
   def self.find_by_parcelle(parcelle_id, facture_id)

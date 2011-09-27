@@ -148,10 +148,6 @@ class Analytic < ActiveRecord::Base
         self.saisons[saison.id][col_type][col_id][line_type][:all][line.id] = {} 
         self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:ha] = 0
         self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:total] = 0
-        # OPTIMIZE supprimer les 3 lignes suivantes si le champs :data ne sert a rien 
-        # unless line.class.eql?(Putoproduit)
-        #   self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:data] = line.name
-        # end
       end
     end
     if line_type == :factures

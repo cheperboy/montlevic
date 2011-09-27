@@ -4,6 +4,11 @@ class Typeculture < ActiveRecord::Base
   
   validates_presence_of :name
   
+  def name_for_select
+    @name_for_select = "Typeculture :: " + name + " - " + " - " + surface.to_s + " Ha" 
+  end
+  
+  
   def self.find_for_saison()
     typeculture_ids = []
     typecultures = []

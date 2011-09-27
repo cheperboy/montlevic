@@ -44,10 +44,10 @@
 			<td></td>
 			<td></td>
 			<td></td>
-			<td class=right><%=h total_prix.display(:with_zero => true) %> <%= euro %></td>
+			<td class=right><%=h total_prix.display() %> <%= euro %></td>
 			<%- if @show_used -%>
 				<td class=right></td>
-				<td class=right><%=h @facture.sum_putoproduits_used.display(:with_zero => true) %> <%= euro %></td>
+				<td class=right><%=h @facture.sum_putoproduits_used.display() %> <%= euro %></td>
 			<%- end -%>
 			<td></td>
 		</tr>

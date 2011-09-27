@@ -12,6 +12,13 @@ module ApplicationHelper
   # def test_somme_produits(@saison) 
   # end
   
+  # Remplace collection_select et ajoute les Types de culture en plus des parcelles
+  def collection_parcelle_and_culture(form, parcelle_id, parcelles, id, name)
+    options = []
+    Application::SAISON.typecultures.each {|c| options << c }
+    Application::SAISON.parcelles.each {|p| options << p }
+    return form.collection_select (:parcelle_id, options, :id, :name_for_select )
+  end
   
   def toggle_div(div) 
     logger.error 'toggle_div id : ' + div.to_s + ' page[div] : ' + page[div]

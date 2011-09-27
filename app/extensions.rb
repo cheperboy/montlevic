@@ -74,16 +74,13 @@ class Integer
   end
 
   def display(*args)
-    precision = args[1]
     options = args.extract_options!
-    
+    precision = Setting::FLOAT_PRECISION
+    precision = args[0] unless args[0].nil?
     if (self.eql?(0))
-      unless options[:with_zero]
+      if options[:z]
         return "-"
-      end 
-    end
-    if precision.nil?
-      precision = Setting::FLOAT_PRECISION
+      end
     end
     return (sprintf("%.#{precision}f", self.to_f))
   end
@@ -100,18 +97,16 @@ class Float
   #affiche un float avec options
   # Options:
   # - display() : precision choisie dans Settings, '-' si valeure = 0,0
-  # - display(:with_zero => true) : '0.0' si valeure = 0,0
+  # - display() : '0.0' si valeure = 0,0
   # - display(2) : 2 chiffres apres la virgule, ecrase les Settings
-  # - display(2, :with_zero => true) : 2 chiffres apres la virgule, ecrase les Settings et 0.0 si valeur=0
+  # - display(2) : 2 chiffres apres la virgule, ecrase les Settings et 0.0 si valeur=0
   def display(*args)
     # Rails.logger.error "Setting::FLOAT_PRECISION: #{Setting::FLOAT_PRECISION.to_s}"
     options = args.extract_options!
     precision = Setting::FLOAT_PRECISION
     precision = args[0] unless args[0].nil?
     if ((-0.01 < self) && (self < 0.01))
-      if options[:with_zero]
-        return (sprintf("%.#{precision}f", self.to_f))
-      else
+      if options[:z]
         return "-"
       end 
     end

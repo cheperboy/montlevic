@@ -30,13 +30,13 @@
 						<%= datas[:surface_total] %> ha
 					</td>
 				<% end %> 
-				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :all, labour.id, :ha).display %></td>
-				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :all, labour.id, :total).display %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :all, labour.id, :ha).display(:z => true) %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :all, labour.id, :total).display(:z => true) %></td>
 			<% rang = 0 %>
 			<% @colonnes.each do |colonne| %>
 				<% rang += 1 %>
-				<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :labours, :all, labour.id, :ha).display %>
-				<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :labours, :all, labour.id, :total).display %>
+				<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :labours, :all, labour.id, :ha).display(:z => true) %>
+				<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :labours, :all, labour.id, :total).display(:z => true) %>
 				<% if @show[:cout_ha] %>
 					<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
 				<% end %>
@@ -58,17 +58,17 @@
 					<td class="date"><%= datas[:date].to_s :dmy %></td>	
 					<td class='left'>
 						<%= datas[:parcelles_length] %> p - 
-						<%= datas[:sum_surfaces].display %> ha
+						<%= datas[:sum_surfaces].display(:z => true) %> ha
 					</td>
 				<% end %> 
-				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :pulves, :all, pulve.id, :ha).display %></td>
-				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :pulves, :all, pulve.id, :total).display %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :pulves, :all, pulve.id, :ha).display(:z => true) %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :pulves, :all, pulve.id, :total).display(:z => true) %></td>
 	
 				<% rang = 0 %>
 				<% @colonnes.each do |colonne| %>
 					<% rang += 1 %>
-					<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :pulves, :all, pulve.id, :ha).display %>
-					<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :pulves, :all, pulve.id, :total).display %>
+					<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :pulves, :all, pulve.id, :ha).display(:z => true) %>
+					<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :pulves, :all, pulve.id, :total).display(:z => true) %>
 					<% if @show[:cout_ha] %>
 						<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
 					<% end %>
@@ -106,13 +106,13 @@
 					<td></td>	
 					<td></td>
 				<% end %>
-				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :category, cat.id, :ha).display %></td>
-				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :category, cat.id, :total).display %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :category, cat.id, :ha).display(:z => true) %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :labours, :category, cat.id, :total).display(:z => true) %></td>
 				<% rang = 0 %>
 				<% @colonnes.each do |colonne| %>
 					<% rang += 1 %>
-					<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :labours, :category, cat.id, :ha).display %>
-					<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :labours, :category, cat.id, :total).display %>
+					<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :labours, :category, cat.id, :ha).display(:z => true) %>
+					<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :labours, :category, cat.id, :total).display(:z => true) %>
 					<% if @show[:cout_ha] %>
 						<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
 					<% end %>
@@ -130,13 +130,13 @@
 				<td></td>
 				<td></td>
 			<% end %> 
-			<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_pulves, :ha).display %></td>
-			<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_pulves, :total).display %></td>	
+			<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_pulves, :ha).display(:z => true) %></td>
+			<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_pulves, :total).display(:z => true) %></td>	
 			<% rang = 0 %>
 			<% @colonnes.each do |colonne| %>
 				<% rang += 1 %>
-				<% cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_pulves, :ha).display %>
-				<% cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_pulves, :total).display %>
+				<% cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_pulves, :ha).display(:z => true) %>
+				<% cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_pulves, :total).display(:z => true) %>
 				<% if @show[:cout_ha] %>
 					<td class="<%= odd(rang) %>_subtotal"><%=h cout_ha %></td>
 				<% end %>
@@ -160,8 +160,8 @@
 			<td></td>	
 			<td></td>
 		<% end %>
-		<td class="saison"><%= total_presta_saison_ha.display %></td>
-		<td class="saison"><%= total_presta_saison.display %></td>	
+		<td class="saison"><%= total_presta_saison_ha.display(:z => true) %></td>
+		<td class="saison"><%= total_presta_saison.display(:z => true) %></td>	
 		<% rang = 0 %>
 		<% @colonnes.each do |colonne| %>
 			<% cout_ha = (@test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_labours, :ha) +
@@ -172,10 +172,10 @@
 			%>
 			<% rang += 1 %>
 			<% if @show[:cout_ha] %>
-				<td class="<%= odd(rang) %>_subtotal"><%=h cout_ha.display %></td>
+				<td class="<%= odd(rang) %>_subtotal"><%=h cout_ha.display(:z => true) %></td>
 			<% end %>
 			<% if @show[:cout_total] %>
-				<td class="<%= odd(rang) %>_subtotal"><%=h cout_total.display %></td>
+				<td class="<%= odd(rang) %>_subtotal"><%=h cout_total.display(:z => true) %></td>
 			<% end %>
 		<% end %>
 	</tr>

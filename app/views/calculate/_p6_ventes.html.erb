@@ -27,14 +27,14 @@
 					<%= datas[:surface_total] %> ha
 				</td>
 			<% end %>
-			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :ha).display %></td>
-			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :total).display %></td>
+			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :ha).display(:z => true) %></td>
+			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :total).display(:z => true) %></td>
 		
 			<% rang = 0 %>
 			<% @colonnes.each do |colonne| %>
 				<% rang += 1 %>
-				<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :ha).display %>
-				<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :total).display %>
+				<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :ha).display(:z => true) %>
+				<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :total).display(:z => true) %>
 				<% if @show[:cout_ha] %>
 					<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
 				<% end %>
@@ -66,13 +66,13 @@
 				<td class="left"><b><%= cat.name %></b></td>
 				<td></td>
 				<td></td>
-				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :ha).display %></td>
-				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :total).display %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :ha).display(:z => true) %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :total).display(:z => true) %></td>
 				<% rang = 0 %>
 				<% @colonnes.each do |colonne| %>
 					<% rang += 1 %>
-					<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :ha).display %>
-					<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :total).display %>
+					<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :ha).display(:z => true) %>
+					<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :total).display(:z => true) %>
 					<% if @show[:cout_ha] %>
 						<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
 					<% end %>
@@ -92,13 +92,13 @@
 		<td></td>	
 		<td></td>	
 	<% end %>
-	<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_ventes, :ha).display %></td>
-	<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_ventes, :total).display %></td>	
+	<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_ventes, :ha).display(:z => true) %></td>
+	<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_ventes, :total).display(:z => true) %></td>	
 	<% rang = 0 %>
 	<% @colonnes.each do |colonne| %>
 		<% rang += 1 %>
-		<% cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_ventes, :ha).display %>
-		<% cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_ventes, :total).display %>
+		<% cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_ventes, :ha).display(:z => true) %>
+		<% cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_ventes, :total).display(:z => true) %>
 		<% if @show[:cout_ha] %>
 			<td class="<%= odd(rang) %>_subtotal"><%=h cout_ha %></td>
 		<% end %>
