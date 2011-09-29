@@ -46,6 +46,17 @@
 
 </table>
 
+<fieldset>
+	<legend><h3>Type de cultures</h3></legend>
+	<div class="typeculture">
+	  <table>
+		<% for t in Typeculture.find_for_saison() %>
+			<%= form_tr_check_tag(t.name, "typecultures[#{t.id}]") %>
+		<% end %>
+	  </table>
+	</div>
+</fieldset>
+
 <div id="ventoparcelles">
 	<% vente_form.fields_for :ventoparcelles do |ventoparcelle_form| %>
 		<% unless vente_form.object.new_record? %>

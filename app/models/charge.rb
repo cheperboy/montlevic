@@ -62,7 +62,62 @@ class Charge < ActiveRecord::Base
     self.user.name
   end
 
-  # METHODES partagées par toutes les dépenses, factures, pulve, ...
+  # ----- Methodes ajout Parcelle par Typeculture -----
+
+  # transforme les checkbox Typeculture en parcelles
+  def update_typecultures(typecultures)
+    unless typecultures.nil?
+      typecultures.each do |typeculture_array|
+        culture = Typeculture.find(typeculture_array[0])
+        unless culture.nil?
+          culture.parcelles.each do |parcelle|
+            self.add_parcelle!(parcelle)
+            self.save!
+          end
+        end
+      end
+    end
+  end
+    
+  # Ajoute une Fac/Lab/Pu/Ven/toparcelle si celle-ci n'existe pas encore pour ce Labou/Pulve/Facture/...
+  def add_parcelle!(parcelle)
+    add = true
+    self.parcelles.each do |p|
+      if parcelle.id.eql?(p.id)
+        add = false
+      end
+    end
+    if add.eql?(true)
+      self.parcelles << parcelle
+    end
+  end
+    
+  # transforme les checkbox Typeculture en Factoparcelles
+  def uniq_parcelles
+    tab = []
+    if self.parcelles.count > 0
+      self.parcelles.each do |parcelle|
+        if tab.include?(parcelle.id)
+          case self.class
+          when Facture
+          when Report
+          when Reportable
+            elt = Factoparcelle.find(:first, :conditions => ["parcelle_id = ? AND facture_id = ?", parcelle.id, self.id])
+          when Labour
+            elt = Labtoparcelle.find(:first, :conditions => ["parcelle_id = ? AND labour_id = ?", parcelle.id, self.id])
+          when Pulve
+            elt = Putoparcelle.find(:first, :conditions => ["parcelle_id = ? AND pulve_id = ?", parcelle.id, self.id])
+          when Vente
+            elt = Ventoparcelle.find(:first, :conditions => ["parcelle_id = ? AND vente_id = ?", parcelle.id, self.id])
+          end
+          elt.destroy
+        else
+          tab << parcelle.id
+        end
+      end
+    end
+  end
+    
 
   def self.find_by_saison(*args)
     with_scope(:find => 

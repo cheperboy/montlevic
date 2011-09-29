@@ -63,6 +63,8 @@ class LaboursController < ApplicationController
     @labour = Labour.find(params[:id])
     respond_to do |format|
       if @labour.update_attributes(params[:labour])
+        @labour.update_typecultures(params[:typecultures])
+        @labour.uniq_parcelles
         flash[:notice] = 'Labour was successfully updated.'
         format.html { redirect_to(@labour) }
         format.xml  { head :ok }

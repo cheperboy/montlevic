@@ -126,8 +126,26 @@ class Facture < Charge
       end
   end
 
-  # ----- Methodes -----
+  def charges?
+    return((self.labours.count > 0) || (self.pulves.count > 0))
+  end
+
+  def comptable_diff?
+    return (self.factype_id == Factype.find_by_name('diff').id)  
+  end
+  def comptable_null?
+    return (self.factype_id == Factype.find_by_name('null').id)  
+  end
+  def comptable_total?
+    return (self.factype_id == Factype.find_by_name('total').id)  
+  end
   
+  def category?(cat)
+    return (self.category.name == cat)  
+  end
+  
+  # ----- Methodes d'affichage -----
+    
   def print_factype
     self.factype.name
   end
@@ -151,24 +169,8 @@ class Facture < Charge
     self.factcat.name
   end
 
-  def charges?
-    return((self.labours.count > 0) || (self.pulves.count > 0))
-  end
+  # ----- Methodes de calcul -----
 
-  def comptable_diff?
-    return (self.factype_id == Factype.find_by_name('diff').id)  
-  end
-  def comptable_null?
-    return (self.factype_id == Factype.find_by_name('null').id)  
-  end
-  def comptable_total?
-    return (self.factype_id == Factype.find_by_name('total').id)  
-  end
-  
-  def category?(cat)
-    return (self.category.name == cat)  
-  end
-  
   #somme les contribition des labour d'une facture
   #c'est-a-dire les champs 'value' des labtofactures associés 
   def sum_labours

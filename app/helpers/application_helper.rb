@@ -13,6 +13,7 @@ module ApplicationHelper
   # end
   
   # Remplace collection_select et ajoute les Types de culture en plus des parcelles
+  # Obsolete, non utilise
   def collection_parcelle_and_culture(form, parcelle_id, parcelles, id, name)
     options = []
     Application::SAISON.typecultures.each {|c| options << c }
@@ -407,10 +408,10 @@ module ApplicationHelper
   def form_tr_check_tag(name, col)
     out = ''
     out += '<tr><td>'
-    out += name
+    out += label col, name
     out += ' : </td>'
     out += '<td>'
-    out += check_box_tag col 
+    out += check_box_tag col
     out += '</td></tr>'
     return out
   end

@@ -44,21 +44,33 @@ sauf si Admin.true?-->
 <%= form_tr_check_tag('Reportable', :reportable) %>
 <%= form_tr_text_area(f, 'Infos', :desc, :size => "20x5") %>
 </table>
-	<% unless @facture.type == 'Reportable' %>
+
 <fieldset>
-	<legend><h3>parcelles associees</h3></legend>
-		<div id="factoparcelles">
-			<% f.fields_for :factoparcelles do |factoparcelle_form| %>
-				<% unless f.object.new_record? %>
-					<%= render :partial => 'factoparcelle', :locals => { :f => factoparcelle_form } %>
-				<% end %>
-			<% end %>
-		</div>
-		<p>
-		<%= link_to 'Ajouter une parcelle', '#factoparcelle', :class => "add_nested_item", :rel => "factoparcelles" %>
-		</p>
-	<% end %>
+	<legend><h3>Type de cultures</h3></legend>
+	<div class="typeculture">
+	  <table>
+		<% for t in Typeculture.find_for_saison() %>
+			<%= form_tr_check_tag(t.name, "typecultures[#{t.id}]") %>
+		<% end %>
+	  </table>
+	</div>
 </fieldset>
+
+	<% unless @facture.type == 'Reportable' %>
+		<fieldset>
+			<legend><h3>parcelles associees</h3></legend>
+				<div id="factoparcelles">
+					<% f.fields_for :factoparcelles do |factoparcelle_form| %>
+						<% unless f.object.new_record? %>
+							<%= render :partial => 'factoparcelle', :locals => { :f => factoparcelle_form } %>
+						<% end %>
+					<% end %>
+				</div>
+				<p>
+				<%= link_to 'Ajouter une parcelle', '#factoparcelle', :class => "add_nested_item", :rel => "factoparcelles" %>
+				</p>
+			<% end %>
+		</fieldset>
 <p><%= f.submit "Enregistrer" %></p>
 </fieldset>
 

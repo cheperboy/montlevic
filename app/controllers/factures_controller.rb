@@ -79,8 +79,6 @@ class FacturesController < ApplicationController
     end
   end
 
-  # GET /factures/1
-  # GET /factures/1.xml
   def show
     @facture = Facture.find(params[:id])
     @show = {}
@@ -91,7 +89,6 @@ class FacturesController < ApplicationController
     end
   end
 
-  # GET /factures/1/edit
   def edit
     @facture = Facture.find(params[:id])
   end
@@ -235,10 +232,13 @@ class FacturesController < ApplicationController
   end
 
   def update
-    @facture = Facture.find(params[:id])
+    @facture = Facture.find(params[:id])  
     param_type = @facture.class.to_s.downcase.to_sym
     respond_to do |format|
       if @facture.update_attributes(params[param_type])
+        # transforme les checkbox Typeculture en Factoparcelles
+        @facture.update_typecultures(params[:typecultures])
+        @facture.uniq_parcelles
         if @facture.class.equal?(Report)
           flash[:notice] = 'Modification du Report "' + @facture.name + '" OK.'
           format.html { redirect_to(facture_url(@facture.reportable)) }
