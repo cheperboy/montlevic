@@ -49,6 +49,7 @@ class Verif < ActiveRecord::Base
   end
 
   def get_result
+    factures.tests << assos_sup_cout
     factures.tests << report_sans_reportable
     factures.tests << reportable_sans_report
     factures.tests << facdiv_sans_diverse
@@ -74,9 +75,20 @@ class Verif < ActiveRecord::Base
     
   end
 
-  # def almost_eql?(valeur, prix, seuil=2)
-  #  ((valeur - prix).abs < seuil)
-  # end
+  def assos_sup_cout
+    test = init_test('Somme associations superieur a cout facture', LOW)
+    test.num =0
+    # Facture.find(:all).each do |facture|
+    Facture.find_with_saison(:all, :order => :id).each do |facture|       
+      if facture.assos_sup_cout.eql?(true)
+        test.num += 1
+        error = init_error(facture.name, facture.id, 'factures')
+        test.errors << error
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
+  end
 
   def reportable_sans_report
     test = init_test('Reportable sans aucun report', LOW)
@@ -345,11 +357,11 @@ class Verif < ActiveRecord::Base
     test.num =0
     @pulves = Pulve.find_by_saison(:all)
     unless @pulves.nil?
-      @pulves.each do |pulve|    
+      @pulves.each do |pulve|
         var = true
         unless pulve.putofactures.empty?
           pulve.putofactures.each do |putofacture|
-            if pulve.get_cout_total_produit.almost_eql?(putofacture.value, 2)
+            if pulve.get_cout_total_produits.almost_eql?(putofacture.value, 2)
               var = false
             end
           end
@@ -372,7 +384,7 @@ class Verif < ActiveRecord::Base
     @pulves = Pulve.find_by_saison(:all)
     unless @pulves.nil?
       @pulves.each do |pulve|    
-        if pulve.get_cout_total_produit == 0
+        if pulve.get_cout_total_produits == 0
           test.num += 1
           text = pulve.to_s(:default)
           error = init_error(text, pulve.id, 'pulves')

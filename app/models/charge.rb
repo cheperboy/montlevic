@@ -14,11 +14,18 @@ class Charge < ActiveRecord::Base
     return true
   end
 
-# Finders
+  # ----- Finders -----
   def self.find_with_saison(*args) 
     with_scope(:find => {:conditions => ["saison_id = ?", Application::SAISON_ID]}) do 
       find(*args)
     end
+  end
+
+  def self.find_by_saison(*args)
+    with_scope(:find => 
+                {:conditions => ["saison_id = ?", Setting.find(:first).saison_id] }) do
+        find(*args)
+      end
   end
 
   # ----- Getters -----
@@ -27,7 +34,9 @@ class Charge < ActiveRecord::Base
     out = ''
     if args[0] == :default
       out += (self.print_date + " ")
-      out += (self.category.name + " ")    
+      unless self.class.eql?(Pulve)
+        out += (self.category.name + " ")    
+      end
       out += (self.name + " ")    
     else
       args.each do |arg|
@@ -118,13 +127,6 @@ class Charge < ActiveRecord::Base
     end
   end
     
-
-  def self.find_by_saison(*args)
-    with_scope(:find => 
-                {:conditions => ["saison_id = ?", Setting.find(:first).saison_id] }) do
-        find(*args)
-      end
-  end
 
 #methode deplacee de Model/Labour.rd vers Charges.rb
 #pour etre accessible par Pulve

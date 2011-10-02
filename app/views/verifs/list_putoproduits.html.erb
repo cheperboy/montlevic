@@ -1,18 +1,23 @@
+<% title "Verif" %>
+
 <%= render :partial => 'menu_verif' %>
 
 <% unless @putoproduits.count == 0 %>
 	<table>
 	  <tr>  	
+	    <td></td>
 	    <td>Id | </td>
+	    <td>Saison | </td>
 	    <td>Pulve | </td>
 	    <td>Produit | </td>
-	    <td>Value | </td>
+	    <td>Dosage | </td>
+	    <td>Dos. vrai | </td>
 	    <td colspan='3'></td>
 	  </tr>
 
 	<% @putoproduits.each do |obj| %>
-<% pu_invalid = (obj.pulve.nil?) %>
-<% prod_invalid = (obj.produit.nil?) %>
+		<% pu_invalid = (obj.pulve.nil?) %>
+		<% prod_invalid = (obj.produit.nil?) %>
 
 	  <tr class='list-row'>
 	    <td>
@@ -21,6 +26,9 @@
 			<% else %>
 				<%= image_tag('img-ok.png') %>
 			<% end %>
+		</td>
+
+	    <td>
 			<%= obj.id %> | 
 		</td>
 
@@ -28,7 +36,7 @@
 	    	<% if obj.saison_id == nil %>
 				<%= obj.saison_id %> | 
 			<% else %>
-				<%= link_to obj.pulve_id, pulve_url(:id => obj.pulve_id) %> |
+				<%= link_to obj.pulve.saison_id, pulve_url(:id => obj.pulve_id) %> |
 			<% end %>
 		</td>
 		
@@ -47,7 +55,8 @@
 				<%= link_to obj.produit_id, produit_url(:id => obj.produit_id) %> |
 			<% end %>
 		</td>
-	    <td><%= obj.dosage.display %> | </td>
+	    <td><%= obj.dosage.display(2) %> | </td>
+	    <td><%= obj.dosage_vrai.display() %> | </td>
 	    <td><%= link_to image_tag('img-modif.png'), edit_pulve_url(:id => obj.pulve_id) %> | </td>
 	    <td><%= link_to image_tag('img-delete.png'), {
 										:controller => :verifs, 

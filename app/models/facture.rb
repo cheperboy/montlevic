@@ -32,7 +32,7 @@ class Facture < Charge
   belongs_to :factype
   belongs_to :user
   belongs_to :saison
-  Facture
+  
   accepts_nested_attributes_for :factoparcelles, :allow_destroy => true
 
   # ----- Validations -----
@@ -127,7 +127,7 @@ class Facture < Charge
   end
 
   def charges?
-    return((self.labours.count > 0) || (self.pulves.count > 0))
+    return((self.labours.count > 0) || (self.pulves.count > 0) || (self.produits.count > 0))
   end
 
   def comptable_diff?
@@ -245,6 +245,17 @@ class Facture < Charge
     return (self.cout)
   end
     
-  
+# ----- Verifs ------
+
+# Somme des associations superieur a facture.cout
+  def assos_sup_cout
+    if charges?
+      if (sum_charges > cout)
+        return true      
+      end
+    end
+    return false
+  end
+
   
 end

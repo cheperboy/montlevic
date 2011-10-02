@@ -82,6 +82,7 @@
 
 <% if (@facture.pulves.count > 0) %>
 <h3>Traitements</h3>
+<table class=table_data>
   <tr class=table_data>
     <td><b>Pulve</b></td>
     <td><b>date</b></td>
@@ -91,17 +92,18 @@
 	<% @facture.putofactures.each do |putofacture| %>
 	  <tr>
 	    <td><%= link_to putofacture.pulve.name, edit_pulve_path(putofacture.pulve) %></td>
-	    <td><%=h putofacture.pulve.print_date %></td>
-	    <td><%=h putofacture.pulve.get_cout_total.display %></td>
-	    <td><%=h putofacture.value.display %></td>
+	    <td class=right><%=h putofacture.pulve.print_date %></td>
+	    <td class=right><%=h putofacture.pulve.get_cout_total.display %></td>
+	    <td class=right><%=h putofacture.value.display %></td>
 	  </tr>
 	<% end %>
   <tr>
     <td></td>
     <td></td>
     <td class=bold>Somme :</td>
-    <td class=bold><%=h @facture.sum_pulves %></td>
+    <td class=right><%=h @facture.sum_pulves %></td>
   </tr>
+</table>
 <% end %>
 
 
