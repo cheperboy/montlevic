@@ -43,7 +43,8 @@ test:
   production:
     adapter: postgresql
     encoding: utf8
-    database: comptagri_prod
+    reconnect: false
+    database: montlevic_production
     pool: 5
-    username: postgres
-    password: picasso
+    username: montlevic
+    password: 
