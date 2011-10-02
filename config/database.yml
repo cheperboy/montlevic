@@ -31,14 +31,6 @@ test:
     pool: 5
     username: postgres
     password: picasso
-  # adapter: mysql
-  # encoding: utf8
-  # reconnect: false
-  # database: montlevic_test
-  # pool: 5
-  # username: root
-  # password: root
-  # socket: /Applications/MAMP/tmp/mysql/mysql.sock
 
   production:
     adapter: postgresql
