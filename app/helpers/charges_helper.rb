@@ -25,6 +25,22 @@ module ChargesHelper
     end
   end
   
+  def star_ascii(obj)
+    if obj.star?
+      return('★')
+    else
+      return('<span class=grey>☆</span>')
+    end
+  end
+  
+  def adu_ascii(obj)
+    if obj.adu?
+      return('⚑')
+    else
+      return('<span class=grey>⚐</span>')
+    end
+  end
+  
   def select_pulve_units(form, col)
     form.select(col, Application::PULVE_DOSAGE_UNITS)
   end

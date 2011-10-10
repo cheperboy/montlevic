@@ -13,6 +13,8 @@ class Application < ActiveRecord::Base
   # HEADER_TYPE = 4
   # HEADER_TRI = 5
   # HEADER_TRI_KEY = 6
+  # HEADER_RED_GREEN = 7
+  # HEADER_COLOR = 8
   
   LABOUR_HEAD = 
   [
@@ -50,21 +52,21 @@ class Application < ActiveRecord::Base
 
   FACTURE_HEAD = 
   [
-    # KEY                       VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
-  	['star',                    'star',       '',     true,         :check_box,   true,   'star'        ], 
-  	['adu',                     'adu',        '',     true,         :check_box,   true,   'adu'         ],
-   	['id',                      'id',         '',     false,        false,        true,   'id'          ], 
-  # ['typecultures',            'Cultures',   '',     false,        false,        false,  ''            ], 
-  	['category_name',           'Categorie',  '',     false,        false,        true,   'category_id' ],
-  	['factcat_name',            'class',      '',     false,        false,        true,   'factcat_id'  ], 
-  	['print_factype',           'compta',     '',     false,        false,        true,   'factype_id'  ],
-  	['type',                    'type',       '',     false,        false,        true,   'type'     ],
-  	['user_name',               'Presta',     '',     false,        false,        true,   'user_id'     ],
-  	['name',                    'nom',        '',     false,        false,        true,   'name'        ],
-  	['cout',                    'Cout',       '€',    false,        false,        true,   'cout'        ],
-    ['ref_client',              'Ref Client', '',     false,        false,        true,   'ref_client'  ],
-    ['ref',                     'Ref',        '',     false,        false,        true,   'ref'         ], 
-  	['print_date',              'date',       '',     false,        false,        true,   'date'        ]
+    # KEY                   VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY           GREEN_RED COLOR
+  	['star',                'star',       '',     true,         :check_box,   true,   'star',           false,    'black'], 
+  	['adu',                 'adu',        '',     true,         :check_box,   true,   'adu',            false,    'black'],
+   	['id',                  'id',         '',     false,        false,        true,   'id',             false,    'grey'],
+  	['category_name',       'Categorie',  '',     false,        false,        true,   'category_id',    false,    'grey'],
+  	['factcat_name',        'class',      '',     false,        false,        true,   'factcat_id',     false,    'grey'],
+  	['print_factype',       'compta',     '',     false,        false,        true,   'factype_id',     false,    'grey'],
+  	['type',                'type',       '',     false,        false,        true,   'type',           false,    'grey'],
+  	['user_name',           'Presta',     '',     false,        false,        true,   'user_id',        false,    'black'],
+  	['name',                'nom',        '',     false,        false,        true,   'name',           false,    'black'],
+  	['cout',                'Cout',       '€',    false,        false,        true,   'cout',           false,    'black'],
+  	['get_cout_total',      'Comptable',  '€',    false,        false,        true,   'get_cout_total', true,     'black'],
+    ['ref_client',          'Ref Client', '',     false,        false,        true,   'ref_client',     false,    'black'],
+    ['ref',                 'Ref',        '',     false,        false,        true,   'ref',            false,    'grey'],
+  	['print_date',          'date',       '',     false,        false,        true,   'date',           false,    'grey'],
   ]
 
   PRODUIT_HEAD = 

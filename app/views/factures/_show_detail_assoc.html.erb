@@ -65,7 +65,7 @@
 	</tr>
 		<% @facture.labtofactures.each do |labtofacture| %>
 		  <tr>
-		    <td><%= link_to labtofacture.labour.name, edit_labour_path(labtofacture.labour) %></td>
+		    <td><%= link_to labtofacture.labour.name, labour_path(labtofacture.labour) %></td>
 		    <td><%=h labtofacture.labour.print_date %></td>
 		    <td><%=h labtofacture.labour.get_cout_total.display %></td>
 		    <td><%=h labtofacture.value.display %></td>
@@ -91,7 +91,7 @@
   </tr>
 	<% @facture.putofactures.each do |putofacture| %>
 	  <tr>
-	    <td><%= link_to putofacture.pulve.name, edit_pulve_path(putofacture.pulve) %></td>
+	    <td><%= link_to putofacture.pulve.name, pulve_path(putofacture.pulve) %></td>
 	    <td class=right><%=h putofacture.pulve.print_date %></td>
 	    <td class=right><%=h putofacture.pulve.get_cout_total.display %></td>
 	    <td class=right><%=h putofacture.value.display %></td>

@@ -1,5 +1,5 @@
 <% unless @elements.count == 0 %>
-<%= draw_table_with_find(Application::FACTURE_HEAD, @elements, 'factures', 'index', params) %>
+<%= facture_table(Application::FACTURE_HEAD, @elements, 'factures', 'index', params) %>
 <% end %>
 <br>
 <br>

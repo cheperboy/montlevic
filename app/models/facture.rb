@@ -213,7 +213,7 @@ class Facture < Charge
   
   # remplacer sum_putoproduits_used par sum_putoproduits_associated pour comptabiliser aussi les produits utilises
   def sum_charges
-    return (self.sum_pulves + self.sum_putoproduits_stock + sum_labours)
+    return (self.sum_pulves + self.sum_putoproduits_used + sum_labours)
   end
   
   def sum_reports

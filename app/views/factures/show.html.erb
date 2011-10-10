@@ -1,26 +1,35 @@
-<% if @facture.class == Diverse %>
-	<% title "Facture (diverse)" %>
-	<p>| <%= link_to "Liste des factures diverses", {:controller => 'factures', :action => 'diverses'} %> |</p>
+<% title "Facture : #{@facture.name} " %>
 
+
+<% if @facture.class == Diverse %>
+	<p>
+		| <%= star_ascii(@facture) %>
+	  	| <%= adu_ascii(@facture) %>
+		| <%= link_to "Liste des factures diverses", {:controller => 'factures', :action => 'diverses'} %> |
+	</p>
+	<%= star_ascii(@facture) %>
 	<%= render :partial => 'show_diverse' %>
 	
-	<h2>Factures associees</h2>
+	<h2>Factures associées</h2>
 	<p>| <%= link_to "Ajouter une facture associee", new_facture_facdiv_url(@facture) %> |</p>
-	
+
 	<% unless @facture.facdivs.empty? %>
 		<%= render :partial => "list_facdivs" %>
-	<% end %>
-	
+	<% end %>	
 <% elsif @facture.class == Reportable %>
-	<% title "Facture (reportable)" %>
-	<p>
-	  | <%= link_to "Modifier", {:controller => 'factures', :action => 'edit', :id => @facture.id} %>
-	  | <%= link_to "Retour a la liste des factures", :controller => 'factures', :action => 'index' %> |
-	</p>
+<p>
+	| <%= star_ascii(@facture) %>
+  	| <%= adu_ascii(@facture) %>
+  	| <%= link_to "Modifier", {:controller => 'factures', :action => 'edit', :id => @facture.id} %>
+  	| <%= link_to "Retour a la liste des factures", :controller => 'factures', :action => 'index' %> |
+</p>
 	<%= render :partial => 'show_reportable' %>
 	
 	<h2>reports associes</h2>
-	<p>| <%= link_to 'Ajouter un Report', {:controller => :factures, :action=> :new_report} %>
+	<p>
+		| <%= star_ascii(@facture) %>
+	  	| <%= adu_ascii(@facture) %>
+		| <%= link_to 'Ajouter un Report', {:controller => :factures, :action=> :new_report} %>
 		| <%= link_to 'Retour a la liste des factures', {:controller => :factures} %> |
 	</p>
 
@@ -29,7 +38,14 @@
 	<% end %>
 	
 <% else %>
-	<% title "Facture" %>
+	<p>
+	  |	<%= star_ascii(@facture) %>
+	  | <%= adu_ascii(@facture) %>
+	  | <%= link_to "Modifier", {:controller => 'factures', :action => 'edit', :id => @facture.id} %>
+	  | <%= link_to "Retour a la liste des factures", :controller => 'factures', :action => 'index' %>
+	</p>
+
+
 	<%= render :partial => 'show_facture' %>
 
 <% end %>

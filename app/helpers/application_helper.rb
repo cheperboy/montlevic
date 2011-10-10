@@ -7,7 +7,9 @@ module ApplicationHelper
   HEADER_TYPE = 4
   HEADER_TRI = 5
   HEADER_TRI_KEY = 6
-
+  HEADER_RED_GREEN = 7
+  HEADER_COLOR = 8
+  
 # WORKING
   # def test_somme_produits(@saison) 
   # end
@@ -18,7 +20,7 @@ module ApplicationHelper
     options = []
     Application::SAISON.typecultures.each {|c| options << c }
     Application::SAISON.parcelles.each {|p| options << p }
-    return form.collection_select (:parcelle_id, options, :id, :name_for_select )
+    return form.collection_select(:parcelle_id, options, :id, :name_for_select )
   end
   
   def toggle_div(div) 
@@ -280,7 +282,7 @@ module ApplicationHelper
     out = ''
     out += '<tr><td class="td-left">'
     out += key.to_s
-    out += ' : </td>'
+    out += '</td>'
     out += '<td class="td-left">'
     out += value.to_s
     if unit
@@ -449,10 +451,13 @@ module ApplicationHelper
                     :method => :put)
   end
 
-  def toggle_value(object) 
-    remote_function(:url => { :controller => "settings", :action => "update_saison" },
+  def toggle_value(object)
+    remote_function(:url => { :controller => "factures", :action => "update_star_or_adu", :id => object.id },
                     :method => :put,
-                    :with => "this.name + '=' + this.checked")
+                    :before => "Element.show('spinner-#{object.id}')" ,
+                    :complete => "Element.hide('spinner-#{object.id}')",
+                    :with => "this.name + '=' + this.checked"
+                    )
   end
 
   def shortstring(text)

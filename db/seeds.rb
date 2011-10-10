@@ -15,7 +15,8 @@ if SEEDS_BASIC
     :detail_ref => false,
     :text_area_size => '25x6',
     :facture_diff_to_null => false,
-    :facture_presta_to_null => false)
+    :facture_presta_to_null => false,
+    :show_reportable => false)
 
   upcategories = Upcategory.create!([
     { :name => 'facture'}, 
@@ -38,7 +39,7 @@ if SEEDS_BASIC
     { :name => 'batiments', :upcategory => facture}, 
     { :name => 'deplacement', :upcategory => facture}, 
     { :name => 'frais de gestion', :upcategory => facture },
-    { :name => 'service agricole', :upcategory => facture },
+    { :name => 'service agricole', :upcategory => facture }, #ne pas modifier
 
     { :name => 'divers', :upcategory => pulve },
     { :name => 'azote', :upcategory => pulve },

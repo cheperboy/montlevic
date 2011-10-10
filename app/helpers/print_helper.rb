@@ -15,7 +15,6 @@ module PrintHelper
     end  
   end
   
-  # A SUPPRIMER
   def td_number(col_length, show_cout_ha, show_cout_total)
     if show_cout_ha && show_cout_total
       num = 2
@@ -51,7 +50,21 @@ module PrintHelper
     return 'd' if facture.class.equal?(Diverse)
   end
   
+  # <table class=table_data>
+  #   <tr class=table_data>
+  #     <td><b>Pulve</b></td>
+  #     <td><b>date</b></td>
+  #     <td><b>cout</b></td>
+  #     <td><b>contribution</b></td>
+  #   </tr>
+  #     <tr>
+  #       <td class=right>=h putofacture.pulve.print_date </td>
+  #       <td class=right>=h putofacture.pulve.get_cout_total.display </td>
+  #       <td class=right>=h putofacture.value.display </td>
+  #     </tr>
+  #   <tr>
   
+    
   #affiche les infos de la facture dans un popup
   def link_popup_facture(dep)
     if dep.is_a?(Integer)
@@ -61,86 +74,158 @@ module PrintHelper
     end
     #affichage tableau
     out = '
-    <a href=" '+ edit_facture_path(facture) +'" class="tip">'+ facture.name 
+    <a href=" '+ facture_path(facture) +'" class="tip">'+ facture.name 
 
     #affichage popup
     out += '
     <span>        
     <fieldset class="popup">
-    <legend class="popup"><b>Facture :: '+ facture.name + '</b></legend>'
+    <legend class="popup"><b>'+ facture.name + '</b></legend>'
+
+    #REPORT
+    if facture.class.equal?(Report)
+      out += '<p>Origine :<b>' + facture.reportable.name + '</b> (' + facture.reportable.cout.to_s + euros + ')</p>'
+    end
 
     #Description
     out += '
-    <table class="table_popup">
+    <table class="table_data">
     ' + tr_text("Id", facture.id) + '
     ' + tr_text("Categorie", facture.category.name) + '
-    ' + tr_text("Surface", facture.sum_surfaces, 'Ha') + '
-    ' + tr_text("Cout", facture.get_cout_total_sans_reduc, '€')
+    ' + tr_text("Surface", facture.sum_surfaces.display, 'Ha') + '
+    ' + tr_text("Cout", facture.get_cout_total_sans_reduc.display, '€')
     if facture.charges? || facture.class.equal?(Reportable)
       out += '
-      ' + tr_text("Cout Comptable", facture.get_cout_total, euros + '/Ha')
+      ' + tr_text("Cout Comptable", facture.get_cout_total.display, euro)
     end
-    out += '
+    out += tr_text("Desc", facture.desc) + '
     </table> '
 
-    #TOUT
-    out += '<br><b>'+facture.parcelles.length.to_s+' parcelles : </b><ul>'
-    for parcelle in facture.parcelles
-      out += '<li>'+parcelle.name + ' (' + parcelle.surface.to_s + 'ha)</li>'
+    #TOUS LES TYPE DE FACTURES
+    unless facture.parcelles.empty?
+      out += '<br><b>'+facture.parcelles.length.to_s+' parcelles : </b>'
+      out += '
+      <table class="table_data">
+        <tr>
+          <td>Culture</td>
+          <td>Nom</td>
+          <td>Ha</td>
+        </tr>'
+      for parcelle in facture.parcelles
+        out += '<tr>'
+          out += '<td>' + parcelle.typeculture.name + '</td>'
+          out += '<td>' + parcelle.name + '</td>'
+          out += '<td>' + parcelle.surface.display(0) + '</td>'
+        out += '</tr>'
+      end
+      out += '</table>'
     end
-    out += '</ul>'
-
+    
     #REPORTABLE : Reports Associees
     if facture.class.equal?(Reportable)
       if facture.reports.count > 0
         out += '<br><b>'+facture.reports.length.to_s+' Reports : </b>'
-        out += '<table class="table_popup">'
+        out += '<table class="table_data">'
         for report in facture.reports
           out += '<tr>'
-          out += '<td>' + report.name + ' | </td>'
-          out += '<td>' + report.cout.to_s + ' € |</td>'
+          out += '<td>' + report.name + '</td>'
+          out += '<td>' + report.cout.to_s + ' ' + euro + '</td>'
           out += '</tr>'
         end
-        out += '<tr><td>Total Reports | </td>'
+        out += '<tr><td>Total Reports</td>'
         out += sum_reports_cout(facture.id)
         out += '</tr>'
         out += '</table>'
-      else
-        out += '<br>Pas de reports associes.<br>'
       end
-    end
-
-    #REPORT
-    if facture.class.equal?(Report)
-      out += '<p><b>Reportable ' + facture.reportable.name + '</b></p>'
-      out += '<p>Cout : ' + facture.cout.to_s + '/' + facture.reportable.cout.to_s + euros + '</p>'
     end
 
     #DEBIT : Charges Associees (Labours et Pulves)
     if facture.labours.count > 0
-      out += '<br><b>'+facture.labours.length.to_s+' Labours : </b><ul>'
-      for labtofacture in facture.labtofactures
-        out += '<li>'+  labtofacture.labour.name + ' (' + 
-        labtofacture.value.to_s + '/' + 
-        labtofacture.labour.get_cout_total.to_s + ')</li>'
+      out += '<p><b>Labours</b></p>'
+      out += '<table class=table_data>
+      	<tr class=bold>
+      	    <td class=left><b>Labour</b></td>
+      	    <td><b>cout</b></td>
+      	</tr>'
+      facture.labtofactures.each do |labtofacture|
+      out += '
+            <tr>
+      		    <td class=left>' + link_to(labtofacture.labour.name, labour_path(labtofacture.labour)) + '</td>
+      		    <td>' + labtofacture.value.display + '</td>
+      		  </tr>'
       end
-      out += '</ul>'
-    else
-      out += '<br>Pas de labours associes.<br>'
-    end
-    if facture.pulves.count > 0
-      out += '<br><b>'+facture.pulves.length.to_s+' Pulves : </b><ul>'
-      for putofacture in facture.putofactures
-        out += '<li>'+  putofacture.pulve.name + ' (' + 
-        putofacture.value.to_s + '€/' + 
-        putofacture.pulve.get_cout_total.to_s + '€)</li>'
-      end
-      out += '</ul>'
-    else
-      out += '<br>Pas de pulves associes.<br>'
+      out += '
+          <tr>
+      	    <td class=bold>Somme :</td>
+      	    <td class=bold>' + facture.sum_labours.display + '</td>
+      	  </tr>
+      </table>'
     end
 
-    out += '<p>' + facture.desc + '</p>'    
+    if facture.pulves.count > 0
+      out += '<p><b>Pulves</b></p>'
+      out += '<table class=table_data>
+      	<tr class=bold>
+      	    <td class=left><b>Pulve</b></td>
+      	    <td><b>cout</b></td>
+      	</tr>'
+      facture.putofactures.each do |putofacture|
+      out += '
+            <tr>
+      		    <td class=left>' + link_to(putofacture.pulve.name, pulve_path(putofacture.pulve)) + '</td>
+      		    <td>' + putofacture.value.display + '</td>
+      		  </tr>'
+      end
+      out += '
+          <tr>
+      	    <td class=bold>Somme :</td>
+      	    <td class=bold>' + facture.sum_pulves.display + '</td>
+      	  </tr>
+      </table>'
+    end
+
+    # COMPTABILISATION
+    if facture.comptable_diff?  
+      out += "<br><b>Comptabilisation : diff</b>
+  	  <table class=table_data>
+  		  <tr>
+  		    <td>Cout facture</td>
+  		    <td><b></b></td>
+  		    <td><b>#{facture.cout.display()}</b></td>
+  		  </tr>"
+      if facture.sum_pulves > 0  
+        out += "<tr>
+                <td>Pulves : </td>
+          		    <td><b>-</b></td>
+          		    <td><b#{facture.sum_pulves.display()}</b></td>
+      		      </tr>"
+      end
+  		if facture.sum_labours > 0  
+  		  out += "<tr>
+  		    <td>Labours : </td>
+  		    <td><b>-</b></td>
+  		    <td><b>#{facture.sum_labours.display()}</b></td>
+  		  </tr>"
+  		end
+      if facture.sum_putoproduits_associated > 0  
+         out += "<tr>
+  		    <td>Produits : </td>
+  		    <td><b>-</b></td>
+  		    <td><b>#{facture.sum_putoproduits_used.display()}</b></td>
+  		  </tr>"
+  		end
+      out += "<tr>
+  		    <td>Valeur comptable de la facture : </td>
+  		    <td><b>=</b></td>
+  		    <td><b>#{(facture.cout - facture.sum_charges).display()}</b></td>
+  		  </tr>
+  	</table>"
+    elsif facture.comptable_null?  
+      out += "<br><b>Comptabilisation : nulle</b>"
+    elsif facture.comptable_total?  
+  	  out += "<br><b>Comptabilisation : total</b>"
+    end
+
     out += '    
     </fieldset>
     </span>

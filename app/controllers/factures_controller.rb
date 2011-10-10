@@ -231,6 +231,30 @@ class FacturesController < ApplicationController
     end
   end
 
+  def update_star_or_adu
+    star = 0
+    adu = 0
+    if params[:facture][:star].eql?("true")
+      star = 1
+    end
+    if params[:facture][:adu].eql?("true")
+      adu = 1
+    end
+    params[:facture][:star] = star
+    params[:facture][:adu] = adu
+    @facture = Facture.find(params[:id])
+    respond_to do |format| 
+      if @facture.update_attributes(params[:facture])
+        flash[:notice] = 'facture was successfully updated.' 
+        format.html { redirect_to(@facture) }
+        format.js	{ head :ok } 
+      else
+        format.html { render :action => "edit" } 
+        format.js	{ head :unprocessable_entity }
+      end 
+    end
+  end
+
   def update
     @facture = Facture.find(params[:id])  
     param_type = @facture.class.to_s.downcase.to_sym

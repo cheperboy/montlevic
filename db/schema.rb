@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.string  "text_area_size"
     t.integer "facture_diff_to_null",         :limit => 2
     t.integer "facture_presta_to_null",       :limit => 2
+    t.integer "show_reportable",              :limit => 2
   end
 
   create_table "verifs", :force => true do |t|

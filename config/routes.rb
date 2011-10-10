@@ -55,7 +55,8 @@ ActionController::Routing::Routes.draw do |map|
                                             :index_types => :get,
                                             :edit_facdiv => :get,
                                             :diverses => :get,
-                                            :modif => :any }
+                                            :modif => :any,
+                                            :update_star_or_adu => :put}
 
   map.resources :categories, :collection => { :test => :any}
   map.resources :upcategories do |upcat|

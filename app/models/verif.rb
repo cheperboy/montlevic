@@ -361,7 +361,8 @@ class Verif < ActiveRecord::Base
         var = true
         unless pulve.putofactures.empty?
           pulve.putofactures.each do |putofacture|
-            if pulve.get_cout_total_produits.almost_eql?(putofacture.value, 2)
+            if (pulve.get_cout_total_produits.almost_eql?(putofacture.value, 2) || 
+                pulve.get_cout_total_passage.almost_eql?(putofacture.value, 2))
               var = false
             end
           end
