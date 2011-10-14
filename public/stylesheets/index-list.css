@@ -1,11 +1,11 @@
 
 .table_list tr { 
-	border: 1px solid grey;
+	border: 1px solid #DDDDDD;
  }
 
 .table_list { border-collapse:collapse; }
 
-.table_list tr.list-row:hover { background-color: #eecfa1; }
+.table_list tr.list-row:hover { background-color: #FFFFBB; }
 
 .table_list td { 	
 	padding-left: 0.5em;

@@ -13,7 +13,16 @@ module ApplicationHelper
 # WORKING
   # def test_somme_produits(@saison) 
   # end
-  
+
+  def toggle_star(object)
+    remote_function(:url => { :controller => "factures", :action => "update_star", :id => object.id },
+                    :method => :put,
+                    :before => "Element.show('spinner-#{object.id}')" ,
+                    :complete => "Element.hide('spinner-#{object.id}')",
+                    :with => "this.name + '=' + this.checked"
+                    )
+  end
+
   # Remplace collection_select et ajoute les Types de culture en plus des parcelles
   # Obsolete, non utilise
   def collection_parcelle_and_culture(form, parcelle_id, parcelles, id, name)
@@ -265,17 +274,17 @@ module ApplicationHelper
 
   def link_to_show(modele, id)
     url = modele.to_s.downcase.pluralize + '/' + id.to_s
-    return (link_to image_tag('img-voir.png'), url)
+    return (link_to image_tag('img-voir.png'), url, :class => "link_yellow")
   end
 
   def link_to_edit(modele, id)
     url = modele.to_s.downcase.pluralize + '/' + id.to_s + '/edit'
-    return (link_to image_tag('img-modif.png'), url)
+    return (link_to image_tag('img-modif.png'), url, :class => "link_yellow")
   end
 
   def link_to_delete(modele, id)
     url = modele.to_s.downcase.pluralize + '/' + id.to_s
-    return (link_to image_tag('img-delete.png'), url, :confirm => 'Are you sure?', :method => :delete)
+    return (link_to image_tag('img-delete.png'), url, :confirm => 'Are you sure?', :method => :delete, :class => "link_yellow")
   end
   	
   def tr_text(key, value, unit=nil)
@@ -302,38 +311,14 @@ module ApplicationHelper
       unit = ' ' + options[:unit].to_s  if options[:unit]
     end
     out = ''
-    out += '<tr><td>'
+    out += '<tr><td class="td-left">'
     out += form.label col, name
     out += ' : </td>'
     out += '<td class="td-left">'
     if options && options[:value]
-      out += form.text_field col.to_sym, :value => value, :size => size
+      out += form.text_field col.to_sym, :value => value, :size => size, :class => "text_field"
     else 
-      out += form.text_field col.to_sym, :size => size
-    end
-    out += unit
-    out += '</td></tr>'
-    return out
-  end
-
-  # identique a form_tr_text mais sans le <tr></tr>
-  def form_text(form, name, col, options=nil)
-    value = ''
-    size = 25
-    unit = ''
-    if options
-      size = options[:size] if options[:size]
-      value = options[:value].to_s if options[:value]
-      unit = ' ' + options[:unit].to_s  if options[:unit]
-    end
-    out = ''
-    out += form.label col, name
-    out += ' : </td>'
-    out += '<td class="td-left">'
-    if options && options[:value]
-      out += form.text_field col.to_sym, :value => value, :size => size
-    else 
-      out += form.text_field col.to_sym, :size => size
+      out += form.text_field col.to_sym, :size => size, :class => "text_field"
     end
     out += unit
     out += '</td></tr>'
@@ -342,14 +327,14 @@ module ApplicationHelper
 
   def form_tr_text_area(form, name, col, options=nil)
     out = ''
-    out += '<tr><td>'
+    out += '<tr><td class="td-left">'
     out += form.label col, name
     out += ' : </td>'
     out += '<td class="td-left">'
     if options
-      out += form.text_area col, :size => options[:size]
+      out += form.text_area col, :size => options[:size], :class => "text_field"
     else
-      out += form.text_area col
+      out += form.text_area col, :class => "text_field"
     end
     out += '</td></tr>'
     return out
@@ -361,7 +346,7 @@ module ApplicationHelper
     #   start_year = options[:start_year]
     # end
     out = ''
-    out += '<tr><td>'
+    out += '<tr><td class="td-left">'
     out += form.label col.to_sym, name
     out += ' : </td>'
     out += '<td class="td-left">'
@@ -383,7 +368,7 @@ module ApplicationHelper
 
   def form_tr_select(form, name, col, collection, id, display, options = nil)
     out = ''
-    out += '<tr><td>'
+    out += '<tr><td class="td-left">'
     out += form.label col.to_sym, name
     out += ' : </td>'
     out += '<td class="td-left">'
@@ -398,10 +383,10 @@ module ApplicationHelper
 
   def form_tr_check(form, name, col)
     out = ''
-    out += '<tr><td>'
+    out += '<tr><td class="td-left">'
     out += form.label col, name
     out += ' : </td>'
-    out += '<td>'
+    out += '<td class="td-left">'
     out += form.check_box col 
     out += '</td></tr>'
     return out
@@ -409,10 +394,10 @@ module ApplicationHelper
 
   def form_tr_check_tag(name, col)
     out = ''
-    out += '<tr><td>'
+    out += '<tr><td class="td-left">'
     out += label col, name
     out += ' : </td>'
-    out += '<td>'
+    out += '<td class="td-left">'
     out += check_box_tag col
     out += '</td></tr>'
     return out
@@ -449,15 +434,6 @@ module ApplicationHelper
   def update_saison() 
     remote_function(:url => { :controller => "settings", :action => "update_saison" },
                     :method => :put)
-  end
-
-  def toggle_value(object)
-    remote_function(:url => { :controller => "factures", :action => "update_star_or_adu", :id => object.id },
-                    :method => :put,
-                    :before => "Element.show('spinner-#{object.id}')" ,
-                    :complete => "Element.hide('spinner-#{object.id}')",
-                    :with => "this.name + '=' + this.checked"
-                    )
   end
 
   def shortstring(text)
@@ -696,6 +672,15 @@ module ApplicationHelper
 
   def generate_template(form_builder, method, options = {})
     escape_javascript generate_html(form_builder, method, options)
+  end
+
+  def popup_show(link, popup)
+    if (link.nil? || popup.nil?)
+      out = "erreur"
+    else
+      out = '<a href="#" class="popup-show">'+ (link.to_s) + '<span class=popup-show-content>'+ (popup.to_s) +'</span></a>'
+    end
+    return out
   end
 
 end

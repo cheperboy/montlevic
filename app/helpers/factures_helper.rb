@@ -9,6 +9,15 @@ module FacturesHelper
   # HEADER_RED_GREEN = 7
   # HEADER_COLOR = 8
   
+  def pop(facture)
+    out = ""
+    out += content_tag :span, facture.name.to_s, :class => "pop-title"
+    out += "<br><span class=grey>Cout : </span> #{facture.cout.to_s} #{euro}"
+    out += "<br><span class=grey>Ref compta : </span> #{facture.ref.to_s}"
+    out += "<br><span class=grey>Ref client : </span> #{facture.ref_client.to_s}"
+    return (out)
+  end
+  
   # Somme des cout des Reports d'une facture Reportable
   # la valeur est retournee dans un <TD> avec couleur verte ou rouge
   def sum_reports_cout(reportable_id)
@@ -86,10 +95,18 @@ module FacturesHelper
         if ((search_params[:tri] == header[ApplicationHelper::HEADER_TRI_KEY]) && (search_params[:sens] == 'ASC'))
           sens = 'DESC'
         end
+        # creation de l'affichage du lien
+        link = "#{header[ApplicationHelper::HEADER_VALUE].to_s}"
+        if ((search_params[:tri] == header[ApplicationHelper::HEADER_TRI_KEY]) && (search_params[:sens] == 'ASC'))
+          link = link + " ▼"
+        elsif ((search_params[:tri] == header[ApplicationHelper::HEADER_TRI_KEY]) && (search_params[:sens] == 'DESC'))
+          link = link + " ▲"
+        end
+        
         # ajout du lien (header de colonne)
-        out += link_to header[ApplicationHelper::HEADER_VALUE].to_s, { :action => "index",
-                                                    :tri => header[ApplicationHelper::HEADER_TRI_KEY].to_s,
-                                                    :sens => sens}
+        out += link_to link, { :action => "index",
+                               :tri => header[ApplicationHelper::HEADER_TRI_KEY].to_s,
+                               :sens => sens}
       else
         out += header[ApplicationHelper::HEADER_VALUE].to_s 
       end
@@ -110,23 +127,19 @@ module FacturesHelper
       end
       # Premier tr de l'element  
       out += "<tr class='list-row'>"        
-
-      out += "<td>"
-      out += check_box_tag 'facture[star]', "1", element.star?, :onclick => toggle_value(element)
-      out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
-      out += "</td>"
       
       headers.each do |header|        
         value = element.send(header[ApplicationHelper::HEADER_KEY])
         #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)
         if header[ApplicationHelper::HEADER_KEY].eql?("star")
           out += "<td>"
-          out += link_to_star(element.class, element.id, false)
+          out += check_box_tag 'facture[star]', "1", element.star?, :onclick => toggle_star(element)
+          out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
           out += "</td>"
-        elsif header[ApplicationHelper::HEADER_KEY].eql?("adu")
-          out += "<td>"
-          out += link_to_star(element.class, element.id, true)
-          out += "</td>"
+        # elsif header[ApplicationHelper::HEADER_KEY].eql?("adu")
+        #   out += "<td>"
+        #   out += link_to_star(element.class, element.id, true)
+        #   out += "</td>"
         else  
           #class css du td : align_right ou align_left
           td_class = "list-elt-right"

@@ -1,6 +1,7 @@
 <% if @facture.comptable_diff?  %>
+<div id="show_table">
 	<h3>Comptabilisation : "diff"</h3>
-	<p>La valeur effectivement prise en compte dans la comptabilisation<br>
+	<p class=grey>La valeur effectivement prise en compte dans la comptabilisation<br>
 	correspond au cout de la facture moins la sommes des charges qui lui sont associées</p>
 	<table>
 		  <tr>
@@ -35,14 +36,18 @@
 		    <td><b><%= (@facture.cout - @facture.sum_charges).display() %> €</b></td>
 		  </tr>
 	</table>
+</div>
 <% elsif @facture.comptable_null?  %>
-	<h3>Comptabilisation : "nulle"</h3>
-	<p>Cette facture n'est pas pris en compte dans la compta<br>
-	Sauf les charges qui y sont explicitement associées</p>
+	<div id="show_table">
+		<h3>Comptabilisation : "nulle"</h3>
+		<p class=grey>Cette facture n'est pas pris en compte dans la compta<br>
+		Sauf les charges qui y sont explicitement associées</p>
 
+	</div>
 <% elsif @facture.comptable_total?  %>
-	<h3>Comptabilisation : "total"</h3>
-	<p>Cette facture est prise en compte dans la compta a 100%<br>
-	quelles que soient les charges qui lui sont associées.</p>
-
+	<div id="show_table">
+		<h3>Comptabilisation : "total"</h3>
+		<p class=grey>Cette facture est prise en compte dans la compta a 100%<br>
+		quelles que soient les charges qui lui sont associées.</p>
+	</div>
 <% end %>	

@@ -18,12 +18,9 @@
 
   </head>
   <body>
-		
+		<link rel="icon" type="image/png" href="/images/graph-icon.png" />
 	<%= render(:file => "/layouts/_menu.html.erb", :use_full_path => true) %>  
     <div id="container">
-	    <%# form_remote_tag :url => {:action => 'hide_menu'} do %> 
-	       <%#= submit_tag 'TEST!!!' %>
-	     <%# end %>
 
 	<%- flash.each do |name, msg| -%>
 		<%= content_tag :div, msg, :id => "flash_#{name}" %>

@@ -66,3 +66,35 @@ a.popup_desc span {
 
 a:hover.popup_desc span { display: block; }
 a:hover.popup_desc {font-size: 99%; /*for IE bug*/ }
+
+
+/* Begin : affichage popup-show */
+
+a.popup-show { 
+	position: relative; 
+	color: black;
+	text-decoration:none;
+}
+
+a.popup-show span.popup-show-content {
+	display: none;
+	position: absolute;
+	text-align: left;
+	top: 20px;
+	left: -10px;
+	min-width: 270px;
+	width: auto;
+	padding: 2px;
+	z-index: 100;
+	background: #EEF2FA;
+	color: black;
+	border: 1px solid black;
+	-moz-border-radius: 5px; /* this works only in camino/firefox */
+	-webkit-border-radius: 5px; /* this is just for Safari */
+}
+
+a:hover.popup-show span.popup-show-content { display: block; }
+a:hover.popup-show {font-size: 99%; /*for IE bug*/ }
+
+/* End : affichage info-bulle */
+

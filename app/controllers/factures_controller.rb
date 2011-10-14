@@ -9,34 +9,36 @@ class FacturesController < ApplicationController
   #   end
   # end
    
-  def toggle_star
-    @facture = Facture.find(params[:id])
-    if @facture.star != 1
-       @facture.star = 1
-    else
-      @facture.star = 0
-    end
-    if @facture.save
-      render(:layout => false)
-    end
-  end
-  
-  def toggle_adu
-    @facture = Facture.find(params[:id])
-    if @facture.adu != 1
-       @facture.adu = 1
-    else
-      @facture.adu = 0
-    end
-    if @facture.save
-      render(:layout => false)
-    end
-  end
-
+  # def toggle_star
+  #   @facture = Facture.find(params[:id])
+  #   if @facture.star != 1
+  #      @facture.star = 1
+  #   else
+  #     @facture.star = 0
+  #   end
+  #   if @facture.save
+  #     render(:layout => false)
+  #   end
+  # end
+  # 
+  # def toggle_adu
+  #   @facture = Facture.find(params[:id])
+  #   if @facture.adu != 1
+  #      @facture.adu = 1
+  #   else
+  #     @facture.adu = 0
+  #   end
+  #   if @facture.save
+  #     render(:layout => false)
+  #   end
+  # end
+  # 
   def index
     @factures = Facture.find_with_saison(:all, :order => :id) 
     if params[:tri]
       @factures = Facture.find_with_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
+      @tri = params[:tri]
+      @sens = params[:sens]
     end
 # calcul des sommes 
     @total_cout = 0
@@ -231,24 +233,20 @@ class FacturesController < ApplicationController
     end
   end
 
-  def update_star_or_adu
+  def update_star
+    logger.error "params : #{params.inspect}"
     star = 0
-    adu = 0
     if params[:facture][:star].eql?("true")
       star = 1
     end
-    if params[:facture][:adu].eql?("true")
-      adu = 1
-    end
     params[:facture][:star] = star
-    params[:facture][:adu] = adu
     @facture = Facture.find(params[:id])
     respond_to do |format| 
       if @facture.update_attributes(params[:facture])
-        flash[:notice] = 'facture was successfully updated.' 
         format.html { redirect_to(@facture) }
         format.js	{ head :ok } 
       else
+        flash[:error] = 'probleme mise a jour Star ou Adu'
         format.html { render :action => "edit" } 
         format.js	{ head :unprocessable_entity }
       end 

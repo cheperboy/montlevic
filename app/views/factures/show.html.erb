@@ -1,13 +1,12 @@
-<% title "Facture : #{@facture.name} " %>
+<% title "Facture #{@facture.name}", false %>
 
+<% titre = "Facture #{@facture.name} #{star_ascii(@facture)}" %>
 
 <% if @facture.class == Diverse %>
 	<p>
-		| <%= star_ascii(@facture) %>
-	  	| <%= adu_ascii(@facture) %>
 		| <%= link_to "Liste des factures diverses", {:controller => 'factures', :action => 'diverses'} %> |
 	</p>
-	<%= star_ascii(@facture) %>
+	<h1><%= titre %></h1>
 	<%= render :partial => 'show_diverse' %>
 	
 	<h2>Factures associées</h2>
@@ -18,17 +17,16 @@
 	<% end %>	
 <% elsif @facture.class == Reportable %>
 <p>
-	| <%= star_ascii(@facture) %>
-  	| <%= adu_ascii(@facture) %>
   	| <%= link_to "Modifier", {:controller => 'factures', :action => 'edit', :id => @facture.id} %>
-  	| <%= link_to "Retour a la liste des factures", :controller => 'factures', :action => 'index' %> |
+  	| <%= link_to "Liste des factures", :controller => 'factures', :action => 'index' %> |
 </p>
+
+<h1><%= titre %></h1>
+
 	<%= render :partial => 'show_reportable' %>
 	
 	<h2>reports associes</h2>
 	<p>
-		| <%= star_ascii(@facture) %>
-	  	| <%= adu_ascii(@facture) %>
 		| <%= link_to 'Ajouter un Report', {:controller => :factures, :action=> :new_report} %>
 		| <%= link_to 'Retour a la liste des factures', {:controller => :factures} %> |
 	</p>
@@ -39,12 +37,11 @@
 	
 <% else %>
 	<p>
-	  |	<%= star_ascii(@facture) %>
-	  | <%= adu_ascii(@facture) %>
 	  | <%= link_to "Modifier", {:controller => 'factures', :action => 'edit', :id => @facture.id} %>
-	  | <%= link_to "Retour a la liste des factures", :controller => 'factures', :action => 'index' %>
+	  | <%= link_to "Liste des factures", :controller => 'factures', :action => 'index' %>
 	</p>
 
+	<h1><%= titre %></h1>
 
 	<%= render :partial => 'show_facture' %>
 

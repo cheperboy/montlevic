@@ -4,12 +4,12 @@
 .table_data { border-collapse:collapse; }
 .table_data { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
 .table_data th{ 
-	border:1px solid grey; 
-	background-color: #ddd;
+	border:1px solid #DDDDDD; 
+	background-color: #F0F6FC;
  }
 .table_data td, th, tr { 
 	text-align: left;
-	border: 1px solid grey; 
+	border: 1px solid #DDDDDD; 
 	padding-left: 10px;
 	padding-right: 12px;	
 }
@@ -21,7 +21,7 @@
 .table_data td.center{ text-align: center; }
 .table_data tr.bold{ font-weight: bold; }
 .table_data td.bold{ font-weight: bold; }
-.table_data tr:hover { background-color: #eecfa1; color: #000}
+.table_data tr:hover { background-color: #FFFFBB; color: #000}
 
 .table_data th.value, td.value {
 	border-right-color :transparent;
@@ -37,25 +37,29 @@ padding-left: 0px;
 
 
 /* Begin : Table Invisible */
-.table_invisible { border-collapse:collapse }
+.table_invisible { 
+	}
 
 .table_invisible td, th, tr { 
 	text-align: left;
-	border: 1px solid grey; 
 	padding-top: 3px;
 	padding-bottom: 3px;
 	padding-left: 10px;
 	padding-right: 12px;	
 }
 
-.table_invisible th.left{ text-align: left; }
+.table_invisible th.left{ 
+	text-align: left; 
+	color: grey; 
+	}
 .table_invisible th.right{ text-align: right; }
 .table_invisible td.left{ text-align: left; }
-.table_invisible td.right{ text-align: right; }
+.table_invisible td.right{ text-align: left; color: grey; 
+}
 .table_invisible td.center{ text-align: center; }
 .table_invisible tr.bold{ font-weight: bold; }
 .table_invisible td.bold{ font-weight: bold; }
-.table_invisible tr:hover { background-color: #eee; color: #000}
+.table_invisible tr:hover { background-color: #FFFFBB; color: #000}
 
 .table_invisible th.value, td.value {
 	border-right-color :transparent;
@@ -63,8 +67,8 @@ padding-left: 0px;
 	padding-right: 6px;
 }
 .table_invisible th.unit, td.unit { 
-text-align: left;
-padding-left: 0px;
+	text-align: left;
+	padding-left: 0px;
 }
 
 

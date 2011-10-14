@@ -25,11 +25,13 @@ module ChargesHelper
     end
   end
   
-  def star_ascii(obj)
+  def star_ascii(obj, invisible=false )
     if obj.star?
       return('★')
     else
-      return('<span class=grey>☆</span>')
+      if invisible
+        return('<span class=grey>☆</span>')
+      end
     end
   end
   

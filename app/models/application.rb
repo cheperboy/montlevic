@@ -53,8 +53,8 @@ class Application < ActiveRecord::Base
   FACTURE_HEAD = 
   [
     # KEY                   VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY           GREEN_RED COLOR
-  	['star',                'star',       '',     true,         :check_box,   true,   'star',           false,    'black'], 
-  	['adu',                 'adu',        '',     true,         :check_box,   true,   'adu',            false,    'black'],
+    ['star',                'star',       '',     true,         :check_box,   true,   'star',           false,    'black'], 
+    # ['adu',                 'adu',        '',     true,         :check_box,   true,   'adu',            false,    'black'],
    	['id',                  'id',         '',     false,        false,        true,   'id',             false,    'grey'],
   	['category_name',       'Categorie',  '',     false,        false,        true,   'category_id',    false,    'grey'],
   	['factcat_name',        'class',      '',     false,        false,        true,   'factcat_id',     false,    'grey'],

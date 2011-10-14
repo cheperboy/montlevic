@@ -17,36 +17,47 @@
 <% content_for :jstemplates do -%>
 	<%= "var factoparcelle='#{generate_template(f, :factoparcelles)}'" %>
 <% end -%>
-
-<table>
-<%= form_tr_text(f, 'Nom', :name) %>
-<%= form_tr_text(f, 'Ref client', :ref_client) %>
-<%= form_tr_text(f, 'Ref perso', :ref) %>
-<%= form_tr_date(f, 'Date', :date) %>
-<%= form_tr_select(f, 'Prestataire', :user_id, User.find(:all, :order => :name), :id, :name) %>
-<%= form_tr_select(f, 'Classement', :factcat_id, Factcat.find(:all, :order => :name), :id, :name) %>
-<%= form_tr_select(f, 'Categorie', :category_id, Category.find_by_type("facture"), :id, :name) %>
-<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype.find(:all, :order => :name), :id, :name) %>
-<%= form_tr_text(f, 'Cout', :cout) %>
-
-<% unless @facture.new_record? %>
-	<% value = @facture.sum_charges.to_s + ' ' + euros  %>
-	<%= tr_text('Charges associees', value) %>
-	
-	<% value = (@facture.cout - @facture.sum_charges).to_s + ' ' + euros  %>
-	<%= tr_text('Valeur Comptable', value) %>
-<% end %>
-
-<%= form_tr_check(f, 'Star', :star) %>
-<%= form_tr_check(f, 'ADU', :adu) %>
-<!-- desactiver la case 'Report' si elle est coche
-sauf si Admin.true?-->
-<%= form_tr_check_tag('Reportable', :reportable) %>
-<%= form_tr_text_area(f, 'Infos', :desc, :size => "20x5") %>
+<div id="edit_table">
+	<h3>Facture</h3>
+	<table>
+	<%= form_tr_text(f, 'Nom', :name) %>
+	<%= form_tr_text(f, 'Cout', :cout) %>
+	<%= form_tr_text(f, 'Ref client', :ref_client) %>
+	<%= form_tr_text(f, 'Ref perso', :ref) %>
+	<%= form_tr_date(f, 'Date', :date) %>
+	<%= form_tr_select(f, 'Prestataire', :user_id, User.find(:all, :order => :name), :id, :name) %>
 </table>
+<div id="edit_table">
+	<h3>Classement</h3>
+	<table>
+	<%= form_tr_select(f, 'Classement', :factcat_id, Factcat.find(:all, :order => :name), :id, :name) %>
+	<%= form_tr_select(f, 'Categorie', :category_id, Category.find_by_type("facture"), :id, :name) %>
+	<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype.find(:all, :order => :name), :id, :name) %>
+</table>
+</div>
+<div id="edit_table">
+	<h3>Classement</h3>
+	<table>
 
-<fieldset>
-	<legend><h3>Type de cultures</h3></legend>
+	<% unless @facture.new_record? %>
+		<% value = @facture.sum_charges.to_s + ' ' + euros  %>
+		<%= tr_text('Charges associees', value) %>
+	
+		<% value = (@facture.cout - @facture.sum_charges).to_s + ' ' + euros  %>
+		<%= tr_text('Valeur Comptable', value) %>
+	<% end %>
+
+	<%= form_tr_check(f, 'Star', :star) %>
+	<%= form_tr_check(f, 'ADU', :adu) %>
+	<!-- desactiver la case 'Report' si elle est coche
+	sauf si Admin.true?-->
+	<%= form_tr_check_tag('Reportable', :reportable) %>
+	<%= form_tr_text_area(f, 'Infos', :desc, :size => "20x5") %>
+	</table>
+</div>
+
+<div id="edit_table">
+	<h3>Type de cultures</h3>
 	<div class="typeculture">
 	  <table>
 		<% for t in Typeculture.find_for_saison() %>
@@ -54,24 +65,24 @@ sauf si Admin.true?-->
 		<% end %>
 	  </table>
 	</div>
-</fieldset>
+</div>
 
 	<% unless @facture.type == 'Reportable' %>
-		<fieldset>
-			<legend><h3>parcelles associees</h3></legend>
-				<div id="factoparcelles">
-					<% f.fields_for :factoparcelles do |factoparcelle_form| %>
-						<% unless f.object.new_record? %>
-							<%= render :partial => 'factoparcelle', :locals => { :f => factoparcelle_form } %>
-						<% end %>
-					<% end %>
-				</div>
-				<p>
-				<%= link_to 'Ajouter une parcelle', '#factoparcelle', :class => "add_nested_item", :rel => "factoparcelles" %>
-				</p>
+	<div id="edit_table">
+		<h3>Parcelles</h3>
+		<div id="factoparcelles">
+			<% f.fields_for :factoparcelles do |factoparcelle_form| %>
+				<% unless f.object.new_record? %>
+					<%= render :partial => 'factoparcelle', :locals => { :f => factoparcelle_form } %>
+				<% end %>
 			<% end %>
-		</fieldset>
+		</div>
+		<p>
+		<%= link_to 'Ajouter une parcelle', '#factoparcelle', :class => "add_nested_item", :rel => "factoparcelles" %>
+		</p>
+	<% end %>
+	</div>
 <p><%= f.submit "Enregistrer" %></p>
-</fieldset>
+</div>
 
 <% end -%>

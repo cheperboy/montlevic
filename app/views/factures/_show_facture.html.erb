@@ -1,41 +1,38 @@
-<table>
+<table class=table_invisible>
 <tr>
-	<td>Campagne : </td>
-	<td><%= @facture.saison.name %></td>
+	<td class='right'>Campagne</td>
+	<td class='left'><%= @facture.saison.name %></td>
 </tr>
 <tr>
-	<td>Nom : </td>
-	<td><%= @facture.name %></td>
+	<td class='right'>Nom</td>
+	<td class='left'><%= @facture.name %></td>
 </tr>
 <tr>
-	<td>Cout : </td>
-	<td><%= @facture.cout.display() %> <%= euro %></td>
+	<td class='right'>Cout</td>
+	<td class='left'><%= @facture.cout.display() %> <%= euro %></td>
 </tr>
 <tr>
-	<td>Ref perso : </td>
-	<td><%= @facture.ref %></td>
+	<td class='right'>Ref perso</td>
+	<td class='left'><%= @facture.ref %></td>
 </tr>
 <tr>
-	<td>Ref client : </td>
-	<td><%= @facture.ref_client %></td>
+	<td class='right'>Ref client</td>
+	<td class='left'><%= @facture.ref_client %></td>
 </tr>
 <tr>
-	<td>Classement : </td>
-	<td><%= @facture.factcat.name %></td>
+	<td class='right'>Classement</td>
+	<td class='left'><%= @facture.factcat.name %></td>
 </tr>
 <tr>
-	<td>Type de facture : </td>
-	<td><%= @facture.factype.name %></td>
+	<td class='right'>Type de facture</td>
+	<td class='left'><%= @facture.factype.name %></td>
 </tr>
-<tr>
-	<td>Repere : </td>
-	<td>Star : <%= @facture.star %>
-	 	| ADU :<%= @facture.adu %></td>
-</tr>
-<tr>
-	<td>Infos : </td>
-	<td><p><%= @facture.desc %></p></td>
-</tr>
+<% unless @facture.desc.blank? %>
+	<tr>
+		<td class='right'>Description</td>
+		<td class='left'><p><%= @facture.desc %></p></td>
+	</tr>
+<% end %>
 
 </table>
 
