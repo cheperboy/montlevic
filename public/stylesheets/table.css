@@ -138,3 +138,72 @@ padding-left: 0px;
 .table_verif td.orange { background-color: orange; }
 
 /* End : Verif */
+
+/* Begin : form_layout table */
+/* Mise en page des vues edit et show */
+
+table.form_layout {
+	border: 0px solid black;
+	border-spacing: 90;
+}
+
+table.form_layout td.form_layout_content_left {
+	border-right: 10px solid #FFF;
+}
+
+table.form_layout td.form_layout_content_right {
+	border-left: 10px solid #FFF;
+}
+
+tr.form_layout_title td { 
+	background-color: #EBEFF9;
+	text-align: left;
+	font-weight:bold;
+	margin-top: 20px;
+	padding-left: 10px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	font-size:12pt;
+}
+
+tr.form_layout_content td { 
+	border-bottom: 20px solid #FFF;
+	padding-left: 5px;
+}
+
+td.form_layout_title_right { 
+	border-left: 10px solid #FFF;
+}
+
+td.form_layout_title_left { 
+	border-right: 10px solid #FFF;
+}
+
+tr.form_layout_title a {
+	font-size:10pt;
+	font-weight:normal;
+	padding-left: 15px;
+	text-decoration:none;
+}
+tr.form_layout_title a:hover {text-decoration:underline; 	font-weight:bold; }
+
+/* End : form_layout */
+
+/* Begin : form_layout_content_table */
+/* Table a l'interieur d'un td d'une table form_layout */
+
+table.form_layout_content_table {
+	border: 0px solid grey;
+}
+
+table.form_layout_content_table td {
+	border: 0px solid grey;
+}
+
+
+table.form_layout_content_table td.label{ text-align:left; }
+table.form_layout_content_table td.field{ text-align:left; }
+
+
+
+/* End : form_layout */

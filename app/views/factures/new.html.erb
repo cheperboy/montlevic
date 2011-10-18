@@ -1,4 +1,12 @@
-<% title "Nouvelle Facture" %>
+<% title "Nouvelle Facture", false %>
+
+<% titre = "Nouvelle Facture" %>
+<% liens = link_to "Annuler", factures_url %>
+<% title = "<span class=title>#{titre}</span><span class=link>#{liens}</span>" %>
+
+<div id="title_h1">
+	<%= title %>
+</div>
 
 <%= render :partial => 'form' %>
 

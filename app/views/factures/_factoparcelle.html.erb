@@ -1,6 +1,6 @@
 <div class="factoparcelle">
   <p>
-    <%= f.label :parcelle_id, "parcelle : " %>
+    <%#= f.label :parcelle_id, "parcelle : " %>
     <%= f.collection_select (:parcelle_id, Parcelle.find_for_saison(), :id, :name_and_culture ) %>
     
 <% if Setting::DETAIL_PARCELLE == 1 %>    

@@ -311,10 +311,10 @@ module ApplicationHelper
       unit = ' ' + options[:unit].to_s  if options[:unit]
     end
     out = ''
-    out += '<tr><td class="td-left">'
+    out += '<tr><td class="label">'
     out += form.label col, name
     out += ' : </td>'
-    out += '<td class="td-left">'
+    out += '<td class="field">'
     if options && options[:value]
       out += form.text_field col.to_sym, :value => value, :size => size, :class => "text_field"
     else 
@@ -328,8 +328,10 @@ module ApplicationHelper
   def form_tr_text_area(form, name, col, options=nil)
     out = ''
     out += '<tr><td class="td-left">'
-    out += form.label col, name
-    out += ' : </td>'
+    unless name.blank?
+      out += form.label col, name
+    end
+    out += '</td>'
     out += '<td class="td-left">'
     if options
       out += form.text_area col, :size => options[:size], :class => "text_field"
@@ -395,9 +397,12 @@ module ApplicationHelper
   def form_tr_check_tag(name, col)
     out = ''
     out += '<tr><td class="td-left">'
-    out += label col, name
+    out += "<label for=#{col}>#{name}</label>"
+    #out += label col, name
+    # probleme: label_for=Type_culture_1_ble
     out += ' : </td>'
     out += '<td class="td-left">'
+    # difference avec input_id=Type_culture_1
     out += check_box_tag col
     out += '</td></tr>'
     return out

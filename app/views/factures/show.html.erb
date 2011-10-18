@@ -36,12 +36,14 @@
 	<% end %>
 	
 <% else %>
-	<p>
-	  | <%= link_to "Modifier", {:controller => 'factures', :action => 'edit', :id => @facture.id} %>
-	  | <%= link_to "Liste des factures", :controller => 'factures', :action => 'index' %>
-	</p>
-
-	<h1><%= titre %></h1>
+<% titre = "Facture #{@facture.name} #{star_ascii(@facture)}" %>
+<% lien1 = link_to "Modifier", {:controller => 'factures', :action => 'edit', :id => @facture.id} %>
+<% lien2 = link_to "Liste des factures", :controller => 'factures', :action => 'index' %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+	<span class=link><%= lien2 %></span>
+</div>
 
 	<%= render :partial => 'show_facture' %>
 
