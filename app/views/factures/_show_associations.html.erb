@@ -1,0 +1,120 @@
+
+<%- if @facture.protofactures.length > 0 -%>
+	<tr class=form_layout_title>
+		<td colspan=2 class=form_layout_title>Produits</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td colspan=2 class=form_layout_content>
+			<!-- affichage des charges associees (PRODUITS, ...) -->
+			<table class=table_data>
+				<tr class=bold>
+					<th class=invisible colspan=3></th>
+					<th colspan=2 class=center>Acheté</th>
+					<th colspan=2 class=center>Consommé</th>
+					<th class=invisible></th>
+				</tr>
+				<tr class=bold>
+					<th>Categorie</th>
+					<th>Nom</th>
+					<th>Prix</th>
+					<th>Quantité</th>
+					<th>Cout</th>
+					<th>Quantité</th>
+					<th>Cout</th>
+					<th class=invisible></th>
+				</tr>
+			<%- total_prix = 0 -%>
+			<%- @facture.protofactures.each do |protofacture| -%>
+				<%- total_prix += protofacture.quantite * protofacture.prix_unit -%>
+				<tr>
+					<td><%=h protofacture.produit.category.name %></td>
+					<td><%=h protofacture.produit.name %></td>
+					<td class=right><%=h (protofacture.prix_unit).display(2) %> €/<%=h protofacture.produit.unit %></td>
+					<td class=right><%=h protofacture.quantite.display %> <%=h protofacture.produit.unit %></td>
+					<td class=right><%=h (protofacture.quantite * protofacture.prix_unit).display %> <%= euro %></td>
+					<td class=right><%=h protofacture.get_used.display %> <%=h protofacture.produit.unit %></td>
+					<td class=right><%=h (protofacture.get_used * protofacture.prix_unit).display %> <%= euro %></td>
+					<td><%= link_to image_tag('img-voir.png'), :controller => "produits", :action => "show", :id => protofacture.produit %></td>
+				</tr>
+			<%- end -%>
+				<tr class=bold>
+					<td>Total</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class=right><%=h total_prix.display() %> <%= euro %></td>
+					<td class=right></td>
+					<td class=right><%=h @facture.sum_putoproduits_used.display() %> <%= euro %></td>
+					<td></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+<%- end -%>
+
+<% if (@facture.labours.count > 0) %>
+<tr class=form_layout_title>
+	<td colspan=2 class=form_layout_title>Labours</td>
+</tr>
+<tr class=form_layout_content>
+	<td colspan=2 class=form_layout_content>
+		
+		<table class=table_data>
+			<tr class=bold>
+			    <th>Labour</th>
+			    <th>date</th>
+			    <th>cout</th>
+			    <th>contribution</th>
+			</tr>
+		<% @facture.labtofactures.each do |labtofacture| %>
+			<tr>
+				<td><%= link_to labtofacture.labour.name, labour_path(labtofacture.labour) %></td>
+				<td><%=h labtofacture.labour.print_date %></td>
+				<td class=right><%=h labtofacture.labour.get_cout_total.display %> <%= euro %></td>
+				<td class=right><%=h labtofacture.value.display %> <%= euro %></td>
+			</tr>
+		<% end %>
+			<tr class=bold>
+				<td>Somme</td>
+				<td></td>
+				<td></td>
+				<td class=right><%=h @facture.sum_labours.display %> <%= euro %></td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<%- end -%>
+
+<% if (@facture.pulves.count > 0) %>
+<tr class=form_layout_title>
+	<td colspan=2 class=form_layout_title>Traitements</td>
+</tr>
+<tr class=form_layout_content>
+	<td colspan=2 class=form_layout_content>
+		<table class=table_data>
+		  <tr class=table_data>
+		    <th>Pulve</th>
+		    <th>date</th>
+		    <th>cout</th>
+		    <th>contribution</th>
+		  </tr>
+		<% @facture.putofactures.each do |putofacture| %>
+		  <tr>
+		    <td><%= link_to putofacture.pulve.name, pulve_path(putofacture.pulve) %></td>
+		    <td class=right><%=h putofacture.pulve.print_date %></td>
+		    <td class=right><%=h putofacture.pulve.get_cout_total.display %> <%= euro %></td>
+		    <td class=right><%=h putofacture.value.display %> <%= euro %></td>
+		  </tr>
+		<% end %>
+		  <tr class=bold>
+		    <td>Somme</td>
+		    <td></td>
+		    <td></td>
+		    <td class=right><%=h @facture.sum_pulves %> <%= euro %></td>
+		  </tr>
+		</table>
+	</td>
+</tr>
+<% end %>
+
+

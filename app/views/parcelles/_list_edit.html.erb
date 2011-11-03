@@ -1,0 +1,41 @@
+<table class=table_data>
+  <tr>
+    <td>Parcelle</td>
+    <td>surface</td>
+    <td>Zones</td>
+    <td>surface (Ha)</td>
+    <td>surface (%)</td>
+  </tr>
+
+<% @parcelles.each do |parcelle| %>
+  <tr>
+    <td><%= link_to parcelle.name, edit_parcelle_path(parcelle) %></td>
+    <td class=right><%= parcelle.surface.display(2) %></td>
+    <td></td>
+    <td></td>
+    <td></td>
+	<% if admin? %>
+	    <td><%= link_to_show(Parcelle, parcelle.id) %></td>
+	    <td><%= link_to_edit(Parcelle, parcelle.id) %></td>
+	    <td><%= link_to_delete(Parcelle, parcelle.id) %></td>
+	<% else %>
+	    <td></td>
+	    <td></td>
+	    <td></td>
+	<% end %>
+  </tr>
+  	<% zones = Zone.find_by_parcelle(parcelle.id) %>
+	<% unless zones.nil? %>
+	  	<% zones.each do |zone| %>
+		<tr>
+			<td></td>
+			<td></td>
+			<td><%= zone.name %></td>
+			<td class=right><%= zone.surface.display(2) %></td>
+			<%= percent_of_zone(parcelle, zone.id) %>
+		</tr>
+		<% end %>
+	<% end %>
+<% end %>
+
+</table>

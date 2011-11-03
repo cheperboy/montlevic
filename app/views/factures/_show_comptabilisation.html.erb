@@ -1,0 +1,49 @@
+<% if @facture.comptable_diff?  %>
+	<td class=form_layout_content_right>
+		<p class=grey>DIFF : Cout de la facture moins la sommes des charges associées.</p>
+		<table class=table_data>
+			<tr class=table_data>
+				<td>Cout facture</td>
+				<td class=invisible></td>
+				<td class=right><%= @facture.cout.display() %> <%= euro %></td>
+			</tr>
+			<% if @facture.sum_pulves > 0  %>
+			<tr class=table_data>
+				<td>Pulves</td>
+				<td class=invisible>-</td>
+				<td class=right><%= @facture.sum_pulves.display() %> <%= euro %></td>
+			</tr>
+			<% end %>
+			<% if @facture.sum_putoproduits_associated > 0  %>
+			<tr class=table_data>
+				<td>Produits</td>
+				<td class=invisible>-</td>
+				<td class=right><%= @facture.sum_putoproduits_used.display() %> <%= euro %></td>
+			</tr>
+			<% end %>
+			<% if @facture.sum_labours > 0  %>
+			<tr class=table_data>
+				<td>Labours</td>
+				<td class=invisible>-</td>
+				<td class=right><%= @facture.sum_labours.display() %> <%= euro %></td>
+			</tr>
+			<% end %>
+			<tr class=bold>
+				<td>Valeur<br>comptable</td>
+				<td class=invisible>=</td>
+				<td class=right><%= (@facture.cout - @facture.sum_charges).display() %> <%= euro %></td>
+			<tr>
+		</table>
+	</td>
+
+<% elsif @facture.comptable_null?  %>
+	<td class=form_layout_content_right>
+		<p class=grey>NULL : facture non comptabilisée. Sauf par l'intermédiaire des charges qui lui sont associées'</p>
+	</td>
+
+<% elsif @facture.comptable_total?  %>
+	<td class=form_layout_content_right>
+		<p class=grey>TOTAL : facture prise en compte a 100%, quelles que soient les charges qui lui sont associées.</p>
+	</td>
+
+<% end %>	
