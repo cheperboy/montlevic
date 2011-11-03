@@ -1,12 +1,12 @@
 /* Begin : Table Datas : Category, Zone, Parcelle, User, ... */
 
 
-.table_data { border-collapse:collapse; }
+.table_data { border-collapse:collapse; margin-top: 10px; margin-bottom: 30px;}
 .table_data { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
 .table_data th{ 
 	border:1px solid #DDDDDD; 
-	background-color: #F0F6FC;
- }
+	background-color: #EDEDED;
+}
 .table_data td, th, tr { 
 	text-align: left;
 	border: 1px solid #DDDDDD; 
@@ -14,14 +14,22 @@
 	padding-right: 12px;	
 }
 
-.table_data th.left{ text-align: left; }
-.table_data th.right{ text-align: right; }
-.table_data td.left{ text-align: left; }
-.table_data td.right{ text-align: right; }
-.table_data td.center{ text-align: center; }
-.table_data tr.bold{ font-weight: bold; }
-.table_data td.bold{ font-weight: bold; }
-.table_data tr:hover { background-color: #FFFFBB; color: #000}
+.table_data th.invisible {
+	border: 1px solid white; 
+	background-color: #FFF;
+}
+
+.table_data td.invisible {	border-right: 1px solid white; }
+ 
+.table_data td.center	{ text-align: center; }
+.table_data th.right	{ text-align: right; }
+.table_data th.right	{ text-align: right; }
+.table_data td.right	{ text-align: right; }
+.table_data th.left		{ text-align: left; }
+.table_data td.left		{ text-align: left; }
+.table_data tr.bold		{ font-weight: bold; }
+.table_data td.bold		{ font-weight: bold; }
+.table_data tr:hover 	{ background-color: #FFFFBB; color: #000}
 
 .table_data th.value, td.value {
 	border-right-color :transparent;
@@ -142,55 +150,68 @@ padding-left: 0px;
 /* Begin : form_layout table */
 /* Mise en page des vues edit et show */
 
-table.form_layout {
-	border: 0px solid black;
-	border-spacing: 90;
+table.form_layout { }
+table.form_layout tr.form_layout_title td  { 
+	
 }
 
-table.form_layout td.form_layout_content_left {
-	border-right: 10px solid #FFF;
-}
-
-table.form_layout td.form_layout_content_right {
-	border-left: 10px solid #FFF;
-}
-
-tr.form_layout_title td { 
-	background-color: #EBEFF9;
-	text-align: left;
-	font-weight:bold;
-	margin-top: 20px;
-	padding-left: 10px;
+table.form_layout tr.form_layout_title td { 
+	border-top: 1px solid #6B90DA;
+	min-width: 300px;
+	padding-left: 20px;
 	padding-top: 4px;
 	padding-bottom: 4px;
+	font-weight:bold;
+	text-align:left;
 	font-size:12pt;
+	background-color: #EBEFF9;
 }
 
-tr.form_layout_content td { 
-	border-bottom: 20px solid #FFF;
-	padding-left: 5px;
+/* td (titre) cote gauche : bordure a droite pour creer un espace */
+table.form_layout tr.form_layout_title td.form_layout_title_left { 
+	border-right: 15px solid #FFF;
 }
 
-td.form_layout_title_right { 
-	border-left: 10px solid #FFF;
+/* td (titre) cote droit : bordure a gauche pour creer un espace */
+table.form_layout tr.form_layout_title td.form_layout_title_right { 
+	border-left: 15px solid #FFF;
 }
 
-td.form_layout_title_left { 
-	border-right: 10px solid #FFF;
+/* grand td (contenu) sur toute la largeur */
+table.form_layout tr.form_layout_content td.form_layout_content { 
+	padding-left: 20px;
+	padding-bottom: 50px;
 }
 
-tr.form_layout_title a {
+/* td (contenu) cote droit : bordure a gauche pour creer un espace */
+table.form_layout tr.form_layout_content td.form_layout_content_right { 
+	padding-left: 20px;
+	padding-bottom: 50px;
+	border-left: 15px solid #FFF;
+	max-width: 400px;
+}
+
+/* td (contenu) cote gauche : bordure a droite pour creer un espace */
+table.form_layout tr.form_layout_content td.form_layout_content_left { 
+	padding-left: 20px;
+	padding-bottom: 50px;
+	border-right: 15px solid #FFF;
+}
+
+/* lien dans la barre de titre ("Ajouter une parcelle" par exemple)*/
+table.form_layout tr.form_layout_title a {
 	font-size:10pt;
 	font-weight:normal;
-	padding-left: 15px;
+	margin-left: 15px;
 	text-decoration:none;
 }
-tr.form_layout_title a:hover {text-decoration:underline; 	font-weight:bold; }
+table.form_layout tr.form_layout_title a:hover {text-decoration:underline; 	font-weight:bold; background-color: #FFFFBB;}
 
 /* End : form_layout */
 
 /* Begin : form_layout_content_table */
 /* Table a l'interieur d'un td d'une table form_layout */
+/* pour affichage de donnees simples : label gris et champ en noir. */
 
 table.form_layout_content_table {
 	border: 0px solid grey;
@@ -198,10 +219,15 @@ table.form_layout_content_table {
 
 table.form_layout_content_table td {
 	border: 0px solid grey;
+	padding-bottom: 5px;
 }
 
 
-table.form_layout_content_table td.label{ text-align:left; }
+table.form_layout_content_table td.label{ 
+	text-align:left;
+	color: #666666;
+	padding-right: 15px;
+}
 table.form_layout_content_table td.field{ text-align:left; }
 
 

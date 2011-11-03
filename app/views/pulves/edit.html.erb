@@ -1,6 +1,12 @@
-<% title "Modif Pulve" %>
+<% title "Pulve #{@pulve.name}", false %>
+
+<% titre = "Pulve #{@pulve.name} #{star_ascii(@pulve)}" %>
+
+<% lien1 = link_to "Annuler", @pulve %>
+<% title = "<span class=title>#{titre}</span><span class=link>#{lien1}</span>" %>
+
+<div id="title_h1">
+	<%= title %>
+</div>
 
 <%= render :partial => 'form' %>
-
-<%= link_to 'Show', @pulve %> |
-<%= link_to 'Back', pulves_path %>

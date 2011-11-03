@@ -1,5 +1,13 @@
-<% title "Nouveau Labour" %>
+<% title "Nouveau Labour", false %>
+
+<% titre = "Nouveau Labour" %>
+<% liens = link_to "Annuler", labours_path %>
+<% title = "<span class=title>#{titre}</span><span class=link>#{liens}</span>" %>
+
+<div id="title_h1">
+	<%= title %>
+</div>
 
 <%= render :partial => 'form' %>
 
-<%= link_to 'Back', labours_path %>
+

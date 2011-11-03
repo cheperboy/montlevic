@@ -1,5 +1,10 @@
-<% title "Nouveau Produit" %>
+<% title "Nouveau Produit", false %>
+
+<% titre = "Nouveau Produit" %>
+<% lien1 = link_to "Annuler", produits_path %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+</div>
 
 <%= render :partial => 'form' %>
-
-<%= link_to 'Annuler', produits_path %>

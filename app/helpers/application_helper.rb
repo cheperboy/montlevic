@@ -272,14 +272,25 @@ module ApplicationHelper
     end
   end
 
-  def link_to_show(modele, id)
-    url = modele.to_s.downcase.pluralize + '/' + id.to_s
-    return (link_to image_tag('img-voir.png'), url, :class => "link_yellow")
-  end
 
-  def link_to_edit(modele, id)
-    url = modele.to_s.downcase.pluralize + '/' + id.to_s + '/edit'
-    return (link_to image_tag('img-modif.png'), url, :class => "link_yellow")
+  def link_to_show(modele, object)
+    url = "#{modele.to_s.downcase}_path"
+    return (link_to image_tag('img-voir.png'), send(url, object), :class => "link_yellow")
+  end
+  
+  # def link_to_show2(modele, id)
+  #   url = modele.to_s.downcase.pluralize + '/' + id.to_s
+  #   return (link_to image_tag('img-voir.png'), url, :class => "link_yellow")
+  # end
+
+  # def link_to_edit(modele, id)
+  #   url = modele.to_s.downcase.pluralize + '/' + id.to_s + '/edit'
+  #   return (link_to image_tag('img-modif.png'), url, :class => "link_yellow")
+  # end
+
+  def link_to_edit(modele, object)
+    url = "edit_#{modele.to_s.downcase}_path"
+    return (link_to image_tag('img-modif.png'), send(url, object), :class => "link_yellow")
   end
 
   def link_to_delete(modele, id)
@@ -289,10 +300,10 @@ module ApplicationHelper
   	
   def tr_text(key, value, unit=nil)
     out = ''
-    out += '<tr><td class="td-left">'
+    out += '<tr><td class="label">'
     out += key.to_s
     out += '</td>'
-    out += '<td class="td-left">'
+    out += '<td class="field">'
     out += value.to_s
     if unit
       out += ' ' + unit.to_s
@@ -327,12 +338,12 @@ module ApplicationHelper
 
   def form_tr_text_area(form, name, col, options=nil)
     out = ''
-    out += '<tr><td class="td-left">'
+    out += '<tr><td class="label">'
     unless name.blank?
       out += form.label col, name
     end
     out += '</td>'
-    out += '<td class="td-left">'
+    out += '<td class="field">'
     if options
       out += form.text_area col, :size => options[:size], :class => "text_field"
     else
@@ -348,10 +359,10 @@ module ApplicationHelper
     #   start_year = options[:start_year]
     # end
     out = ''
-    out += '<tr><td class="td-left">'
+    out += '<tr><td class="label">'
     out += form.label col.to_sym, name
     out += ' : </td>'
-    out += '<td class="td-left">'
+    out += '<td class="field">'
     out += form.date_select(col.to_sym, :start_year => 2008, :order => [:day, :month, :year]) 
     out += '</td></tr>'
     return out
@@ -359,10 +370,10 @@ module ApplicationHelper
   
   def form_tr_simple_select(form, name, col, collection)
     out = ''
-    out += '<tr><td>'
+    out += '<tr><td class="label">'
     out += form.label col.to_sym, name
     out += ' : </td>'
-    out += '<td class="td-left">'
+    out += '<td class="field">'
     out += form.select(col, collection) 
     out += '</td></tr>'
     return out
@@ -370,10 +381,10 @@ module ApplicationHelper
 
   def form_tr_select(form, name, col, collection, id, display, options = nil)
     out = ''
-    out += '<tr><td class="td-left">'
+    out += '<tr><td class="label">'
     out += form.label col.to_sym, name
     out += ' : </td>'
-    out += '<td class="td-left">'
+    out += '<td class="field">'
     unless options.nil?
       out += form.collection_select(col, collection, id, display, :selected => options[:selected]) 
     else
@@ -385,10 +396,10 @@ module ApplicationHelper
 
   def form_tr_check(form, name, col)
     out = ''
-    out += '<tr><td class="td-left">'
+    out += '<tr><td class="label">'
     out += form.label col, name
     out += ' : </td>'
-    out += '<td class="td-left">'
+    out += '<td class="field">'
     out += form.check_box col 
     out += '</td></tr>'
     return out
@@ -396,12 +407,12 @@ module ApplicationHelper
 
   def form_tr_check_tag(name, col)
     out = ''
-    out += '<tr><td class="td-left">'
+    out += '<tr><td class="label">'
     out += "<label for=#{col}>#{name}</label>"
     #out += label col, name
     # probleme: label_for=Type_culture_1_ble
     out += ' : </td>'
-    out += '<td class="td-left">'
+    out += '<td class="field">'
     # difference avec input_id=Type_culture_1
     out += check_box_tag col
     out += '</td></tr>'
@@ -679,13 +690,5 @@ module ApplicationHelper
     escape_javascript generate_html(form_builder, method, options)
   end
 
-  def popup_show(link, popup)
-    if (link.nil? || popup.nil?)
-      out = "erreur"
-    else
-      out = '<a href="#" class="popup-show">'+ (link.to_s) + '<span class=popup-show-content>'+ (popup.to_s) +'</span></a>'
-    end
-    return out
-  end
 
 end

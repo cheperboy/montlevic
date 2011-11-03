@@ -1,119 +1,160 @@
-<% title "Produit" %>
-<%= Setting::FLOAT_PRECISION %>
-<table class=table_data>
-	<tr>
-		<td class=left>Nom</td>
-		<td class=left><b><%= @produit.name %></b></td>
-	</tr>
-	<tr>
-		<td class=left>Categorie</td>
-		<td class=left><b><%=h @produit.category.name %></b></td>
-	</tr>
-	<tr>
-		<td class=left>Prix unitaire</td>
-		<td class=right><b><%=h @produit.get_prix_unitaire.display(2) %> <%=h @produit.get_prix_unitaire_unit %></b></td>
-	</tr>
-<% unless @produit.desc.eql?('') %>
-	<tr>
-		<td>Description</td>
-		<td><p><%=h @produit.desc %></p></td>
-	</tr>
-<% end %>
-</table>
+<% title "Produit #{@produit.name}", false %>
 
-<h3>Stock</h3>
-<table class=table_data>
-	<tr>
-		<td></td>
-		<td>Quantité</td>
-		<td>Valeur</td>
-	</tr>
-	<tr>
-		<td>Stock initial</td>
-		<td class=right><%=h @produit.get_quantite.display() %> <%=h @produit.unit %></td>
-		<td class=right><%=h (@produit.get_quantite * @produit.get_prix_unitaire).display() %> <%=h euro %></td>
-	</tr>
-	<tr>
-		<td>Consommé</td>
-		<td class=right><%=h @produit.get_used_quantite.display() %> <%=h @produit.unit %></td>
-		<td class=right><%=h (@produit.get_used_quantite * @produit.get_prix_unitaire).display() %> <%=h euro %></td>
-	</tr>
-	<tr>
-		<td>Stock final</td>
-		<td class=right><%=h (@produit.get_quantite - @produit.get_used_quantite).to_f.display() %> <%=h @produit.unit %></td>
-		<td class=right><%=h ((@produit.get_quantite - @produit.get_used_quantite) * @produit.get_prix_unitaire).display() %> <%=h euro %></td>
-	</tr>
-</table>
+<% titre = "Produit #{@produit.name} #{star_ascii(@produit)}" %>
+<% lien1 = link_to "Modifier", edit_produit_path(@produit) %>
+<% lien2 = link_to "Liste des produits", produits_path %>
+<% lien3 = link_to "Supprimer", @produit, :confirm => "Supprimer le produit #{@produit.name} ?", :method => :delete %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+	<span class=link><%= lien2 %></span>
+	<span class=link_delete><%= lien3 %></span>
+</div>
 
-<h3>Factures</h3>
-<%- if @produit.protofactures.length > 0 -%>
-	<table class=table_data>
-		<tr class=bold>
-			<td>Date</td>
-			<td>Ref</td>
-			<td>Nom</td>
-			<td>Quantite</td>
-			<td>Used</td>
-			<td>Stock</td>
-			<td>Prix unitaire</td>
-			<td>Cout</td>
+<table class=form_layout>
+	<!-- GENERAL -->
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Pulve</td>
+		<td class=form_layout_title_right>Classement</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<table class=form_layout_content_table>
+				<%= tr_text('Nom', 				@produit.name) %>
+				<%= tr_text('Categorie', 		@produit.category.name) %>
+				<%= tr_text('Prix unitaire', 	@produit.get_prix_unitaire.display(2), @produit.get_prix_unitaire_unit) %>
+			</table>
+		</td>
+		<td class=form_layout_content_right>
+			<table class=form_layout_content_table>
+				<%= tr_text('Star', 			@produit.star) %>
+				<%= tr_text('ADU', 				@produit.adu) %>
+			</table>
+		</td>
+	</tr>
+	
+	<!-- STOCK & DESC -->
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Stock</td>
+		<td class=form_layout_title_right>Description</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<table class=table_data>
+				<tr>
+					<td></th>
+					<th>Quantité</th>
+					<th>Valeur</th>
+				</tr>
+				<tr>
+					<th>Stock initial</th>
+					<td class=right><%=h @produit.get_quantite.display() %> <%=h @produit.unit %></td>
+					<td class=right><%=h (@produit.get_quantite * @produit.get_prix_unitaire).display() %> <%=h euro %></td>
+				</tr>
+				<tr>
+					<th>Consommé</th>
+					<td class=right><%=h @produit.get_used_quantite.display() %> <%=h @produit.unit %></td>
+					<td class=right><%=h (@produit.get_used_quantite * @produit.get_prix_unitaire).display() %> <%=h euro %></td>
+				</tr>
+				<tr>
+					<th>Stock final</th>
+					<td class=right><%=h (@produit.get_quantite - @produit.get_used_quantite).to_f.display() %> <%=h @produit.unit %></td>
+					<td class=right><%=h ((@produit.get_quantite - @produit.get_used_quantite) * @produit.get_prix_unitaire).display() %> <%=h euro %></td>
+				</tr>
+			</table>
+		</td>
+		<td class=form_layout_content_right>
+			<table class=form_layout_content_table>
+				<%= tr_text('Infos', @produit.desc) %>
+			</table>
+		</td>
+	</tr>
+
+	<!-- PASSAGES -->
+	<tr class=form_layout_title>
+		<td colspan=2 class=form_layout_title>Passages</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td colspan=2class=form_layout_content>
+		<%- if @produit.protofactures.length > 0 -%>
+		<table class=table_data>
+			<tr>
+				<th>date</th>
+				<th>Nom</th>
+				<th>Dosage</th>
+				<th>Surface</th>
+				<th>Quantite</th>
+				<th></th>
+			</tr>
+		<%- quantity = 0 -%>
+		<%- surface = 0 -%>
+		<%- @produit.pulves.each do |pulve| -%>
+			<%- putoproduit = @produit.putoproduits.find_by_pulve_id(pulve.id) -%>
+			<% quantity += (putoproduit.dosage * pulve.sum_surfaces) %>
+			<% surface += (pulve.sum_surfaces) %>
+			<tr>
+				<td><%=h pulve.date %></td>
+				<td><%= link_to pulve.name, pulve_path(pulve) %></td>
+				<td class=right><%=h putoproduit.dosage.display %> <%=h @produit.unit %>/<%=h ha %></td>
+				<td class=right><%=h (pulve.sum_surfaces).display %> Ha</td>
+				<td class=right><%=h (putoproduit.dosage * pulve.sum_surfaces).display %> <%=h @produit.unit %></td>
+				<td><%= popup_show(image_tag('img-voir.png'), pop_content(pulve), "popup-show-content-large") %></td>
+			</tr>
+		<%- end -%>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class=right><b><%=h surface.display() %> <%=h ha %></b></td>
+			<td class=right><b><%=h quantity.display() %> <%=h @produit.unit %></b></td>
 			<td></td>
 		</tr>
-		<%- @produit.protofactures.find(:all, :order => :facture_id).each do |protofacture| -%>
-		<tr>
-			<td><%=h protofacture.facture.date.to_s %></td>
-			<td><%=h protofacture.facture.ref %></td>
-			<td><%=h protofacture.facture.name %></td>
-			<td class=right><%=h protofacture.quantite.display() %> <%=h @produit.unit %></td>
-			
-			<td class=right><%=h (protofacture.quantite - protofacture.stock).display() %> <%=h @produit.unit %></td>
-			<td class=right><%=h protofacture.stock.display() %> <%=h @produit.unit %></td>
-
-			<td class=right><%=h protofacture.prix_unit.display(2) %> <%= euro %>/<%=h @produit.unit %></td>
-			<td class=right><%=h (protofacture.prix_unit * protofacture.quantite).display() %> <%= euro %></td>
-			<td><%= link_to image_tag('img-voir.png'), :controller => "factures", :action => "show", :id => protofacture.facture %></td>
-		</tr>
-	<%- end -%>
-	</table>
-<%- end -%>
-
-<h3>Passages</h3>
-<table class=table_data>
-	<tr class=bold>
-		<td class=left>date</td>
-		<td class=left>Nom</td>
-		<td class=left>Dosage</td>
-		<td class=left>Surface</td>
-		<td class=left>Quantite</td>
-		<td class=left></td>
+		</table>
+		<%- else -%>
+			<p>Aucun passage fait avec ce produit!</p>
+		<%- end -%>
+		</td>
 	</tr>
-<%- quantity = 0 -%>
-<%- surface = 0 -%>
-<%- @produit.pulves.each do |pulve| -%>
-	<%- putoproduit = @produit.putoproduits.find_by_pulve_id(pulve.id) -%>
-	<% quantity += (putoproduit.dosage * pulve.sum_surfaces) %>
-	<% surface += (pulve.sum_surfaces) %>
-	<tr>
-		<td><%=h pulve.date %></td>
-		<td><%=h pulve.name %></td>
-		<td class=right><%=h putoproduit.dosage.display %> <%=h @produit.unit %>/<%=h ha %></td>
-		<td class=right><%=h (pulve.sum_surfaces).display %> Ha</td>
-		<td class=right><%=h (putoproduit.dosage * pulve.sum_surfaces).display %> <%=h @produit.unit %></td>
-		<td><%= link_to image_tag('img-voir.png'), :controller => "pulves", :action => "show", :id => pulve %></td>
+
+	<!-- FACTURES -->
+	<tr class=form_layout_title>
+		<td colspan=2 class=form_layout_title>Factures</td>
 	</tr>
-<%- end -%>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td class=right><b><%=h surface.display() %> <%=h ha %></b></td>
-	<td class=right><b><%=h quantity.display() %> <%=h @produit.unit %></b></td>
-	<td></td>
-</tr>
+	<tr class=form_layout_content>
+		<td colspan=2class=form_layout_content>
+		<%- if @produit.protofactures.length > 0 -%>
+			<table class=table_data>
+				<tr>
+					<th>Date</th>
+					<th>Ref</th>
+					<th>Nom</th>
+					<th>Quantite</th>
+					<th>Used</th>
+					<th>Stock</th>
+					<th>Prix unitaire</th>
+					<th>Cout</th>
+					<th></th>
+				</tr>
+				<%- @produit.protofactures.find(:all, :order => :facture_id).each do |protofacture| -%>
+				<tr>
+					<td><%=h protofacture.facture.date.to_s %></td>
+					<td><%=h protofacture.facture.ref %></td>
+					<td><%= link_to protofacture.facture.name, facture_path(protofacture.facture) %></td>
+					<td class=right><%=h protofacture.quantite.display() %> <%=h @produit.unit %></td>
+
+					<td class=right><%=h (protofacture.quantite - protofacture.stock).display() %> <%=h @produit.unit %></td>
+					<td class=right><%=h protofacture.stock.display() %> <%=h @produit.unit %></td>
+
+					<td class=right><%=h protofacture.prix_unit.display(2) %> <%= euro %>/<%=h @produit.unit %></td>
+					<td class=right><%=h (protofacture.prix_unit * protofacture.quantite).display() %> <%= euro %></td>
+					<td><%= popup_show(image_tag('img-voir.png'), pop_content(protofacture.facture), "popup-show-content") %></td>
+				</tr>
+			<%- end -%>
+			</table>
+		<%- else -%>
+			<p>Aucune facture associee a ce produit!</p>
+		<%- end -%>
+		</td>
+	</tr>
 </table>
 
-<p>
-  <%= link_to "Edit", edit_produit_path(@produit) %> |
-  <%= link_to "Destroy", @produit, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", produits_path %>
-</p>

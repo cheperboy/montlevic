@@ -1,11 +1,15 @@
-<% title "Parcelles" %>
+<% title "Parcelles", false %>
+
+<% titre = "Parcelles" %>
+
+<% lien1 = link_to 'Modifier les parcelles', {:controller => :parcelles, :action=> :index_edit} %>
+
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+</div>
 
 <%= render :partial => 'list' %>
 
 <br />
 
-<%= link_to 'Nouvelle Parcelle', new_parcelle_path %>
-
-<br />
-<h2>Details</h2>
-<%= render :partial => 'detail' %>

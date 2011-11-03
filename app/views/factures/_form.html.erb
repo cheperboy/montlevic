@@ -69,22 +69,11 @@
 		<td colspan=2 class=form_layout_title>informations</td>
 	</tr>
 	<tr class=form_layout_content>
-		<td class=form_layout_content>
+		<td colspan=2 class=form_layout_content>
 			<table>
 				<%= form_tr_text_area(f, '', :desc, :size => "20x5") %>
 			</table>
 		</td class=form_layout_content>
-		<td>
-			<table>
-				<% unless @facture.new_record? %>
-					<% value = @facture.sum_charges.to_s + ' ' + euros  %>
-					<%= tr_text('<span class=grey>Charges associees : </span>', value) %>
-
-					<% value = (@facture.cout - @facture.sum_charges).to_s + ' ' + euros  %>
-					<%= tr_text('<span class=grey>Valeur Comptable : </span>', value) %>
-				<% end %>
-			</table>
-		</td>
 	</tr>
 </table>
 

@@ -1,38 +1,55 @@
 <% javascript :defaults, 'delegate' %>
 
-<% form_for @produit do |produit_form| -%>
+<% form_for @produit do |f| -%>
 
 <% content_for :jstemplates do -%>
-	<%= "var protofacture='#{generate_template(produit_form, :protofactures)}'" %>
+	<%= "var protofacture='#{generate_template(f, :protofactures)}'" %>
 <% end -%>
 
-<table>
-	<%= form_tr_text(produit_form, 'Nom', :name) %>
-	<%= form_tr_select(produit_form, 'Categorie', :category_id, Category.find_by_type("pulve"), :id, :name) %>
-	<%= form_tr_text_area(produit_form, 'Infos', :desc, :size => "20x1") %>	
-	<%= form_tr_simple_select(produit_form, 'Unite', :unit, Application::PRODUIT_QUANTITE_UNITS) %>
+<table class=form_layout>
+
+	<!-- GENERAL -->
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Pulve</td>
+		<td class=form_layout_title_right>Classement</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<table class=form_layout_content_table>
+				<%= form_tr_text(f, 'Nom', :name) %>
+
+				<%= form_tr_select(f, 'Categorie', :category_id, Category.find_by_type("pulve"), :id, :name) %>
+				<%= form_tr_simple_select(f, 'Unite', :unit, Application::PRODUIT_QUANTITE_UNITS) %>
+			</table>
+		</td>
+		<td class=form_layout_content_right>
+			<table class=form_layout_content_table>
+				<%= form_tr_text_area(f, 'Infos', :desc, :size => "20x1") %>					
+				<%= form_tr_check(f, 'Star', :star) %>
+				<%= form_tr_check(f, 'ADU', :adu) %>
+			</table>
+		</td>
+	</tr>
+
+	<!-- FACTURES -->
+	<tr class=form_layout_title>
+		<td colspan=2 class=form_layout_title>Factures<span class=link><%= link_to 'Ajouter une facture', '#protofacture', :class => "add_nested_item", :rel => "protofactures" %></span></td>
+	</tr>
+	<tr class=form_layout_content>
+		<td colspan=2 class=form_layout_content>
+			<div id="protofactures">
+				<% f.fields_for :protofactures do |protofacture_form| %>
+					<% unless f.object.new_record? %>
+						<%= render :partial => 'protofacture', :locals => { :f => protofacture_form } %>
+					<% end %>
+				<% end %>
+			</div>
+		</td class=form_layout_content>
+	</tr>
 </table>
-<br>
-
-<fieldset>
-  <legend>Factures</legend>
-<div id="protofactures">
-	<% produit_form.fields_for :protofactures do |protofacture_form| %>
-		<% unless produit_form.object.new_record? %>
-			<%= render :partial => 'protofacture', :locals => { :f => protofacture_form } %>
-		<% end %>
-	<% end %>
-</div>
 <p>
-<%= link_to 'Ajouter une facture', '#protofacture', :class => "add_nested_item", :rel => "protofactures" %>
+<%= f.submit "Enregistrer" %>
 </p>
-</fieldset>
-<br>
-
-<p>
-<%= produit_form.submit "Enregistrer" %>
-</p>
-
 
 <% end -%>
 

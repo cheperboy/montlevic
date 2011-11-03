@@ -9,15 +9,6 @@ module FacturesHelper
   # HEADER_RED_GREEN = 7
   # HEADER_COLOR = 8
   
-  def pop(facture)
-    out = ""
-    out += content_tag :span, facture.name.to_s, :class => "pop-title"
-    out += "<br><span class=grey>Cout : </span> #{facture.cout.to_s} #{euro}"
-    out += "<br><span class=grey>Ref compta : </span> #{facture.ref.to_s}"
-    out += "<br><span class=grey>Ref client : </span> #{facture.ref_client.to_s}"
-    return (out)
-  end
-  
   # Somme des cout des Reports d'une facture Reportable
   # la valeur est retournee dans un <TD> avec couleur verte ou rouge
   def sum_reports_cout(reportable_id)
@@ -80,8 +71,8 @@ module FacturesHelper
     link_size = 3
     out = ""
     # Action a choix multiple
-    out += form_tag :action => 'index'
-    out += submit_tag :'Action'
+    # out += form_tag :action => 'index'
+    # out += submit_tag :'Action'
     out += '<table class="table_list">'
 
     #Head - TH

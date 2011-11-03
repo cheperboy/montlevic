@@ -35,7 +35,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :pulves, :collection => { :index => :any,
                                           :export => :any}
 
-  map.resources :parcelles
+  map.resources :parcelles, :collection => { :index_edit => :get}
 
   map.resources :labtoparcelles
 

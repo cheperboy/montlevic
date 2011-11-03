@@ -1,5 +1,11 @@
-<% title "Nouveau Pulve" %>
+<% title "Nouveau Pulve", false %>
+
+<% titre = "Nouveau Pulve" %>
+<% lien1 = link_to "Annuler", pulves_path %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+</div>
 
 <%= render :partial => 'form' %>
 
-<%= link_to 'Back', pulves_path %>

@@ -84,6 +84,7 @@ class PulvesController < ApplicationController
     respond_to do |format|
       if @pulve.update_attributes(params[:pulve])
         @pulve.update_typecultures(params[:typecultures])
+        #@pulve.save!
         @pulve.uniq_parcelles
         flash[:notice] = 'Pulve mis a jour.'
         format.html { redirect_to(@pulve) }

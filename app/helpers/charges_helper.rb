@@ -51,4 +51,58 @@ module ChargesHelper
     form.select(col, Application::PRODUIT_QUANTITE_UNITS)
   end
 
+  #kklass=popup-show-content ou popup-show-content-large
+  def popup_show(link, content, kklass)
+    if (link.nil? || content.nil?)
+      out = "erreur"
+    else
+      out = '<a href="#" class=popup-show>'+ (link.to_s) + '<span class='+ kklass + '>'+ (content.to_s) +'</span></a>'
+    end
+    return out
+  end
+
+  def pop_content(elt)
+    out = ""
+    if elt.kind_of?(Facture)
+      out += content_tag :span, elt.name.to_s, :class => "pop-title"
+      out += "<br><span class=grey>Cout : </span> #{elt.cout.to_s} #{euro}"
+      out += "<br><span class=grey>Ref compta : </span> #{elt.ref.to_s}"
+      out += "<br><span class=grey>Ref client : </span> #{elt.ref_client.to_s}"
+    elsif elt.kind_of?(Labour)
+      out += content_tag :span, elt.name.to_s, :class => "pop-title"
+      out += "<br><span class=grey>Cout : </span> #{elt.cout.to_s} #{euro}"
+      out += "<br><span class=grey>Ref compta : </span> #{elt.ref.to_s}"
+      out += "<br><span class=grey>Ref client : </span> #{elt.ref_client.to_s}"
+    elsif elt.kind_of?(Pulve)
+      out += "
+			<table class=table_data>
+				<tr>
+					<th>Culture</th>
+					<th>Parcelle</th>
+					<th>Surface</th>
+				</tr>"
+				elt.putoparcelles.each do |putoparcelle|
+        out += "
+				<tr>
+					<td>#{putoparcelle.parcelle.typeculture.name}</td>
+					<td>#{link_to putoparcelle.parcelle.name, parcelle_path(putoparcelle.parcelle)}</td>
+					<td>#{putoparcelle.parcelle.surface} #{ha}</td>
+				</tr>"
+				end
+        out += "</table>"
+			
+    elsif elt.kind_of?(Vente)
+      out += content_tag :span, elt.name.to_s, :class => "pop-title"
+      out += "<br><span class=grey>Cout : </span> #{elt.cout.to_s} #{euro}"
+      out += "<br><span class=grey>Ref compta : </span> #{elt.ref.to_s}"
+      out += "<br><span class=grey>Ref client : </span> #{elt.ref_client.to_s}"
+    elsif elt.kind_of?(Produit)
+      out += content_tag :span, elt.name.to_s, :class => "pop-title"
+      out += "<br><span class=grey>Cout : </span> #{elt.date.to_s} #{euro}"
+    else
+      out+= "NOTHING"
+    end
+    return (out)
+  end
+  
 end

@@ -1,9 +1,17 @@
-<% title "Nouveau report" %>
-	<% if @reportable %>
-		<p>reportable : <%= @reportable.id.to_s %></p>
-	<% else %>
-		<p>Pas de reportable selectionne</p>
-	<% end %>
+<% titre = "Nouveau report" %>
+<% lien1 = link_to "Annuler", factures_url %>
+<% unless @debit.nil? %>
+	<% lien1 = link_to "Annuler", facture_url(@reportable) %>
+<% end %>
+
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+</div>
+
+<% if @reportable %>
+	<p>Reportable : <%= @reportable.name.to_s %> (<%= @reportable.id.to_s %>)</p>
+<% end %>
 
 <% javascript :defaults, 'delegate' %>
 
@@ -13,24 +21,42 @@
 %>
 
 <% form_for @facture, :url => 'create_report' do |f| -%>
+<table class=form_layout>
+	<tr class=form_layout_title>
+		<td class=form_layout_title>Facture</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content>
+			<p>Attention : Ne pas oublier d'editer les parcelles associees a ce report apres son enregistrement</p>
 
-<p>Le cout correspond a la valeur aui sera deduite de la facture d'origine</p>
-<p>Attention : Ne pas oublier d'editer les parcelles associees a ce report apres son enregistrement</p>
-	
-<table>
-<% unless @reportable.nil? %>
-	<% @reportables.clear %>	
-	<% @reportables << @reportable %>	
-<% end %>
-<%= form_tr_select(f, "Facture d'origine", :reportable_id, @reportables, :id, :name_reportable) %>
-<%= form_tr_text(f, 'Nom', :name) %>
-<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype.find(:all), :id, :name) %>
-<%= form_tr_text(f, 'Cout', :cout) %>
-<%= form_tr_check(f, 'Star', :star) %>
-<%= form_tr_check(f, 'ADU', :adu) %>
-<%= form_tr_text_area(f, 'Infos', :desc, :size => "20x5") %>
-	
+			<% unless @reportable.nil? %>
+				<% @reportables.clear %>	
+				<% @reportables << @reportable %>	
+			<% end %>
+			<table class=form_layout_content_table>
+				<%= form_tr_select(f, "Facture d'origine", :reportable_id, @reportables, :id, :name_reportable) %>
+			</table>
+		</td>
+	</tr>
+	<tr class=form_layout_title>
+		<td class=form_layout_title>Report</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content>
+			<p>Les champs suivants (Nom, Cout, etc) concernent le report créé</p>
+			<p>Le cout correspond a la valeur aui sera deduite de la facture d'origine</p>
+			<table class=form_layout_content_table>
+				<%= form_tr_text(f, 'Nom', :name) %>
+				<%= form_tr_text(f, 'Cout', :cout) %>
+				<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype.find(:all), :id, :name) %>
+				<%= form_tr_check(f, 'Star', :star) %>
+				<%= form_tr_check(f, 'ADU', :adu) %>
+				<%= form_tr_text_area(f, 'Description', :desc, :size => "20x5") %>
+			</table>
+		</td>
+	</tr>
 </table>
+
 
 <%= f.submit "Enregistrer" %>
 <% end -%>

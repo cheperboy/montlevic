@@ -10,6 +10,16 @@ class ParcellesController < ApplicationController
     end
   end
 
+  def index_edit
+    @parcelles = Parcelle.find_by_saison(:all)
+    @saison = Setting.find(:first).saison
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @parcelles }
+    end
+  end
+
   def show
     @parcelle = Parcelle.find(params[:id])
     @parcelles = Parcelle.find_by_saison(:all)

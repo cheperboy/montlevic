@@ -76,13 +76,14 @@ a.popup-show {
 	text-decoration:none;
 }
 
-a.popup-show span.popup-show-content {
+a.popup-show span.popup-show-content table.table_data td, a.popup-show span.popup-show-content-large table.table_data td {background-color: white; }
+a.popup-show span.popup-show-content, a.popup-show span.popup-show-content-large {
 	display: none;
 	position: absolute;
 	text-align: left;
 	top: 20px;
 	left: -10px;
-	min-width: 270px;
+	min-width: 370px;
 	width: auto;
 	padding: 2px;
 	z-index: 100;
@@ -93,8 +94,19 @@ a.popup-show span.popup-show-content {
 	-webkit-border-radius: 5px; /* this is just for Safari */
 }
 
-a:hover.popup-show span.popup-show-content { display: block; }
+a.popup-show span.popup-show-content{
+	min-width: 270px;
+	width: auto;
+}
+
+a.popup-show span.popup-show-content-large {
+	min-width: 300px;
+	width: auto;
+}
+
+a:hover.popup-show span.popup-show-content, a:hover.popup-show span.popup-show-content-large { display: block; }
 a:hover.popup-show {font-size: 99%; /*for IE bug*/ }
+
 
 /* End : affichage info-bulle */
 

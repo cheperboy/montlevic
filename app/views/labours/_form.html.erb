@@ -1,94 +1,108 @@
 <% javascript :defaults, 'delegate' %>
 			
-<% form_for @labour do |labour_form| -%>
+<% form_for @labour do |f| -%>
 
-<% content_for :jstemplates do -%>
-	<%= "var labtoparcelle='#{generate_template(labour_form, :labtoparcelles)}'" %>
-	<%= "var labtofacture='#{generate_template(labour_form, :labtofactures)}'" %>
-<% end -%>
+	<% content_for :jstemplates do -%>
+		<%= "var labtoparcelle='#{generate_template(f, :labtoparcelles)}'" %>
+		<%= "var labtofacture='#{generate_template(f, :labtofactures)}'" %>
+	<% end -%>
 
-<% unless User.find_by_name('Trochet').nil? %>
-	<% selected = User.find_by_name('Trochet').id %>
-<% end %>
+	<% unless User.find_by_name('Trochet').nil? %>
+		<% selected = User.find_by_name('Trochet').id %>
+	<% end %>
 
-<table>
-	<%= form_tr_text(labour_form, 'Nom', :name) %>
-	<%= form_tr_date(labour_form, 'Date', :date ) %>
-	<%= form_tr_select(labour_form, 'Prestataire', 
-						:user_id, 
-						User.find(:all, :order => :name), 
-						:id, :name, 
-						:selected => selected) %>
-	<%= form_tr_select(labour_form, 'Categorie', :category_id, Category.find_by_type("labour"), :id, :name) %>
-	<%= form_tr_text_area(labour_form, 'Infos', :desc, :size => "20x1") %>	
+	<table class=form_layout>
+
+		<!-- GENERAL -->
+		<tr class=form_layout_title>
+			<td class=form_layout_title_left>Labour</td>
+			<td class=form_layout_title_right>Classement</td>
+		</tr>
+		<tr class=form_layout_content>
+			<td class=form_layout_content_left>
+				<table class=form_layout_content_table>
+					<%= form_tr_text(f, 'Nom', :name) %>
+					<%= form_tr_text(f, 'Cout du passage', 
+													:cout_ha_passage, 
+													:unit => '€/Ha', 
+													:value => (@labour.cout_ha_passage || 0), 
+													:size => 4) %>
+					<%= form_tr_select(f, 'Prestataire', 
+										:user_id, 
+										User.find(:all, :order => :name), 
+										:id, :name, 
+										:selected => selected) %>
+				</table>
+			</td>
+			<td class=form_layout_content_right>
+				<table class=form_layout_content_table>
+					<%= form_tr_select(f, 'Categorie', :category_id, Category.find_by_type("labour"), :id, :name) %>
+					<%= form_tr_date(f, 'Date', :date ) %>
+					<%= form_tr_check(f, 'Star', :star) %>
+					<%= form_tr_check(f, 'ADU', :adu) %>
+					<% if @labour.cout_ha_passage %>
+						<%= tr_text('Cout total', @labour.get_cout_total.display, euro) %>
+					<% end %>
+				</table>
+			</td>
+		</tr>
+
+		<!-- PARCELLES & CULTURES -->
+		<tr class=form_layout_title>
+			<td class=form_layout_title_left>Parcelles <span class=link><%= link_to 'Ajouter une parcelle', '#labtoparcelle', :class => "add_nested_item", :rel => "labtoparcelles" %></span></td>
+			<td class=form_layout_title_right>Cultures</td>
+		</tr>
+		<tr class=form_layout_content>
+			<td class=form_layout_content_left>
+				<div id="labtoparcelles">
+					<% f.fields_for :labtoparcelles do |labtoparcelle_form| %>
+						<% unless f.object.new_record? %>
+							<%= render :partial => 'labtoparcelle', :locals => { :f => labtoparcelle_form } %>
+						<% end %>
+					<% end %>
+				</div>
+			</td>
+			<td class=form_layout_content_right>
+				<div class="typeculture">
+				  <table class=form_layout_content_table>
+					<% for t in Typeculture.find_for_saison() %>
+						<%= form_tr_check_tag(t.name, "typecultures[#{t.id}]") %>
+					<% end %>
+				  </table>
+				</div>
+			</td>
+		</tr>
 	
-<% if @labour.cout_ha_passage %>
-	<tr>
-		<td>Cout total : </td>
-		<td><%= @labour.get_cout_total %></td>
-	</tr>
-<% end %>
-</table>
+		<!-- DESC -->
+		<tr class=form_layout_title>
+			<td colspan=2 class=form_layout_title>informations</td>
+		</tr>
+		<tr class=form_layout_content>
+			<td colspan=2 class=form_layout_content>
+				<table>
+					<%= form_tr_text_area(f, '', :desc, :size => "80x5") %>
+				</table>
+			</td class=form_layout_content>
+		</tr>
 
-<br>
-<fieldset>
-  <legend>Passage</legend>
-	<table>
-		
-		<%= form_tr_text(labour_form, 'Cout du passage', 
-										:cout_ha_passage, 
-										:unit => '€/Ha', 
-										:value => (@labour.cout_ha_passage || 0), 
-										:size => 4) %>
+		<!-- FACTURES -->
+		<tr class=form_layout_title>
+			<td colspan=2 class=form_layout_title>Factures <span class=link><%= link_to 'Ajouter une facture', '#labtofacture', :class => "add_nested_item", :rel => "labtofactures" %></span></td>
+		</tr>
+		<tr class=form_layout_content>
+			<td colspan=2 class=form_layout_content>
+				<div id="labtofactures">
+					<% f.fields_for :labtofactures do |labtofacture_form| %>
+						<% unless f.object.new_record? %>
+							<%= render :partial => 'labtofacture', :locals => { :f => labtofacture_form } %>
+						<% end %>
+					<% end %>
+				</div>
+			</td class=form_layout_content>
+		</tr>
+
 	</table>
-</fieldset>
-<br>
 
-<br>
-<fieldset>
-	<legend><h3>Type de cultures</h3></legend>
-	<div class="typeculture">
-	  <table>
-		<% for t in Typeculture.find_for_saison() %>
-			<%= form_tr_check_tag(t.name, "typecultures[#{t.id}]") %>
-		<% end %>
-	  </table>
-	</div>
-</fieldset>
+	<%= f.submit "Enregistrer" %>
 
-<fieldset>
-  <legend>Parcelles</legend>
-  
-<div id="labtoparcelles">
-	<% labour_form.fields_for :labtoparcelles do |labtoparcelle_form| %>
-		<% unless labour_form.object.new_record? %>
-			<%= render :partial => 'labtoparcelle', :locals => { :f => labtoparcelle_form } %>
-		<% end %>
-	<% end %>
-</div>
-<p>
-<%= link_to 'Ajouter une parcelle', '#labtoparcelle', :class => "add_nested_item", :rel => "labtoparcelles" %>
-</p>
-</fieldset>
-<br>
-
-<fieldset>
-  <legend>Factures</legend>
-  
-<div id="labtofactures">
-	<% labour_form.fields_for :labtofactures do |labtofacture_form| %>
-		<% unless labour_form.object.new_record? %>
-			<%= render :partial => 'labtofacture', :locals => { :f => labtofacture_form } %>
-		<% end %>
-	<% end %>
-</div>
-<p>
-<%= link_to 'Ajouter une facture', '#labtofacture', :class => "add_nested_item", :rel => "labtofactures" %>
-</p>
-
-</fieldset>
-<br>
-
-<%= labour_form.submit "Enregistrer" %>
-</p>
 <% end -%>

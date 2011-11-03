@@ -1,9 +1,13 @@
-<% title "Produits" %>
+<% title "Produits", false %>
 
-| <%= link_to 'Nouveau produit', new_produit_path %> |
-<br />
-<br />
-<%#= draw_table_with_find(Application::PULVE_HEAD, @pulves, 'pulves', 'index', params) %>
+<% titre = "Produits" %>
+
+<% lien1 = link_to 'Nouveau produit', new_produit_path %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+</div>
+
 <%= draw_table(Application::PRODUIT_HEAD, @produits) %>
 
 <br />

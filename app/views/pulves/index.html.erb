@@ -1,9 +1,12 @@
-<% title "Pulves" %>
+<% title "Pulves", false %>
 
-| <%= link_to 'Nouveau pulve', new_pulve_path %> |
+<% titre = "Pulves" %>
 
-<br />
-<br />
+<% lien1 = link_to 'Nouveau pulve', new_pulve_path %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+</div>
 
 <%= draw_table_with_find(Application::PULVE_HEAD, @pulves, 'pulves', 'index', params) %>
 

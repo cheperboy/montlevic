@@ -88,7 +88,7 @@ class Charge < ActiveRecord::Base
     end
   end
     
-  # Ajoute une Fac/Lab/Pu/Ven/toparcelle si celle-ci n'existe pas encore pour ce Labou/Pulve/Facture/...
+  # Ajoute une Fac/Lab/Pu/Ven/toparcelle si celle-ci n'existe pas encore pour ce Labour/Pulve/Facture/...
   def add_parcelle!(parcelle)
     add = true
     self.parcelles.each do |p|
@@ -103,30 +103,29 @@ class Charge < ActiveRecord::Base
     
   # transforme les checkbox Typeculture en Factoparcelles
   def uniq_parcelles
+    # self.reload
     tab = []
     if self.parcelles.count > 0
       self.parcelles.each do |parcelle|
+        # parcelle deja enregistree
         if tab.include?(parcelle.id)
-          case self.class
-          when Facture
-          when Report
-          when Reportable
-            elt = Factoparcelle.find(:first, :conditions => ["parcelle_id = ? AND facture_id = ?", parcelle.id, self.id])
-          when Labour
-            elt = Labtoparcelle.find(:first, :conditions => ["parcelle_id = ? AND labour_id = ?", parcelle.id, self.id])
-          when Pulve
-            elt = Putoparcelle.find(:first, :conditions => ["parcelle_id = ? AND pulve_id = ?", parcelle.id, self.id])
-          when Vente
-            elt = Ventoparcelle.find(:first, :conditions => ["parcelle_id = ? AND vente_id = ?", parcelle.id, self.id])
+          # recherche de l'element a supprimer
+          if self.kind_of?(Facture)
+            elt = self.factoparcelles.find(:first, :conditions => ["parcelle_id = ?", parcelle.id])
+          elsif self.kind_of?(Labour)
+            elt = self.labtoparcelles.find(:first, :conditions => ["parcelle_id = ?", parcelle.id])
+          elsif self.kind_of?(Pulve)
+            elt = self.putoparcelles.find(:first, :conditions => ["parcelle_id = ?", parcelle.id])
+          elsif self.kind_of?(Vente)
+            elt = self.ventoparcelles.find(:first, :conditions => ["parcelle_id = ?", parcelle.id])
           end
-          elt.destroy
+          elt.destroy if elt
         else
           tab << parcelle.id
         end
       end
     end
   end
-    
 
 #methode deplacee de Model/Labour.rd vers Charges.rb
 #pour etre accessible par Pulve

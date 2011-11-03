@@ -1,6 +1,13 @@
-<% title "Modif Produit" %>
+<% title "Produit #{@produit.name}", false %>
+
+<% titre = "Produit #{@produit.name} #{star_ascii(@produit)}" %>
+
+<% lien1 = link_to "Annuler", @produit %>
+<% title = "<span class=title>#{titre}</span><span class=link>#{lien1}</span>" %>
+
+<div id="title_h1">
+	<%= title %>
+</div>
 
 <%= render :partial => 'form' %>
 
-<%= link_to 'Show', @produit %> |
-<%= link_to 'Back', produits_path %>

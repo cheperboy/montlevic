@@ -84,7 +84,7 @@ class ProduitsController < ApplicationController
           protofacture.save!
         end  
         flash[:notice] = 'Enregistrement produit OK.'
-        format.html { redirect_to(produits_url) }
+        format.html { redirect_to(produit_url(@produit)) }
       else
         add_errors_to_model(@produit.errors)
         format.html { render :action => "new" }
@@ -97,7 +97,7 @@ class ProduitsController < ApplicationController
     respond_to do |format|
       if @produit.update_attributes(params[:produit])
         flash[:notice] = 'Modification du produit ok'
-        format.html { redirect_to(produits_url) }
+        format.html { redirect_to(produit_url(@produit)) }
       else
         add_errors_to_model(@produit.errors)
         format.html { render :action => "edit" }

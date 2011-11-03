@@ -1,67 +1,103 @@
-<% title "Labour" %>
+<% title "Labour #{@labour.name}", false %>
 
-<table>
-	<tr>
-		<td>Nom : </td>
-		<td><%=h @labour.name %></td>
-	</tr>
-	<tr>
-		<td>Categorie : </td>
-		<td><%=h @labour.category.name %></td>
-	</tr>
-	<tr>
-		<td>Prestataire : </td>
-		<td><%=h @labour.user.name %></td>
-	</tr>
-	<tr>
-		<td>Cout du passage : </td>
-		<td><%=h @labour.cout_ha_passage %> €/Ha</td>
-	</tr>
-	<tr>
-		<td>Cout total : </td>
-		<td><%=h @labour.get_cout_total %> €</td>
-	</tr>
-	<tr>
-		<td>Description : </td>
-		<td><p><%=h @labour.desc %></p></td>
-	</tr>
-</table>
+<% titre = "Labour #{@labour.name} #{star_ascii(@labour)}" %>
+<% lien1 = link_to "Modifier", edit_labour_path(@labour) %>
+<% lien2 = link_to "Liste des labours", labours_path %>
+<% lien3 = link_to "Supprimer", @labour, :confirm => "Supprimer le labour #{@labour.name} ?", :method => :delete %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+	<span class=link><%= lien2 %></span>
+	<span class=link_delete><%= lien3 %></span>
+</div>
 
 
-<%- if @labour.labtoparcelles.length > 0 -%>
-	<h3>Parcelles (<%= @labour.sum_surfaces %> Ha)</h3>
-	<table class=table_data>
-		<tr class=bold>
-			<td>Culture</td>
-			<td>Parcelle</td>
-			<td>Surface</td>
-			<td>Cout</td>
+<table class=form_layout>
+	<!-- GENERAL -->
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Labour</td>
+		<td class=form_layout_title_right>Classement</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<table class=form_layout_content_table>
+				<%= tr_text('Nom', 				@labour.name) %>
+				<%= tr_text('Cout du passage', 	@labour.cout_ha_passage, euro_ha) %>
+				<%= tr_text('Cout Total', 		@labour.get_cout_total, euro) %>
+				<%= tr_text('Prestataire', 		@labour.user.name) %>
+			</table>
+		</td>
+		<td class=form_layout_content_right>
+			<table class=form_layout_content_table>
+				<%= tr_text('Categorie', 		@labour.category.name) %>
+				<%= tr_text('Date', 			@labour.date) %>
+				<%= tr_text('Star', 			@labour.star) %>
+				<%= tr_text('ADU', 				@labour.adu) %>
+			</table>
+		</td>
+	</tr>
+	
+	<!-- PARCELLES -->
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Parcelles</td>
+		<td class=form_layout_title_right></td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<table class=table_data>
+				<tr class=bold>
+					<th>Culture</th>
+					<th>Parcelle</th>
+					<th>Surface</th>
+					<th>Cout</th>
+				</tr>
+				<%- @labour.labtoparcelles.each do |labtoparcelle| -%>
+				<tr>
+					<td><%=h labtoparcelle.parcelle.typeculture.name %></td>
+					<td><%= link_to labtoparcelle.parcelle.name, parcelle_path(labtoparcelle.parcelle) %></td>
+					<td><%=h labtoparcelle.parcelle.surface %> ha</td>
+					<td><%=h (labtoparcelle.parcelle.surface * @labour.get_cout_ha).display %> €</td>
+				</tr>
+				<%- end -%>
+			</table>
+		</td>
+
+	</tr>
+
+	<!-- FACTURES -->
+	<%- if @labour.labtofactures.length > 0 -%>
+		<tr class=form_layout_title>
+			<td colspan=2 class=form_layout_title>Factures</td>
 		</tr>
-		<%- @labour.labtoparcelles.each do |labtoparcelle| -%>
-		<tr>
-			<td><%=h labtoparcelle.parcelle.typeculture.name %></td>
-			<td><%=h labtoparcelle.parcelle.name %></td>
-			<td><%=h labtoparcelle.parcelle.surface %> ha</td>
-			
-			<td><%=h (labtoparcelle.parcelle.surface * @labour.get_cout_ha).display %> €</td>
+		<tr class=form_layout_content>
+			<td colspan=2class=form_layout_content>
+				<table class=table_data>
+					<tr class=bold>
+						<th>Facture</th>
+						<th>Cout</th>
+						<th>Contribution</th>
+					</tr>
+					<%- @labour.labtofactures.each do |labtofacture| -%>
+					<tr>
+						<td><%= link_to labtofacture.facture.name, facture_path(labtofacture.facture) %></td>
+						<td><%=h labtofacture.facture.cout.display %> <%= euro %></td>
+						<td><%=h labtofacture.value.display %> <%= euro %></td>
+					</tr>
+					<%- end -%>
+				</table>
+			</td>
 		</tr>
-		<%- end -%>
-	</table>
-<%- end -%>
-
-<%- if @labour.labtofactures.length > 0 -%>
-	<h3>Factures</h3>
-	<ul>
-	<%- @labour.labtofactures.each do |labtofacture| -%>
-		<li><%= labtofacture.facture.name %>
-			[<%= labtofacture.facture.cout %> €]
-		 	contribution : <%= labtofacture.value %> €
-	</li>
 	<%- end -%>
-	</ul>
-<%- end -%>
-<p>
-  <%= link_to "Edit", edit_labour_path(@labour) %> |
-  <%= link_to "Destroy", @labour, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", labours_path %>
-</p>
+
+	<!-- DESC -->
+	<tr class=form_layout_title>
+		<td colspan=2 class=form_layout_title>informations</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td colspan=2class=form_layout_content>
+			<p class=grey><%= @labour.desc %></p>
+		</td>
+	</tr>
+
+
+</table>

@@ -1,8 +1,12 @@
-<% title "Labours" %>
+<% title "Labours", false %>
 
-| <%= link_to 'Nouveau', new_labour_path %> |
+<% titre = "Labours" %>
 
-<br /><br />
+<% lien1 = link_to 'Nouveau labour', new_labour_path %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+</div>
 
 <%= draw_table_with_find(Application::LABOUR_HEAD, 	@labours, 	'labours', 'index', params) %>
 

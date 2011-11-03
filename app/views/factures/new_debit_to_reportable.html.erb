@@ -1,4 +1,13 @@
-<% title "Debit -> Reportable" %>
+<% titre = "Debit -> Reportable" %>
+<% lien1 = link_to "Annuler", factures_url %>
+<% unless @debit.nil? %>
+	<% lien1 = link_to "Annuler", facture_url(@debit) %>
+<% end %>
+
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+</div>
 
 <% javascript :defaults, 'delegate' %>
 
@@ -7,46 +16,43 @@
 						:message => "corriger les erreurs suivantes" 
 %>
 						
-<% form_for @facture, :url => 'create_debit_to_reportable' do |facture_form| -%>
+<% form_for @facture, :url => 'create_debit_to_reportable' do |f| -%>
+<%= link_to 'Retour', factures_path %>
+<table class=form_layout>
+	<tr class=form_layout_title>
+		<td class=form_layout_title>Reportable</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content>
+			<p>La facture sera transformee en Reportable et un Report associé sera créé.</p>
 
-<p>La facture sera transformee en Reportable et un Report associe sera cree.<br>
-Les champs suivants (Nom, Cout, etc) concernent le report ainsi cree</p>
-
-<table>
-<tr>
-	<td>Facture d'origine : </td>
-	<% unless @debit.nil? %>
-		<% @debits.clear %>	
-		<% @debits << @debit %>	
-	<% end %>
-	<td><%= collection_select(:debit, :id, @debits, :id, :name_debit ) %></td>
-</tr>
-<tr>
-	<td><%= facture_form.label :name, "Nom : " %></td>
-	<td><%= facture_form.text_field :name %></td>
-</tr>
-<tr>
-	<td><%= facture_form.label :cout, "Cout : " %></td>
-	<td><%= facture_form.text_field :cout, :size => 3 %> euros</td>
-</tr>
-<tr>
-	<td><%= facture_form.label :factype_id, "Type de facture : " %></td>
-	<td><%= facture_form.collection_select (:factype_id, Factype.find(:all), :id, :name ) %></td>
-</tr>
-
-<tr>
-	<td>Repere : </td>
-	<td><%= facture_form.label :star, "Star : " %><%= facture_form.check_box :star %>
-	 | <%= facture_form.label :adu, "ADU : " %>
-	<%= facture_form.check_box :adu %></td>
-</tr>
-<tr>
-	<td><%= facture_form.label :desc, "Infos : " %></td>
-	<td><%= facture_form.text_area :desc, :size => "20x5" %></td>
-</tr>
+			<% unless @debit.nil? %>
+				<% @debits.clear %>	
+				<% @debits << @debit %>	
+			<% end %>
+			<table class=form_layout_content_table>
+				<td><%= collection_select(:debit, :id, @debits, :id, :name_debit ) %></td>
+			</table>
+		</td>
+	</tr>
+	<tr class=form_layout_title>
+		<td class=form_layout_title>Debit</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content>
+			<p>Les champs suivants (Nom, Cout, etc) concernent le report créé</p>
+			<table class=form_layout_content_table>
+				<%= form_tr_text(f, 'Nom', :name) %>
+				<%= form_tr_text(f, 'Cout', :cout) %>
+				<%= form_tr_select(f, 'Type de facture', :factype_id, Factype.find(:all), :id, :name) %>
+				<%= form_tr_check(f, 'Star', :star) %>
+				<%= form_tr_check(f, 'ADU', :adu) %>
+				<%= form_tr_text_area(f, 'Description', :desc, :size => "20x5") %>
+			</table>
+		</td>
+	</tr>
 </table>
+<%= f.submit "Enregistrer" %>
 
-<%= facture_form.submit "Enregistrer" %>
 <% end -%>
 
-<%= link_to 'Retour', factures_path %>
