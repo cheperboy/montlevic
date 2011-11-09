@@ -1,50 +1,50 @@
 <% javascript :defaults, 'delegate' %>
 
-<% form_for @vente do |vente_form| -%>
+<% form_for @vente do |f| -%>
 
 <% content_for :jstemplates do -%>
-	<%= "var ventoparcelle='#{generate_template(vente_form, :ventoparcelles)}'" %>
+	<%= "var ventoparcelle='#{generate_template(f, :ventoparcelles)}'" %>
 <% end -%>
-<table>
-<tr>
-	<td><%= vente_form.label :saison_id, "Campagne : " %></td>
-	<td><%= vente_form.collection_select (:saison_id, Saison.find(:all, :order => :name), :id, :name, :selected => current_saison_id) %></td>
-</tr>
-<tr>
-	<td><%= vente_form.label :name, "Nom : " %></td>
-	<td><%= vente_form.text_field :name %></td>
-</tr>
-<tr>
-	<td><%= vente_form.label :ref_client, "Ref client : " %></td>
-	<td><%= vente_form.text_field :ref_client %></td>
-</tr>
-<tr>
-	<td><%= vente_form.label :ref, "Ref perso : " %></td>
-	<td><%= vente_form.text_field :ref %></td>
-</tr>
-<tr>
-	<td><%= vente_form.label :date, "Date : " %></td>
-	<td><%= vente_form.date_select(:date, :start_year => 2008, :order => [:day, :month, :year]) %></td>
-</tr>
-<tr>
-	<td><%= vente_form.label :user_id, "Prestataire : " %></td>
-	<td><%= vente_form.collection_select (:user_id, User.find(:all), :id, :name ) %></td>
-</tr>  
-<tr>
-	<td><%= vente_form.label :category_id, "Categorie : " %></td>
-	<td><%= vente_form.collection_select (:category_id, Category.find_by_type("vente"), :id, :name ) %></td>
-</tr>
-<tr>
-	<td><%= vente_form.label :prix, "Valeur : " %></td>
-	<td><%= vente_form.text_field :prix, :size => 3 %> euros</td>
-</tr>
-<tr>
-	<td>Repere : </td>
-	<td><%= vente_form.label :star, "Star : " %><%= vente_form.check_box :star %>
-	 | <%= vente_form.label :adu, "ADU : " %><%= vente_form.check_box :adu %></td>
-</tr>
+
+<table class=form_layout>
+
+	<!-- GENERAL -->
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Vente</td>
+		<td class=form_layout_title_right>Classement</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<table class=form_layout_content_table>
+				<%= form_tr_text(f, 'Nom', :name) %>
+				<%= form_tr_text(f, 'Prix total', 
+									:prix,
+									:unit => euro,
+									:prix => (@vente.prix || 0),
+									:size => 4) %>
+				<%= form_tr_select(f, 'Prestataire', 
+									:user_id, 
+									User.find(:all, :order => :name), 
+									:id, :name) %>
+				<%= form_tr_text(f, 'Ref client', :ref_client) %>
+				<%= form_tr_text(f, 'Ref perso', :ref) %>
+			</table>
+		</td>
+		<td class=form_layout_content_right>
+			<table class=form_layout_content_table>
+				<%= form_tr_select(f, 'Saison', :saison_id, Saison.find(:all, :order => :name), :id, :name) %>
+				<%= form_tr_select(f, 'Categorie', :category_id, Category.find_by_type("vente"), :id, :name) %>
+				<%= form_tr_date(f, 'Date', :date) %>
+				<%= form_tr_select(f, 'Prestataire', :user_id, User.find(:all, :order => :name), :id, :name) %>
+				<%= form_tr_check(f, 'Star', :star) %>
+				<%= form_tr_check(f, 'ADU', :adu) %>
+			</table>
+		</td>
+	</tr>
+
 
 </table>
+
 
 <fieldset>
 	<legend><h3>Type de cultures</h3></legend>
@@ -58,8 +58,8 @@
 </fieldset>
 
 <div id="ventoparcelles">
-	<% vente_form.fields_for :ventoparcelles do |ventoparcelle_form| %>
-		<% unless vente_form.object.new_record? %>
+	<% f.fields_for :ventoparcelles do |ventoparcelle_form| %>
+		<% unless f.object.new_record? %>
 			<%= render :partial => 'ventoparcelle', :locals => { :f => ventoparcelle_form } %>
 		<% end %>
 	<% end %>
@@ -68,7 +68,7 @@
 <%= link_to 'Ajouter une parcelle', '#ventoparcelle', :class => "add_nested_item", :rel => "ventoparcelles" %>
 </p>
 
-<%= vente_form.submit "Enregistrer" %>
+<%= f.submit "Enregistrer" %>
 </p>
 <% end -%>
 

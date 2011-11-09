@@ -1,40 +1,76 @@
-<% title "Vente" %>
+<% title "Vente #{@vente.name}", false %>
 
-<table>
-	<tr>
-		<td>Nom : </td>
-		<td><%=h @vente.name %></td>
+<% titre = "Vente #{@vente.name} #{star_ascii(@vente)}" %>
+<% lien1 = link_to "Modifier", edit_vente_path(@vente) %>
+<% lien2 = link_to "Liste des ventes", ventes_path %>
+<% lien3 = link_to "Supprimer", @vente, :confirm => "Supprimer la vente #{@vente.name} ?", :method => :delete %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+	<span class=link><%= lien2 %></span>
+	<span class=link_delete><%= lien3 %></span>
+</div>
+
+<table class=form_layout>
+	<!-- GENERAL -->
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Vente</td>
+		<td class=form_layout_title_right>Classement</td>
 	</tr>
-	<tr>
-		<td>Categorie : </td>
-		<td><%=h @vente.category.name %></td>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<table class=form_layout_content_table>
+				<%= tr_text('Nom', 				@vente.name) %>
+				<%= tr_text('Cout Total', 		@vente.get_cout_total, euro) %>
+				<%= tr_text('Prestataire', 		@vente.user.name) %>
+			</table>
+		</td>
+		<td class=form_layout_content_right>
+			<table class=form_layout_content_table>
+				<%= tr_text('Categorie', 		@vente.category.name) %>
+				<%= tr_text('Date', 			@vente.date) %>
+				<%= tr_text('Star', 			@vente.star) %>
+				<%= tr_text('ADU', 				@vente.adu) %>
+			</table>
+		</td>
 	</tr>
-	<tr>
-		<td>Prestataire : </td>
-		<td><%=h @vente.user.name %></td>
+	
+	<!-- PARCELLES -->
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Parcelles</td>
+		<td class=form_layout_title_right></td>
 	</tr>
-	<tr>
-		<td>Prix total : </td>
-		<td><%=h @vente.get_cout_total %> €</td>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<table class=table_data>
+				<tr class=bold>
+					<th>Culture</th>
+					<th>Parcelle</th>
+					<th>Surface</th>
+					<th>Prix Ha</th>
+					<th>Prix</th>
+				</tr>
+				<%- @vente.ventoparcelles.each do |ventoparcelle| -%>
+				<tr>
+					<td><%=h ventoparcelle.parcelle.typeculture.name %></td>
+					<td><%= link_to ventoparcelle.parcelle.name, parcelle_path(ventoparcelle.parcelle) %></td>
+					<td><%=h ventoparcelle.parcelle.surface %> ha</td>
+					<td><%=h @vente.get_cout_ha.display %> <%= euro_ha %></td>
+					<td><%=h (ventoparcelle.parcelle.surface * @vente.get_cout_ha).display %> <%= euro %></td>
+				</tr>
+				<%- end -%>
+			</table>
+		</td>
 	</tr>
+	
+	<!-- DESC -->
+	<tr class=form_layout_title>
+		<td colspan=2 class=form_layout_title>informations</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td colspan=2class=form_layout_content>
+			<p class=grey><%= @vente.desc %></p>
+		</td>
+	</tr>
+
 </table>
-
-<%- if @vente.ventoparcelles.length > 0 -%>
-	<h3>Parcelles (<%= @vente.sum_surfaces %> Ha)</h3>
-	<ul>
-	<%- @vente.ventoparcelles.each do |ventoparcelle| -%>
-	<li><%= ventoparcelle.parcelle.typeculture.name %> - 
-		<%= ventoparcelle.parcelle.name %>
-			[surface : <%= ventoparcelle.parcelle.surface %> ha] x 
-	<!--	[taux : <%= ventoparcelle.value %>] x -->
-			[prix/Ha : <%= @vente.get_cout_ha %>] =
-			<%=h (ventoparcelle.parcelle.surface * @vente.get_cout_ha) %> €
-	<!-- TODO : prise en compte de ventoparcelle.value -->
-	<%- end -%>
-	</ul>
-<%- end -%>
-<p>
-  <%= link_to "Edit", edit_vente_path(@vente) %> |
-  <%= link_to "Destroy", @vente, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", ventes_path %>
-</p>

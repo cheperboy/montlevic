@@ -1,6 +1,12 @@
-<% title "Modif vente" %>
+<% title "Vente #{@vente.name}", false %>
+
+<% titre = "Vente #{@vente.name} #{star_ascii(@vente)}" %>
+
+<% lien1 = link_to "Annuler", @vente %>
+<% title = "<span class=title>#{titre}</span><span class=link>#{lien1}</span>" %>
+
+<div id="title_h1">
+	<%= title %>
+</div>
 
 <%= render :partial => 'form' %>
-
-<%= link_to 'Voir', @vente %> |
-<%= link_to 'Retour', ventes_path %>
