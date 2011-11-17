@@ -7,7 +7,10 @@ class Typeculture < ActiveRecord::Base
   def name_for_select
     @name_for_select = "Typeculture :: " + name + " - " + " - " + surface.to_s + " Ha" 
   end
-  
+
+  def self.find_by_code(code)
+    self.find(:first, :conditions => ["code = ?", code])
+  end  
   
   def self.find_for_saison()
     typeculture_ids = []

@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
     self.find(:first, :conditions => ["name = ?", name])
   end
 
+  def self.find_by_code(code)
+    self.find(:first, :conditions => ["code = ?", code])
+  end
+
 end

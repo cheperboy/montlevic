@@ -13,6 +13,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
 
   create_table "zones", :force => true do |t|
     t.string   "name",       :null => false
+    t.string   "code",       :null => false
     t.float    "surface",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -20,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
 
   create_table "typecultures", :force => true do |t|
     t.string "name", :null => false
+    t.string "code", :null => false
   end
 
   create_table "charges", :id => false, :force => true do |t|
@@ -50,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
 
   create_table "users", :force => true do |t|
     t.string   "name",       :null => false
+    t.string   "code",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -235,6 +238,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer  "saison_id",      :null => false
     t.integer  "typeculture_id", :null => false
     t.string   "name",           :null => false
+    t.string   "code"
     t.float    "surface"
     t.text     "desc"
     t.datetime "created_at"

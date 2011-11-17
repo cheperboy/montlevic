@@ -40,6 +40,9 @@ if SEEDS_BASIC
     { :name => 'deplacement', :upcategory => facture}, 
     { :name => 'frais de gestion', :upcategory => facture },
     { :name => 'service agricole', :upcategory => facture }, #ne pas modifier
+    { :name => 'materiel', :upcategory => facture },
+    { :name => 'fermage', :upcategory => facture },
+    { :name => 'bricolage', :upcategory => facture },
 
     { :name => 'divers', :upcategory => pulve },
     { :name => 'azote', :upcategory => pulve },
@@ -57,7 +60,10 @@ if SEEDS_BASIC
     { :name => 'vibro', :upcategory => labour },
     { :name => 'herse', :upcategory => labour },
 
-    { :name => 'foin', :upcategory => vente },
+    { :name => 'Paille foin', :upcategory => vente },
+    { :name => 'Paille ble', :upcategory => vente },
+    { :name => 'Paille colza', :upcategory => vente },
+    { :name => 'Assurance', :upcategory => vente },
     { :name => 'PAC', :upcategory => vente },
     { :name => 'Avoir', :upcategory => vente }
   ])
@@ -68,12 +74,13 @@ if SEEDS_BASIC
     { :name => 'invest' }
   ])
 
-  ble = Typeculture.create!({:name => "Ble"})
-  bleble = Typeculture.create!({:name => "2eme Ble"})
-  tournesol = Typeculture.create!({:name => "Tournesol"})
-  colza = Typeculture.create!({:name => "Colza"})
-  jachere = Typeculture.create!({:name => "Jachere"})
-  luzerne = Typeculture.create!({:name => "Luzerne"})
+  ble = Typeculture.create!({:name => "Ble", :code => "ble"})
+  bleble = Typeculture.create!({:name => "2eme Ble", :code => "bleble"})
+  tournesol = Typeculture.create!({:name => "Tournesol", :code => "tournesol"})
+  colza = Typeculture.create!({:name => "Colza", :code => "colza"})
+  jachere = Typeculture.create!({:name => "Jachere", :code => "jachere"})
+  luzerne = Typeculture.create!({:name => "Luzerne", :code => "luzerne"})
+  foin = Typeculture.create!({:name => "Foin", :code => "foin"})
   typeculture = Typeculture.find(:first)
 
   factypes = Factype.create!([
@@ -82,40 +89,72 @@ if SEEDS_BASIC
     {:name => "null", :display => "null", :desc => "test desc"}])
 
   users = User.create!([
-    {:name => "Jouve"},
-    {:name => "Trochet"},
-    {:name => "Dauger"},
-    {:name => "Raffault"},
-    {:name => "C le Mobile"},
-    {:name => "Credit Agricole Assurances"},
-    {:name => "Bastard"},
-    {:name => "Daugeron Garage"},
-    {:name => "Communaute de communes"},
-    {:name => "SIAEP de l'Igneraie"},
-    {:name => "France Telecom"},
-    {:name => "Dechansiaud"},
-    {:name => "Renaud"},
-    {:name => "EDF"},
-    {:name => "Compta Centre"},
-    {:name => "Pneu Europe Service"},
-    {:name => "Sodibe"},
-    {:name => "Lapeyre"},
-    {:name => "Seelec"},
-    {:name => "Denormandie Jardinerie"},
-    {:name => "MSA"},
-    {:name => "Agro-Service"},
-    {:name => "CBM"},
-    {:name => "Super U"},
-    {:name => "DDA"},
-    {:name => "PAC"},
-    {:name => "Charrier"},
-    {:name => "La Poste"},
-    {:name => "Brico Depot"},
-    {:name => "divers"},
-    {:name => "Auroy"},
-    {:name => "Bernard Peres"},
-    {:name => "Bricomarche"},
-    {:name => "Aucun"}
+    # code genere USERS
+    {:name => 'Agro-Service', :code => 'agro_service'},
+    {:name => 'AIP systems', :code => 'aip_systems'},
+    {:name => 'ASTM', :code => 'astm'},
+    {:name => 'Aubrun carburants', :code => 'aubrun_carburants'},
+    {:name => 'Aucun', :code => 'aucun'},
+    {:name => 'Auroy', :code => 'auroy'},
+    {:name => 'Aussourd', :code => 'aussourd'},
+    {:name => 'Bastard et Fils', :code => 'bastard'},
+    {:name => 'Batiloisirs', :code => 'batiloisirs'},
+    {:name => 'Beauvais', :code => 'beauvais'},
+    {:name => 'Bernard Peres', :code => 'bernard_peres'},
+    {:name => 'Bonnin', :code => 'bonnin'},
+    {:name => 'Bricodepot', :code => 'bricodepot'},
+    {:name => 'Bricomarche', :code => 'bricomarche'},
+    {:name => 'Bricopro', :code => 'bricopro'},
+    {:name => 'C le Mobile', :code => 'c_le_mobile'},
+    {:name => 'CACI36', :code => 'caci36'},
+    {:name => 'CBM', :code => 'cbm'},
+    {:name => 'Centragri', :code => 'centragri'},
+    {:name => 'CGA 36', :code => 'cga36'},
+    {:name => 'Chambre Agriculture', :code => 'chambre_agriculture'},
+    {:name => 'Charrier', :code => 'charrier'},
+    {:name => 'Chirrault', :code => 'chirrault'},
+    {:name => 'CMD', :code => 'cmd'},
+    {:name => 'Communaute de communes', :code => 'communaute_de_communes'},
+    {:name => 'Compta Centre', :code => 'compta_centre'},
+    {:name => 'Coutillet', :code => 'coutillet'},
+    {:name => 'Credit Agricole Assurances', :code => 'credit_agricole_assurances'},
+    {:name => 'Dauger', :code => 'dauger'},
+    {:name => 'Daugeron Garage', :code => 'daugeron_garage'},
+    {:name => 'DDA', :code => 'dda'},
+    {:name => 'Dechansiaud', :code => 'dechansiaud'},
+    {:name => 'Demanus', :code => 'demanus'},
+    {:name => 'Denormandie Jardinerie', :code => 'denormandie'},
+    {:name => 'divers', :code => 'divers'},
+    {:name => 'Dumont', :code => 'dumont'},
+    {:name => 'EARL Prinet', :code => 'earl_prinet'},
+    {:name => 'EBT', :code => 'ebt'},
+    {:name => 'EDF bleu ciel', :code => 'edf_bleu_ciel'},
+    {:name => 'La France agricole', :code => 'France_agricole'},
+    {:name => 'France Telecom', :code => 'France_telecom'},
+    {:name => 'Groupama', :code => 'groupama'},
+    {:name => 'Isagri', :code => 'isagri'},
+    {:name => 'Jamase', :code => 'jamase'},
+    {:name => 'Jouve', :code => 'jouve'},
+    {:name => 'Kestoloot', :code => 'kesteloot'},
+    {:name => 'La Poste', :code => 'la_poste'},
+    {:name => 'Lapeyre', :code => 'lapeyre'},
+    {:name => 'Lapeyre', :code => 'lapeyre'},
+    {:name => 'Medard', :code => 'medard'},
+    {:name => 'MF de la Cot', :code => 'mflacot'},
+    {:name => 'Moulin', :code => 'moulin'},
+    {:name => 'MSA', :code => 'msa'},
+    {:name => 'PAC', :code => 'pac'},
+    {:name => 'Pierre Auroy Sarl', :code => 'pierre_auroy_sarl'},
+    {:name => 'Pneu Europe Service', :code => 'pneu_europe_service'},
+    {:name => 'Raffault', :code => 'raffault'},
+    {:name => 'Raffault freres', :code => 'raffault_freres'},
+    {:name => 'Renaud', :code => 'renaud'},
+    {:name => 'Seelec', :code => 'seelec'},
+    {:name => 'SIAEP Igneraie', :code => 'siaep'},
+    {:name => 'Sodibe', :code => 'sodibe'},
+    {:name => 'Sotramat', :code => 'sotramat'},
+    {:name => 'Super U', :code => 'super_u'},
+    {:name => 'Trochet', :code => 'trochet'}
   ])
   trochet = User.find_by_name('Trochet')
 
@@ -129,27 +168,26 @@ if SEEDS_BASIC
 end # if SEEDS_BASIC
 
 zones = Zone.create!([
-  {:name => "Bruneau",          :surface => 14},    #/1/
-  {:name => "Mitant",           :surface => 5},     #/2/     
-  {:name => "La Rue",           :surface => 46.55}, #/3/
-  {:name => "Basse-cour",       :surface => 2},     #/4/
-  {:name => "Vallees",          :surface => 11},    #/5/
+  {:name => 'Bons Pains', :code => 'bruneau', :surface => 14},
+  {:name => 'Mitant', :code => 'mitant', :surface => 5},
+  {:name => 'La Rue', :code => 'la_rue', :surface => 46.55},
 
-  {:name => "Guiberons",        :surface => 2.5},   #/6/
-  {:name => "La cote",          :surface => 2},     #/7/
-  {:name => "Feuillets",        :surface => 16},    #/8/
-  {:name => "Brandes",          :surface => 2.97},  #/9/
-  {:name => "Taillis",          :surface => 19.32}, #/10/
-  {:name => "Varennes",         :surface => 15.86}, #/11/
-  {:name => "Patureaux",        :surface => 8.87},  #/12/
-  {:name => "Prairie Chevaux",  :surface => 13.26}, #/13/
-  {:name => "Sous l'eglise",    :surface => 1.35},  #/14/
+  {:name => 'Basse-cour', :code => 'basse_cour', :surface => 2},
+  {:name => 'Vallees', :code => 'valles', :surface => 11},
+  {:name => 'Guiberons', :code => 'guiberons', :surface => 2.5},
+  {:name => 'La cote', :code => 'la_cote', :surface => 2},
+  {:name => 'Feuillets', :code => 'feuillets', :surface => 16},
 
-  {:name => "Reserve",          :surface => 2.55},  #/15/
-  {:name => "Lavernier",        :surface => 0.75},  #/16/
-  {:name => "Le Bourg-1",       :surface => 0.52},   #/17/
-  {:name => "zoneA",            :surface => 10},     # a supprimer
-  {:name => "zoneB",            :surface => 100},    # a supprimer
-  {:name => "zoneC",            :surface => 200}    # a supprimer
+
+  {:name => 'Brandes', :code => 'brandes', :surface => 2.97},
+  {:name => 'Taillis', :code => 'taillis', :surface => 19.32},
+  {:name => 'Varennes', :code => 'varennes', :surface => 15.86},
+  {:name => 'Patureaux', :code => 'patureaux', :surface => 8.87},
+  {:name => 'Chevaux', :code => 'chevaux', :surface => 13.26},
+  {:name => 'Sous Eglise', :code => 'sous_eglise', :surface => 1.35},
+  {:name => 'Reserve', :code => 'reserve', :surface => 2.55},
+  {:name => 'Lavernier', :code => 'lavernier', :surface => 0.75},
+  {:name => 'Le bourg', :code => 'le_bourg', :surface => 0.52},
+  
 ])
 

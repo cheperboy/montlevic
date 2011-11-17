@@ -14,6 +14,10 @@ class Zone < ActiveRecord::Base
     @surface_and_name = surface.to_s(2) + " Ha - " + name 
   end
 
+  def self.find_by_code(code)
+    self.find(:first, :conditions => ["code = ?", code])
+  end
+  
   def self.find_for_saison()
     zones = []
     parcelles = Parcelle.find_by_saison(:all)

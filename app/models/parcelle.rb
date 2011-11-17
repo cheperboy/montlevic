@@ -27,6 +27,11 @@ class Parcelle < ActiveRecord::Base
 
 # ----- Finders -----
 
+  # ATTENTION utiliser comme suit : saison_20XX.parcelles.find_by_code("the_code")
+  def self.find_by_code(code)
+    self.find(:first, :conditions => ["code = ?", code])
+  end
+
   def self.find_for_saison()
     saison = Saison.find(Setting.find(:first).saison_id)
     if saison.parcelles.size == 0
@@ -38,6 +43,13 @@ class Parcelle < ActiveRecord::Base
   def self.find_by_saison(*args)
     with_scope(:find => 
                 {:conditions => ["saison_id = ?", Setting.find(:first).saison_id] }) do
+        find(*args)
+      end
+  end
+ 
+  def self.find_by_code(*args)
+    with_scope(:find => 
+                {:conditions => ["code = ?", code] }) do
         find(*args)
       end
   end
@@ -58,7 +70,7 @@ class Parcelle < ActiveRecord::Base
   def name_and_culture
     @name_and_culture = name + " - " + typeculture.name + " - " + surface.to_s + " Ha" 
   end
-  
+
   def name_for_select
     @name_for_select = "Parcelle :: " + name + " - " + typeculture.name + " - " + surface.to_s + " Ha" 
   end
