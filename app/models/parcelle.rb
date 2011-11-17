@@ -47,12 +47,12 @@ class Parcelle < ActiveRecord::Base
       end
   end
  
-  def self.find_by_code(*args)
-    with_scope(:find => 
-                {:conditions => ["code = ?", code] }) do
-        find(*args)
-      end
-  end
+  # def self.find_by_code(*args)
+  #   with_scope(:find => 
+  #               {:conditions => ["code = ?", code] }) do
+  #       find(*args)
+  #     end
+  # end
  
   def self.find_by_zone(zone_id)
     parcelles = []

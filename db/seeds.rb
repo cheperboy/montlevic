@@ -25,11 +25,11 @@ if SEEDS_BASIC
     { :name => 'vente' }
   ])
 
-  pulve = Upcategory.find_by_name('pulve')
-  facture = Upcategory.find_by_name('facture')
-  labour = Upcategory.find_by_name('labour')
-  vente = Upcategory.find_by_name('vente')
-  diverse = Upcategory.find_by_name('diverse')
+pulve = Upcategory.find_by_name('pulve')
+facture = Upcategory.find_by_name('facture')
+labour = Upcategory.find_by_name('labour')
+vente = Upcategory.find_by_name('vente')
+diverse = Upcategory.find_by_name('diverse')
 
   categories = Category.create!([
     { :name => 'frais generaux', :upcategory => facture}, 

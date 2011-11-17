@@ -1,5 +1,3 @@
-# TODO
-# -> modifier les labours de chaque parcelle
 
 # Upcategories
 cat_pulve = Upcategory.find_by_name('pulve')
@@ -73,127 +71,130 @@ Setting.find(:first).update_attribute(:saison_id,	saison_2010_2011.id )
 
 # PARCELLES
 
-#Bons pain + mitant
-for zone in Zone.find([1, 2])
-  parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => ble, :surface => zone.surface)
-  zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => zone.surface)
-end
-
-# Feuillets
-zone = Zone.find(8)
-parcelle = Parcelle.create!(:name => (zone.name + " 1"), :saison => saison_2010_2011, :typeculture => foin, :surface => 7)
-zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
-parcelle = Parcelle.create!(:name => (zone.name + " 2"), :saison => saison_2010_2011, :typeculture => foin, :surface => 4)
-zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
-parcelle = Parcelle.create!(:name => (zone.name + " 3"), :saison => saison_2010_2011, :typeculture => foin, :surface => 5)
-zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
-
-
-# Champ de la Rue
-zone = Zone.find(3)
-parcelle = Parcelle.create!(:name => "Pont des champs", :saison => saison_2010_2011, :typeculture => ble, :surface => 10)
-zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
-parcelle = Parcelle.create!(:name => "Aeromodelisme", :saison => saison_2010_2011, :typeculture => ble, :surface => 14)
-zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
-parcelle = Parcelle.create!(:name => "Derierre", :saison => saison_2010_2011, :typeculture => colza, :surface => 14)
-zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
-parcelle = Parcelle.create!(:name => "Champ du Milieu", :saison => saison_2010_2011, :typeculture => tournesol, :surface => 9)
-zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
-
-# Basse-cour
-zone = Zone.find(4)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => colza, :surface => zone.surface )
-zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
-
-# Vallees
-zone = Zone.find(5)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => tournesol, :surface => zone.surface )
-zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
-
-
+# #Bons pain + mitant
+# for zone in Zone.find([1, 2])
+#   parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => ble, :surface => zone.surface)
+#   zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => zone.surface)
+# end
+# 
+# # Feuillets
+# zone = Zone.find(8)
+# parcelle = Parcelle.create!(:name => (zone.name + " 1"), :saison => saison_2010_2011, :typeculture => foin, :surface => 7)
+# zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
+# parcelle = Parcelle.create!(:name => (zone.name + " 2"), :saison => saison_2010_2011, :typeculture => foin, :surface => 4)
+# zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
+# parcelle = Parcelle.create!(:name => (zone.name + " 3"), :saison => saison_2010_2011, :typeculture => foin, :surface => 5)
+# zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
+# 
+# 
+# # Champ de la Rue
+# zone = Zone.find(3)
+# parcelle = Parcelle.create!(:name => "Pont des champs", :saison => saison_2010_2011, :typeculture => ble, :surface => 10)
+# zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
+# parcelle = Parcelle.create!(:name => "Aeromodelisme", :saison => saison_2010_2011, :typeculture => ble, :surface => 14)
+# zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
+# parcelle = Parcelle.create!(:name => "Derierre", :saison => saison_2010_2011, :typeculture => colza, :surface => 14)
+# zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
+# parcelle = Parcelle.create!(:name => "Champ du Milieu", :saison => saison_2010_2011, :typeculture => tournesol, :surface => 9)
+# zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
+# 
+# # Basse-cour
+# zone = Zone.find(4)
+# parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => colza, :surface => zone.surface )
+# zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
+# 
+# # Vallees
+# zone = Zone.find(5)
+# parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => tournesol, :surface => zone.surface )
+# zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
+# 
 
 zone = Zone.find(1)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => ble, :surface => 14)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'bons_pains', :saison => saison_2010_2011, :typeculture => ble, :surface => 14)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(2)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => ble, :surface => 5)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'mitant', :saison => saison_2010_2011, :typeculture => ble, :surface => 5)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(3)
-parcelle = Parcelle.create!(:name => 'Pont des champs', :saison => saison_2010_2011, :typeculture => ble, :surface => 10)
+parcelle = Parcelle.create!(:name => 'Pont des champs', :code => 'pont_des_champs', :saison => saison_2010_2011, :typeculture => ble, :surface => 10)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(3)
-parcelle = Parcelle.create!(:name => 'Aeromodelisme' , :saison => saison_2010_2011, :typeculture => ble, :surface => 14)
+parcelle = Parcelle.create!(:name => 'Aeromodelisme', :code => 'aeromodelisme', :saison => saison_2010_2011, :typeculture => ble, :surface => 14)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(3)
-parcelle = Parcelle.create!(:name => 'Derierre' , :saison => saison_2010_2011, :typeculture => colza, :surface => 14)
+parcelle = Parcelle.create!(:name => 'Derriere', :code => 'derriere', :saison => saison_2010_2011, :typeculture => colza, :surface => 14)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(3)
-parcelle = Parcelle.create!(:name => 'Champ du Milieu' , :saison => saison_2010_2011, :typeculture => tournesol, :surface => 9)
+parcelle = Parcelle.create!(:name => 'Champ du Milieu', :code => 'champ_du_milieu', :saison => saison_2010_2011, :typeculture => tournesol, :surface => 9)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(4)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => colza, :surface => 2)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'basse_cour', :saison => saison_2010_2011, :typeculture => colza, :surface => 2)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(5)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => tournesol, :surface => 11)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'vallees', :saison => saison_2010_2011, :typeculture => tournesol, :surface => 11)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(6)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => foin, :surface => 2.5)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'guiberons', :saison => saison_2010_2011, :typeculture => foin, :surface => 2.5)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(7)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => luzerne, :surface => 2)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'la_cote', :saison => saison_2010_2011, :typeculture => luzerne, :surface => 2)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(8)
-parcelle = Parcelle.create!(:name => 'Feuillet-1', :saison => saison_2010_2011, :typeculture => foin, :surface => 7)
+parcelle = Parcelle.create!(:name => 'Feuillet-1', :code => 'feuillets_1', :saison => saison_2010_2011, :typeculture => foin, :surface => 7)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(8)
-parcelle = Parcelle.create!(:name => 'Feuillet-2', :saison => saison_2010_2011, :typeculture => foin, :surface => 4)
+parcelle = Parcelle.create!(:name => 'Feuillet-2', :code => 'feuillets_2', :saison => saison_2010_2011, :typeculture => foin, :surface => 4)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(8)
-parcelle = Parcelle.create!(:name => 'Feuillet-3', :saison => saison_2010_2011, :typeculture => foin, :surface => 5)
+parcelle = Parcelle.create!(:name => 'Feuillet-3', :code => 'feuillets_3', :saison => saison_2010_2011, :typeculture => foin, :surface => 5)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(9)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => foin, :surface => 2.97)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'brandes', :saison => saison_2010_2011, :typeculture => foin, :surface => 2.97)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(10)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => foin, :surface => 19.32)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'taillis', :saison => saison_2010_2011, :typeculture => foin, :surface => 19.32)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(11)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => foin, :surface => 15.86)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'varennes', :saison => saison_2010_2011, :typeculture => foin, :surface => 15.86)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(12)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => foin, :surface => 8.87)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'patureaux', :saison => saison_2010_2011, :typeculture => foin, :surface => 8.87)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(13)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => foin, :surface => 13.26)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'chevaux', :saison => saison_2010_2011, :typeculture => foin, :surface => 13.26)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(14)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => foin, :surface => 1.35)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'sous_eglise', :saison => saison_2010_2011, :typeculture => foin, :surface => 1.35)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(15)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => foin, :surface => 2.55)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'reserve', :saison => saison_2010_2011, :typeculture => foin, :surface => 2.55)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find(16)
-parcelle = Parcelle.create!(:name => zone.name, :saison => saison_2010_2011, :typeculture => foin, :surface => 0.75)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'lavernier', :saison => saison_2010_2011, :typeculture => foin, :surface => 0.75)
+zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
+
+zone = Zone.find(17)
+parcelle = Parcelle.create!(:name => zone.name, :code => 'le_bourg', :saison => saison_2010_2011, :typeculture => foin, :surface => 0.52)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 
@@ -474,6 +475,12 @@ facture = Debit.create!(:name => '(terrassement hangar)', :date => '2010-09-14',
 
 
 
+
+
+
+
+
+
 # PULVES & LABOURS - (generation automatique xls)
 
  # Les Vallées - Tournesol - 11Ha
@@ -512,9 +519,7 @@ Putofacture.create!(:pulve => pulve, :facture => fac_pulve, :value => pulve.get_
 #labour = Labour.create!(:name => 'déchaumage blé - 1', :cout_ha_passage => 10, :user => trochet, :saison => saison_2010_2011, :date => '2010-05-01', :star => 0, :category => cat_covercrop, :desc => 'date inconnue')
 #labours << labour
 
-# Parcelle.find_by_saison(:all, saison_2010_2011).each {|parcelle| parcelles_ble << parcelle}
-#parcelle = saison_2010_2011.parcelles.find_by_code(:fi"vallees")
-parcelle = saison_2010_2011.parcelles.find_by_code(:first, 'vallees')
+parcelle = saison_2010_2011.parcelles.find_by_code('vallees')
 labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
 pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
 
@@ -546,7 +551,7 @@ pulves << pulve
 Putofacture.create!(:pulve => pulve, :facture => fac_pulve_2, :value => pulve.get_cout_total_passage)
 
 
-parcelle = saison_2010_2011.parcelles.find_by_name('Champ du Milieu')
+parcelle = saison_2010_2011.parcelles.find_by_code('champ_du_milieu')
 labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
 pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
 
@@ -626,7 +631,7 @@ Putofacture.create!(:pulve => pulve, :facture => fac_pulve_2, :value => pulve.ge
 
 
 
-parcelle = saison_2010_2011.parcelles.find_by_name('Basse-cour')
+parcelle = saison_2010_2011.parcelles.find_by_code('basse_cour')
 labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
 pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
 
@@ -635,7 +640,7 @@ pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, 
 
 
 
- # Derierre - Colza - 14Ha
+ # Derriere - Colza - 14Ha
 
 pulves = []
 labours = []
@@ -701,7 +706,8 @@ Putofacture.create!(:pulve => pulve, :facture => fac_pulve_2, :value => pulve.ge
 
 
 
-parcelle = saison_2010_2011.parcelles.find_by_name('Derierre')
+parcelle = saison_2010_2011.parcelles.find_by_code('derriere')
+puts "PARCELLE FOUND FOR derriere #{parcelle.name}"
 labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
 pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
 
@@ -766,7 +772,7 @@ Putofacture.create!(:pulve => pulve, :facture => fac_pulve_2, :value => pulve.ge
 
 
 
-parcelle = saison_2010_2011.parcelles.find_by_name('Pont des champs')
+parcelle = saison_2010_2011.parcelles.find_by_code('pont_des_champs')
 labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
 pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
 
@@ -831,7 +837,7 @@ Putofacture.create!(:pulve => pulve, :facture => fac_pulve_2, :value => pulve.ge
 
 
 
-parcelle = saison_2010_2011.parcelles.find_by_name('Aeromodelisme')
+parcelle = saison_2010_2011.parcelles.find_by_code('aeromodelisme')
 labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
 pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
 
@@ -894,7 +900,7 @@ Putofacture.create!(:pulve => pulve, :facture => fac_pulve_2, :value => pulve.ge
 
 
 
-parcelle = saison_2010_2011.parcelles.find_by_name('Mitant')
+parcelle = saison_2010_2011.parcelles.find_by_code('mitant')
 labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
 pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
 
@@ -904,7 +910,7 @@ pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, 
 
 
 
- # Bruneau - Blé - 14 Ha
+ # Bons Pains - Blé - 14 Ha
 
 pulves = []
 labours = []
@@ -950,14 +956,26 @@ putoproduit = Putoproduit.create!(:pulve => pulve, :produit => bravo_elite, :dos
 pulves << pulve
 Putofacture.create!(:pulve => pulve, :facture => fac_pulve_2, :value => pulve.get_cout_total_passage)
 
-parcelle = Parcelle.find_by_name('Bons Pains')
+parcelle = saison_2010_2011.parcelles.find_by_code('bons_pains')
 labours.each {|labour| labtoparcelle = Labtoparcelle.create!(:parcelle => parcelle, :labour => labour, :value => 0)}
 pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 # FIN PULVES & LABOURS
+
 
 # VENTES - from xls
 
