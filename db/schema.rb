@@ -37,14 +37,17 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "categories", :force => true do |t|
-    t.integer  "upcategory_id"
-    t.string   "name"
+    t.integer  "factcat_id",        :null => false
+    t.integer  "upcategory_id",        :null => false
+    t.string   "name",        :null => false
+    t.string   "code",        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "factcats", :force => true do |t|
-    t.string   "name",       :null => false
+    t.string   "name",        :null => false
+    t.string   "code",       :null => false
     t.string   "desc"
     t.datetime "created_at"
     t.datetime "updated_at"

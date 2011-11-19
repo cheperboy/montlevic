@@ -119,7 +119,7 @@ module FacturesHelper
       # Premier tr de l'element  
       out += "<tr class='list-row'>"        
       
-      headers.each do |header|        
+      headers.each do |header|
         value = element.send(header[ApplicationHelper::HEADER_KEY])
         #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)
         if header[ApplicationHelper::HEADER_KEY].eql?("star")

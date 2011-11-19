@@ -18,61 +18,99 @@ if SEEDS_BASIC
     :facture_presta_to_null => false,
     :show_reportable => false)
 
-  upcategories = Upcategory.create!([
-    { :name => 'facture'}, 
-    { :name => 'pulve' }, 
-    { :name => 'labour' },
-    { :name => 'vente' }
-  ])
+#Factcats
+factcat_agri = Factcat.create!({ :code => 'agri', :name => 'Agricole'}) 
+factcat_maison = Factcat.create!({ :code => 'maison', :name => 'Maison'}) 
+factcat_invest = Factcat.create!({ :code => 'invest', :name => 'Investissement'}) 
 
-pulve = Upcategory.find_by_name('pulve')
-facture = Upcategory.find_by_name('facture')
-labour = Upcategory.find_by_name('labour')
-vente = Upcategory.find_by_name('vente')
-diverse = Upcategory.find_by_name('diverse')
+#Upcaegories
+upcategory_facture = Upcategory.create!({ :name => 'facture'})
+upcategory_pulve = Upcategory.create!({ :name => 'pulve'})
+upcategory_labour = Upcategory.create!({ :name => 'labour'})
+upcategory_vente = Upcategory.create!({ :name => 'vente'})
 
-  categories = Category.create!([
-    { :name => 'frais generaux', :upcategory => facture}, 
-    { :name => 'produits phyto', :upcategory => facture}, 
-    { :name => 'semences', :upcategory => facture}, 
-    { :name => 'mecanique', :upcategory => facture}, 
-    { :name => 'batiments', :upcategory => facture}, 
-    { :name => 'deplacement', :upcategory => facture}, 
-    { :name => 'frais de gestion', :upcategory => facture },
-    { :name => 'service agricole', :upcategory => facture }, #ne pas modifier
-    { :name => 'materiel', :upcategory => facture },
-    { :name => 'fermage', :upcategory => facture },
-    { :name => 'bricolage', :upcategory => facture },
+# generation auto Categories
+cat_produits_phyto = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'produits phyto', :code => 'produits_phyto'})
+cat_mecanique = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'mecanique', :code => 'mecanique'})
+cat_batiment = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'batiment', :code => 'batiment'})
+cat_service_agricole = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'service agricole', :code => 'service_agricole'})
+cat_services_divers = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'services divers', :code => 'services_divers'})
+cat_comptabilite = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'comptabilite', :code => 'comptabilite'})
+cat_assurance = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'assurance', :code => 'assurance'})
+cat_frais_generaux = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'frais generaux', :code => 'frais_generaux'})
+cat_materiel = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'materiel', :code => 'materiel'})
+cat_fermage = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'fermage', :code => 'fermage'})
+cat_divers = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'divers', :code => 'divers'})
+cat_oligo = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'oligo', :code => 'oligo'})
+cat_azote = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'azote', :code => 'azote'})
+cat_engrais = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'engrais', :code => 'engrais'})
+cat_semis = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'semis', :code => 'semis'})
+cat_soufre = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'soufre', :code => 'soufre'})
+cat_desherbant = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'desherbant', :code => 'desherbant'})
+cat_fongicide = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'fongicide', :code => 'fongicide'})
+cat_herbicide = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'herbicide', :code => 'herbicide'})
+cat_insecticide = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'insecticide', :code => 'insecticide'})
+cat_moisson = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_labour, :name => 'moisson', :code => 'moisson'})
+cat_covercrop = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_labour, :name => 'covercrop', :code => 'covercrop'})
+cat_vibro = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_labour, :name => 'vibro', :code => 'vibro'})
+cat_herse = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_labour, :name => 'herse', :code => 'herse'})
+cat_paille_foin = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'paille foin', :code => 'paille_foin'})
+cat_paille_ble = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'paille ble', :code => 'paille_ble'})
+cat_paille_colza = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'paille colza', :code => 'paille_colza'})
+cat_Assurance = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'Assurance', :code => 'Assurance'})
+cat_pac = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'PAC', :code => 'pac'})
+cat_avoir = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'avoir', :code => 'avoir'})
+cat_bricolage = Category.create!({:factcat => factcat_maison, :upcategory => upcategory_facture, :name => 'bricolage', :code => 'bricolage'})
+cat_maison = Category.create!({:factcat => factcat_maison, :upcategory => upcategory_facture, :name => 'maison', :code => 'maison'})
+cat_deplacement = Category.create!({:factcat => factcat_maison, :upcategory => upcategory_facture, :name => 'deplacement', :code => 'deplacement'})
+cat_telephone = Category.create!({:factcat => factcat_maison, :upcategory => upcategory_facture, :name => 'telephone', :code => 'telephone'})
+cat_edf = Category.create!({:factcat => factcat_maison, :upcategory => upcategory_facture, :name => 'edf', :code => 'edf'})
+cat_materiel = Category.create!({:factcat => factcat_invest, :upcategory => upcategory_facture, :name => 'materiel', :code => 'materiel'})
+cat_batiment = Category.create!({:factcat => factcat_invest, :upcategory => upcategory_facture, :name => 'batiment', :code => 'batiment'})
 
-    { :name => 'divers', :upcategory => pulve },
-    { :name => 'azote', :upcategory => pulve },
-    { :name => 'desherbant', :upcategory => pulve },
-    { :name => 'engrais', :upcategory => pulve },
-    { :name => 'fongicide', :upcategory => pulve },
-    { :name => 'herbicide', :upcategory => pulve },
-    { :name => 'insecticide', :upcategory => pulve },
-    { :name => 'oligo', :upcategory => pulve },
-    { :name => 'semis', :upcategory => pulve },
-    { :name => 'soufre', :upcategory => pulve },
 
-    { :name => 'moisson', :upcategory => labour },
-    { :name => 'covercrop', :upcategory => labour },
-    { :name => 'vibro', :upcategory => labour },
-    { :name => 'herse', :upcategory => labour },
 
-    { :name => 'Paille foin', :upcategory => vente },
-    { :name => 'Paille ble', :upcategory => vente },
-    { :name => 'Paille colza', :upcategory => vente },
-    { :name => 'Assurance', :upcategory => vente },
-    { :name => 'PAC', :upcategory => vente },
-    { :name => 'Avoir', :upcategory => vente }
-  ])
 
-  factcats = Factcat.create!([
-    { :name => 'agri'}, 
-    { :name => 'maison' }, 
-    { :name => 'invest' }
-  ])
+    # 
+    # categories = Category.create!([
+    # { :name => 'materiel', :upcategory => invest },
+    # { :name => 'batiment', :upcategory => invest },
+    # 
+    # { :name => 'frais generaux', :upcategory => facture}, 
+    # { :name => 'produits phyto', :upcategory => facture}, 
+    # { :name => 'semences', :upcategory => facture}, 
+    # { :name => 'mecanique', :upcategory => facture}, 
+    # { :name => 'batiments', :upcategory => facture}, 
+    # { :name => 'deplacement', :upcategory => facture}, 
+    # { :name => 'frais de gestion', :upcategory => facture },
+    # { :name => 'service agricole', :upcategory => facture }, #ne pas modifier
+    # { :name => 'materiel', :upcategory => facture },
+    # { :name => 'fermage', :upcategory => facture },
+    # { :name => 'bricolage', :upcategory => facture },
+    # 
+    # { :name => 'divers', :upcategory => pulve },
+    # { :name => 'azote', :upcategory => pulve },
+    # { :name => 'desherbant', :upcategory => pulve },
+    # { :name => 'engrais', :upcategory => pulve },
+    # { :name => 'fongicide', :upcategory => pulve },
+    # { :name => 'herbicide', :upcategory => pulve },
+    # { :name => 'insecticide', :upcategory => pulve },
+    # { :name => 'oligo', :upcategory => pulve },
+    # { :name => 'semis', :upcategory => pulve },
+    # { :name => 'soufre', :upcategory => pulve },
+    # 
+    # { :name => 'moisson', :upcategory => labour },
+    # { :name => 'covercrop', :upcategory => labour },
+    # { :name => 'vibro', :upcategory => labour },
+    # { :name => 'herse', :upcategory => labour },
+    # 
+    # { :name => 'Paille foin', :upcategory => vente },
+    # { :name => 'Paille ble', :upcategory => vente },
+    # { :name => 'Paille colza', :upcategory => vente },
+    # { :name => 'Assurance', :upcategory => vente },
+    # { :name => 'PAC', :upcategory => vente },
+    # { :name => 'Avoir', :upcategory => vente }
+  # ])
 
   ble = Typeculture.create!({:name => "Ble", :code => "ble"})
   bleble = Typeculture.create!({:name => "2eme Ble", :code => "bleble"})
