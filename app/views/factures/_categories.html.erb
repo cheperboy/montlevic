@@ -1,22 +1,13 @@
 
 <td class="label"><%= label :factcat_id, 'Categorie' %></td>
+
 <td class="field">
 
-	<%#= select_tag(			:category_id, 
+	<%= collection_select("facture", 
+							:category_id, 
 							categories, 
 							:id, 
 							:name) 
 	%>
-	<%= select_tag "test", options_from_collection_for_select(categories, "id", "name") %>
 </td>
-
-<!-- <td class="field"> -->
-
-	<%#= collection_select("fact", 
-	:category_id, 
-							categories, 
-							:id, 
-							:name) 
-	%>
-<!-- </td> -->
 

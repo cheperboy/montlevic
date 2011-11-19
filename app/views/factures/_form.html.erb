@@ -27,21 +27,7 @@
 		</td>
 		<td class=form_layout_content_right>
 			<table class=form_layout_content_table>
-			    <tr>
-					<td class="label"><%= f.label :factcat_id, 'Classement' %></td>
-			    	<td class="field">
-					<%= f.collection_select(:factcat_id,  
-											Factcat.find(:all, :order => :name),  :id, :name,
-											{},
-					                      	{:onchange => "#{remote_function(:url  => {:action => "update_categories"},
-					                         :with => "'factcat_id='+value")}"}) 
-					%>					
-					</td>
-				</tr>
-				<tr id="categories">				
-					<%= render :partial => 'categories', :object => @categories, :locals => {:f => f } %>
-				</tr>
-
+<%= form_tr_select(f, 'Categorie', :category_id, Category.for_factures, :id, :name_for_select_for_facture) %>
 				<%#= form_tr_select(f, 'Classement', :factcat_id, Factcat.find(:all, :order => :name), :id, :name) %>
 				<%#= form_tr_select(f, 'Categorie', :category_id, Category.find_by_type("facture"), :id, :name) %>
 				<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype.find(:all, :order => :name), :id, :name) %>

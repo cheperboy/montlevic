@@ -134,6 +134,7 @@ class FacturesController < ApplicationController
       @facture = Debit.new(params[:facture])
     end
     @facture.saison_id = current_saison_id
+    @facture.factcat_id = Category.find(params[:facture][:category_id]).factcat_id
     respond_to do |format|
       if @facture.save
         flash[:notice] = 'Enregistrement facture OK.'

@@ -6,6 +6,10 @@ class Category < ActiveRecord::Base
   has_many :charges
   has_many :factures
   
+  def name_for_select_for_facture
+    @name_for_select = self.factcat.name + " - " + self.name
+  end
+  
   def self.find_by_type(type)
     type_id = Upcategory.find(:all, :conditions => { :name => type })
     # logger.error('type_id' + type_id.to_s)
@@ -55,8 +59,12 @@ class Category < ActiveRecord::Base
   #   find_by_upcategory('facture')
   # end
   
+  # def self.for_factures
+  #   find_by_factcat_and_upcategory_name('agri', 'facture')
+  # end
+    
   def self.for_factures
-    find_by_factcat_and_upcategory_name('agri', 'facture')
+    find_by_upcategory('facture')
   end
     
 end
