@@ -1,49 +1,68 @@
+<table class=form_layout>
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Facture</td>
+		<td class=form_layout_title_right>Classement</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<table class=form_layout_content_table>
+				<%= tr_text('Nom', @facture.name) %>
+				<%= tr_text('Campagne', @facture.saison.name) %>
+				<%= tr_text('Somme des Couts', @facture.cout.display, euro) %>
+				<%= tr_text('Ref client', @facture.ref_client) %>
+				<%= tr_text('Ref perso', @facture.ref) %>
+				<%= tr_text('Date', @facture.print_date) %>
+				<%= tr_text('Prestataire', @facture.user.name) %>
+			</table>
+		</td>
+		<td class=form_layout_content_right>
+			<table class=form_layout_content_table>
+			<%= tr_text('Classement', @facture.factcat.name) %>
+			<%= tr_text('Categorie', @facture.category.name) %>
+			<%= tr_text('Comptabilisation', @facture.factype.name) %>
+			<%= tr_text('Star', @facture.star) %>
+			<%= tr_text('ADU', @facture.adu) %>
+			</table>
+		</td>
+	</tr>
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Parcelles</td>
+		<td class=form_layout_title_right>Synthese des couts</td>
+	</tr>
+	<tr class=form_layout_content>
+		<!-- PARCELLES -->
+		<td class=form_layout_content_left>
+			<table class=form_layout_content_table>
+				<% @facture.factoparcelles.each do |factoparcelle| %>
+					<%= tr_text(factoparcelle.parcelle.typeculture.name, factoparcelle.parcelle.name) %>
+				<% end %>
+			</table>
+		</td>
+		<%= render :partial => 'show_comptabilisation' %>
+	</tr>
+	<!-- affichage des charges associees (PRODUITS, LABOURS, ...) -->
+	<%= render :partial => 'show_associations' %>
 
-<table>
-<tr>
-	<td>Campagne : </td>
-	<td><%= @facture.saison.name %></td>
-</tr>
-<tr>
-	<td>Nom : </td>
-	<td><%= @facture.name %></td>
-</tr>
-<tr>
-	<td>Somme des couts : </td>
-	<td><%= @facture.cout %> euros</td>
-</tr>
-<tr>
-	<td>Ref perso : </td>
-	<td><%= @facture.ref %></td>
-</tr>
-<tr>
-	<td>Categorie : </td>
-	<td><%= @facture.category.name %></td>
-</tr>
-<tr>
-	<td>Comptabilisation : </td>
-	<td><%= @facture.factype.name %></td>
-</tr>
-<tr>
-	<td>Repere : </td>
-	<td>Star : <%= @facture.star %>
-	 	| ADU :<%= @facture.adu %></td>
-</tr>
-<tr>
-	<td>Infos : </td>
-	<td><p><%= @facture.desc %></p></td>
-</tr>
+	<!-- Description -->
+	<% unless @facture.desc.eql?('') %>
+		<tr class=form_layout_title>
+			<td colspan=2 class=form_layout_title>informations</td>
+		</tr>
+		<tr class=form_layout_content>
+			<td colspan=2class=form_layout_content>
+				<p class=grey><%= @facture.desc %></p>
+			</td>
+		</tr>
+	<% end %>
+
+	<!-- Reports -->
+	<tr class=form_layout_title>
+		<td colspan=2 class=form_layout_title>Liste des Reports <span class=link><%= link_to "Ajouter un report", {:action => :new_report, :reportable_id => @facture} %></span></td>
+	</tr>
+	<tr class=form_layout_content>
+		<% unless @facture.reports.empty? %>
+			<%= render :partial => "list_reports" %>
+		<% end %>
+	</tr>
 </table>
 
-
-<!-- Parcelles associees -->
-<%= render :partial => 'show_detail_parcelles' %>
-
-<!-- affichage des charges associees -->
-<%= render :partial => 'show_detail_assoc' %>
-
-<!-- Warnings -->
-<%= render :partial => 'show_detail_warning' %>
-
-<!-- Comptabilisation -->
-<%= render :partial => 'show_detail_comptab' %>

@@ -84,14 +84,15 @@ class Parcelle < ActiveRecord::Base
     s
   end
   
-  #TODO : ajouter find_by_saison
-  def self.all_surfaces()
-    s=0
-    Parcelle.find(:all).each do |parcelle| 
-      s = s + parcelle.surface
-    end
-    s
-  end
+  #TODO : ajouter find_by_saison 
+  # 2011-11-21 : methode inutil donc supprimee
+  # def self.all_surfaces()
+  #   s=0
+  #   Parcelle.find(:all).each do |parcelle| 
+  #     s = s + parcelle.surface
+  #   end
+  #   s
+  # end
 
   def percent_of_zone(zone_id)
     zone = Zone.find(zone_id)

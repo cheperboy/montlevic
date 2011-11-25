@@ -14,7 +14,6 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
   
-  # TODO OPTIMIZE mettre en gras le premier mot de chaque erreur (utiliser message.split)
   def add_errors_to_model(model_errors)
     flash.now[:error] = 'Données Invalide :<br>'
     model_errors.each do |name, message|

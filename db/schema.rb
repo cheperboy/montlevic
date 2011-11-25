@@ -110,6 +110,10 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.string   "ref_client"
     t.integer  "ref"
     t.text     "desc"
+
+    t.float    "tva"
+    t.integer  "paye",      :limit => 2
+
     t.datetime "created_at"
     t.datetime "updated_at"
   end

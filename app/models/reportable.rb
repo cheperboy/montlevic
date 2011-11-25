@@ -7,7 +7,7 @@ class Reportable < Facture
     #pour etre prise en compte dans les calculs
   # => dans FactureController, a la creation d'une Reportable, son champ 'factype' est set a 'null'
   
-  # TODO la valeur comptable d'une Reportable doit etre la valeur cout moins la somme des Report. ainsi le cout comptable est le restant qui n'a pas ete reporte.
+  # TODO la valeur "comptable" d'une Reportable doit etre la valeur cout moins la somme des Report. ainsi le cout comptable est le restant qui n'a pas ete reporte.
   
   set_table_name "factures"
   has_many :reports

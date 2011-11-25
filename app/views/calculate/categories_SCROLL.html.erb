@@ -1,0 +1,257 @@
+<script type="text/javascript">
+
+function toggleLevel3(name) {
+    var els = document.getElementsByClassName(name);
+    var i;
+    for (i = 0; i < els.length; i += 1) {
+		if (els[i].style.display == '')  els[i].style.display = 'none';
+		else els[i].style.display = '';
+	}
+}
+
+function toggleAllLevel3() {
+	var els = document.getElementsByTagName("tr");
+    var i;
+	var show = 'yes'
+	if (this.name == 'hide') show = 'no';
+
+    for (i = 0; i < els.length; i += 1) {
+		if (show == 'yes') {
+	    	if ((els[i].className.split('_')[0] == 'level-3') || (els[i].className.split('_')[0] == 'level-2')) {
+				els[i].style.display = ''; 
+			} 
+		}
+		else {
+	    	if ((els[i].className.split('_')[0] == 'level-3')) {
+				els[i].style.display = 'none';
+			}
+		}
+	}
+	if (this.name == 'show') {
+		this.name = 'hide';
+	}
+	else {
+		this.name = 'show';
+	}
+}
+
+function toggleAllLevel2() {
+	var els = document.getElementsByTagName("tr");
+    var i;
+	var show = 'yes'
+	if (this.name == 'hide') { 
+		show = 'no';
+		this.name = 'show';
+	}
+	else {
+		show = 'yes';
+		this.name = 'hide';
+	}
+	
+    for (i = 0; i < els.length; i += 1) {
+	    if ((show == 'yes') && ((els[i].className.split('_')[0] == 'level-2') || (els[i].className.split('_')[0] == 'level-3'))) {
+			els[i].style.display = ''; 
+		} 
+		if ((show == 'no') && ((els[i].className.split('_')[0] == 'level-2') || (els[i].className.split('_')[0] == 'level-3'))) {
+			els[i].style.display = 'none';
+		}
+	}
+}
+
+function toggleLevel2(factcatCode) {
+	var els = document.getElementsByTagName("tr");
+    var i;
+	if (this.className == 'btn-hide') {
+	    for (i = 0; i < els.length; i += 1) {
+		    if ((els[i].className == 'level-2_'+factcatCode) || (els[i].className.split('.')[0] == 'level-3_'+factcatCode)) {
+				els[i].style.display = 'none';
+			}
+		}
+		this.className = 'btn-show';
+	}
+	else {
+	    for (i = 0; i < els.length; i += 1) {
+		    if ((els[i].className == 'level-2_'+factcatCode) || (els[i].className.split('.')[0] == 'level-3_'+factcatCode)) {
+				els[i].style.display = '';
+			}
+		}
+		this.className = 'btn-hide';
+	}
+}
+
+function toggleAll(name) {
+    var els = document.getElementsByTagName('tr');
+    var i;
+    for (i = 0; i < els.length; i += 1) 
+		{
+			if (els[i].style.display == '')  els[i].style.display = 'none';
+			else els[i].style.display = '';				
+		}
+	}
+</script>
+
+<% title "Categories" %>
+<%= button_to_function 'toggle All', "toggleAll()" %>
+<table class=header_for_scroll>
+	<tr>
+	  <td class=td1><%= link_to 'Type', "javascript: toggleAllLevel2();" %></td>
+	  <td class=td2><%= link_to 'Categorie', "javascript: toggleAllLevel3();", :name => 'hide' %></td>
+	  <td class=td3>Facture</td>
+	  <td class=td4>Date</td>
+	  <td class=td5>Cout</td>
+
+	</tr>
+</table>
+
+<div class=div_contain_table_scroll>
+
+  <table class=table_scroll>
+<% factcats = Factcat.find(:all) %>
+<% factcats.each do |factcat| %>
+	<tr class="level-1">
+		<td class=td1><%= link_to factcat.name, "javascript: toggleLevel2('#{factcat.code}');" %></td>
+		<td class=td2></td>
+		<td class=td3></td>
+		<td class=td4></td>
+		<td class=td5></td>
+	</tr>
+	<% categories = Category.find(:all, :conditions => {:upcategory_id => Upcategory.find_by_name('facture').id, 
+		 												:factcat_id => factcat.id}) %>
+	<% categories.each do |categorie| %>
+		<tr class="level-2_<%= factcat.code %>"> 
+		  <td class=td1></td>
+		  <td class=td2><%= link_to categorie.name, "javascript: toggleLevel3('level-3_#{factcat.code}.#{categorie.code}');" %></td>
+		  <td class=td3></td>
+		  <td class=td4></td>
+		  <td class=td5></td>
+		</tr>
+		<% categorie.factures.each do |facture| %>
+			<tr name=visible class="level-3_<%= factcat.code %>.<%= categorie.code %>">
+			  <td class=td1></td>
+			  <td class=td2></td>
+			  <td class=td3><%= facture.name %></td>
+			  <td class=td4><%= facture.print_date %></td>
+			  <td class=td5></td>
+			</tr>
+		<% end %>
+	<% end %>
+<% end %>
+
+<tr>
+  <td class=td1><%= link_to 'Vente', "javascript: toggleLevel2('vente');" %></td>
+  <td class=td2></td>
+  <td class=td3></td>
+  <td class=td4></td>
+  <td class=td5></td>
+</tr>
+
+<% categories = Category.find(:all, :conditions => {:upcategory_id => Upcategory.find_by_name('vente').id }) %>
+<% categories.each do |categorie| %>
+	<tr class="level-2_vente">
+	  <td class=td1></td>
+	  <td class=td2><%= link_to categorie.name, "javascript: toggleLevel3('level-3_vente.#{categorie.code}');" %></td>
+	  <td class=td3></td>
+	  <td class=td4></td>
+	  <td class=td5></td>
+	</tr>
+	<% categorie.ventes.each do |facture| %>
+		<tr class="level-3_vente.<%= categorie.code %>">
+		  <td class=td1></td>
+		  <td class=td2></td>
+		  <td class=td3><%= facture.name %></td>
+		  <td class=td4><%= facture.print_date %></td>
+		  <td class=td5></td>
+		</tr>
+	<% end %>
+<% end %>
+
+
+
+  </table>
+</div>
+
+<html>
+<head>
+	<title>TEST</title>
+		<script type="text/javascript">
+
+	function getElementsByClassName(node,classname) 
+	{
+		if (node.getElementsByClassName)
+			{return node.getElementsByClassName(classname);}
+		else 
+		{
+        // your custom function
+		}
+	}
+	
+	function getElementsByClass(searchClass,node,tag) 
+	{
+		var classElements = new Array();
+		if ( node == null ){node = document;}
+		if ( tag == null ){tag = '*';}
+		var els = node.getElementsByTagName(tag);
+		var elsLen = els.length;
+		var pattern = new indexOf(searchClass);
+		for (i = 0, j = 0; i < elsLen; i++) 
+		{
+		if ( pattern.test(els[i].className) ) 
+			{
+			classElements[j] = els[i];
+			j++;
+			}
+		}
+		return classElements;
+	}	
+	
+function toggle(el) 
+	{
+    if (el.style.display === '') 
+		{
+        el.style.display = 'none';
+		}
+		else 
+		{
+        el.style.display = '';
+		}
+	}	
+
+function display2B() 
+	{
+    var els = getElementsByClassName(document, 'T2B');
+    var i;
+    for (i = 0; i < els.length; i += 1) 
+		{
+		toggle(els[i]);
+		}
+	}
+
+function display1B() 
+	{
+    var els = getElementsByClassName(document, 'T1B');
+    var i;
+    for (i = 0; i < els.length; i += 1) 
+	{
+        toggle(els[i]);
+    }
+	}
+</script>
+</head>
+<body>
+
+<p><a href="javascript: display1B();">Toggle First Basemen</a></a></p>
+<p><a href="javascript: display2B();">Toggle Second Basemen</a></a></p>
+<table>
+	<tr style="background:black;color:white;"><td>Position(s)</td><td>Name</td><td>Note</td></tr>
+	<tr class="T2B" style="background:#A8A8A8;"><td>Seond Base</td><td>Works, because class is just T2B</td><td>Ralph Secondbase</td></tr>
+	<tr class="T1B" style="background:#A8A8A8;"><td>First Base</td><td>Works, because class is just T1B</td><td>Mike Fistbase</td></tr>
+	<tr class="pos-T1B"><td>First Base</td><td>Does not work (class is pos-T1B)</td><td>Joey Firstbase</td></tr>
+	<tr class="pos-T1B-T2B"><td>First Base, Second Base</td><td>Does not work (class is pos-T1B-T2B)</td><td>Joey Firstbase Secondbase</td></tr>
+	<tr class="pos-T2B-T1B"><td>Second Base, First Base</td><td>Does not work (class is pos-T2B-T1B)</td><td>Mike Secondbase FirstBase</td></tr>
+	<tr class="pos-T2B"><td>Seond Base</td><td>Does not work (class is pos-T2B)</td><td>Bill Secondbase</td></tr>
+	
+</table>
+	
+
+</body>
+</html>

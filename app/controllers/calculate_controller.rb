@@ -124,4 +124,39 @@ class CalculateController < ApplicationController
     end    
   end  
   
+  def categories
+    model = Typeculture
+    @saison = Saison.find(session[:current_saison_id])
+    @colonnes = model.find_for_saison()
+    if model.eql?(Parcelle)
+      typeculture = Typeculture.find_by_name("Ble")
+      @colonnes = @saison.parcelles.find( :all, :order => :typeculture_id)
+    end
+    @labours = @saison.labours
+    @pulves = @saison.pulves
+    @produits = @saison.produits
+    @putoproduits = @saison.putoproduits
+    @factures = @saison.factures.find(:all, :order => :id)
+    @ventes = @saison.ventes.find(:all, :order => "category_id")
+    @types = Factcat.all
+    @labour_categories = Category.labours
+    @facture_categories = Category.factures
+    @pulve_categories = Category.pulves
+    @vente_categories = Category.ventes
+    
+    respond_to do |format|
+      # @test = Calculate.new(model)
+      format.html
+      # unless @test.nil?
+      #   if @test.calculate
+      #     format.html
+      #   else
+      #     @display = 0
+      #     flash[:error] = "l'affichage par type de cultures n'est pas possible pour cette saison"
+      #     format.html
+      #   end
+      # end
+    end    
+  end  
+  
 end

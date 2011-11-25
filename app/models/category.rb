@@ -2,9 +2,9 @@ class Category < ActiveRecord::Base
   
   belongs_to :factcat
   belongs_to :upcategory
-  # TODO "has_many :depenses" doit etre supprime?
   has_many :charges
   has_many :factures
+  has_many :ventes
   
   def name_for_select_for_facture
     @name_for_select = self.factcat.name + " - " + self.name
@@ -65,6 +65,11 @@ class Category < ActiveRecord::Base
     
   def self.for_factures
     find_by_upcategory('facture')
+  end
+    
+  def self.get_factcat(cat_id)
+    category = Category.find(cat_id)
+    Factcat.find(category.factcat_id)
   end
     
 end

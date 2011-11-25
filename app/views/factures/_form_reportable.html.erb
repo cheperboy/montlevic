@@ -4,42 +4,71 @@
 						:message => "corriger les erreurs suivantes" 
 %>
 						
-<fieldset>
-	<legend>| 
-	<% unless @facture.new_record? %>
-		<%= link_to "Annuler", facture_url(@facture) %>
-	<% else %>
-		<%= link_to "Annuler", factures_url %>
-	<% end %>
-	 |</legend>
-
 <% form_for @facture, :controller => :factures do |f| -%>
 
 	<table>
-	
-	<% saisons = Saison.find(:all, :order => :name) %>
-	<%= form_tr_select(f, 'Campagne', :saison_id, saisons, :id, :name,  :selected => current_saison_id) %>
-	
-	<%= form_tr_text(f, 'Nom', :name) %>
-	<%= form_tr_text(f, 'Ref client', :ref_client) %>
-	<%= form_tr_text(f, 'Ref perso', :ref) %>
-	<%= form_tr_date(f, 'Date', :date) %>
-	
-	<% users = User.find(:all, :order => :name) %>
-	<%= form_tr_select(f, 'Prestataire', :user_id, users, :id, :name) %>
-	
-	<% collection = Category.find_by_type("facture") %>
-	<%= form_tr_select(f, 'Categorie', :category_id, collection, :id, :name) %>
-	
-	<%= form_tr_text(f, 'Cout', :cout) %>
-	
-	<%= form_tr_check(f, 'Star', :star) %>
-	<%= form_tr_check(f, 'ADU', :adu) %>
-	
-	<%= form_tr_text_area(f, 'Infos', :desc, :size => "20x5") %>
 
-	</table>
+		<table class=form_layout>
+			<tr class=form_layout_title>
+				<td class=form_layout_title_left>Facture</td>
+				<td class=form_layout_title_right>Classement</td>
+			</tr>
+			<tr class=form_layout_content>
+				<td class=form_layout_content_left>
+					<table class=form_layout_content_table>
+						<%= form_tr_text(f, 'Nom', :name) %>
+						<%= form_tr_text(f, 'Cout', :cout) %>
+						<%= form_tr_text(f, 'Ref client', :ref_client) %>
+						<%= form_tr_text(f, 'Ref perso', :ref) %>
+						<%= form_tr_date(f, 'Date', :date) %>
+						<%= form_tr_select(f, 'Prestataire', :user_id, User.find(:all, :order => :name), :id, :name) %>
+					</table>
+				</td>
+				<td class=form_layout_content_right>
+					<table class=form_layout_content_table>
+						<% saisons = Saison.find(:all, :order => :name) %>
+						<%= form_tr_select(f, 'Campagne', :saison_id, saisons, :id, :name,  :selected => current_saison_id) %>
+						<%= form_tr_select(f, 'Categorie', :category_id, Category.for_factures, :id, :name_for_select_for_facture) %>
+						<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype.find(:all, :order => :name), :id, :name) %>
+						<%= form_tr_check(f, 'Star', :star) %>
+						<%= form_tr_check(f, 'ADU', :adu) %>
+					</table>
+				</td>
+			</tr>		
 
-<%= f.submit "Enregistrer" %>
-<% end -%>
-</fieldset>
+			<tr class=form_layout_title>
+				<td colspan=2 class=form_layout_title>informations</td>
+			</tr>
+			<tr class=form_layout_content>
+				<td colspan=2 class=form_layout_content>
+					<table>
+						<%= form_tr_text_area(f, '', :desc, :size => "20x5") %>
+					</table>
+				</td class=form_layout_content>
+			</tr>
+			<tr class=form_layout_title>
+				<td colspan=2 class=form_layout_title>
+					Reports <span class=link><%= link_to "Ajouter un report", {:action => 'new_report', :reportable_id => @facture} %></span>
+				</td>
+			</tr>
+			<tr class=form_layout_content>
+				<%= render :partial => 'list_reports' %>
+			</tr>
+		</table>
+
+		<p><%= f.submit "Enregistrer" %></p>
+
+
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+

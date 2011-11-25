@@ -2,8 +2,8 @@
 <br>
   <strong>Resultat</strong >
   <ul>
-  <%- ['print', 'calculate'].each do |controller| -%>	
-    <li><%= link_to controller, :controller => controller, :action => 'all'  %></li>
+  <%- ['all', 'categories'].each do |action| -%>	
+    <li><%= link_to action, :controller => :calculate, :action => action  %></li>
   <%- end -%>
   </ul>
   <strong>Charges</strong>

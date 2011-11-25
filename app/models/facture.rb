@@ -216,13 +216,12 @@ class Facture < Charge
     return (self.sum_pulves + self.sum_putoproduits_used + sum_labours)
   end
   
-  def sum_reports
-    if self.report?
-      #TODO effectuer ici la somme des reports
-      return (0)
-    end
-    return (0)
-  end
+  # def sum_reports
+  #   if self.report?
+  #     return (0)
+  #   end
+  #   return (0)
+  # end
   
   def get_cout_ha
     return (self.get_cout_total / self.sum_surfaces)
@@ -243,6 +242,12 @@ class Facture < Charge
     
   def get_cout_total_sans_reduc
     return (self.cout)
+  end
+  
+  def update_factcat
+    cat = Category.find(self.category_id)
+    self.factcat_id = Factcat.find(cat.factcat_id).id
+    self.save!
   end
     
 # ----- Verifs ------

@@ -204,7 +204,6 @@ class Calculate < ActiveRecord::Base
       # = (self.cout_ha_passage + self.get_cout_ha_produits + (self.cout_fixe / self.sum_surfaces))
       end
       #total des pulves
-      # FIXME Remplacer pulve.get_cout_ha_moyen(@surface_of_saison) PAR PUTOPRODUIT...
       @res.add_other_line_for_saison(@sid, :resultats, :total_pulves, :ha, pulve.get_cout_ha_passage_for_saison(@surface_of_saison))      
       @res.add_other_line_for_saison(@sid, :resultats, :total_pulves, :total, pulve.get_cout_total_passage)
     

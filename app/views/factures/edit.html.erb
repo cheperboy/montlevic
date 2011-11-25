@@ -23,21 +23,19 @@
 	<% @facdivs = @facture.facdivs %>
 	<%= render :partial => 'list_facdivs' %>
 
+
 <% elsif @facture.class == Reportable %>
 <% titre = "Facture #{@facture.name} #{star_ascii(@facture)}" %>
+
 <% liens = link_to "Annuler", facture_url(@facture) %>
 <div id="title_h1">
 	<span class=title><%= titre %></span>
 	<span class=link><%= liens %></span>
 </div>
 
-	<p>Attention, cette facture est un original, elle ne devrait pas etre modifiee.</p>
+	<p>Attention, cette facture est de type Reportable, elle ne devrait pas etre modifiee.</p>
 	<%= render :partial => 'form_reportable' %>
 
-	<h2>Reports associes</h2>
-	<p>| <%= link_to "Ajouter un report", {:action => 'new_report', :reportable_id => @facture} %> |</p>
-
-	<%= render :partial => 'list_reports' %>
 
 <% elsif @facture.class == Report %>
 <% titre = "Facture #{@facture.name} #{star_ascii(@facture)}" %>

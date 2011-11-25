@@ -42,7 +42,7 @@ typeculture = Typeculture.find(:first)
 
   # La Rue
   zone = Zone.find(3) 
-  #TODO pont des champ non trouve dans le carnet Trochet
+  # pont des champ non trouve dans le carnet Trochet
   parcelle = Parcelle.create!(:name => "Pont des champs", :saison => saison_2009, :typeculture => luzerne, :surface => 10)
   zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
   parcelle = Parcelle.create!(:name => "Aeromodelisme", :saison => saison_2009, :typeculture => tournesol, :surface => 13.55)

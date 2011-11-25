@@ -1,5 +1,4 @@
 <% javascript :defaults, 'delegate' %>
-<%#= javascript_include_tag :defaults %>
 <%= error_messages_for 	:facture, :factoparcelle,
 						:header_message => "Donnees incompletes ou Incorrectes", 
 						:message => "corriger les erreurs suivantes" 
@@ -17,12 +16,12 @@
 	<tr class=form_layout_content>
 		<td class=form_layout_content_left>
 			<table class=form_layout_content_table>
-			<%= form_tr_text(f, 'Nom', :name) %>
-			<%= form_tr_text(f, 'Cout', :cout) %>
-			<%= form_tr_text(f, 'Ref client', :ref_client) %>
-			<%= form_tr_text(f, 'Ref perso', :ref) %>
-			<%= form_tr_date(f, 'Date', :date) %>
-			<%= form_tr_select(f, 'Prestataire', :user_id, User.find(:all, :order => :name), :id, :name) %>
+				<%= form_tr_text(f, 'Nom', :name) %>
+				<%= form_tr_text(f, 'Cout', :cout) %>
+				<%= form_tr_text(f, 'Ref client', :ref_client) %>
+				<%= form_tr_text(f, 'Ref perso', :ref) %>
+				<%= form_tr_date(f, 'Date', :date) %>
+				<%= form_tr_select(f, 'Prestataire', :user_id, User.find(:all, :order => :name), :id, :name) %>
 			</table>
 		</td>
 		<td class=form_layout_content_right>

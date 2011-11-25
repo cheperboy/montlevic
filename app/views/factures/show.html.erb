@@ -1,5 +1,4 @@
 <% title "Facture #{@facture.name}", false %>
-
 <% titre = "Facture #{@facture.name} #{star_ascii(@facture)}" %>
 
 <% if @facture.class == Diverse %>
@@ -16,24 +15,16 @@
 		<%= render :partial => "list_facdivs" %>
 	<% end %>	
 <% elsif @facture.class == Reportable %>
-<p>
-  	| <%= link_to "Modifier", {:controller => 'factures', :action => 'edit', :id => @facture.id} %>
-  	| <%= link_to "Liste des factures", :controller => 'factures', :action => 'index' %> |
-</p>
-
-<h1><%= titre %></h1>
+	<% titre = "Facture #{@facture.name} #{star_ascii(@facture)}" %>
+	<% lien1 = link_to "Modifier", {:controller => 'factures', :action => 'edit', :id => @facture.id} %>
+	<% lien2 = link_to "Liste des factures", :controller => 'factures', :action => 'index' %>
+	<div id="title_h1">
+		<span class=title><%= titre %></span>
+		<span class=link><%= lien1 %></span>
+		<span class=link><%= lien2 %></span>
+	</div>
 
 	<%= render :partial => 'show_reportable' %>
-	
-	<h2>reports associes</h2>
-	<p>
-		| <%= link_to 'Ajouter un Report', {:controller => :factures, :action=> :new_report} %>
-		| <%= link_to 'Retour a la liste des factures', {:controller => :factures} %> |
-	</p>
-
-	<% unless @facture.reports.empty? %>
-		<%= render :partial => "list_reports" %>
-	<% end %>
 	
 <% else %>
 <% titre = "Facture #{@facture.name} #{star_ascii(@facture)}" %>
