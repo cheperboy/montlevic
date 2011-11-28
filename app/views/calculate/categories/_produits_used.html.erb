@@ -1,0 +1,59 @@
+		<tr class="level-2_<%= @factcat.code %>"> 
+			<td class=col1></td>
+			<td class=col2><b><%= link_to 'Produits Used', "javascript: toggleLevel3('level-3_#{@factcat.code}.produits_used');" %></b></td>
+			<td class=col3></td>
+			<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_putoproduits, :ha).display(:z => true) %></td>
+			<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_putoproduits, :total).display(:z => true) %></td>	
+			<% rang = 0 %>
+			<% @colonnes.each do |colonne| %>
+				<% rang += 1 %>
+				<% cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_putoproduits, :ha).display(:z => true) %>
+				<% cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_putoproduits, :total).display(:z => true) %>
+				<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
+				<td class="<%= odd(rang) %>"><%=h cout_total %></td>
+			<% end %>
+		</tr>
+		<% sub_categories = Category.find(:all, :conditions => {:upcategory_id => Upcategory.find_by_name('pulve').id}) %>
+		<% sub_categories.each do |cat| %>
+			<tr name=visible class="level-3_<%= @factcat.code %>.produits_used">
+				<td class=col1></td>
+				<td class=col2><b> -> <%= link_to cat.name, "javascript: toggleLevel4('level-4_#{@factcat.code}.produits_used.#{cat.code}');" %></b></td>
+				<td class=col3></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :putoproduits, :category, cat.id, :ha).display(:z => true) %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :putoproduits, :category, cat.id, :total).display(:z => true) %></td>
+				<% rang = 0 %>
+				<% @colonnes.each do |colonne| %>
+					<% rang += 1 %>
+					<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :category, cat.id, :ha).display(:z => true) %>
+					<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :category, cat.id, :total).display(:z => true) %>
+					<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
+					<td class="<%= odd(rang) %>"><%=h cout_total %></td>
+				<% end %>
+			</tr>
+		
+			<% @pulves.each do |pulve| %>
+				<% pulve.putoproduits.each do |putoproduit| %>
+					<% if putoproduit.produit.category_id.eql?(cat.id) %>
+					
+						<% datas = @test.res.get_saison_line_datas(@test.sid, :putoproduits, putoproduit.id) %>
+						<tr name=visible class="level-4_<%= @factcat.code %>.produits_used.<%= cat.code %>">
+							<td class=col1></td>
+							<td class=col2></td>
+							<td class=col3><%= link_popup_putoproduit(datas) %></td>
+							<td class="saison"><%= @test.res.get_saison_line(@test.sid, :putoproduits, :all, putoproduit.id, :ha).display(:z => true) %></td>
+							<td class="saison"><%= @test.res.get_saison_line(@test.sid, :putoproduits, :all, putoproduit.id, :total).display(:z => true) %></td>
+							<% rang = 0 %>
+							<% @colonnes.each do |colonne| %>
+								<% rang += 1 %>
+								<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :all, putoproduit.id, :ha).display(:z => true) %>
+								<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :all, putoproduit.id, :total).display(:z => true) %>
+								<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
+								<td class="<%= odd(rang) %>"><%=h cout_total %></td>
+							<% end %>
+						</tr>
+					<% end %>
+				<% end %>
+			<% end %>
+		<% end %>
+
+

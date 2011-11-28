@@ -24,7 +24,7 @@
 	padding: 0; 
 	margin: 0;
 	height: 600px; 
-	width: 920px; 
+/*	width: 920px; */
 	overflow: auto;
 }
 
@@ -43,7 +43,7 @@
 }
 
 td.col1 	{width: 130px; text-align:left;}
-td.col2 	{width: 150px; text-align:left;}
+td.col2 	{width: 170px; text-align:left;}
 td.col3 	{width: 250px; text-align:left;}
 td.col4, td.col5	{width: 160px; text-align:center;}
 td.col4.1, td.col5.1, td.col6.1 {width: 80px; text-align:right;}

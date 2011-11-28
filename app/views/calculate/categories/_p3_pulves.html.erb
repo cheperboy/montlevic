@@ -1,0 +1,82 @@
+<tr>
+	<th id="nom">Traitements</th>
+	<% td_number_before_saison().times do %>
+		<td></td>
+	<% end %>
+	<td class="saison"></td>
+	<td class="saison"></td>
+	<% td_number_after_saison(@colonnes.length, @show[:cout_ha], @show[:cout_total]).times do %>
+		<td></td>
+	<% end %>
+</tr>
+<% unless (((@pulves.class == Array) && @pulves.size == 0) || (@pulves.nil?)) %>
+	<% if @show[:pulves] %>
+		<% @pulves.each do |pulve| %>
+			<% datas = @test.res.get_saison_line_datas(@test.sid, :pulves, pulve.id) %>
+			<tr>
+				<td class='left'></strong></td>
+				<td class='left'><%= link_popup_pulve(datas) %></td>
+				<td class="date"><%= datas[:date].to_s :dmy %></td>	
+				<td class='left'>
+					<%= datas[:parcelles_length] %> p - 
+					<%= datas[:surface_total].display(:z => true) %> ha
+				</td>
+				<td class="saison">
+					<%= @test.res.get_saison_line(@test.sid, :pulves, :all, pulve.id, :ha).display(:z => true) %>
+				</td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :pulves, :all, pulve.id, :total).display(:z => true) %></td>
+		
+				<% rang = 0 %>
+				<% @colonnes.each do |colonne| %>
+					<% rang += 1 %>
+					<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :pulves, :all, pulve.id, :ha).display(:z => true) %>
+					<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :pulves, :all, pulve.id, :total).display(:z => true) %>
+					<% if @show[:cout_ha] %>
+						<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
+					<% end %>
+					<% if @show[:cout_total] %>
+						<td class="<%= odd(rang) %>"><%=h cout_total %></td>
+					<% end %>
+				<% end %>
+			</tr>
+		<% end %>
+	<% end %>
+
+	<!--Sous Total Pulve "category" (desherbant, fongicide,...) -->
+	<% if @show[:total_cat] %>
+		<tr>
+			<td>Total par Categorie</td>
+			<% td_number_before_saison().times do %>
+				<td></td>
+			<% end %>
+			<td class="saison"></td>
+			<td class="saison"></td>
+			<% td_number_after_saison(@colonnes.length, @show[:cout_ha], @show[:cout_total]).times do %>
+				<td></td>
+			<% end %>
+		</tr>	
+	<% end %>
+	
+	<tr class="total">
+		<td>Total Pulve:	</td>
+		<td></td>	
+		<td></td>	
+		<td></td>
+		<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_pulves, :ha).display(:z => true) %></td>
+		<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_pulves, :total).display(:z => true) %></td>	
+		<% rang = 0 %>
+		<% @colonnes.each do |colonne| %>
+			<% rang += 1 %>
+			<% cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_pulves, :ha).display(:z => true) %>
+			<% cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_pulves, :total).display(:z => true) %>
+			<% if @show[:cout_ha] %>
+				<td class="<%= odd(rang) %>_subtotal"><%=h cout_ha %></td>
+			<% end %>
+			<% if @show[:cout_total] %>
+				<td class="<%= odd(rang) %>_subtotal"><%=h cout_total %></td>
+			<% end %>
+		<% end %>
+	</tr>
+	
+<% end %>
+<tr><td></td></tr>

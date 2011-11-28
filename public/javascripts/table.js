@@ -1,3 +1,12 @@
+function toggleLevel4(name) {
+    var els = document.getElementsByClassName(name);
+    var i;
+    for (i = 0; i < els.length; i += 1) {
+		if (els[i].style.display == '')  els[i].style.display = 'none';
+		else els[i].style.display = '';
+	}
+}
+
 function toggleLevel3(name) {
     var els = document.getElementsByClassName(name);
     var i;
@@ -20,7 +29,7 @@ function toggleAllLevel3() {
 			} 
 		}
 		else {
-	    	if ((els[i].className.split('_')[0] == 'level-3')) {
+	    	if ((els[i].className.split('_')[0] == 'level-3') || (els[i].className.split('_')[0] == 'level-4')) {
 				els[i].style.display = 'none';
 			}
 		}
@@ -50,7 +59,7 @@ function toggleAllLevel2() {
 	    if ((show == 'yes') && ((els[i].className.split('_')[0] == 'level-2') || (els[i].className.split('_')[0] == 'level-3'))) {
 			els[i].style.display = ''; 
 		} 
-		if ((show == 'no') && ((els[i].className.split('_')[0] == 'level-2') || (els[i].className.split('_')[0] == 'level-3'))) {
+		if ((show == 'no') && ((els[i].className.split('_')[0] == 'level-2') || (els[i].className.split('_')[0] == 'level-3') || (els[i].className.split('_')[0] == 'level-4'))) {
 			els[i].style.display = 'none';
 		}
 	}
@@ -61,7 +70,7 @@ function toggleLevel2(factcatCode) {
     var i;
 	if (this.className == 'btn-hide') {
 	    for (i = 0; i < els.length; i += 1) {
-		    if ((els[i].className == 'level-2_'+factcatCode) || (els[i].className.split('.')[0] == 'level-3_'+factcatCode)) {
+		    if ((els[i].className == 'level-2_'+factcatCode) || (els[i].className.split('.')[0] == 'level-3_'+factcatCode) || (els[i].className.split('.')[0] == 'level-4_'+factcatCode)) {
 				els[i].style.display = 'none';
 			}
 		}

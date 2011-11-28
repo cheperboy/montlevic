@@ -269,6 +269,7 @@ class Calculate < ActiveRecord::Base
     logger.error "quantite #{@res.get_saison_line(@sid, :factures, :produits, :quantite, :total)}"
     logger.error "stock #{@res.get_saison_line(@sid, :factures, :produits, :stock, :total)}"
     logger.error "used #{@res.get_saison_line(@sid, :factures, :produits, :used, :total)}"
+    if nil?
     # OPTIMIZE cout ha pour la colonne saison
     # pour optimiser la vitesse de traitement, on peu calculer uniquement les cout totaux puis refaire une boucle 
     # (for facture in @factures) pour le calcul du cout ha de saison.
@@ -278,7 +279,7 @@ class Calculate < ActiveRecord::Base
     # end
     # facture_total = @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
     # @res.set_other_line_for_saison(@sid, :resultats, :total_factures, :ha, (facture_total/@surface_of_saison))     
-    
+    end
   end
 
   def run_ventes
