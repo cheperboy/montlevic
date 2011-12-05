@@ -74,47 +74,7 @@ cat_vente_assurance = Category.create!({:factcat => factcat_agri, :upcategory =>
 cat_vente_pac = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'PAC', :code => 'pac'})
 cat_vente_avoir = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'avoir', :code => 'avoir'})
 
-    # 
-    # categories = Category.create!([
-    # { :name => 'materiel', :upcategory => invest },
-    # { :name => 'batiment', :upcategory => invest },
-    # 
-    # { :name => 'frais generaux', :upcategory => facture}, 
-    # { :name => 'produits phyto', :upcategory => facture}, 
-    # { :name => 'semences', :upcategory => facture}, 
-    # { :name => 'mecanique', :upcategory => facture}, 
-    # { :name => 'batiments', :upcategory => facture}, 
-    # { :name => 'deplacement', :upcategory => facture}, 
-    # { :name => 'frais de gestion', :upcategory => facture },
-    # { :name => 'service agricole', :upcategory => facture }, #ne pas modifier
-    # { :name => 'materiel', :upcategory => facture },
-    # { :name => 'fermage', :upcategory => facture },
-    # { :name => 'bricolage', :upcategory => facture },
-    # 
-    # { :name => 'divers', :upcategory => pulve },
-    # { :name => 'azote', :upcategory => pulve },
-    # { :name => 'desherbant', :upcategory => pulve },
-    # { :name => 'engrais', :upcategory => pulve },
-    # { :name => 'fongicide', :upcategory => pulve },
-    # { :name => 'herbicide', :upcategory => pulve },
-    # { :name => 'insecticide', :upcategory => pulve },
-    # { :name => 'oligo', :upcategory => pulve },
-    # { :name => 'semis', :upcategory => pulve },
-    # { :name => 'soufre', :upcategory => pulve },
-    # 
-    # { :name => 'moisson', :upcategory => labour },
-    # { :name => 'covercrop', :upcategory => labour },
-    # { :name => 'vibro', :upcategory => labour },
-    # { :name => 'herse', :upcategory => labour },
-    # 
-    # { :name => 'Paille foin', :upcategory => vente },
-    # { :name => 'Paille ble', :upcategory => vente },
-    # { :name => 'Paille colza', :upcategory => vente },
-    # { :name => 'Assurance', :upcategory => vente },
-    # { :name => 'PAC', :upcategory => vente },
-    # { :name => 'Avoir', :upcategory => vente }
-  # ])
-
+# Typecultures
   ble = Typeculture.create!({:name => "Ble", :code => "ble"})
   bleble = Typeculture.create!({:name => "2eme Ble", :code => "bleble"})
   tournesol = Typeculture.create!({:name => "Tournesol", :code => "tournesol"})
@@ -229,6 +189,9 @@ zones = Zone.create!([
   {:name => 'Reserve', :code => 'reserve', :surface => 2.55},
   {:name => 'Lavernier', :code => 'lavernier', :surface => 0.75},
   {:name => 'Le bourg', :code => 'le_bourg', :surface => 0.52},
+# zones pour test
+  {:name => 'test - 1', :code => 'zone_test_1', :surface => 10},
+  {:name => 'test - 2', :code => 'zone_test_2', :surface => 10},
   
 ])
 

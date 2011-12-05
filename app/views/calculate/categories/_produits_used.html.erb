@@ -1,6 +1,6 @@
 		<tr class="level-2_<%= @factcat.code %>"> 
 			<td class=col1></td>
-			<td class=col2><b><%= link_to 'Produits Used', "javascript: toggleLevel3('level-3_#{@factcat.code}.produits_used');" %></b></td>
+			<td class=col2><b><%= link_to 'Produits Utilisés', "javascript: toggleLevel3('level-3_#{@factcat.code}.produits_used');" %></b></td>
 			<td class=col3></td>
 			<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_putoproduits, :ha).display(:z => true) %></td>
 			<td class="saison"><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_putoproduits, :total).display(:z => true) %></td>	

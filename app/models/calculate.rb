@@ -240,8 +240,13 @@ class Calculate < ActiveRecord::Base
       @res.set_saison_line(@sid, :factures, :all, facture.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
       
       #total des factures
-      @res.add_other_line_for_saison(@sid, :resultats, :total_factures, :total, facture.get_cout_total)
-      @res.add_other_line_for_saison(@sid, :resultats, :total_factures, :ha, facture.get_cout_ha_moyen(@surface_of_saison))     
+      
+      if facture.factcat_id.eql?(1)
+        # TODO : agir ici pour mettre une option sur la prise en compte des factures maison et invest dans le resultat de chaque colonne
+        # if ((option_charges_include_agri && facture.factcat.agri?) || (option_charges_include_invest && facture.factcat.invest?))
+        @res.add_other_line_for_saison(@sid, :resultats, :total_factures, :total, facture.get_cout_total)
+        @res.add_other_line_for_saison(@sid, :resultats, :total_factures, :ha, facture.get_cout_ha_moyen(@surface_of_saison))     
+      end
       
       #totaux par types de factures
       for factcat in self.types_facture
@@ -266,9 +271,9 @@ class Calculate < ActiveRecord::Base
         @res.add_saison_line(@sid, :factures, :produits, :used, :total, facture.sum_putoproduits_used)
       end
     end
-    logger.error "quantite #{@res.get_saison_line(@sid, :factures, :produits, :quantite, :total)}"
-    logger.error "stock #{@res.get_saison_line(@sid, :factures, :produits, :stock, :total)}"
-    logger.error "used #{@res.get_saison_line(@sid, :factures, :produits, :used, :total)}"
+    # logger.error "quantite #{@res.get_saison_line(@sid, :factures, :produits, :quantite, :total)}"
+    # logger.error "stock #{@res.get_saison_line(@sid, :factures, :produits, :stock, :total)}"
+    # logger.error "used #{@res.get_saison_line(@sid, :factures, :produits, :used, :total)}"
     if nil?
     # OPTIMIZE cout ha pour la colonne saison
     # pour optimiser la vitesse de traitement, on peu calculer uniquement les cout totaux puis refaire une boucle 
@@ -413,7 +418,7 @@ class Calculate < ActiveRecord::Base
       end
     end
     
-    unless @putoproduits.nil?
+    unless @factures.nil?
       for col in @cols
         sum_total = 0
         total = 0
@@ -421,7 +426,11 @@ class Calculate < ActiveRecord::Base
         for facture in @factures       
           #valeur totale de la facture pour cette colonne
           total = @res.get_line(@sid, @c, col.id, :factures, :all, facture.id, :total)
-          sum_total += total
+          # TODO : agir ici pour mettre une option sur la prise en compte des factures maison et invest dans le resultat
+          # if ((option_charges_include_agri && facture.factcat.agri?) || (option_charges_include_invest && facture.factcat.invest?))
+          if facture.factcat_id.eql?(1)
+            sum_total += total
+          end
           for factcat in self.types_facture
             if (facture.factcat_id == factcat.id)
               @res.add_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :total, total)
@@ -434,21 +443,23 @@ class Calculate < ActiveRecord::Base
             end
           end
         end
-        #somme des produits par col
+        #somme des factures par col
         @res.set_other_line(@sid, @c, col.id, :resultats, :total_factures, :total, sum_total)     
         @res.set_other_line(@sid, @c, col.id, :resultats, :total_factures, :ha, sum_total/col.surface)
         #total des couts par col
         @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, sum_total)
         @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, sum_total/col.surface)
         #total des benefs par col
-        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
-        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
-        #totaux par categorie de labour
+        # benef_include_maison = false
+        # benef_include_invest = false
+        # if facture.factcat_id.eql?(1)
+          @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
+          @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
+        # end
+        #totaux par categorie de facture
         for factcat in self.types_facture
-          if (facture.factcat_id == factcat.id)
-            cout_total = @res.get_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :total)
-            @res.set_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :ha, cout_total/col.surface)
-          end
+          cout_total = @res.get_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :total)
+          @res.set_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :ha, cout_total/col.surface)
         end
         for cat in Category.factures
           cout_total = @res.get_line(@sid, @c, col.id, :factures, :category, cat.id, :total)
@@ -467,6 +478,12 @@ class Calculate < ActiveRecord::Base
           #valeur totale du pulve pour cette colonne
           total = @res.get_line(@sid, @c, col.id, :ventes, :all, vente.id, :total)
           sum_total += total
+          for cat in Category.ventes
+            if (vente.category_id == cat.id)
+              # valeur totale de la vente pour cette categorie
+              @res.add_line(@sid, @c, col.id, :ventes, :category, cat.id, :total, total)
+            end
+          end
         end
         #somme des produits par col
         @res.set_other_line(@sid, @c, col.id, :resultats, :total_ventes, :total, sum_total)     
