@@ -43,25 +43,29 @@
 </fieldset>
 
 <fieldset>
-	<legend>Comptabilisation des facture</legend>
-<table>
-	<tr>
-		<td><%= f.label :facture_diff_to_null, "Ne pas comptabiliser le reste des facture 'diff'" %></td>
-		<td><%= f.check_box(:facture_diff_to_null) %></td>
-	</tr>  
-	<tr>
-		<td><%= f.label :facture_presta_to_null, "Ne pas comptabiliser les facture 'Prestation Agricole'" %></td>
-		<td><%= f.check_box(:facture_presta_to_null) %></td>
-	</tr>  
-</table>
-</fieldset>
-	
-<fieldset>
 	<legend>Affichage Analytic</legend>
 <table>
 	<tr>
 		<td><%= f.label :show_reportable, "Afficher les facture Reportables" %></td>
 		<td><%= f.check_box(:show_reportable) %></td>
+	</tr>  
+</table>
+</fieldset>
+	
+<fieldset>
+	<legend>Option calcul compte de résultat</legend>
+<table>
+	<tr>
+		<td><%= f.label :charges_include_maison, "Inclure les factures 'Maison' dans le compte de résultat?" %></td>
+		<td><%= f.check_box(:charges_include_maison) %></td>
+	</tr>  
+	<tr>
+		<td><%= f.label :charges_include_invest, "Inclure les factures 'Investissement' dans le compte de résultat?" %></td>
+		<td><%= f.check_box(:charges_include_invest) %></td>
+	</tr>  
+	<tr>
+		<td><%= f.label :charges_include_stock_produit, "Inclure la valeur des produits en stock dans le compte de résultat?" %></td>
+		<td><%= f.check_box(:charges_include_stock_produit) %></td>
 	</tr>  
 </table>
 </fieldset>

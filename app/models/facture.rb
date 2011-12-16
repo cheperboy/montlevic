@@ -144,6 +144,14 @@ class Facture < Charge
     return (self.category.name == cat)  
   end
   
+  def category_produits?()
+    return (self.category.code.eql?('produits_phyto'))  
+  end
+  
+  def category_services_agri?()
+    return (self.category.code.eql?('service_agricole'))  
+  end
+  
   # ----- Methodes d'affichage -----
     
   def print_factype
@@ -195,7 +203,7 @@ class Facture < Charge
     sum
   end
   
-  # Somme des produits associes.meme ceux qui n'ont pas ete utilises lors de traitements.
+  # Somme des produits associes. meme ceux qui n'ont pas ete utilises lors de traitements.
   def sum_putoproduits_associated
     # TODO URGENT facture 46 la valeur renvoyee est fausse
     sum = 0
@@ -232,8 +240,6 @@ class Facture < Charge
     if (self.comptable_null?)
       return (0)
     elsif (self.comptable_diff?)
-      return (0) if (Setting::FACTURE_PRESTA_TO_NULL.eql?(true) && self.category.name.eql?("service agricole"))
-      return (0) if (Setting::FACTURE_DIFF_TO_NULL.eql?(true) && !self.category.name.eql?("service agricole"))
       return (self.cout - self.sum_charges)
     elsif (self.comptable_total?)
       return (self.cout)

@@ -14,9 +14,11 @@ if SEEDS_BASIC
     :detail_desc => false, 
     :detail_ref => false,
     :text_area_size => '25x6',
-    :facture_diff_to_null => false,
-    :facture_presta_to_null => false,
-    :show_reportable => false)
+    :show_reportable => false,
+    :charges_include_maison => false,
+    :charges_include_invest => false,
+    :charges_include_stock_produit => true
+    )
 
 #Factcats
 factcat_agri = Factcat.create!({ :code => 'agri', :name => 'Agricole'}) 

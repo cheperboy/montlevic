@@ -1,5 +1,5 @@
 <!-- <div id='search'> -->
-<% form_tag :action => 'all' do %> 
+<% form_tag :action => 'categories' do %> 
 	<%= select_tag(:column, options_for_select(%w{ Typeculture Parcelle Zone }, params[:column])) %>	<br>
 	<%= check_box_tag 'show[pulves]', value = true, checked = @show[:pulves], options = {:id => 'show[pulves]'} %>
 	<label for='show[pulves]'>Pulves</label><br>

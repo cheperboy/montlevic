@@ -18,7 +18,7 @@
 	<% categories.each do |cat| %>
 		<tr class="level-2_vente">
 			<td class=col1></td>
-			<td class=col2><b><%= link_to cat.name, "javascript: toggleLevel3('level-3_vente.#{cat.code}');" %></b></td>
+			<td class=col2><b><%= link_to cat.name, "javascript: toggleLevel3('vente.#{cat.code}');" %></b></td>
 			<td class=col3></td>
 			<td class="saison"><span class=green><%= @test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :ha).display(:z => true) %></span></td>
 			<td class="saison"><span class=green><%= @test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :total).display(:z => true) %></span></td>

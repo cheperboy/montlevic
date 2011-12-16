@@ -18,6 +18,14 @@ class Produit < ActiveRecord::Base
   validates_presence_of :category_id, :message => "Categorie ne doit pas etre vide"
   validates_presence_of :unit, :message => "Unite ne doit pas etre vide"
 
+  def to_s(*args)
+    out = ''
+    if args[0] == :default
+      out += (self.name + " ")    
+    end
+    out
+  end
+
   def is_valid
     unless prix.nil?
       unless protofactures.nil?
@@ -136,5 +144,10 @@ class Produit < ActiveRecord::Base
     if stock_vs_used?
       return "X"
     end
-  end     
+  end  
+  
+  def sans_facture_avec_pulve?
+    return ((self.protofactures.count.eql?(0)) && !(self.putoproduits.count.eql?(0)))
+  end
+  
 end

@@ -76,7 +76,7 @@
 	</tr>
 	<tr class=form_layout_content>
 		<td colspan=2class=form_layout_content>
-		<%- if @produit.protofactures.length > 0 -%>
+		<% if @produit.pulves.length > 0 %>
 		<table class=table_data>
 			<tr>
 				<th>date</th>
@@ -86,10 +86,12 @@
 				<th>Quantite</th>
 				<th></th>
 			</tr>
-		<%- quantity = 0 -%>
-		<%- surface = 0 -%>
-		<%- @produit.pulves.each do |pulve| -%>
-			<%- putoproduit = @produit.putoproduits.find_by_pulve_id(pulve.id) -%>
+		<% quantity = 0 %>
+		<% surface = 0 %>
+
+
+		<% @produit.pulves.each do |pulve| %>
+			<% putoproduit = @produit.putoproduits.find_by_pulve_id(pulve.id) %>
 			<% quantity += (putoproduit.dosage * pulve.sum_surfaces) %>
 			<% surface += (pulve.sum_surfaces) %>
 			<tr>
@@ -100,7 +102,7 @@
 				<td class=right><%=h (putoproduit.dosage * pulve.sum_surfaces).display %> <%=h @produit.unit %></td>
 				<td><%= popup_show(image_tag('img-voir.png'), pop_content(pulve), "popup-show-content-large") %></td>
 			</tr>
-		<%- end -%>
+		<% end %>
 		<tr>
 			<td></td>
 			<td></td>
@@ -110,9 +112,9 @@
 			<td></td>
 		</tr>
 		</table>
-		<%- else -%>
+		<% else %>
 			<p>Aucun passage fait avec ce produit!</p>
-		<%- end -%>
+		<% end %>
 		</td>
 	</tr>
 

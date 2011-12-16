@@ -54,7 +54,8 @@ class Verif < ActiveRecord::Base
     factures.tests << reportable_sans_report
     factures.tests << facdiv_sans_diverse
     factures.tests << diverse_sans_facdiv
-    
+    # factures.tests << facture_produit_incomplete
+
     factypes.tests << report_factype_null
     factypes.tests << reportable_factype_notnull
     factypes.tests << debit_factype_null_perdu
@@ -72,6 +73,9 @@ class Verif < ActiveRecord::Base
     saisie.tests << pulve_sans_facture
     saisie.tests << pulve_avec_facture_et_valeur_incoh
     saisie.tests << pulve_cout_produit_null
+    saisie.tests << facture_produit_incomplete
+    saisie.tests << pulve_sans_facture_service_avec_cout_presta_non_nul
+    saisie.tests << produit_sans_facture_avec_pulve
     
   end
 
@@ -129,7 +133,7 @@ class Verif < ActiveRecord::Base
   #facture (debit) ayant une comptabilisation NULL mais associee a aucun labour ou pulve
   #donc jamais comptabilisee dans les charges
   def debit_factype_null_perdu
-    test = init_test('Debit (Facture) avec factype NULL mais sans labour ni pulve associes)', LOW)
+    test = init_test('Debit (Facture) avec factype NULL mais sans labour ni pulve associes', LOW)
     Debit.find(:all).each do |facture|    
       if facture.factype_id.equal?(Factype.find_by_name('null').id) && facture.pulves.empty? && facture.labours.empty?
         test.num += 1
@@ -157,6 +161,22 @@ class Verif < ActiveRecord::Base
     Diverse.find(:all).each do |diverse|    
       if diverse.facdivs.empty?
         test.num += 1
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
+  end
+
+  def facture_produit_incomplete
+    test = init_test('facture de produits dont le cout est superieur a la somme des couts des produits', HIGH)
+    test.num = 0
+    factures = Facture.find_by_saison(:all, :conditions => ["category_id = ?", Category.find_by_code('produits_phyto').id]) 
+    factures.each do |facture|
+      unless (facture.sum_putoproduits_associated.almost_eql?(facture.cout, 1))
+        test.num += 1
+        text = facture.to_s(:default)
+        error = init_error(facture.name, facture.id, 'factures')
+        test.errors << error
       end
     end
     test.result = (test.num == 0)    
@@ -381,7 +401,7 @@ class Verif < ActiveRecord::Base
 
   def pulve_cout_produit_null
     test = init_test('Pulves dont le cout produit est nul', LOW)
-    test.num =0
+    test.num = 0
     @pulves = Pulve.find_by_saison(:all)
     unless @pulves.nil?
       @pulves.each do |pulve|    
@@ -396,6 +416,61 @@ class Verif < ActiveRecord::Base
     test.result = (test.num == 0)    
     return test
   end
+
+  def pulve_sans_facture_service_avec_cout_presta_non_nul
+    test = init_test('Pulves dont le cout presta est non nul, sans assoc facture "service_agri"', HIGH)
+    test.num = 0
+    @pulves = Pulve.find_by_saison(:all)
+    unless @pulves.nil?
+      @pulves.each do |pulve|
+        var = true
+        unless pulve.get_cout_total_passage.almost_eql?(0, 1)
+          sum_fac_services = 0
+          pulve.putofactures.each do |putofacture|
+            if putofacture.facture.category_services_agri?
+              sum_fac_services += putofacture.value
+            end
+          end
+          if pulve.get_cout_total_passage.almost_eql?(sum_fac_services, 1)
+            var = false
+          end
+        else
+          var = false
+        end
+        if var == true
+          test.num += 1
+          text = pulve.to_s(:default)
+          error = init_error(text, pulve.id, 'pulves')
+          test.errors << error
+        end
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
+  end
+
+  def produit_sans_facture_avec_pulve
+    test = init_test('Produit sans facture mais utilise dans un traitement', HIGH)
+    test.num = 0
+    @produits = Produit.find_by_saison(:all)
+    unless @produits.nil?
+      @produits.each do |produit|
+        var = false
+        if produit.sans_facture_avec_pulve?
+          var = true
+        end
+        if var == true
+          test.num += 1
+          text = produit.to_s(:default)
+          error = init_error(text, produit.id, 'produits')
+          test.errors << error
+        end
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
+  end
+
 
 
 

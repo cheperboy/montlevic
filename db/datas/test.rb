@@ -1,3 +1,8 @@
+# S5011
+# abandon des mecanismes labours/labtofacture et pulve/putofacture (mais on conserve pulve/produit/protofacture)
+# pour simplifier les modifs on prend les hypotheses suivantes: toutes les factures sont en TOTAL sauf les fac produit qui restent en DIFF
+# cette hypothese tue les labours/pulve qui pompent des factures
+
 
 # Upcategories
 cat_pulve = Upcategory.find_by_name('pulve')
@@ -82,7 +87,7 @@ factcat_invest = Factcat.find_by_code("invest")
 
 
 #Saison
-saison_test = Saison.create!(:name => "2010/2011", :year => "2010")
+saison_test = Saison.create!(:name => "Saison Test", :year => "2010")
 Setting.find(:first).update_attribute(:saison_id,	saison_test.id )
 
 
@@ -113,23 +118,25 @@ foin.parcelles.find_by_saison(:all, saison_test).each {|parcelle| parcelles_foin
 
 # PRODUITS - (Generation automatique xls)
 p1 = Produit.create!(:name => 'produit - 1', :unit =>'kg', :category => cat_agri_engrais, :saison => saison_test, :desc => '')
+# p2 = Produit.create!(:name => 'produit - 2', :unit =>'kg', :category => cat_agri_azote, :saison => saison_test, :desc => '')
 
 # FACTURES - from xls
 
-# fac_service = Debit.create!(:name => 'Fac services agri', :date => '2010-11-30', :cout => 100, :ref_client => '01-2010-1187', :ref => '001', :user => User.find_by_code('dauger'), :factype => factype_diff,:factcat => factcat_agri,:category => cat_agri_service_agricole, :desc => '1 sac big bag',:saison => saison_test, :star => 0, :adu => 0)
+# fac_service = Debit.create!(:name => 'Fac services agri', :date => '2010-11-30', :cout => 200, :ref_client => '01-2010-1187', :ref => '001', :user => User.find_by_code('dauger'), :factype => factype_total,:factcat => factcat_agri,:category => cat_agri_service_agricole, :desc => '1 sac big bag',:saison => saison_test, :star => 0, :adu => 0)
 
 fac_produit = Debit.create!(:name => 'Facture produit', :date => '2010-11-30', :cout => 100, :ref_client => '01-2010-1187', :ref => '001', :user => User.find_by_code('dauger'), :factype => factype_diff,:factcat => factcat_agri,:category => cat_agri_produits_phyto, :desc => '1 sac big bag',:saison => saison_test, :star => 0, :adu => 0)
-protofacture = Protofacture.create!(:facture => fac_produit, :produit => p1, :prix_unit => 1, :quantite => 50, :saison => saison_test)
+protofacture = Protofacture.create!(:facture => fac_produit, :produit => p1, :prix_unit => 1, :quantite => 200, :saison => saison_test)
 
-# facture = Debit.create!(:name => 'Facture - 2', :date => '2010-11-30', :cout => 1000, :ref_client => '01-2010-1187', :ref => '001', :user => User.find_by_code('dauger'), :factype => factype_diff,:factcat => factcat_maison,:category => cat_maison_batiment, :desc => '1 sac big bag',:saison => saison_test, :star => 0, :adu => 0)
+# protofacture = Protofacture.create!(:facture => fac_produit, :produit => p2, :prix_unit => 1, :quantite => 100, :saison => saison_test)
 
+# facture = Debit.create!(:name => 'Facture - 2', :date => '2010-11-30', :cout => 2000, :ref_client => '01-2010-1187', :ref => '001', :user => User.find_by_code('dauger'), :factype => factype_diff,:factcat => factcat_maison,:category => cat_maison_batiment, :desc => '1 sac big bag',:saison => saison_test, :star => 0, :adu => 0)
 # facture = Debit.create!(:name => 'Facture - 3', :date => '2010-11-30', :cout => 1000, :ref_client => '01-2010-1187', :ref => '001', :user => User.find_by_code('dauger'), :factype => factype_diff,:factcat => factcat_invest,:category => cat_invest_materiel, :desc => '1 sac big bag',:saison => saison_test, :star => 0, :adu => 0)
 
 # FIN de FACTURES - from xls
 
 
-# vente = Vente.create!(:name => 'Vente 1', :date => '2011-08-02', :prix => 3000, :ref_client => '', :ref => '007', :user => User.find_by_name('Groupama'),:category => cat_vente_assurance, :desc => '',:saison => saison_test, :star => 0, :adu => 0)
-# parcelles_ble.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
+vente = Vente.create!(:name => 'Vente 1', :date => '2011-08-02', :prix => 1000, :ref_client => '', :ref => '007', :user => User.find_by_name('Groupama'),:category => cat_vente_assurance, :desc => '',:saison => saison_test, :star => 0, :adu => 0)
+parcelles_ble.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
 
 # FIN VENTES - from xls
 
@@ -137,11 +144,14 @@ protofacture = Protofacture.create!(:facture => fac_produit, :produit => p1, :pr
 pulves = []
 labours = []
 
-pulve = Pulve.create!(:name => 'pulve - 1', :cout_ha_passage => 0, :user => trochet, :saison => saison_test, :date => '2011-03-11', :star => 1, :adu => 0, :desc => '')
-putoproduit = Putoproduit.create!(:pulve => pulve, :produit => p1, :dosage => 1, :saison => saison_test)
-# Putofacture.create!(:pulve => pulve, :facture => fac_service, :value => pulve.get_cout_total_passage)
+pulve1 = Pulve.create!(:name => 'pulve - 1', :cout_ha_passage => 0, :user => trochet, :saison => saison_test, :date => '2011-03-11', :star => 1, :adu => 0, :desc => '')
+putoproduit = Putoproduit.create!(:pulve => pulve1, :produit => p1, :dosage => 1, :saison => saison_test)
+
+# pulve2 = Pulve.create!(:name => 'pulve - 2', :cout_ha_passage => 0, :user => trochet, :saison => saison_test, :date => '2011-03-11', :star => 1, :adu => 0, :desc => '')
+# putoproduit = Putoproduit.create!(:pulve => pulve2, :produit => p1, :dosage => 1, :saison => saison_test)
+
 # pulves << pulve
-# 
+
 # parcelle = saison_test.parcelles.find_by_code('parcelle1')
 pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, :pulve => pulve, :value => 0)}
 
@@ -151,13 +161,12 @@ pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, 
 # NE PAS SUPPRIMER
 
 # positionne correctement le champ value des Putofacture
-# cecie ne peut pas etre fait juste apres la creation des pulve car les putoparcelles ne sont pas encore crees
+# ceci ne peut pas etre fait juste apres la creation des pulve car les putoparcelles ne sont pas encore crees
 # ATTENTION ceci ecrase l'ensemble des Putofactures
 Putofacture.find(:all).each do |putof|
   putof.value = putof.pulve.get_cout_total_passage
   putof.save!
 end
-
 
 
 # Mise a jour des Stocks

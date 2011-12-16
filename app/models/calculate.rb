@@ -1,9 +1,6 @@
-# 
-# smoking ace
-# red
-# 
-
 class Calculate < ActiveRecord::Base
+
+  PRESTA_LAB_PU = false
 
   #Txxx variables temporaires
   #Zxxx variables par Zone
@@ -46,11 +43,6 @@ class Calculate < ActiveRecord::Base
     run_totaux
     verif
     # return true
-  end
- 
-  def init_display
-    self.display = {}
-    self.display[:labours] = -1
   end
 
   def init_cols
@@ -239,11 +231,12 @@ class Calculate < ActiveRecord::Base
       @res.set_saison_line(@sid, :factures, :all, facture.id, :total, facture.get_cout_total)
       @res.set_saison_line(@sid, :factures, :all, facture.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
       
-      #total des factures
-      
+      # Total des factures
+      # TODO : agir ici pour mettre une option sur la prise en compte des factures produits non pulverises
+      # if ((facture.factcat.code.eql?('invest')) && (Setting::CHARGES_INCLUDE_INVEST.eql?(true)) || 
+      #     (facture.factcat.code.eql?('maison')) && (Setting::CHARGES_INCLUDE_MAISON.eql?(true)) || 
+      #     (facture.factcat.code.eql?('agri')))
       if facture.factcat_id.eql?(1)
-        # TODO : agir ici pour mettre une option sur la prise en compte des factures maison et invest dans le resultat de chaque colonne
-        # if ((option_charges_include_agri && facture.factcat.agri?) || (option_charges_include_invest && facture.factcat.invest?))
         @res.add_other_line_for_saison(@sid, :resultats, :total_factures, :total, facture.get_cout_total)
         @res.add_other_line_for_saison(@sid, :resultats, :total_factures, :ha, facture.get_cout_ha_moyen(@surface_of_saison))     
       end
@@ -338,17 +331,19 @@ class Calculate < ActiveRecord::Base
             # valeur totale du labour pour cette categorie
             @res.add_line(@sid, @c, col.id, :labours, :category, cat.id, :total, total_labour)
           end
-        end        
+        end
       end
       #somme des labours par col
       @res.set_other_line(@sid, @c, col.id, :resultats, :total_labours, :total, sum_total)     
       @res.set_other_line(@sid, @c, col.id, :resultats, :total_labours, :ha, sum_total/col.surface)
-      #total des couts par col
-      @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, sum_total)
-      @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, sum_total/col.surface)
-      #total des benefs par col
-      @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
-      @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
+      if PRESTA_LAB_PU.eql?(true)
+        #total des couts par col
+        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, sum_total)
+        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, sum_total/col.surface)
+        #total des benefs par col
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
+      end
       #totaux par categorie de labour
       for cat in Category.labours
         cout_total = @res.get_line(@sid, @c, col.id, :labours, :category, cat.id, :total)
@@ -401,15 +396,17 @@ class Calculate < ActiveRecord::Base
           total = @res.get_line(@sid, @c, col.id, :pulves, :all, pulve.id, :total)
           sum_total += total
         end
-        #somme des produits par col
+        #somme des pulves par col
         @res.set_other_line(@sid, @c, col.id, :resultats, :total_pulves, :total, sum_total)     
         @res.set_other_line(@sid, @c, col.id, :resultats, :total_pulves, :ha, sum_total/col.surface)
-        #total des couts par col
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, sum_total)
-        @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, sum_total/col.surface)
-        #total des benefs par col
-        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
-        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
+        if PRESTA_LAB_PU.eql?(true)
+          #total des couts par col
+          @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, sum_total)
+          @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, sum_total/col.surface)
+          #total des benefs par col
+          @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
+          @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
+        end
         #totaux par categorie de labour
         for cat in Category.pulves
           cout_total = @res.get_line(@sid, @c, col.id, :pulves, :category, cat.id, :total)
@@ -450,12 +447,8 @@ class Calculate < ActiveRecord::Base
         @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :total, sum_total)
         @res.add_other_line(@sid, @c, col.id, :resultats, :total_charges, :ha, sum_total/col.surface)
         #total des benefs par col
-        # benef_include_maison = false
-        # benef_include_invest = false
-        # if facture.factcat_id.eql?(1)
-          @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
-          @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
-        # end
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
+        @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
         #totaux par categorie de facture
         for factcat in self.types_facture
           cout_total = @res.get_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :total)
@@ -500,26 +493,28 @@ class Calculate < ActiveRecord::Base
     end
     
 #SOMME DES TOTAUX POUR COLONNE SAISON
-
     # total Charges (et total_ha) pour la saison (pas par colonnes, colonne "saison")
-    total_pulves_ha =   @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :ha)
-    total_putoproduits_ha =   @res.get_other_line_for_saison(@sid, :resultats, :total_putoproduits, :ha)
-    total_labours_ha =  @res.get_other_line_for_saison(@sid, :resultats, :total_labours, :ha)
-    total_factures_ha = @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :ha)
-    @res.add_other_line_for_saison(@sid, :resultats, :total_charges, :ha, total_labours_ha)
+    total_putoproduits_ha = @res.get_other_line_for_saison(@sid, :resultats, :total_putoproduits, :ha)
+    total_factures_ha =     @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :ha)
     @res.add_other_line_for_saison(@sid, :resultats, :total_charges, :ha, total_putoproduits_ha)
-    @res.add_other_line_for_saison(@sid, :resultats, :total_charges, :ha, total_pulves_ha)
     @res.add_other_line_for_saison(@sid, :resultats, :total_charges, :ha, total_factures_ha)
-
-    total_pulves =    @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :total)
-    total_putoproduits =   @res.get_other_line_for_saison(@sid, :resultats, :total_putoproduits, :total)
-    total_labours =   @res.get_other_line_for_saison(@sid, :resultats, :total_labours, :total)
-    total_factures =  @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
-    @res.add_other_line_for_saison(@sid, :resultats, :total_charges, :total, total_labours)
-    @res.add_other_line_for_saison(@sid, :resultats, :total_charges, :total, total_pulves)
+    if PRESTA_LAB_PU.eql?(true)
+      total_pulves_ha =       @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :ha)
+      total_labours_ha =      @res.get_other_line_for_saison(@sid, :resultats, :total_labours, :ha)
+      @res.add_other_line_for_saison(@sid, :resultats, :total_charges, :ha, total_pulves_ha)
+      @res.add_other_line_for_saison(@sid, :resultats, :total_charges, :ha, total_labours_ha)
+    end
+    
+    total_putoproduits =  @res.get_other_line_for_saison(@sid, :resultats, :total_putoproduits, :total)
+    total_factures =      @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
     @res.add_other_line_for_saison(@sid, :resultats, :total_charges, :total, total_putoproduits)
     @res.add_other_line_for_saison(@sid, :resultats, :total_charges, :total, total_factures)
-
+    if PRESTA_LAB_PU.eql?(true)
+      total_labours =       @res.get_other_line_for_saison(@sid, :resultats, :total_labours, :total)
+      total_pulves =        @res.get_other_line_for_saison(@sid, :resultats, :total_pulves, :total)
+      @res.add_other_line_for_saison(@sid, :resultats, :total_charges, :total, total_labours)
+      @res.add_other_line_for_saison(@sid, :resultats, :total_charges, :total, total_pulves)
+    end
     # total benef
     total_ventes_ha =   @res.get_other_line_for_saison(@sid, :resultats, :total_ventes, :ha)
     total_charges_ha =  @res.get_other_line_for_saison(@sid, :resultats, :total_charges, :ha)

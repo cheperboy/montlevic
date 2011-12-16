@@ -43,6 +43,10 @@ namespace :data do
 
   desc "seed database from file test.rb"
   task :test => :environment do 
+    sh %{rake db:drop}
+    sh %{rake db:create}
+    sh %{rake db:schema:load}
+    sh %{rake db:seed}
     file = File.join(Rails.root, 'db', 'datas', 'test.rb')
     load(file) if File.exist?(file)
   end

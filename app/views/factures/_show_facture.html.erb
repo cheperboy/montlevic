@@ -8,7 +8,10 @@
 			<table class=form_layout_content_table>
 			<%= tr_text('Nom', @facture.name) %>
 			<%= tr_text('Cout', @facture.cout.display, euro) %>
-			<%= tr_text('Valeur comptable', @facture.get_cout_total.display, euro) %>
+			<%#= tr_text('Valeur non imputée', @facture.get_cout_total.display, euro) %>
+			<% if @facture.category_produits? %>
+				<%= tr_text('valeur produits en stock', @facture.sum_putoproduits_stock.display, euro) %>
+			<% end %>
 			<%= tr_text('Ref client', @facture.ref_client) %>
 			<%= tr_text('Ref perso', @facture.ref) %>
 			<%= tr_text('Date', @facture.print_date) %>
@@ -32,11 +35,15 @@
 	<tr class=form_layout_content>
 		<!-- PARCELLES -->
 		<td class=form_layout_content_left>
-			<table class=form_layout_content_table>
-				<% @facture.factoparcelles.each do |factoparcelle| %>
-					<%= tr_text(factoparcelle.parcelle.typeculture.name, factoparcelle.parcelle.name) %>
-				<% end %>
-			</table>
+			<% if @facture.factoparcelles.count.eql?(0) %>
+				<p>cette facture est imputee sur toutes les parcelles</p>
+			<% else %>
+				<table class=form_layout_content_table>
+					<% @facture.factoparcelles.each do |factoparcelle| %>
+						<%= tr_text(factoparcelle.parcelle.typeculture.name, factoparcelle.parcelle.name) %>
+					<% end %>
+				</table>
+			<% end %>
 		</td>
 		<%= render :partial => 'show_comptabilisation' %>
 	</tr>

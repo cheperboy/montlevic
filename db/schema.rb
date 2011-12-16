@@ -73,15 +73,16 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "settings", :force => true do |t|
-    t.integer "saison_id",                    :null => false
-    t.integer "value_parcelle",               :limit => 2
-    t.integer "detail_desc",                  :limit => 2
-    t.integer "detail_ref",                   :limit => 2
+    t.integer "saison_id",                      :null => false
+    t.integer "value_parcelle",                 :limit => 2
+    t.integer "detail_desc",                    :limit => 2
+    t.integer "detail_ref",                     :limit => 2
     t.integer "float_precision"
     t.string  "text_area_size"
-    t.integer "facture_diff_to_null",         :limit => 2
-    t.integer "facture_presta_to_null",       :limit => 2
-    t.integer "show_reportable",              :limit => 2
+    t.integer "show_reportable",                :limit => 2
+    t.integer "charges_include_maison",         :limit => 2
+    t.integer "charges_include_invest",         :limit => 2
+    t.integer "charges_include_stock_produit",  :limit => 2    
   end
 
   create_table "verifs", :force => true do |t|

@@ -5,8 +5,6 @@ class Setting < ActiveRecord::Base
   # t.integer "detail_ref",                   :limit => 2
   # t.integer "float_precision"
   # t.string  "text_area_size"
-  # t.integer "facture_diff_to_null",         :limit => 2
-  # t.integer "facture_presta_to_null",       :limit => 2
   # t.integer "show_reportable",              :limit => 2
 
   unless Setting.find(:first).nil?
@@ -16,13 +14,15 @@ class Setting < ActiveRecord::Base
     FLOAT_PRECISION = Setting.find(:first).float_precision
     TEXT_AREA_SIZE = Setting.find(:first).text_area_size
 
-    FACTURE_DIFF_TO_NULL = false
-    FACTURE_DIFF_TO_NULL = true if Setting.find(:first).facture_diff_to_null.eql?(1)
-    FACTURE_PRESTA_TO_NULL = false
-    FACTURE_PRESTA_TO_NULL = true if Setting.find(:first).facture_presta_to_null.eql?(1)
     SHOW_REPORTABLE = false
     SHOW_REPORTABLE = true if Setting.find(:first).show_reportable.eql?(1)
-
+    
+    CHARGES_INCLUDE_MAISON = false
+    CHARGES_INCLUDE_MAISON = true if Setting.find(:first).charges_include_maison.eql?(1)
+    CHARGES_INCLUDE_INVEST = false
+    CHARGES_INCLUDE_INVEST = true if Setting.find(:first).charges_include_invest.eql?(1)
+    CHARGES_INCLUDE_STOCK_PRODUIT = false
+    CHARGES_INCLUDE_STOCK_PRODUIT = true if Setting.find(:first).charges_include_stock_produit.eql?(1)
   end
   
   belongs_to :saison
