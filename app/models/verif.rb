@@ -70,11 +70,11 @@ class Verif < ActiveRecord::Base
     data.tests << data_contrib_lab
     data.tests << data_contrib_pu
 
-    saisie.tests << pulve_sans_facture
+    # saisie.tests << pulve_sans_facture
     saisie.tests << pulve_avec_facture_et_valeur_incoh
     saisie.tests << pulve_cout_produit_null
     saisie.tests << facture_produit_incomplete
-    saisie.tests << pulve_sans_facture_service_avec_cout_presta_non_nul
+    # saisie.tests << pulve_sans_facture_service_avec_cout_presta_non_nul
     saisie.tests << produit_sans_facture_avec_pulve
     
   end
@@ -379,7 +379,9 @@ class Verif < ActiveRecord::Base
     unless @pulves.nil?
       @pulves.each do |pulve|
         var = true
-        unless pulve.putofactures.empty?
+        if pulve.putofactures.empty?
+          var = false
+        else
           pulve.putofactures.each do |putofacture|
             if (pulve.get_cout_total_produits.almost_eql?(putofacture.value, 2) || 
                 pulve.get_cout_total_passage.almost_eql?(putofacture.value, 2))

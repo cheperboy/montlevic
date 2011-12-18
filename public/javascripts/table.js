@@ -1,3 +1,12 @@
+function toggleLevel_by_name(name) {
+    var els = document.getElementsByClassName(name);
+    var i;
+    for (i = 0; i < els.length; i += 1) {
+		if (els[i].style.display == '')  els[i].style.display = 'none';
+		else els[i].style.display = '';
+	}
+}
+
 function toggleLevel4(name) {
     var els = document.getElementsByClassName(name);
     var i;

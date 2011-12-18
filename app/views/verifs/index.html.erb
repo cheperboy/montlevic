@@ -16,19 +16,22 @@
 	  </tr>
 	<% serie.tests.each do |test| %>
 	  <tr>
-		<td class='<%= color(test) %>'></td>
+		<td class='<%= color(test) %>'>
+			<% unless test.num.equal?(0) %>
+				<%= link_to '<>', "javascript: toggleLevel_by_name('#{test.name}');" %></td>
+			<% end %>
 	  	<td><%= test.name %></td>
-		<td class='<%= color(test) %>'><%= test.num.to_s %></td>
+		<td class='<%= color(test) %>'><b><%= test.num.to_s %></b></td>
 	  </tr>
 		<% if test.result.equal?(false) %>
 			<% test.errors.each do |error| %>
-			  <tr>
+			  <tr class="<%= test.name %>">
 			  	<td></td>
 				<td>--> <%= error.id %> | 
 				<% if error.controller.nil? %>
 					<%= error.name %>
 				<% else %>
-					<%= link_to error.name, :controller => error.controller, :action => 'edit' , :id => error.id  %> | 
+					<%= link_to error.name, :controller => error.controller, :action => 'show' , :id => error.id  %> | 
 			    	<%= link_to image_tag('img-voir.png'), :controller => error.controller, :action => 'show' , :id => error.id %> | 
 			    	<%= link_to image_tag('img-modif.png'),  :controller => error.controller, :action => 'edit' , :id => error.id %> |
 				<% end %>
