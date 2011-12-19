@@ -66,12 +66,12 @@ cat_invest_materiel = Category.create!({:factcat => factcat_invest, :upcategory 
 cat_invest_batiment = Category.create!({:factcat => factcat_invest, :upcategory => upcategory_facture, :name => 'batiment', :code => 'batiment'})
 
 #Categories Vente
-cat_vente_paille_foin = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'paille foin', :code => 'paille_foin'})
 cat_vente_paille_ble = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'paille ble', :code => 'paille_ble'})
 cat_vente_paille_colza = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'paille colza', :code => 'paille_colza'})
 cat_vente_foin = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'foin', :code => 'foin'})
 cat_vente_ble = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'ble', :code => 'ble'})
 cat_vente_colza = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'colza', :code => 'colza'})
+cat_vente_tournesol = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'tournesol', :code => 'tournesol'})
 cat_vente_assurance = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'Assurance', :code => 'assurance'})
 cat_vente_pac = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'PAC', :code => 'pac'})
 cat_vente_avoir = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'avoir', :code => 'avoir'})
@@ -132,13 +132,13 @@ cat_vente_avoir = Category.create!({:factcat => factcat_agri, :upcategory => upc
     {:name => 'EARL Prinet', :code => 'earl_prinet'},
     {:name => 'EBT', :code => 'ebt'},
     {:name => 'EDF bleu ciel', :code => 'edf_bleu_ciel'},
-    {:name => 'La France agricole', :code => 'France_agricole'},
     {:name => 'France Telecom', :code => 'France_telecom'},
     {:name => 'Groupama', :code => 'groupama'},
     {:name => 'Isagri', :code => 'isagri'},
     {:name => 'Jamase', :code => 'jamase'},
     {:name => 'Jouve', :code => 'jouve'},
     {:name => 'Kestoloot', :code => 'kesteloot'},
+    {:name => 'La France agricole', :code => 'France_agricole'},
     {:name => 'La Poste', :code => 'la_poste'},
     {:name => 'Lapeyre', :code => 'lapeyre'},
     {:name => 'Lapeyre', :code => 'lapeyre'},
@@ -158,7 +158,7 @@ cat_vente_avoir = Category.create!({:factcat => factcat_agri, :upcategory => upc
     {:name => 'Sotramat', :code => 'sotramat'},
     {:name => 'Super U', :code => 'super_u'},
     {:name => 'Trochet', :code => 'trochet'}
-  ])
+    ])
   trochet = User.find_by_name('Trochet')
 
   myuser = Myuser.create!([

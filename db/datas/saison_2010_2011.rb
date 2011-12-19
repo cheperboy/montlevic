@@ -73,12 +73,12 @@ cat_invest_materiel = Category.find(:first, :conditions => { :upcategory_id => U
 cat_invest_batiment = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('facture').id, :code => 'batiment', :factcat_id => Factcat.find_by_code('invest').id})
 
 
-cat_vente_paille_foin = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'paille_foin', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_paille_ble = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'paille_ble', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_paille_colza = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'paille_colza', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_foin = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'foin', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_ble = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'ble', :factcat_id => Factcat.find_by_code('agri').id})
-cat_vente_colza = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'colza', :factcat_id => Factcat.find_by_code('agri').id})
+cat_vente_colza =     Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'colza', :factcat_id => Factcat.find_by_code('agri').id})
+cat_vente_tournesol = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'tournesol', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_assurance = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'assurance', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_pac = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'pac', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_avoir = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'avoir', :factcat_id => Factcat.find_by_code('agri').id})
@@ -924,15 +924,6 @@ pulves.each {|pulve| putoparcelle = Putoparcelle.create!(:parcelle => parcelle, 
 
 
 
-
-
-
-
-
-
-# FIN PULVES & LABOURS
-
-
 # VENTES - from xls
 
 vente = Vente.create!(:name => 'Moulin - paille ble', :date => '2011-08-01', :prix => 2324, :ref_client => '', :ref => '001', :user => User.find_by_name('Moulin'),:category => cat_vente_paille_ble, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
@@ -943,29 +934,47 @@ vente = Vente.create!(:name => 'Demanus - paille colza', :date => '2011-08-01', 
 parcelles_colza.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
 vente = Vente.create!(:name => 'Dumont - paille colza', :date => '2011-08-01', :prix => 1685, :ref_client => '', :ref => '003', :user => User.find_by_name('Dumont'),:category => cat_vente_paille_colza, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_colza.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Dumont - foin', :date => '2011-08-01', :prix => 5852, :ref_client => '', :ref => '003', :user => User.find_by_name('Dumont'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+vente = Vente.create!(:name => 'Dumont - foin', :date => '2011-08-01', :prix => 5852, :ref_client => '', :ref => '003', :user => User.find_by_name('Dumont'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Medard - foin', :date => '2011-08-01', :prix => 4240, :ref_client => '', :ref => '004', :user => User.find_by_name('Medard'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+vente = Vente.create!(:name => 'Medard - foin', :date => '2011-08-01', :prix => 4240, :ref_client => '', :ref => '004', :user => User.find_by_name('Medard'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Medard - foin', :date => '2011-08-01', :prix => 400, :ref_client => '', :ref => '004', :user => User.find_by_name('Medard'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 1, :adu => 0)
+vente = Vente.create!(:name => 'Medard - foin', :date => '2011-08-01', :prix => 400, :ref_client => '', :ref => '004', :user => User.find_by_name('Medard'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 1, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Aussourd - foin', :date => '2011-08-01', :prix => 1976, :ref_client => '', :ref => '005', :user => User.find_by_name('Aussourd'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+vente = Vente.create!(:name => 'Aussourd - foin', :date => '2011-08-01', :prix => 1976, :ref_client => '', :ref => '005', :user => User.find_by_name('Aussourd'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Aussourd - foin', :date => '2011-08-01', :prix => 988, :ref_client => '', :ref => '005', :user => User.find_by_name('Aussourd'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+vente = Vente.create!(:name => 'Aussourd - foin', :date => '2011-08-01', :prix => 988, :ref_client => '', :ref => '005', :user => User.find_by_name('Aussourd'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Coutillet - foin', :date => '2011-08-01', :prix => 2050, :ref_client => '', :ref => '006', :user => User.find_by_name('Coutillet'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+vente = Vente.create!(:name => 'Coutillet - foin', :date => '2011-08-01', :prix => 2050, :ref_client => '', :ref => '006', :user => User.find_by_name('Coutillet'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Coutillet - foin', :date => '2011-08-01', :prix => 2050, :ref_client => '', :ref => '006', :user => User.find_by_name('Coutillet'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+vente = Vente.create!(:name => 'Coutillet - foin', :date => '2011-08-01', :prix => 2050, :ref_client => '', :ref => '006', :user => User.find_by_name('Coutillet'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
 vente = Vente.create!(:name => 'Groupama - Assurance', :date => '2011-08-02', :prix => 21647, :ref_client => '', :ref => '007', :user => User.find_by_name('Groupama'),:category => cat_vente_assurance, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_ble.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Dauger - Ble', :date => '2011-01-20', :prix => 15289.50, :ref_client => '', :ref => '', :user => User.find_by_name('Dauger'),:category => cat_vente_ble, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+vente = Vente.create!(:name => 'Dauger - Ble', :date => '2011-01-20', :prix => 15289.50, :ref_client => 'VPV-01-2010-727', :ref => '', :user => User.find_by_name('Dauger'),:category => cat_vente_ble, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_ble.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Dauger - Ble', :date => '2011-01-20', :prix => 40000, :ref_client => 'VPV-01-2010-727', :ref => '', :user => User.find_by_name('Dauger'),:category => cat_vente_pac, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 
+vente = Vente.create!(:name => 'PAC - Pac', :date => '2011-01-20', :prix => 40000, :ref_client => '', :ref => '', :user => User.find_by_name('PAC'),:category => cat_vente_pac, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 
+vente = Vente.create!(:name => 'Dauger - Ble 1', :date => '2011-08-08', :prix => 1861.28, :ref_client => 'VPV-01-2011-78', :ref => '', :user => User.find_by_name('Dauger'),:category => cat_vente_ble, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+parcelles_ble.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
 
+vente = Vente.create!(:name => 'Dauger - Ble 2', :date => '2011-09-07', :prix => 1792.53, :ref_client => 'VPV-01-2011-150', :ref => '', :user => User.find_by_name('Dauger'),:category => cat_vente_ble, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+parcelles_ble.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
 
+vente = Vente.create!(:name => 'Dauger - Ble 3', :date => '2011-10-21', :prix => 1257.23, :ref_client => 'VPV-01-2011-303', :ref => '', :user => User.find_by_name('Dauger'),:category => cat_vente_ble, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+parcelles_ble.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
+
+vente = Vente.create!(:name => 'Dauger - Ble 4', :date => '2011-11-23', :prix => 3588.32, :ref_client => 'VPV-01-2011-396', :ref => '', :user => User.find_by_name('Dauger'),:category => cat_vente_ble, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+parcelles_ble.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
+
+vente = Vente.create!(:name => 'Dauger - Tournesol 1', :date => '2011-11-30', :prix => 1828.7, :ref_client => 'VPV-01-2011-553', :ref => '', :user => User.find_by_name('Dauger'),:category => cat_vente_tournesol, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+parcelles_tournesol.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
+
+vente = Vente.create!(:name => 'Dauger - Tournesol 2', :date => '2011-11-30', :prix => 3651.81, :ref_client => 'VPV-01-2011-554', :ref => '', :user => User.find_by_name('Dauger'),:category => cat_vente_tournesol, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+parcelles_tournesol.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
+
+vente = Vente.create!(:name => 'Dauger - Colza', :date => '2011-11-07', :prix => 13670.19, :ref_client => 'VPV-01-2011-360', :ref => '', :user => User.find_by_name('Dauger'),:category => cat_vente_colza, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+parcelles_colza.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
 
 
 # FIN VENTES - from xls
@@ -977,7 +986,9 @@ vente = Vente.create!(:name => 'Dauger - Ble', :date => '2011-01-20', :prix => 4
 
 
 
-# FIN VENTES - from xls
+
+
+
 
 
 
