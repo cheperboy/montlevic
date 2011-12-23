@@ -14,46 +14,14 @@ class Saison < ActiveRecord::Base
   has_one :setting
 
   # positionne le champ Protofac.quantite_restante de chaque produit de la saison.
+  # normalement cette methode n'a pas besoin d'etre appelee car les updates sont fait 
+  # apres chaque modif de produit ou pulve
   def update_protofacture_stock
-  # Produit : p
-  # p.used_quantity : quantite utilisee
-  # p.quantite : quantite totale achetee (somme des factures)
-  # protofac.get_quantite = protofac.prix_unit_unitaire * protofac.quantite
-  # 
-  # Init:
-  # produit_restant = produit.quantite_initiale
-    
-  # 
-  # Algo:
     self.produits.each do |produit|
-      used_a_deduire = produit.get_used_quantite
-      # logger.error "Produit : #{produit.id}\t #{produit.name}. used : #{used_a_deduire}"
-      produit.protofactures.find(:all, :order => :facture_id).each do |protofac|  
-        # logger.error "\tprotofacture : #{protofac.id}"
-        if used_a_deduire.eql?(0)
-          protofac.stock = protofac.quantite
-        else
-          if protofac.quantite <= used_a_deduire
-            # logger.error "\tprotofac.quantite (#{protofac.quantite}) < used_a_deduire (#{used_a_deduire})"
-            protofac.stock = 0
-            # logger.error "\tprotofac.stock = 0"
-            used_a_deduire = used_a_deduire - protofac.quantite
-            # logger.error "\tused_a_deduire(#{used_a_deduire}) -= protofac.quantite(#{protofac.quantite})"
-          else
-            # logger.error "\tprotofac.quantite (#{protofac.quantite}) > used_a_deduire (#{used_a_deduire})"
-            protofac.stock = protofac.quantite - used_a_deduire
-            # logger.error "\tprotofac.stock = used_a_deduire(#{used_a_deduire})"
-            used_a_deduire = 0
-            # logger.error "\tstock=#{used_a_deduire}"
-          end
-        end
-        protofac.save!
-      end #produit.protofactures.each
-      
-    end # of saison.produits.each
+      produit.update_protofacture_stock
+    end
+  end
     
-  end # of method
-  
   # retourne les id des pulves des parcelles de la saison (ou nil)
   def putoproduits
     putoproduits = []

@@ -40,7 +40,11 @@
 			<% else %>
 				<table class=form_layout_content_table>
 					<% @facture.factoparcelles.each do |factoparcelle| %>
-						<%= tr_text(factoparcelle.parcelle.typeculture.name, factoparcelle.parcelle.name) %>
+						<%#= tr_text(factoparcelle.parcelle.typeculture.name, factoparcelle.parcelle.name) %>
+						<tr class=color_culture_<%= factoparcelle.parcelle.typeculture.code %>>
+							<td class="label"><%= factoparcelle.parcelle.typeculture.name %></td>
+							<td class="field"><%= factoparcelle.parcelle.name %></td>
+						</tr>
 					<% end %>
 				</table>
 			<% end %>

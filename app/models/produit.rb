@@ -1,9 +1,13 @@
 class Produit < ActiveRecord::Base  
   
-  has_many :protofactures
+  def after_save 
+    self.update_protofacture_stock
+  end
+
+  has_many :protofactures, :dependent => :destroy
   has_many :factures, :through => :protofactures
   
-  has_many :putoproduits
+  has_many :putoproduits, :dependent => :destroy
   has_many :pulves, :through => :putoproduits
 
   belongs_to :saison
@@ -51,7 +55,7 @@ class Produit < ActiveRecord::Base
   end
 
   # Finders
-    def self.find_by_saison(*args)
+  def self.find_by_saison(*args)
     with_scope(:find => { :conditions => ["saison_id = ?", Application::SAISON_ID],
                           :order => :category_id}) do
         find(*args)
@@ -94,6 +98,15 @@ class Produit < ActiveRecord::Base
     return (get_quantite - get_used_quantite)
   end  
     
+  def stock_percent_pp
+    unless get_quantite.eql?(0)
+      value = (100 * (get_quantite - get_used_quantite)/get_quantite)
+    else
+      value = 0
+    end
+    return ("#{value.display}")
+  end
+    
   def get_cout_total
     cout_total = 0
     unless self.protofactures.count.eql?(0)
@@ -102,6 +115,33 @@ class Produit < ActiveRecord::Base
     end
   end
   
+  def update_protofacture_stock
+  # Produit : p
+  # p.used_quantity : quantite utilisee
+  # p.quantite : quantite totale achetee (somme des factures)
+  # protofac.get_quantite = protofac.prix_unit_unitaire * protofac.quantite
+  # 
+  # Init:
+  # produit_restant = produit.quantite_initiale
+  # 
+  # Algo:
+    used_a_deduire = self.get_used_quantite
+    self.protofactures.find(:all, :order => :facture_id).each do |protofac|  
+      if used_a_deduire.eql?(0)
+        protofac.stock = protofac.quantite
+      else
+        if protofac.quantite <= used_a_deduire
+          protofac.stock = 0
+          used_a_deduire = used_a_deduire - protofac.quantite
+        else
+          protofac.stock = protofac.quantite - used_a_deduire
+          used_a_deduire = 0
+        end
+      end
+      protofac.save!
+    end
+  end
+
   # ----- Affichage -----
   def name_for_select
     out = "#{self.category.name} - #{self.name}"

@@ -53,11 +53,20 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.datetime "updated_at"
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "name",       :null => false
-    t.string   "code",       :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table  "users", :force => true do |t|
+    t.string    "name",       :null => false
+    t.string    "code",       :null => false
+    t.string    "tel_fixe"
+    t.string    "tel_portable"
+    t.string    "tel_3"
+    t.string    "adresse_1"
+    t.string    "adresse_2"
+    t.string    "adresse_cp"
+    t.string    "adresse_ville"
+    t.string    "societe"
+    t.text      "desc"
+    t.datetime  "created_at"
+    t.datetime  "updated_at"
   end
 
   create_table "upcategories", :force => true do |t|
@@ -114,11 +123,11 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
 
     t.float    "tva"
     t.integer  "paye",      :limit => 2
+    t.integer  "reglement", :limit => 2
 
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
   create_table "facdivs", :force => true do |t|
     t.integer  "facture_id",  :null => false
     t.integer  "saison_id",   :null => false
@@ -135,7 +144,6 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
   create_table "factoparcelles", :force => true do |t|
     t.integer  "saison_id"
     t.integer  "parcelle_id"

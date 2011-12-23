@@ -2,6 +2,7 @@ class Application < ActiveRecord::Base
 
   PULVE_DOSAGE_UNITS = [['L/Ha', 'L/Ha'], ['kg/Ha', 'kg/Ha']]
   PRODUIT_QUANTITE_UNITS = [['L', 'L'], ['kg', 'kg']]
+  FACTURE_TVA = [['5,5%', 'L'], ['kg', 'kg']]
 
   SAISON_ID = Setting.find(1).saison_id
   SAISON = Setting.find(1).saison
@@ -75,6 +76,7 @@ class Application < ActiveRecord::Base
     ['star',                    'star',       '',     true,         :check_box,   true,   'star'        ],
     ['adu',                     'adu',        '',     true,         :check_box,   true,   'adu'         ],
     ['stock_vs_used_pp',        'S',          '',     true,         false,        false,  ''            ],
+    ['stock_percent_pp',        'used',       '%',     true,         false,        false,  ''            ],
    	['id',                      'id',         '',     false,        false,        true,   'id'          ],
    	['category_name',           'categorie',  '',     false,        :text_field,  true,   'category_id' ],
    	['name',                    'nom',        '',     true,         :text_field,  true,   'name'        ],

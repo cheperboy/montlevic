@@ -1,11 +1,17 @@
 
 <% form_for(@user) do |f| %>
   <%= f.error_messages %>
-<table>
-<tr>
-	<td><%= f.label :name, "Nom : " %></td>
-	<td><%= f.text_field :name %></td>
-</tr>  
+<table class=form_layout_content_table>
+	<%= form_tr_text(f, 'Nom', :name) %>
+	<%= form_tr_text(f, 'Entreprise', :societe) %>
+	<%= form_tr_text(f, 'Tel fixe', :tel_fixe) %>
+	<%= form_tr_text(f, 'Tel Portable', :tel_portable) %>
+	<%= form_tr_text(f, 'Tel Autre', :tel_3) %>
+	<%= form_tr_text(f, 'Adresse', :adresse_1) %>
+	<%= form_tr_text(f, 'Adresse (suite)', :adresse_2) %>
+	<%= form_tr_text(f, 'CP', :adresse_cp) %>
+	<%= form_tr_text(f, 'Ville', :adresse_ville) %>
+	<%= form_tr_text_area(f, 'Informations', :desc, :size => "30x4") %>
 </table>
 </p>
 <%= f.submit "Enregistrer" %>

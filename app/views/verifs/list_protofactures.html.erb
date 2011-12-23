@@ -1,0 +1,56 @@
+<% title "Verif" %>
+
+<%= render :partial => 'menu_verif' %>
+
+<% unless @protofactures.count == 0 %>
+	<table>
+	  <tr>  	
+	    <td>Id | </td>
+	    <td>Produit | </td>
+	    <td>Facture | </td>
+	    <td>Prix Unit | </td>
+	    <td>Quantite | </td>
+	    <td colspan='3'></td>
+	  </tr>
+
+	<% @protofactures.each do |obj| %>
+<% pro_invalid = (obj.produit.nil?) %>
+<% fact_invalid = (obj.facture.nil?) %>
+
+	  <tr class='list-row'>
+	    <td>
+	    	<% if pro_invalid || fact_invalid %>
+				<%= image_tag('img-nok.png') %> 
+			<% else %>
+				<%= image_tag('img-ok.png') %>
+			<% end %>
+			<%= obj.id %> | 
+		</td>
+
+	    <td>
+	    	<% if pro_invalid %>
+				<%= obj.produit_id %> | 
+			<% else %>
+				<%= link_to obj.produit_id, produit_url(:id => obj.produit_id) %> |
+			<% end %>
+		</td>
+
+	    <td>
+	    	<% if fact_invalid %>
+				<%= obj.facture_id %> | 
+			<% else %>
+				<%= link_to obj.facture_id, facture_url(:id => obj.facture_id) %> |
+			<% end %>
+		</td>
+	    <td><%= obj.prix_unit.to_s %> | </td>
+	    <td><%= obj.quantite.to_s %> | </td>
+	    <td><%= link_to image_tag('img-modif.png'), edit_produit_url(:id => obj.produit_id) %> | </td>
+	    <td><%= link_to image_tag('img-delete.png'), {
+										:controller => :verifs, 
+									 	:action =>:delete_protofacture ,
+									 	:id => obj } %> | 
+		</td>
+	  </tr>
+	<% end %>
+</table>
+<% end %>

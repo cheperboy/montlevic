@@ -130,14 +130,20 @@
 					<th>Date</th>
 					<th>Ref</th>
 					<th>Nom</th>
-					<th>Quantite</th>
-					<th>Used</th>
-					<th>Stock</th>
+					<th>Stock initial</th>
+					<th>Consommé</th>
+					<th>Stock final</th>
 					<th>Prix unitaire</th>
 					<th>Cout</th>
 					<th></th>
 				</tr>
+				<% stock_initial = 0 %>
+				<% stock_final = 0 %>
+				<% used = 0 %>
 				<%- @produit.protofactures.find(:all, :order => :facture_id).each do |protofacture| -%>
+					<% stock_initial += protofacture.quantite %>
+					<% stock_final += protofacture.stock %>
+					<% used += (protofacture.quantite - protofacture.stock) %>
 				<tr>
 					<td><%=h protofacture.facture.date.to_s %></td>
 					<td><%=h protofacture.facture.ref %></td>
@@ -152,6 +158,17 @@
 					<td><%= popup_show(image_tag('img-voir.png'), pop_content(protofacture.facture), "popup-show-content") %></td>
 				</tr>
 			<%- end -%>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td class=right><b><%= stock_initial.display %> <%=h @produit.unit %></b></td>
+				<td class=right><b><%= used.display %> <%=h @produit.unit %></b></td>
+				<td class=right><b><%= stock_final.display %> <%=h @produit.unit %></b></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
 			</table>
 		<%- else -%>
 			<p>Aucune facture associee a ce produit!</p>

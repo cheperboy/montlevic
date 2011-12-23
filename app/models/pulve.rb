@@ -1,5 +1,13 @@
 class Pulve < Charge
 
+  def after_save 
+    self.produits.each { |produit| produit.update_protofacture_stock }
+  end
+
+  def before_delete 
+    # update_protofacture_stock realise dans le controller.
+    # self.produits.each { |produit| produit.update_protofacture_stock }
+  end
 # ----- Model -----
 
   # belongs_to :category

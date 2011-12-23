@@ -19,7 +19,7 @@
 <% @parcelles.each do |parcelle| %>
 	<% sum_surfaces += parcelle.surface %>
 	<% surfaces[parcelle.typeculture.name.to_sym] += parcelle.surface %>
-  <tr>
+  <tr class=color_culture_<%= parcelle.typeculture.code %>>
     <td><%= parcelle.name %></td>
     <td class=right><%= parcelle.surface.display(2) %></td>
     <td><%= parcelle.typeculture.name %></td>
@@ -48,9 +48,9 @@
 
 <!-- TR's SAU par types de cultures -->
 <% @saison.typecultures.each do |typeculture| %>
-	<tr class=bold>
-	  <td>SAU <%= typeculture.name %></td>
-	  <td class=right><%= surfaces[typeculture.name.to_sym].display %></td>
+	<tr class=color_culture_<%= typeculture.code %>>
+	  <td><b>SAU <%= typeculture.name %></b></td>
+	  <td class=right><b><%= surfaces[typeculture.name.to_sym].display %></b></td>
 	  <td></td>
 
 		<% if admin? %>

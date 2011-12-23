@@ -116,13 +116,22 @@ class PulvesController < ApplicationController
   # DELETE /pulves/1.xml
   def destroy
     @pulve = Pulve.find(params[:id])
-    @pulve.destroy
+    # @pulve.produits ne fonctionne pas car le @pulve sera supprime
+    # Donc on recupere les ids des produits du pulve et on charges les produits dans la variable "produits"
+    produit_ids = @pulve.produit_ids
+    produits = []
+    produit_ids.each { |id| produits << Produit.find(id) }
 
+    @pulve.destroy
+    produits.each do |produit|
+      produit.update_protofacture_stock
+    end
     respond_to do |format|
       format.html { redirect_to(pulves_url) }
       format.xml  { head :ok }
     end
   end
+  
   def toggle_star
     @obj = Pulve.find(params[:id])
     if @obj.star != 1

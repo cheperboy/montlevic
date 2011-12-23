@@ -44,6 +44,7 @@ padding-left: 0px;
 /* End : Table Datas */
 
 
+
 /* Begin : Table Invisible */
 .table_invisible { 
 	}
@@ -230,6 +231,19 @@ table.form_layout_content_table td.label{
 }
 table.form_layout_content_table td.field{ text-align:left; }
 
-
-
 /* End : form_layout */
+
+/* Couleurs des <tr> Types de cultures */
+tr.color_culture_ble 							{ background-color: yellow;}
+tr.color_culture_ble:hover 				{ background-color: #FFFFBB;}
+
+tr.color_culture_colza 						{ background-color: #8BB96E;}
+tr.color_culture_colza:hover 			{ background-color: #D6E5CB;}
+
+tr.color_culture_tournesol 				{ background-color: #6AB6D8;}
+tr.color_culture_tournesol:hover 	{ background-color: #B8F3FE;}
+
+tr.color_culture_foin			 				{ background-color: #D6A742;}
+tr.color_culture_foin:hover 			{ background-color: #EDE0A5;}
+/* End Couleurs des <tr> Types de cultures */
+

@@ -21,8 +21,8 @@ class Setting < ActiveRecord::Base
     CHARGES_INCLUDE_MAISON = true if Setting.find(:first).charges_include_maison.eql?(1)
     CHARGES_INCLUDE_INVEST = false
     CHARGES_INCLUDE_INVEST = true if Setting.find(:first).charges_include_invest.eql?(1)
-    CHARGES_INCLUDE_STOCK_PRODUIT = false
-    CHARGES_INCLUDE_STOCK_PRODUIT = true if Setting.find(:first).charges_include_stock_produit.eql?(1)
+    # CHARGES_INCLUDE_STOCK_PRODUIT = false
+    CHARGES_INCLUDE_STOCK_PRODUIT = Setting.find(:first).charges_include_stock_produit.eql?(1)
   end
   
   belongs_to :saison

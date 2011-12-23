@@ -86,6 +86,29 @@ class VerifsController < ApplicationController
     end
   end
   
+  def list_protofactures
+    @protofactures = Protofacture.find(:all)  
+    respond_to do |format|
+      format.html
+    end
+  end
+  def delete_protofacture
+    protofacture = Protofacture.find(params[:id])  
+    if session[:admin]
+      if protofacture.produit.nil? || protofacture.facture.nil?
+        protofacture.destroy
+        flash[:notice] = 'Protofacture will be deleted'   
+      else
+        flash[:error] = 'no need to delete this protofacture'
+      end
+    else
+      flash[:error] = 'not deleted, Admin only!'
+    end        
+    respond_to do |format|
+      format.html { redirect_to :action => "list_protofactures" }
+    end
+  end
+  
   def list_putofactures
     @putofactures = Putofacture.find(:all)  
     respond_to do |format|
