@@ -1017,6 +1017,13 @@ Putofacture.find(:all).each do |putof|
   putof.save!
 end
 
+#positionne les champs 'facture.paye, 'facture.reglement', 'facture.tva'
+Facture.find(:all).each do |f|
+  f.paye = Application::DEFAULT
+  f.tva = Application::DEFAULT
+  f.reglement = Application::DEFAULT
+  f.save!
+end
 
 
 # Mise a jour des Stocks

@@ -10,10 +10,15 @@ module ApplicationHelper
   HEADER_RED_GREEN = 7
   HEADER_COLOR = 8
   
-# WORKING
-  # def test_somme_produits(@saison) 
-  # end
-
+  # Retourne la valeur a afficher d'une 
+  # liste de choix construite avec un tableau de constantes
+  # a = [ [ 1, "one"], [2, "two"], [3, "three"], ["ii", "two"] ] 
+  # a.rassoc("two") → [2, "two"]
+  def constant_pp(array, value)
+    new_array = array.rassoc(value)
+    return (new_array[0].to_s)
+  end
+  
   def toggle_star(object)
     remote_function(:url => { :controller => "factures", :action => "update_star", :id => object.id },
                     :method => :put,

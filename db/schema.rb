@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.text     "desc"
 
     t.float    "tva"
-    t.integer  "paye",      :limit => 2
+    t.integer  "paye"
     t.integer  "reglement", :limit => 2
 
     t.datetime "created_at"

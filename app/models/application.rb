@@ -1,12 +1,28 @@
 class Application < ActiveRecord::Base
 
+  
+  # Veleurs utilisees dans les listes deroulante
+  DEFAULT = 0
+  ERROR   = -1
+
+  # Types de reglement
+  CHEQUE = 1
+  ESPECE = 2
+  
+  # Taux TVA
+  TVA_5_5 = 5.5
+  TVA_19_6 = 19.6
+  
+  # Valeurs de listes deroulantes
   PULVE_DOSAGE_UNITS = [['L/Ha', 'L/Ha'], ['kg/Ha', 'kg/Ha']]
   PRODUIT_QUANTITE_UNITS = [['L', 'L'], ['kg', 'kg']]
-  FACTURE_TVA = [['5,5%', 'L'], ['kg', 'kg']]
+  TAUX_TVA = [['-', DEFAULT], ['5,5%', TVA_5_5], ['19,6%', TVA_19_6]]
+  TYPE_REGLEMENT = [['-', DEFAULT], ['Cheque', CHEQUE], ['Liquide', ESPECE]]
 
   SAISON_ID = Setting.find(1).saison_id
   SAISON = Setting.find(1).saison
   
+
   # HEADER_KEY = 0
   # HEADER_VALUE = 1
   # HEADER_UNIT = 2
@@ -55,10 +71,11 @@ class Application < ActiveRecord::Base
   [
     # KEY                   VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY           GREEN_RED COLOR
     ['star',                'star',       '',     true,         :check_box,   true,   'star',           false,    'black'], 
-    # ['adu',                 'adu',        '',     true,         :check_box,   true,   'adu',            false,    'black'],
+    ['paye',                'paye',       '',     true,         :check_box,   true,   'paye',           false,    'black'], 
+    # ['adu',               'adu',        '',     true,         :check_box,   true,   'adu',            false,    'black'],
    	['id',                  'id',         '',     false,        false,        true,   'id',             false,    'grey'],
   	['category_name',       'Categorie',  '',     false,        false,        true,   'category_id',    false,    'grey'],
-    # ['factcat_name',        'class',      '',     false,        false,        true,   'factcat_id',     false,    'grey'],
+    # ['factcat_name',      'class',      '',     false,        false,        true,   'factcat_id',     false,    'grey'],
   	['print_factype',       'compta',     '',     false,        false,        true,   'factype_id',     false,    'grey'],
   	['type',                'type',       '',     false,        false,        true,   'type',           false,    'grey'],
   	['user_name',           'Presta',     '',     false,        false,        true,   'user_id',        false,    'black'],

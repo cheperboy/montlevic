@@ -10,7 +10,7 @@
 			<%= tr_text('Cout', @facture.cout.display, euro) %>
 			<%#= tr_text('Valeur non imputée', @facture.get_cout_total.display, euro) %>
 			<% if @facture.category_produits? %>
-				<%= tr_text('valeur produits en stock', @facture.sum_putoproduits_stock.display, euro) %>
+				<%= tr_text('Stock produits restant', @facture.sum_putoproduits_stock.display, euro) %>
 			<% end %>
 			<%= tr_text('Ref client', @facture.ref_client) %>
 			<%= tr_text('Ref perso', @facture.ref) %>
@@ -25,6 +25,11 @@
 			<%= tr_text('Comptabilisation', @facture.factype.name) %>
 			<%= tr_text('Star', @facture.star) %>
 			<%= tr_text('ADU', @facture.adu) %>
+			
+			<%= tr_text('Payé', @facture.paye) %>
+			<%= tr_text('Reglement', constant_pp(Application::TYPE_REGLEMENT, @facture.reglement)) %>
+			<%= tr_text('TVA', constant_pp(Application::TAUX_TVA, @facture.tva)) %>
+			
 			</table>
 		</td>
 	</tr>
