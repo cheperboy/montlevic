@@ -95,7 +95,7 @@ module FacturesHelper
         end
         
         # ajout du lien (header de colonne)
-        out += link_to link, { :action => "index",
+        out += link_to link, { :action => action,
                                :tri => header[ApplicationHelper::HEADER_TRI_KEY].to_s,
                                :sens => sens}
       else

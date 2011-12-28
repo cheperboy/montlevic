@@ -6,6 +6,12 @@
     <li><%= link_to action, :controller => :calculate, :action => action  %></li>
   <%- end -%>
   </ul>
+  <strong>Factures</strong>
+  <ul>
+	<li><%= link_to "Nouveau", 	:controller => :factures, :action => :new  %></li>
+	<li><%= link_to "Liste", 	:controller => :factures  %></li>
+	<li><%= link_to "Payées", 	:controller => :factures, :action => :index_paye %></li>
+  </ul>
   <strong>Charges</strong>
   <ul>
     <%- [Facture, Labour, Pulve, Produit].each do |model| -%>

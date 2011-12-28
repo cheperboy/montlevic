@@ -117,10 +117,10 @@ class Facture < Charge
   end
   
   #old find_not_papier
-  def self.find_not_null(*args)
-    with_scope(:find => { :conditions => ["saison_id = ? AND factype_id != ?", 
+  def self.find_real_by_saison(*args)
+    with_scope(:find => { :conditions => ["saison_id = ? AND type != ?", 
                                           Setting.find(:first).saison_id,
-                                          Factype.find_by_name('null').id],
+                                          'Report'],
                           :order => :category_id}) do
         find(*args)
       end
@@ -153,6 +153,14 @@ class Facture < Charge
   end
   
   # ----- Methodes d'affichage -----
+  
+  def pp_paye
+    if self.paye.eql?(1) 
+      return ("✓")
+    else 
+      return ""
+    end
+  end
     
   def print_factype
     self.factype.name

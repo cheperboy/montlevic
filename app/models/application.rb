@@ -71,7 +71,7 @@ class Application < ActiveRecord::Base
   [
     # KEY                   VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY           GREEN_RED COLOR
     ['star',                'star',       '',     true,         :check_box,   true,   'star',           false,    'black'], 
-    ['paye',                'paye',       '',     true,         :check_box,   true,   'paye',           false,    'black'], 
+    ['pp_paye',                'paye',       '',     true,         :check_box,   true,   'paye',           false,    'black'], 
     # ['adu',               'adu',        '',     true,         :check_box,   true,   'adu',            false,    'black'],
    	['id',                  'id',         '',     false,        false,        true,   'id',             false,    'grey'],
   	['category_name',       'Categorie',  '',     false,        false,        true,   'category_id',    false,    'grey'],
@@ -82,6 +82,20 @@ class Application < ActiveRecord::Base
   	['name',                'nom',        '',     false,        false,        true,   'name',           false,    'black'],
   	['cout',                'Cout',       '€',    false,        false,        true,   'cout',           false,    'black'],
     # ['get_cout_total',      'Comptable',  '€',    false,        false,        true,   'get_cout_total', true,     'black'],
+    ['ref_client',          'Ref Client', '',     false,        false,        true,   'ref_client',     false,    'black'],
+    ['ref',                 'Ref',        '',     false,        false,        true,   'ref',            false,    'grey'],
+  	['print_date',          'date',       '',     false,        false,        true,   'date',           false,    'grey'],
+  ]
+
+  FACTURE_HEAD_PAYEES = 
+  [
+    # KEY                   VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY           GREEN_RED COLOR
+    ['star',                'star',       '',     true,         :check_box,   true,   'star',           false,    'black'], 
+    ['pp_paye',             'paye',       '',     true,         :check_box,   true,   'paye',           false,    'black'], 
+  	['category_name',       'Categorie',  '',     false,        false,        true,   'category_id',    false,    'grey'],
+  	['user_name',           'Presta',     '',     false,        false,        true,   'user_id',        false,    'black'],
+  	['name',                'nom',        '',     false,        false,        true,   'name',           false,    'black'],
+  	['cout',                'Cout',       '€',    false,        false,        true,   'cout',           false,    'black'],
     ['ref_client',          'Ref Client', '',     false,        false,        true,   'ref_client',     false,    'black'],
     ['ref',                 'Ref',        '',     false,        false,        true,   'ref',            false,    'grey'],
   	['print_date',          'date',       '',     false,        false,        true,   'date',           false,    'grey'],

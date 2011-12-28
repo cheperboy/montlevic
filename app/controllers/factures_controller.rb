@@ -57,6 +57,18 @@ class FacturesController < ApplicationController
     end
   end
 
+  def index_paye
+    @factures = Facture.find_real_by_saison(:all, :order => :id) 
+    if params[:tri]
+      @factures = Facture.find_real_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
+      @tri = params[:tri]
+      @sens = params[:sens]
+    end
+    respond_to do |format|
+      format.html
+    end
+  end
+
   def diverses
     @factures = Diverse.find_by_saison(:all, :order => 'ref DESC')
     respond_to do |format|

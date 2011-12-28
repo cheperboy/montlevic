@@ -55,6 +55,7 @@ ActionController::Routing::Routes.draw do |map|
                                             :new_diverse => :get,
                                             :create_diverse => :post,
                                             :index_types => :get,
+                                            :index_paye => :get,
                                             :edit_facdiv => :get,
                                             :diverses => :get,
                                             :modif => :any,
