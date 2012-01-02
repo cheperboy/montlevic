@@ -399,6 +399,61 @@ module ApplicationHelper
     return out
   end
 
+  def form_tr_select_with_groups_old(form, name, col, collection, id, theclass, display, options = nil)
+  #   out = ""
+  #   out << "<tr><td class='label'>"
+  #   out += form.label col.to_sym, name
+  #   out += " : </td>"
+  #   out += "<td class='field'>"
+  #   nom = ''
+  #   nom = theclass.to_s.downcase
+  #   nom += '['
+  #   nom += col.to_s
+  #   nom += ']'
+  # 
+  #   out += "<select id=#{theclass.to_s.downcase}_#{col} name='#{nom}'>"
+  #           # <select id="facture_category_id" name="facture[category_id]">
+  #   unless options.nil?
+  #     out += option_groups_from_collection_for_select(collection, :options, :type_name, :id,:name, options[:selected])
+  #   else
+  #     out += option_groups_from_collection_for_select(collection, :options, :type_name, :id,:name)
+  #   end
+  #   out += '</td></tr>'
+  #   return out
+  end
+
+  def form_tr_select_with_groups(form, name, col, collection, id, object, options = nil)
+    out = ""
+    out << "<tr><td class='label'>"
+    out += form.label col.to_sym, name
+    out += " : </td>"
+    out += "<td class='field'>"
+    nom = ''
+    nom = object.class.to_s.downcase
+    nom += '['
+    nom += col.to_s
+    nom += ']'
+
+    out += "<select	id=#{object.class.to_s.downcase}_#{col} name='#{nom}'>"
+    collection.each do |group|
+      out += "<optgroup label=#{group.type_name}>"
+      group.options.each do |cat|
+        selected = ''
+        if (object && object.category_id && (cat.id == object.category_id))
+          selected = 'selected="selected"'
+        end
+        out += "<option value='#{cat.id}'"
+        out += selected
+        out += ">#{cat.name}</option>"
+      end
+      out += "</optgroup>"
+    end
+
+    out += "</select>"
+    out += '</td></tr>'
+    return out
+  end
+
   def form_tr_check(form, name, col)
     out = ''
     out += '<tr><td class="label">'
@@ -452,10 +507,10 @@ module ApplicationHelper
     return session[:user_id]
   end
 
-  def update_saison() 
-    remote_function(:url => { :controller => "settings", :action => "update_saison" },
-                    :method => :put)
-  end
+  # def update_saison() 
+  #   remote_function(:url => { :controller => "settings", :action => "update_saison" },
+  #                   :method => :put)
+  # end
 
   def shortstring(text)
     truncate(text, :length => 11, :omission => '...')

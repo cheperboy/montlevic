@@ -175,7 +175,6 @@ class Charge < ActiveRecord::Base
     cultures.uniq.sort.to_s
   end
   
-  # sum_surfaces
   # retourne la somme des surfaces de chaque parcelles associées à cette charge.
   # Si aucune parcelle n'est associée a cette charge, toutes les parcelles sont prises en compte.
   # [IF MODIF] Attention, normalement cette méthode ne devrait jamais retourner 0   

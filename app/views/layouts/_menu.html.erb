@@ -12,18 +12,14 @@
 	<li><%= link_to "Liste", 	:controller => :factures  %></li>
 	<li><%= link_to "Payées", 	:controller => :factures, :action => :index_paye %></li>
   </ul>
-  <strong>Charges</strong>
+  <strong>Ventes</strong>
   <ul>
-    <%- [Facture, Labour, Pulve, Produit].each do |model| -%>
-    <li>
-      <%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url") %>  
-			<%= link_to "New", eval("new_#{model.name.downcase}_url")  %>
-    </li>
-    <%- end -%>
+	<li><%= link_to "Nouveau", 	:controller => :ventes, :action => :new  %></li>
+	<li><%= link_to "Liste", 	:controller => :ventes  %></li>
   </ul>
-  <strong>Recettes</strong>
+  <strong>Travaux</strong>
   <ul>
-    <%- [Vente].each do |model| -%>
+    <%- [Labour, Pulve, Produit].each do |model| -%>
     <li>
       <%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url") %>  
 			<%= link_to "New", eval("new_#{model.name.downcase}_url")  %>
@@ -32,9 +28,10 @@
   </ul>
   <strong>Données</strong>
   <ul>
-    <%- [Zone, Parcelle, Typeculture, Category, Saison, User].each do |model| -%>
+    <%- [Zone, Parcelle, Typeculture, Category, Saison].each do |model| -%>
     <li><%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url")  %></li>
     <%- end -%>
+	<li><%= link_to "Clients", 	:controller => :users  %></li>
   </ul>
   <% if session[:admin] %>
 	  <strong>Admin</strong>

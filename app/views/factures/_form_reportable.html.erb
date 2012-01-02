@@ -28,7 +28,7 @@
 					<table class=form_layout_content_table>
 						<% saisons = Saison.find(:all, :order => :name) %>
 						<%= form_tr_select(f, 'Campagne', :saison_id, saisons, :id, :name,  :selected => current_saison_id) %>
-						<%= form_tr_select(f, 'Categorie', :category_id, Category.for_factures, :id, :name_for_select_for_facture) %>
+						<%= form_tr_select_with_groups(f, 'Catégorie', :category_id, Category.grouped_for_factures, :id, @facture) %>
 						<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype.find(:all, :order => :name), :id, :name) %>
 						<%= form_tr_check(f, 'Star', :star) %>
 						<%= form_tr_check(f, 'ADU', :adu) %>

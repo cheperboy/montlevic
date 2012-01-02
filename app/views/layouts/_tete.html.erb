@@ -1,6 +1,6 @@
 <div id="bloc_up">
 	<% if logged_in? %>
-		  	saison <strong><%= Saison.find(current_saison_id).name %></strong> |
+		  	Campagne: <strong><span class=red><%= Saison.find(current_saison_id).name %></strong></class> |
 		  	<%= session[:user_login] %> | 
 		  	<%= ENV['RAILS_ENV'].to_s %> | 
 			<%= link_to 'Logout', session_path, :method => :delete %>

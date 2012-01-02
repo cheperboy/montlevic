@@ -5,7 +5,23 @@ class Category < ActiveRecord::Base
   has_many :charges
   has_many :factures
   has_many :ventes
+
+  CategoryOption = Struct.new(:id, :name)
+
+  # For Select List by Group
+  class CategoryUptype 
+    attr_reader :type_name, :options 
+    def initialize(name)
+      @type_name = name
+      @options = []
+    end 
   
+    def <<(option)
+      @options << option
+    end
+  end
+  # End of For Select List by Group
+
   def name_for_select_for_facture
     @name_for_select = self.factcat.name + " - " + self.name
   end
@@ -67,10 +83,51 @@ class Category < ActiveRecord::Base
     find_by_upcategory('facture')
   end
     
+  def self.grouped_for_factures
+    cats = find_by_upcategory('facture')
+    upcategory_id = Upcategory.find(:first, :conditions => { :name => 'facture' }).id
+    
+    myoptions = []
+    Factcat.find(:all).each do |upcat|
+      myupcat = CategoryUptype.new(upcat.name)
+      categories = Category.find(:all, :conditions => ["factcat_id = ? AND upcategory_id = ?", upcat.id, upcategory_id])
+      categories.each do |cat|
+        myupcat << CategoryOption.new(cat.id, cat.name)
+      end
+      myoptions << myupcat
+    end
+
+    # agri = CategoryUptype.new("Agricole")
+    # factcat_id = Factcat.find_by_code("agri").id
+    # categories = Category.find(:all, :conditions => ["factcat_id = ? AND upcategory_id = ?", factcat_id, upcategory_id])
+    # categories.each do |cat|
+    #   agri << CategoryOption.new(cat.id, cat.name)
+    # end
+    # 
+    # invest = CategoryUptype.new("Investissement")
+    # factcat_id = Factcat.find_by_code("invest").id
+    # categories = Category.find(:all, :conditions => ["factcat_id = ? AND upcategory_id = ?", factcat_id, upcategory_id])
+    # categories.each do |cat|
+    #   invest << CategoryOption.new(cat.id, cat.name)
+    # end
+    # 
+    # maison = CategoryUptype.new("Maison")
+    # factcat_id = Factcat.find_by_code("maison").id
+    # categories = Category.find(:all, :conditions => ["factcat_id = ? AND upcategory_id = ?", factcat_id, upcategory_id])
+    # categories.each do |cat|
+    #   maison << CategoryOption.new(cat.id, cat.name)
+    # end
+    # 
+    # options = [agri, invest, maison]
+    return myoptions
+  end
+    
   def self.get_factcat(cat_id)
     category = Category.find(cat_id)
     Factcat.find(category.factcat_id)
   end
     
 end
+
+
 

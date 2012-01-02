@@ -10,13 +10,22 @@ class SaisonsController < ApplicationController
     end
   end
 
-  # GET /saisons/1
-  # GET /saisons/1.xml
-  def show
-    @saison = Saison.find(params[:id])
+  def select_saison
+    @setting = Setting.find(:first)
+    @saisons = Saison.all
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @saison }
+      if @setting.update_attribute(:saison_id, params[:select_saison][:id])
+        @setting.reload
+        # Update Session variable
+        # current_saison_id = Setting.find(:first).saison.id
+        # session[:saison_name] = Setting.find(:first).saison.name
+        session[:current_saison_id] = Setting.find(:first).saison_id
+        flash[:notice] = 'Saison selectionnee.'
+        
+      else
+        flash[:error] = 'Pas de mise a jour'
+      end
+      format.html { redirect_to(saisons_url) }
     end
   end
 
@@ -27,6 +36,16 @@ class SaisonsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
+      format.xml  { render :xml => @saison }
+    end
+  end
+
+  # GET /saisons/1
+  # GET /saisons/1.xml
+  def show
+    @saison = Saison.find(params[:id])
+    respond_to do |format|
+      format.html # show.html.erb
       format.xml  { render :xml => @saison }
     end
   end
