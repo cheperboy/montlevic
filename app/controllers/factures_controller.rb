@@ -35,9 +35,9 @@ class FacturesController < ApplicationController
   # end
   # 
   def index
-    @factures = Facture.find_with_saison(:all, :order => :id) 
+    @factures = Facture.find_by_saison(:all) 
     if params[:tri]
-      @factures = Facture.find_with_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
+      @factures = Facture.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
       @tri = params[:tri]
       @sens = params[:sens]
     end
@@ -275,6 +275,26 @@ class FacturesController < ApplicationController
       star = 1
     end
     params[:facture][:star] = star
+    @facture = Facture.find(params[:id])
+    respond_to do |format| 
+      if @facture.update_attributes(params[:facture])
+        format.html { redirect_to(@facture) }
+        format.js	{ head :ok } 
+      else
+        flash[:error] = 'probleme mise a jour Star ou Adu'
+        format.html { render :action => "edit" } 
+        format.js	{ head :unprocessable_entity }
+      end 
+    end
+  end
+
+  def update_adu
+    logger.error "params : #{params.inspect}"
+    adu = 0
+    if params[:facture][:adu].eql?("true")
+      adu = 1
+    end
+    params[:facture][:adu] = adu
     @facture = Facture.find(params[:id])
     respond_to do |format| 
       if @facture.update_attributes(params[:facture])

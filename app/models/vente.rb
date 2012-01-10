@@ -16,6 +16,13 @@ class Vente < Charge
   validates_numericality_of :prix, :message => "Prix doit etre un nombre"
   validates_associated :ventoparcelles
 
+  def self.find_by_saison(*args)
+    with_scope(:find => { :conditions => ["saison_id = ?", Application::SAISON_ID],
+                          :order => :category_id}) do
+        find(*args)
+      end
+  end
+
   def get_cout_ha
     return (self.get_cout_total / self.sum_surfaces)  
   end

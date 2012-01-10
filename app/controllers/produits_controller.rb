@@ -11,41 +11,47 @@ class ProduitsController < ApplicationController
     end
   end
    
-  def toggle_star
-    @produit = Produit.find(params[:id])
-    if @produit.star != 1
-       @produit.star = 1
-    else
-      @produit.star = 0
-    end
-    if @produit.save
-      render(:layout => false)
+  def modif_star_adu
+    @produits = Produit.find_all
+    @produits.each do |produit|
+      produit.star = 0
+      produit.adu = 0
+      produit.save!
     end
   end
-  
-  def toggle_adu
-    @produit = Produit.find(params[:id])
-    if @produit.adu != 1
-       @produit.adu = 1
-    else
-      @produit.adu = 0
-    end
-    if @produit.save
-      render(:layout => false)
-    end
-  end
+   
+  # def toggle_star
+  #   @produit = Produit.find(params[:id])
+  #   if @produit.star != 1
+  #      @produit.star = 1
+  #   else
+  #     @produit.star = 0
+  #   end
+  #   if @produit.save
+  #     render(:layout => false)
+  #   end
+  # end
+  # 
+  # def toggle_adu
+  #   @produit = Produit.find(params[:id])
+  #   if @produit.adu != 1
+  #      @produit.adu = 1
+  #   else
+  #     @produit.adu = 0
+  #   end
+  #   if @produit.save
+  #     render(:layout => false)
+  #   end
+  # end
 
   def index
-    @produits = Produit.find_by_saison(:all, :order => :category_id) 
+    @produits_used =        Produit.find_used(:all, :order => :category_id)
+    @produits_non_achetes = Produit.find_not_buy(:all, :order => :category_id)
+    @produits_not_used =    Produit.find_not_used(:all, :order => :category_id)
+
     if params[:tri]
       @produits = Produit.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
     end
-    # @produits.each do |produit|
-    #   if produit.stock_vs_used?
-    #     produit.protofactures.first.quantite = produit.get_used_quantite
-    #     produit.save
-    #   end
-    # end
     respond_to do |format|
       format.html
     end
@@ -97,10 +103,10 @@ class ProduitsController < ApplicationController
     respond_to do |format|
       if @produit.update_attributes(params[:produit])
         flash[:notice] = 'Modification du produit ok'
-        format.html { redirect_to(produit_url(@produit)) }
+        # format.html { redirect_to(produit_url(@produit)) }
       else
         add_errors_to_model(@produit.errors)
-        format.html { render :action => "edit" }
+        # format.html { render :action => "edit" }
         format.xml  { render :xml => @produit.errors, :status => :unprocessable_entity }
       end
     end
@@ -122,4 +128,45 @@ class ProduitsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def update_star
+    logger.error "params : #{params.inspect}"
+    star = 0
+    if params[:element][:star].eql?("true")
+      star = 1
+    end
+    params[:element][:star] = star
+    @element = Produit.find(params[:id])
+    respond_to do |format| 
+      if @element.update_attributes(params[:element])
+        format.html { redirect_to(@element) }
+        format.js	{ head :ok } 
+      else
+        flash[:error] = 'probleme mise a jour Star ou Adu'
+        format.html { render :action => "edit" } 
+        format.js	{ head :unprocessable_entity }
+      end 
+    end
+  end
+
+  def update_adu
+    logger.error "params : #{params.inspect}"
+    adu = 0
+    if params[:element][:adu].eql?("true")
+      adu = 1
+    end
+    params[:element][:adu] = adu
+    @element = Produit.find(params[:id])
+    respond_to do |format| 
+      if @element.update_attributes(params[:element])
+        format.html { redirect_to(@element) }
+        format.js	{ head :ok } 
+      else
+        flash[:error] = 'probleme mise a jour Star ou Adu'
+        format.html { render :action => "edit" } 
+        format.js	{ head :unprocessable_entity }
+      end 
+    end
+  end
+  
 end

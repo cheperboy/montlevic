@@ -42,31 +42,60 @@
 		</td>
 	</tr>
 
+	<!-- PARCELLES & CULTURES -->
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Parcelles <span class=link><%= link_to 'Ajouter une parcelle', '#ventoparcelle', :class => "add_nested_item", :rel => "ventoparcelles" %></span></td>
+		<td class=form_layout_title_right>Cultures</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<div id="ventoparcelles">
+				<% f.fields_for :ventoparcelles do |ventoparcelle_form| %>
+					<% unless f.object.new_record? %>
+						<%= render :partial => 'ventoparcelle', :locals => { :f => ventoparcelle_form } %>
+					<% end %>
+				<% end %>
+			</div>
+		</td>
+		<td class=form_layout_content_right>
+			<div class="typeculture">
+			  <table class=form_layout_content_table>
+				<% for t in Typeculture.find_for_saison() %>
+					<%= form_tr_check_tag(t.name, "typecultures[#{t.id}]") %>
+				<% end %>
+			  </table>
+			</div>
+		</td>
+	</tr>
+
+
+
+	<!-- DESC -->
+	<tr class=form_layout_title>
+		<td colspan=2 class=form_layout_title>Description</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td colspan=2 class=form_layout_content>
+			<table>
+				<%= form_tr_text_area(f, '', :desc, :size => "80x5") %>
+			</table>
+		</td class=form_layout_content>
+	</tr>
+
+	<!-- INFO -->
+	<tr class=form_layout_title>
+		<td colspan=2 class=form_layout_title>Informations Importantes</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td colspan=2 class=form_layout_content>
+			<table>
+				<%= form_tr_text_area(f, '', :info, :size => "80x5") %>
+			</table>
+		</td class=form_layout_content>
+	</tr>
 
 </table>
 
-
-<fieldset>
-	<legend><h3>Type de cultures</h3></legend>
-	<div class="typeculture">
-	  <table>
-		<% for t in Typeculture.find_for_saison() %>
-			<%= form_tr_check_tag(t.name, "typecultures[#{t.id}]") %>
-		<% end %>
-	  </table>
-	</div>
-</fieldset>
-
-<div id="ventoparcelles">
-	<% f.fields_for :ventoparcelles do |ventoparcelle_form| %>
-		<% unless f.object.new_record? %>
-			<%= render :partial => 'ventoparcelle', :locals => { :f => ventoparcelle_form } %>
-		<% end %>
-	<% end %>
-</div>
-<p>
-<%= link_to 'Ajouter une parcelle', '#ventoparcelle', :class => "add_nested_item", :rel => "ventoparcelles" %>
-</p>
 
 <%= f.submit "Enregistrer" %>
 </p>

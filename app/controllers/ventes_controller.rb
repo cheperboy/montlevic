@@ -27,8 +27,12 @@ class VentesController < ApplicationController
   # GET /ventes
   # GET /ventes.xml
   def index
-    @ventes = Vente.find_by_saison(:all)
-
+    @ventes = Vente.find_by_saison(:all) 
+    if params[:tri]
+      @ventes = Vente.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
+      @tri = params[:tri]
+      @sens = params[:sens]
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @ventes }
@@ -111,4 +115,46 @@ class VentesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def update_star
+    logger.error "params : #{params.inspect}"
+    star = 0
+    if params[:element][:star].eql?("true")
+      star = 1
+    end
+    params[:element][:star] = star
+    @element = Vente.find(params[:id])
+    respond_to do |format| 
+      if @element.update_attributes(params[:element])
+        format.html { redirect_to(@element) }
+        format.js	{ head :ok } 
+      else
+        flash[:error] = 'probleme mise a jour Star ou Adu'
+        format.html { render :action => "edit" } 
+        format.js	{ head :unprocessable_entity }
+      end 
+    end
+  end
+
+  def update_adu
+    logger.error "params : #{params.inspect}"
+    adu = 0
+    if params[:element][:adu].eql?("true")
+      adu = 1
+    end
+    params[:element][:adu] = adu
+    @element = Vente.find(params[:id])
+    respond_to do |format| 
+      if @element.update_attributes(params[:element])
+        format.html { redirect_to(@element) }
+        format.js	{ head :ok } 
+      else
+        flash[:error] = 'probleme mise a jour Star ou Adu'
+        format.html { render :action => "edit" } 
+        format.js	{ head :unprocessable_entity }
+      end 
+    end
+  end
+
+  
 end

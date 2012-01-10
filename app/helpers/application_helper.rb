@@ -19,8 +19,17 @@ module ApplicationHelper
     return (new_array[0].to_s)
   end
   
-  def toggle_star(object)
-    remote_function(:url => { :controller => "factures", :action => "update_star", :id => object.id },
+  def toggle_star(object, controller)
+    remote_function(:url => { :controller => controller, :action => "update_star", :id => object.id },
+                    :method => :put,
+                    :before => "Element.show('spinner-#{object.id}')" ,
+                    :complete => "Element.hide('spinner-#{object.id}')",
+                    :with => "this.name + '=' + this.checked"
+                    )
+  end
+
+  def toggle_adu(object, controller)
+    remote_function(:url => { :controller => controller, :action => "update_adu", :id => object.id },
                     :method => :put,
                     :before => "Element.show('spinner-#{object.id}')" ,
                     :complete => "Element.hide('spinner-#{object.id}')",
@@ -70,8 +79,8 @@ module ApplicationHelper
     link_size = 3
     out = ""
     # Action a choix multiple
-    out += form_tag :action => 'index'
-    out += submit_tag :'Action'
+    # out += form_tag :action => 'index'
+    # out += submit_tag :'Action'
     out += '<table class="table_list">'
     
     # CHECKKBOX A SUPPRIMER
@@ -133,15 +142,21 @@ module ApplicationHelper
       # out += "</td>"
       
       headers.each do |header|
+        logger.error "header[HEADER_KEY] : #{header[HEADER_KEY]}"
         value = element.send(header[HEADER_KEY])
         #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)
         if header[HEADER_KEY].eql?("star")
           out += "<td>"
-          out += link_to_star(element.class, element.id, false)
+          out += check_box_tag 'element[star]', "1", element.star?, :onclick => toggle_star(element, controller)
+          out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
           out += "</td>"
+          # out += "<td>"
+          # out += link_to_star(element.class, element.id, false)
+          # out += "</td>"
         elsif header[HEADER_KEY].eql?("adu")
           out += "<td>"
-          out += link_to_star(element.class, element.id, true)
+          out += check_box_tag 'element[adu]', "1", element.adu?, :onclick => toggle_adu(element, controller)
+          out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
           out += "</td>"
         elsif header[HEADER_KEY].eql?("dosage")
           out += "<td class='list-elt-right'>"

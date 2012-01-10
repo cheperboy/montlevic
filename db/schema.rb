@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.string   "ref_client"
     t.integer  "ref"
     t.text     "desc"
+    t.text     "info"
 
     t.float    "tva"
     t.integer  "paye"
@@ -196,6 +197,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer  "star"
     t.integer  "adu"
     t.text     "desc"
+    t.text     "info"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -226,6 +228,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.string   "name",                         :null => false
     t.float    "cout_ha_passage"
     t.text     "desc"
+    t.text     "info"
     t.integer  "star",            :limit => 2
     t.integer  "adu",             :limit => 2
     t.datetime "created_at"
@@ -256,7 +259,9 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.string   "name",           :null => false
     t.string   "code"
     t.float    "surface"
+    t.float    "surface_utile"
     t.text     "desc"
+    t.text     "info"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -270,6 +275,22 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.datetime "updated_at"
   end
 
+  # create_table "prodpaille", :force => true do |t|
+  #   t.integer  "category_id", :null => false
+  #   t.integer  "saison_id",   :null => false
+  #   t.integer  "user_id"
+  #   t.string   "name",        :null => false
+  #   t.integer  "star"
+  #   t.integer  "typebotte"  #ronde, carre
+  #   t.integer  "poids"
+  #   t.float    "valorisation",:null => false
+  #   t.integer  "adu"
+  #   t.text     "desc"
+  #   t.text     "info"
+  #   t.datetime "created_at"
+  #   t.datetime "updated_at"
+  # end
+
   create_table "ventes", :force => true do |t|
     t.integer  "category_id", :null => false
     t.integer  "saison_id",   :null => false
@@ -282,6 +303,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer  "star"
     t.integer  "adu"
     t.text     "desc"
+    t.text     "info"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,8 +1,9 @@
 <table class=table_data>
   <tr>
-    <td>Nom</td>
-    <td class=right>surface (Ha)</td>
     <td>Culture</td>
+    <td>Nom</td>
+    <td class=right>surface pac (Ha)</td>
+    <td class=right>surface utile (Ha)</td>
 	<% if admin? %>
 	    <td></td>
 		<td></td>
@@ -12,22 +13,28 @@
 
 <% sum_surfaces = 0 %>
 <% surfaces = {} %>
+<% sum_surfaces_utile = 0 %>
+<% surfaces_utile = {} %>
 <% @saison.typecultures.each do |typeculture| %>
 	<% surfaces[typeculture.name.to_sym] = 0 %>
+	<% surfaces_utile[typeculture.name.to_sym] = 0 %>
 <% end %>
 
 <% @parcelles.each do |parcelle| %>
 	<% sum_surfaces += parcelle.surface %>
 	<% surfaces[parcelle.typeculture.name.to_sym] += parcelle.surface %>
+	<% sum_surfaces_utile += parcelle.surface_utile %>
+	<% surfaces_utile[parcelle.typeculture.name.to_sym] += parcelle.surface_utile %>
   <tr class=color_culture_<%= parcelle.typeculture.code %>>
+    <td><%= parcelle.typeculture.name %></td>
     <td><%= parcelle.name %></td>
     <td class=right><%= parcelle.surface.display(2) %></td>
-    <td><%= parcelle.typeculture.name %></td>
+    <td class=right><%= parcelle.surface_utile.display(2) %></td>
 	
 	<% if admin? %>
-	    <td><%= link_to 'Voir', parcelle %></td>
-	    <td><%= link_to 'Modifier', edit_parcelle_path(parcelle) %></td>
-	    <td><%= link_to 'Supprimer', parcelle, :confirm => 'Are you sure?', :method => :delete %></td>
+	    <td><%= link_to_show (parcelle.class, parcelle.id) %></td>
+	    <td><%= link_to_edit(parcelle.class, parcelle.id) %></td>
+	    <td><%= link_to_delete(parcelle.class, parcelle.id) %></td>
 	<% end %>
   
   </tr>
@@ -36,6 +43,7 @@
 <!-- TR vide -->
 <tr>
 	  <td></td>
+	  <td class=right></td>
 	  <td class=right></td>
 	  <td></td>
 
@@ -49,8 +57,10 @@
 <!-- TR's SAU par types de cultures -->
 <% @saison.typecultures.each do |typeculture| %>
 	<tr class=color_culture_<%= typeculture.code %>>
-	  <td><b>SAU <%= typeculture.name %></b></td>
+	  <td><b>SAU<%= typeculture.name %></b></td>
+	  <td></td>
 	  <td class=right><b><%= surfaces[typeculture.name.to_sym].display %></b></td>
+	  <td class=right><b><%= surfaces_utile[typeculture.name.to_sym].display %></b></td>
 	  <td></td>
 
 		<% if admin? %>
@@ -65,6 +75,7 @@
 <tr>
 	  <td></td>
 	  <td class=right></td>
+	  <td class=right></td>
 	  <td></td>
 
 		<% if admin? %>
@@ -77,7 +88,9 @@
 <!-- TR TOTAL SAU -->
 <tr class=bold>
   <td>Total SAU</td>
+  <td>Total SAU</td>
   <td class=right><%= sum_surfaces %></td>
+  <td class=right><%= sum_surfaces_utile %></td>
   <td></td>
 	
 	<% if admin? %>

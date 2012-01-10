@@ -18,7 +18,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resource :session
   
-  map.resources :ventes
+  map.resources :ventes, :collection => { :update_adu => :put,
+                                            :update_star => :put}
+  
 
   map.resources :myusers
 
@@ -35,15 +37,20 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :saisons
 
   map.resources :pulves, :collection => { :index => :any,
-                                          :export => :any}
+                                          :export => :any,
+                                          :update_adu => :put,
+                                          :update_star => :put}
 
   map.resources :parcelles, :collection => { :index_edit => :get}
 
   map.resources :labtoparcelles
 
-  map.resources :labours
+  map.resources :labours, :collection => {:update_adu => :put,
+                                          :update_star => :put}
 
-  map.resources :produits
+  map.resources :produits, :collection => { :update_adu => :put,
+                                            :update_star => :put}
+  
 
   map.resources :factypes
 
@@ -59,6 +66,7 @@ ActionController::Routing::Routes.draw do |map|
                                             :edit_facdiv => :get,
                                             :diverses => :get,
                                             :modif => :any,
+                                            :update_adu => :put,
                                             :update_star => :put}
 
   map.resources :categories, :collection => { :test => :any}

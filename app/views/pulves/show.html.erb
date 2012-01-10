@@ -83,7 +83,7 @@
 					<th>Cout</th>
 				</tr>
 				<%- @pulve.putoparcelles.each do |putoparcelle| -%>
-				<tr>
+				<tr class=color_culture_<%= putoparcelle.parcelle.typeculture.code %>>
 					<td><%=h putoparcelle.parcelle.typeculture.name %></td>
 					<td><%= link_to putoparcelle.parcelle.name, parcelle_path(putoparcelle.parcelle) %></td>
 					<td><%=h putoparcelle.parcelle.surface %> ha</td>
@@ -149,13 +149,25 @@
 
 	<!-- DESC -->
 	<tr class=form_layout_title>
-		<td colspan=2 class=form_layout_title>informations</td>
+		<td colspan=2 class=form_layout_title>Description</td>
 	</tr>
 	<tr class=form_layout_content>
 		<td colspan=2class=form_layout_content>
 			<p class=grey><%= @pulve.desc %></p>
 		</td>
 	</tr>
+
+	<!-- INFO -->
+	<% unless @pulve.info.nil? || @pulve.info.eql?("") %>
+	<tr class=form_layout_title>
+		<td colspan=2 class=form_layout_title>Informations Importantes</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td colspan=2class=form_layout_content>
+			<p class=grey><%= @pulve.info %></p>
+		</td>
+	</tr>
+	<% end %>
 
 </table>
 

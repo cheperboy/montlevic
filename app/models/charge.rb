@@ -15,15 +15,10 @@ class Charge < ActiveRecord::Base
   end
 
   # ----- Finders -----
-  def self.find_with_saison(*args) 
-    with_scope(:find => {:conditions => ["saison_id = ?", Application::SAISON_ID]}) do 
-      find(*args)
-    end
-  end
 
   def self.find_by_saison(*args)
     with_scope(:find => 
-                {:conditions => ["saison_id = ?", Setting.find(:first).saison_id] }) do
+                {:conditions => ["saison_id = ?", Application::SAISON_ID] }) do
         find(*args)
       end
   end
@@ -303,6 +298,20 @@ class Charge < ActiveRecord::Base
       out +="
       <a href='"+ url +"' class='popup_desc'><img src='/images/img-info.png' border='0'><span>
       "+ self.desc + "
+      </span>
+      </a>
+      "
+    end
+    return out
+  end
+  
+  def get_info_popup
+    url = self.class.to_s.downcase.pluralize + '/' + self.id.to_s
+    out = ""
+    unless (self.info.eql?("") || self.info.nil?) 
+      out +="
+      <a href='"+ url +"' class='popup_desc'><img src='/images/img-info.png' border='0'><span>
+      "+ self.info + "
       </span>
       </a>
       "

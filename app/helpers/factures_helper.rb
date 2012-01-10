@@ -124,7 +124,12 @@ module FacturesHelper
         #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)
         if header[ApplicationHelper::HEADER_KEY].eql?("star")
           out += "<td>"
-          out += check_box_tag 'facture[star]', "1", element.star?, :onclick => toggle_star(element)
+          out += check_box_tag 'facture[star]', "1", element.star?, :onclick => toggle_star(element, controller)
+          out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
+          out += "</td>"
+        elsif header[ApplicationHelper::HEADER_KEY].eql?("adu")
+          out += "<td>"
+          out += check_box_tag 'facture[adu]', "1", element.adu?, :onclick => toggle_adu(element, controller)
           out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
           out += "</td>"
         # elsif header[ApplicationHelper::HEADER_KEY].eql?("adu")

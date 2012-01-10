@@ -33,12 +33,12 @@
 			</table>
 		</td>
 	</tr>
+<!-- PARCELLES et COUTS -->
 	<tr class=form_layout_title>
 		<td class=form_layout_title_left>Parcelles</td>
 		<td class=form_layout_title_right>Synthese des couts</td>
 	</tr>
 	<tr class=form_layout_content>
-		<!-- PARCELLES -->
 		<td class=form_layout_content_left>
 			<% if @facture.factoparcelles.count.eql?(0) %>
 				<p>cette facture est imputee sur toutes les parcelles</p>
@@ -58,15 +58,28 @@
 	</tr>
 	<!-- affichage des charges associees (PRODUITS, LABOURS, ...) -->
 	<%= render :partial => 'show_associations' %>
-	<!-- Comptabilisation -->
+
+<!-- Description -->
 	<tr class=form_layout_title>
-		<td colspan=2 class=form_layout_title>informations</td>
+		<td colspan=2 class=form_layout_title>Description</td>
 	</tr>
 	<tr class=form_layout_content>
 		<td colspan=2class=form_layout_content>
 			<p class=grey><%= @facture.desc %></p>
 		</td>
 	</tr>
+
+<!-- Infos Importantes -->
+	<% unless @facture.info.nil? || @facture.info.eql?("") %>
+		<tr class=form_layout_title>
+			<td colspan=2 class=form_layout_title>informations Importantes</td>
+		</tr>
+		<tr class=form_layout_content>
+			<td colspan=2class=form_layout_content>
+				<p class=grey><%= @facture.info %></p>
+			</td>
+		</tr>
+	<% end %>
 </table>
 
 <!-- Warnings -->

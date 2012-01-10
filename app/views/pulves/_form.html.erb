@@ -91,12 +91,24 @@
 	
 		<!-- DESC -->
 		<tr class=form_layout_title>
-			<td colspan=2 class=form_layout_title>informations</td>
+			<td colspan=2 class=form_layout_title>Description</td>
 		</tr>
 		<tr class=form_layout_content>
 			<td colspan=2 class=form_layout_content>
 				<table>
 					<%= form_tr_text_area(f, '', :desc, :size => "80x5") %>
+				</table>
+			</td class=form_layout_content>
+		</tr>
+
+		<!-- INFO -->
+		<tr class=form_layout_title>
+			<td colspan=2 class=form_layout_title>Informations Importantes</td>
+		</tr>
+		<tr class=form_layout_content>
+			<td colspan=2 class=form_layout_content>
+				<table>
+					<%= form_tr_text_area(f, '', :info, :size => "80x5") %>
 				</table>
 			</td class=form_layout_content>
 		</tr>

@@ -11,9 +11,9 @@ class PulvesController < ApplicationController
   
   def index
     logger.error params.inspect
-    @pulves = Pulve.find_with_saison(:all, :order => :id) 
+    @pulves = Pulve.find_by_saison(:all, :order => :id) 
     if params[:tri]
-      @pulves = Pulve.find_with_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
+      @pulves = Pulve.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
     end
     @sum_all_surfaces = 0
     @pulves.each { |pulve| @sum_all_surfaces += pulve.sum_surfaces}
@@ -132,27 +132,67 @@ class PulvesController < ApplicationController
     end
   end
   
-  def toggle_star
-    @obj = Pulve.find(params[:id])
-    if @obj.star != 1
-       @obj.star = 1
-    else
-      @obj.star = 0
+  def update_star
+    logger.error "params : #{params.inspect}"
+    star = 0
+    if params[:element][:star].eql?("true")
+      star = 1
     end
-    if @obj.save
-      render(:layout => false)
+    params[:element][:star] = star
+    @element = Pulve.find(params[:id])
+    respond_to do |format| 
+      if @element.update_attributes(params[:element])
+        format.html { redirect_to(@element) }
+        format.js	{ head :ok } 
+      else
+        flash[:error] = 'probleme mise a jour Star ou Adu'
+        format.html { render :action => "edit" } 
+        format.js	{ head :unprocessable_entity }
+      end 
     end
-  end  
-  
-  def toggle_adu
-    @obj = Pulve.find(params[:id])
-    if @obj.adu != 1
-       @obj.adu = 1
-    else
-      @obj.adu = 0
+  end
+
+  def update_adu
+    logger.error "params : #{params.inspect}"
+    adu = 0
+    if params[:element][:adu].eql?("true")
+      adu = 1
     end
-    if @obj.save
-      render(:layout => false)
+    params[:element][:adu] = adu
+    @element = Pulve.find(params[:id])
+    respond_to do |format| 
+      if @element.update_attributes(params[:element])
+        format.html { redirect_to(@element) }
+        format.js	{ head :ok } 
+      else
+        flash[:error] = 'probleme mise a jour Star ou Adu'
+        format.html { render :action => "edit" } 
+        format.js	{ head :unprocessable_entity }
+      end 
     end
-  end  
+  end
+
+  # def toggle_star
+  #   @obj = Pulve.find(params[:id])
+  #   if @obj.star != 1
+  #      @obj.star = 1
+  #   else
+  #     @obj.star = 0
+  #   end
+  #   if @obj.save
+  #     render(:layout => false)
+  #   end
+  # end  
+  # 
+  # def toggle_adu
+  #   @obj = Pulve.find(params[:id])
+  #   if @obj.adu != 1
+  #      @obj.adu = 1
+  #   else
+  #     @obj.adu = 0
+  #   end
+  #   if @obj.save
+  #     render(:layout => false)
+  #   end
+  # end  
 end

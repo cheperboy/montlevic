@@ -172,16 +172,15 @@ cat_vente_avoir = Category.create!({:factcat => factcat_agri, :upcategory => upc
 end # if SEEDS_BASIC
 
 zones = Zone.create!([
-  {:name => 'Bons Pains', :code => 'bruneau', :surface => 14},
+  {:name => 'Bons Pains', :code => 'bons_pains', :surface => 14},
   {:name => 'Mitant', :code => 'mitant', :surface => 5},
   {:name => 'La Rue', :code => 'la_rue', :surface => 46.55},
 
   {:name => 'Basse-cour', :code => 'basse_cour', :surface => 2},
-  {:name => 'Vallees', :code => 'valles', :surface => 11},
+  {:name => 'Vallees', :code => 'vallees', :surface => 11},
   {:name => 'Guiberons', :code => 'guiberons', :surface => 2.5},
   {:name => 'La cote', :code => 'la_cote', :surface => 2},
   {:name => 'Feuillets', :code => 'feuillets', :surface => 16},
-
 
   {:name => 'Brandes', :code => 'brandes', :surface => 2.97},
   {:name => 'Taillis', :code => 'taillis', :surface => 19.32},
@@ -192,7 +191,7 @@ zones = Zone.create!([
   {:name => 'Reserve', :code => 'reserve', :surface => 2.55},
   {:name => 'Lavernier', :code => 'lavernier', :surface => 0.75},
   {:name => 'Le bourg', :code => 'le_bourg', :surface => 0.52},
-# zones pour test
+  # zones pour test
   {:name => 'test - 1', :code => 'zone_test_1', :surface => 10},
   {:name => 'test - 2', :code => 'zone_test_2', :surface => 10},
   

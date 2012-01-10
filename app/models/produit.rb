@@ -50,18 +50,63 @@ class Produit < ActiveRecord::Base
   #TODO finir cette methode!
   # classement par cout?
   def self.find_with_order()
-    saison = Saison.find(Setting.find(:first).saison_id)
+    saison = Saison.find(Application::SAISON_ID)
     produits = saison.produits.find(:all, :order => :category_id)
   end
 
   # Finders
+  
+  def self.find_not_buy(*args)
+    produits = []
+    elements = self.find_by_saison(:all, :order => :category_id)
+    elements.each do |p|
+      if p.protofactures.count == 0
+        produits << p
+      end
+    end
+    return produits
+  end
+  
+  def self.find_used(*args)
+    produits = []
+    elements = self.find_by_saison(:all, :order => :category_id)
+    elements.each do |p|
+      if (p.putoproduits.count != 0 && p.protofactures.count != 0)
+        produits << p
+      end
+    end
+    return produits
+  end
+  
+  def self.find_not_used(*args)
+    produits = []
+    elements = self.find_by_saison(:all, :order => :category_id)
+    elements.each do |p|
+      if (p.putoproduits.count == 0 && p.protofactures.count != 0)
+        produits << p
+      end
+    end
+    return produits
+  end
+  
+  def self.find_buy(*args)
+    produits = []
+    elements = self.find_by_saison(:all, :order => :category_id)
+    elements.each do |p|
+      if p.protofactures.count != 0
+        produits << p
+      end
+    end
+    return produits
+  end
+  
   def self.find_by_saison(*args)
     with_scope(:find => { :conditions => ["saison_id = ?", Application::SAISON_ID],
                           :order => :category_id}) do
         find(*args)
       end
   end
-    
+  
   # ----- Calculs -----  
   def get_prix_unitaire
     sum_cout = 0

@@ -234,8 +234,9 @@ table.form_layout_content_table td.field{ text-align:left; }
 /* End : form_layout */
 
 /* Couleurs des <tr> Types de cultures */
-tr.color_culture_ble 							{ background-color: yellow;}
-tr.color_culture_ble:hover 				{ background-color: #FFFFBB;}
+tr.color_culture_ble 							{ background-color: #FFFFBB;}
+tr.color_culture_ble_light				{ background-color: #FFFFBB;}
+tr.color_culture_ble:hover 				{ background-color: #eeee00;}
 
 tr.color_culture_colza 						{ background-color: #8BB96E;}
 tr.color_culture_colza:hover 			{ background-color: #D6E5CB;}

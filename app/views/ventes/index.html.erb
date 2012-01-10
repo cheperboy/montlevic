@@ -1,11 +1,15 @@
-<% title "Ventes" %>
-<%= link_to 'Nouvelle vente', new_vente_path %>
-<br /><br />
+<% title "Ventes", false %>
 
-<% @elements = @ventes %>
-<div id='list_elts'>	
-	<%= render :partial => 'list' %>
+<% titre = "Ventes" %>
+
+<% lien1 = link_to 'Nouvelle vente', new_vente_path %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
 </div>
+
+<%= draw_table_with_find(Application::VENTE_HEAD, @ventes, 'ventes', 'index', params) %>
+
 
 
 

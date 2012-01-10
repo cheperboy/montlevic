@@ -83,7 +83,7 @@ class Verif < ActiveRecord::Base
     test = init_test('Somme associations superieur a cout facture', LOW)
     test.num =0
     # Facture.find(:all).each do |facture|
-    Facture.find_with_saison(:all, :order => :id).each do |facture|       
+    Facture.find_by_saison(:all, :order => :id).each do |facture|       
       if facture.assos_sup_cout.eql?(true)
         test.num += 1
         error = init_error(facture.name, facture.id, 'factures')
