@@ -108,24 +108,25 @@ class FacturesController < ApplicationController
     @facture = Facture.find(params[:id])
   end
 
-  def update_categories
-    logger.error "UPDATING CATEGORIES"
-    factcat = Factcat.find(params[:factcat_id])
-    upcategory = Upcategory.find_by_name("facture")
-    logger.error "selected factcat=#{factcat.name}"
-    categories = Category.find_by_factcat_and_upcategory(factcat.id, upcategory.id)
-    
-    logger.error "selected cats=#{categories.inspect}"
-    categories.each do |cat| 
-          logger.error "selected cat << #{cat.name}"      
-    end
-
-    render :update do |page|
-      page.replace_html 'categories', :partial => 'categories', :object => categories
-      page[:categories].visual_effect :highlight
-      # page.replace_html 'songs',   :partial => 'songs',   :object => songs
-    end
-  end
+# A SUPPRIMER?
+  # def update_categories
+  #   logger.error "UPDATING CATEGORIES"
+  #   factcat = Factcat.find(params[:factcat_id])
+  #   upcategory = Upcategory.find_by_name("facture")
+  #   logger.error "selected factcat=#{factcat.name}"
+  #   categories = Category.find_by_factcat_and_upcategory(factcat.id, upcategory.id)
+  #   
+  #   logger.error "selected cats=#{categories.inspect}"
+  #   categories.each do |cat| 
+  #         logger.error "selected cat << #{cat.name}"      
+  #   end
+  # 
+  #   render :update do |page|
+  #     page.replace_html 'categories', :partial => 'categories', :object => categories
+  #     page[:categories].visual_effect :highlight
+  #     # page.replace_html 'songs',   :partial => 'songs',   :object => songs
+  #   end
+  # end
 
   def new
     @facture ||= Facture.new
@@ -136,7 +137,6 @@ class FacturesController < ApplicationController
   end
 
   def create
-    logger.error "PARAMS #{params.inspect}"
     errors = []
     if params[:reportable] == '1'
       @facture = Reportable.new(params[:facture])
@@ -269,7 +269,6 @@ class FacturesController < ApplicationController
   end
 
   def update_star
-    logger.error "params : #{params.inspect}"
     star = 0
     if params[:facture][:star].eql?("true")
       star = 1
@@ -289,7 +288,6 @@ class FacturesController < ApplicationController
   end
 
   def update_adu
-    logger.error "params : #{params.inspect}"
     adu = 0
     if params[:facture][:adu].eql?("true")
       adu = 1

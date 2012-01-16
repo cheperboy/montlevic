@@ -1,5 +1,5 @@
 class Produit < ActiveRecord::Base  
-  
+
   def after_save 
     self.update_protofacture_stock
   end
@@ -25,7 +25,6 @@ class Produit < ActiveRecord::Base
   named_scope :by_saison, :conditions => ["saison_id = ?", Application::SAISON_ID]
   named_scope :starred, :conditions => ["star = ?", 1]
   named_scope :not_starred, :conditions => ["star = ?", 0]
-
 
   def to_s(*args)
     out = ''

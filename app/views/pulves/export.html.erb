@@ -2,11 +2,14 @@
 <table border="1">
   <tr>
     <th>Name</th>
+    <th colspan=2>user et cout</th>
   </tr>
   <% @pulves.each do |p| %>
     <tr>
       <td><%= p.name %></td>
       <td><%= p.user.name %></td>
+      <td><%= p.get_cout_total %></td>
     <% end %>
   </tr>
 </table>
+

@@ -1,17 +1,15 @@
 <div id="bloc_left">
 
-<% form_remote_tag  do %> 
-	selectA: <%= select_tag(:select_saison_id, options_for_select(Saison.all.collect {|p| [ p.name, p.id ] }, 	params[:new_saison_id]), :onchange => call_update_saison()) %>
+<%# form_remote_tag  do %> 
+	<%#= select_tag(:select_saison_id, options_for_select(Saison.all.collect {|p| [ p.name, p.id ] }, 	params[:new_saison_id]), :onchange => call_update_saison()) %>
 
-<% end %>
+<%# end %>
 	
 	
 <br>
   <strong>Resultat</strong >
   <ul>
-  <%- ['all', 'categories'].each do |action| -%>	
-    <li><%= link_to action, :controller => :calculate, :action => action  %></li>
-  <%- end -%>
+    <li><%= link_to "Resultat", :controller => :calculate, :action => "categories"  %></li>
   </ul>
   <strong>Factures</strong>
   <ul>

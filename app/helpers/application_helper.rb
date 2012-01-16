@@ -150,7 +150,6 @@ module ApplicationHelper
       # out += "</td>"
       
       headers.each do |header|
-        logger.error "header[HEADER_KEY] : #{header[HEADER_KEY]}"
         value = element.send(header[HEADER_KEY])
         #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)
         if header[HEADER_KEY].eql?("star")

@@ -10,7 +10,6 @@ class PulvesController < ApplicationController
   end
   
   def index
-    logger.error params.inspect
     @pulves = Pulve.find_by_saison(:all, :order => :id) 
     if params[:tri]
       @pulves = Pulve.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 

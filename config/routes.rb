@@ -49,7 +49,8 @@ ActionController::Routing::Routes.draw do |map|
                                           :update_star => :put}
 
   map.resources :produits, :collection => { :update_adu => :put,
-                                            :update_star => :put}
+                                            :update_star => :put,
+                                            :export => :any}
   
 
   map.resources :factypes

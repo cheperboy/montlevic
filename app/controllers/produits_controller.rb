@@ -43,7 +43,18 @@ class ProduitsController < ApplicationController
   #     render(:layout => false)
   #   end
   # end
-
+  
+  def export
+    @produits_used = Produit.all
+    
+    # Don't forget to reigster the xls/pdf mime types in config/initializers/mime_types.rb
+    respond_to do |format|
+      format.html
+      format.xls { doc_raptor_send }
+      format.pdf { doc_raptor_send }
+    end
+  end
+  
   def index
     @produits_used =        Produit.find_used(:all, :order => :category_id)
     @produits_non_achetes = Produit.find_not_buy(:all, :order => :category_id)

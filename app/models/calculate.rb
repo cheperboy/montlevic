@@ -210,8 +210,6 @@ class Calculate < ActiveRecord::Base
   end
 
   def run_factures
-    cat_produit_phyto_id = Category.find(2).id
-    logger.error "cat_produit_phyto id: #{cat_produit_phyto_id}, name: #{cat_produit_phyto_id = Category.find(2).name}"
     for facture in @factures
       for col in @cols
         #valeur ha et total pour chaque col

@@ -190,4 +190,5 @@ class CalculateController < ApplicationController
     end    
   end  
   
+  
 end
