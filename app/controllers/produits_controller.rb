@@ -50,7 +50,7 @@ class ProduitsController < ApplicationController
     @produits_not_used =    Produit.find_not_used(:all, :order => :category_id)
 
     if params[:tri]
-      @produits = Produit.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
+      @produits_used = Produit.find_used(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
     end
     respond_to do |format|
       format.html

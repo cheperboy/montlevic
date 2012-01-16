@@ -22,6 +22,11 @@ class Produit < ActiveRecord::Base
   validates_presence_of :category_id, :message => "Categorie ne doit pas etre vide"
   validates_presence_of :unit, :message => "Unite ne doit pas etre vide"
 
+  named_scope :by_saison, :conditions => ["saison_id = ?", Application::SAISON_ID]
+  named_scope :starred, :conditions => ["star = ?", 1]
+  named_scope :not_starred, :conditions => ["star = ?", 0]
+
+
   def to_s(*args)
     out = ''
     if args[0] == :default
@@ -56,6 +61,17 @@ class Produit < ActiveRecord::Base
 
   # Finders
   
+  def self.find_buy(*args)
+    produits = []
+    elements = self.find_by_saison(:all, :order => :category_id)
+    elements.each do |p|
+      if p.protofactures.count != 0
+        produits << p
+      end
+    end
+    return produits
+  end
+  
   def self.find_not_buy(*args)
     produits = []
     elements = self.find_by_saison(:all, :order => :category_id)
@@ -69,7 +85,7 @@ class Produit < ActiveRecord::Base
   
   def self.find_used(*args)
     produits = []
-    elements = self.find_by_saison(:all, :order => :category_id)
+    elements = self.find_by_saison(*args)
     elements.each do |p|
       if (p.putoproduits.count != 0 && p.protofactures.count != 0)
         produits << p
@@ -83,17 +99,6 @@ class Produit < ActiveRecord::Base
     elements = self.find_by_saison(:all, :order => :category_id)
     elements.each do |p|
       if (p.putoproduits.count == 0 && p.protofactures.count != 0)
-        produits << p
-      end
-    end
-    return produits
-  end
-  
-  def self.find_buy(*args)
-    produits = []
-    elements = self.find_by_saison(:all, :order => :category_id)
-    elements.each do |p|
-      if p.protofactures.count != 0
         produits << p
       end
     end

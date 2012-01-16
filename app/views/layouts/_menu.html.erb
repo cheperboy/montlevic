@@ -1,4 +1,11 @@
 <div id="bloc_left">
+
+<% form_remote_tag  do %> 
+	selectA: <%= select_tag(:select_saison_id, options_for_select(Saison.all.collect {|p| [ p.name, p.id ] }, 	params[:new_saison_id]), :onchange => call_update_saison()) %>
+
+<% end %>
+	
+	
 <br>
   <strong>Resultat</strong >
   <ul>

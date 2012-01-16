@@ -129,11 +129,12 @@ class Application < ActiveRecord::Base
    	['category_name',           'categorie',  '',     false,        :text_field,  true,   'category_id' ],
    	['name',                    'nom',        '',     true,         :text_field,  true,   'name'        ],
     ['get_cout_total',          'Achat',      '€',    false,        false,        false,  ''            ], 
-   	['get_quantite',            'Quantite',   '',     false,        false,        true,   'quantity'    ],
+   	['get_quantite',            'Quantite',   '',     false,        false,        false,  ''            ],
    	['unit',                    '',           '',     false,        false,        true,   'unit'        ],
 
     ['get_stock',               'Stock',      '',     false,        false,        false,  ''            ], 
-    ['stock_percent_pp',        'used',       '%',    true,         false,        false,  ''            ],
+   	['unit',                    '',           '',     false,        false,        true,   'unit'        ],
+    ['stock_percent_pp',        'reste',      '%',    true,         false,        false,  ''            ],
 
     ['get_prix_unitaire',       'Prix',       '',     false,        false,        false,  ''            ],
     ['get_prix_unitaire_unit',  '',           '',     false,        false,        false,  ''            ], 

@@ -275,21 +275,31 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.datetime "updated_at"
   end
 
-  # create_table "prodpaille", :force => true do |t|
-  #   t.integer  "category_id", :null => false
-  #   t.integer  "saison_id",   :null => false
-  #   t.integer  "user_id"
-  #   t.string   "name",        :null => false
-  #   t.integer  "star"
-  #   t.integer  "typebotte"  #ronde, carre
-  #   t.integer  "poids"
-  #   t.float    "valorisation",:null => false
-  #   t.integer  "adu"
-  #   t.text     "desc"
-  #   t.text     "info"
-  #   t.datetime "created_at"
-  #   t.datetime "updated_at"
-  # end
+  create_table "prodpaille", :force => true do |t|
+    t.integer  "category_id", :null => false
+    t.integer  "saison_id",   :null => false
+    t.integer  "user_id"
+    t.string   "name",        :null => false
+    t.integer  "star"
+    t.integer  "typebotte"  #ronde, carre
+    t.integer  "poids"
+    t.float    "valorisation",:null => false
+    t.integer  "adu"
+    t.text     "desc"
+    t.text     "info"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  create_table "prodpailletoparcelles", :force => true do |t|
+    t.integer   "saison_id",      :null => false
+    t.integer   "prodpaille_id",       :null => false
+    t.integer   "parcelle_id",    :null => false
+  end
+  create_table "prodpailletoventes", :force => true do |t| 
+    t.integer   "saison_id",      :null => false
+    t.integer   "prodpaille_id",       :null => false
+    t.integer   "vente_id",    :null => false
+  end
 
   create_table "ventes", :force => true do |t|
     t.integer  "category_id", :null => false

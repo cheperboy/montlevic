@@ -31,7 +31,21 @@ class ApplicationController < ActionController::Base
   def logged_in?
     return session[:user_id].nil?
   end
-    
+
+  def update_current_saison_id
+    logger.error "IN application_controller.rb : PARAMETERS : #{params}"
+    logger.error "params[:select_saison_id] : #{params[:select_saison_id]}"
+    logger.error "params[:new_saison_id] : #{params[:new_saison_id]}"
+    render :update do |page|
+      # page.reload
+    end
+    setting = Setting.find(:first).saison_id
+    setting.update_attribute(:saison_id, params[:select_saison_id])
+    # setting.saison_id = params[:select_saison_id]
+    setting.save!
+    @current_saison_id = params[:select_saison_id]
+  end
+
   def current_saison_id=(saison)
     @current_saison_id = Setting.find(:first).saison_id
   end
@@ -44,8 +58,7 @@ class ApplicationController < ActionController::Base
     # <% form_remote_tag :url => {:action => 'hide_menu'} do %> 
     #   <%= text_field 'todo', 'name' %> 
     #   <%= submit_tag 'TEST!!!' %>
-    # <% end %>
-    
+    # <% end %>    
       render :update do |page| 
         # page.insert_html  :bottom,  'todo_list' , "<li>#{todo.name}</li>" 
         # page.replace_html 'bloc_left' ,  "bloc_left_hidden"

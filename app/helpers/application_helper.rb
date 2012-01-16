@@ -36,6 +36,14 @@ module ApplicationHelper
                     :with => "this.name + '=' + this.checked"
                     )
   end
+  
+  def call_update_saison()
+    logger.error "call_update_saison()"
+    remote_function(:url => { :controller => "application", :action => "update_current_saison_id", :id => nil },
+                    :method => :put,
+                    :with => "this.name + '=' + this.value"
+                    )
+  end
 
   # Remplace collection_select et ajoute les Types de culture en plus des parcelles
   # Obsolete, non utilise
