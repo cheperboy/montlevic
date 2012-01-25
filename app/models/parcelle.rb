@@ -42,17 +42,10 @@ class Parcelle < ActiveRecord::Base
 
   def self.find_by_saison(*args)
     with_scope(:find => 
-                {:conditions => ["saison_id = ?", Setting.find(:first).saison_id] }) do
+                {:conditions => ["saison_id = ?", Setting.find(:first).saison_id], :order => :typeculture_id }) do
         find(*args)
       end
   end
- 
-  # def self.find_by_code(*args)
-  #   with_scope(:find => 
-  #               {:conditions => ["code = ?", code] }) do
-  #       find(*args)
-  #     end
-  # end
  
   def self.find_by_zone(zone_id)
     parcelles = []
@@ -84,16 +77,6 @@ class Parcelle < ActiveRecord::Base
     s
   end
   
-  #TODO : ajouter find_by_saison 
-  # 2011-11-21 : methode inutil donc supprimee
-  # def self.all_surfaces()
-  #   s=0
-  #   Parcelle.find(:all).each do |parcelle| 
-  #     s = s + parcelle.surface
-  #   end
-  #   s
-  # end
-
   def percent_of_zone(zone_id)
     zone = Zone.find(zone_id)
     zonetopa = Zonetopa.find_by(zone_id, self.id)

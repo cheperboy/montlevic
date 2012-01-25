@@ -4,27 +4,7 @@
 <%= link_to 'Nouvelle categorie', new_category_path %>
 <br /><br />
 
-<table class=table_data>
-  <tr class=bold>
-    <td>Type</td>
-    <td>Categorie</td>
-    <td></td>
-	<% if admin? %>
-    	<td></td>
-	<% end %>
-  </tr>
-
-<% for category in @categories %>
-  <tr>
-    <td><%=h category.upcategory.name %></td>
-    <td><%=h category.name %></td>
-    <td><%= link_to 'Modifier', edit_category_path(category) %></td>
-	<% if admin? %>
-    	<td><%= link_to 'Supprimer', category, :confirm => 'Are you sure?', :method => :delete %></td>
-	<% end %>
-  </tr>
-<% end %>
-</table>
-
+<%#= render  :partial => 'list' %>
+<%= render  :partial => 'list_sort_2' %>
 
 

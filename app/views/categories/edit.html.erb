@@ -1,20 +1,27 @@
-<% title "Modif Categorie" %>
+<% titre = "Modif Categorie #{@category.name}" %>
+<% lien1 = link_to "Annuler", categories_url %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+</div>
+
 
 <% form_for(@category) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-		<%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-		<%= f.label :upcategory %><br />
-    <%= select("category", "upcategory_id", Upcategory.find(:all).collect{ |c| [ c.name, c.id] }) %>
-  </p>
-	
-  <p>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
+<table class=form_layout>
+	<tr class=form_layout_content>
+		<td colspan=2 class=form_layout_content>
+			<table>
+				<%= tr_text('Type', @category.factcat.name) %>
+				<%= tr_text('categorie superieure', @category.upcategory.name) %>
+				<%= form_tr_text(f, 'Nom', :name) %>
+				<%= form_tr_text(f, 'Code', :code) %>
+			</table>
+		</td class=form_layout_content>
+	</tr>
+</table>
 
-<%= link_to 'Retour', categories_path %>
+<%= f.submit "Enregistrer" %>
+
+<% end %>

@@ -6,13 +6,13 @@
 
 <% if @facture.class == Diverse %>
 
-<% titre = "Facture #{@facture.name} #{star_ascii(@facture)} + " %>
-<% liens = link_to "Annuler", facture_url(@facture) %>
-<% title = "<span class=title>#{titre}</span><span class=link>#{liens}</span>" %>
+	<% titre = "Facture #{@facture.name} #{star_ascii(@facture)} + " %>
+	<% liens = link_to "Annuler", facture_url(@facture) %>
+	<% title = "<span class=title>#{titre}</span><span class=link>#{liens}</span>" %>
 
-<div id="title_h1">
-	<%= title %>
-</div>
+	<div id="title_h1">
+		<%= title %>
+	</div>
 
 	<p>Cette facture est de type "Diverse"</p>
 	<p>| <%= link_to "Liste des factures diverses", {:controller => 'factures', :action => 'diverses'} %> |</p>
@@ -25,29 +25,29 @@
 
 
 <% elsif @facture.class == Reportable %>
-<% titre = "Facture #{@facture.name} #{star_ascii(@facture)}" %>
+	<% titre = "Facture #{@facture.name} #{star_ascii(@facture)}" %>
 
-<% liens = link_to "Annuler", facture_url(@facture) %>
-<div id="title_h1">
-	<span class=title><%= titre %></span>
-	<span class=link><%= liens %></span>
-</div>
+	<% liens = link_to "Annuler", facture_url(@facture) %>
+	<div id="title_h1">
+		<span class=title><%= titre %></span>
+		<span class=link><%= liens %></span>
+	</div>
 
-	<p>Attention, cette facture est de type Reportable, elle ne devrait pas etre modifiee.</p>
-	<%= render :partial => 'form_reportable' %>
+		<p>Attention, cette facture est de type Reportable, elle ne devrait pas etre modifiee.</p>
+		<%= render :partial => 'form_reportable' %>
 
 
 <% elsif @facture.class == Report %>
-<% titre = "Facture #{@facture.name} #{star_ascii(@facture)}" %>
-<% liens = link_to "Annuler", facture_url(@facture) %>
-<div id="title_h1">
-	<span class=title><%= titre %></span>
-	<span class=link><%= liens %></span>
-</div>
+	<% titre = "Facture #{@facture.name} #{star_ascii(@facture)}" %>
+	<% liens = link_to "Annuler", facture_url(@facture) %>
+	<div id="title_h1">
+		<span class=title><%= titre %></span>
+		<span class=link><%= liens %></span>
+	</div>
 
-	<p>
-	| <%= link_to "Annuler", factures_url %>
-	| <%= link_to "Voir la facture originale et les autres reports", {:action => 'show', :id => @facture.reportable} %> |</p>
+		<p>
+		| <%= link_to "Annuler", factures_url %>
+		| <%= link_to "Voir la facture originale et les autres reports", {:action => 'show', :id => @facture.reportable} %> |</p>
 	
 	<%= render :partial => 'form' %>
 <% else %>

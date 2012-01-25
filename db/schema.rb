@@ -259,7 +259,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.string   "name",           :null => false
     t.string   "code"
     t.float    "surface"
-    t.float    "surface_utile"
+    t.float    "surface_pac"
     t.text     "desc"
     t.text     "info"
     t.datetime "created_at"

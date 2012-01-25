@@ -1,8 +1,10 @@
 <% title "Parcelles", false %>
 
 <% titre = "Parcelles" %>
-
-<% lien1 = link_to 'Modifier les parcelles', {:controller => :parcelles, :action=> :index_edit} %>
+<% lien1 = nil %>
+<% if admin? %>
+	<% lien1 = link_to 'Modifier les parcelles', {:controller => :parcelles, :action=> :index_edit} %>
+<% end %>
 
 <div id="title_h1">
 	<span class=title><%= titre %></span>

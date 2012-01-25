@@ -235,16 +235,19 @@ table.form_layout_content_table td.field{ text-align:left; }
 
 /* Couleurs des <tr> Types de cultures */
 tr.color_culture_ble 							{ background-color: #FFFFBB;}
-tr.color_culture_ble_light				{ background-color: #FFFFBB;}
-tr.color_culture_ble:hover 				{ background-color: #eeee00;}
+tr.color_culture_ble:hover,
+tr.color_culture_ble_strong				{ background-color: #eeee00;}
 
-tr.color_culture_colza 						{ background-color: #8BB96E;}
-tr.color_culture_colza:hover 			{ background-color: #D6E5CB;}
+tr.color_culture_colza 						{ background-color: #B8E2B8;}
+tr.color_culture_colza:hover,
+tr.color_culture_colza_strong			{ background-color: #80CC80;}
 
-tr.color_culture_tournesol 				{ background-color: #6AB6D8;}
-tr.color_culture_tournesol:hover 	{ background-color: #B8F3FE;}
+tr.color_culture_tournesol				{ background-color: #B8F3FE;}
+tr.color_culture_tournesol:hover,
+tr.color_culture_tournesol_strong { background-color: #6AB6D8;}
 
-tr.color_culture_foin			 				{ background-color: #D6A742;}
-tr.color_culture_foin:hover 			{ background-color: #EDE0A5;}
+tr.color_culture_foin			 				{ background-color: #E2C671;}
+tr.color_culture_foin:hover,
+tr.color_culture_foin_strong 			{ background-color: #D6A742;}
 /* End Couleurs des <tr> Types de cultures */
 

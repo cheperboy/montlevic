@@ -1,0 +1,103 @@
+<% unless @user.nil? %>
+
+	<% if @act.eql?('show') %>
+	<%=	link_to_remote	get_img_edit(), 
+		:url => {:action => 'edit_user', :id => @user},
+		:update => 'user_body'
+	%>
+		<table class=form_layout_content_table>
+			<%= tr_text('Id', 		@user.id) %>
+			<%= tr_text('Nom', @user.name) %>
+			<%= tr_text('code', @user.code) %>
+			<%= tr_text('Code',		@user.code) %>
+			<%= tr_text('Entreprise', @user.societe) %>
+			<%= tr_text('Tel fixe', @user.tel_fixe) %>
+			<%= tr_text('Tel Portable', @user.tel_portable) %>
+			<%= tr_text('Tel Autre', @user.tel_3) %>
+			<%= tr_text('Adresse', @user.adresse_1) %>
+			<%= tr_text('Adresse (suite)', @user.adresse_2) %>
+			<%= tr_text('CP', @user.adresse_cp) %>
+			<%= tr_text('Ville', @user.adresse_ville) %>
+			<%= tr_text('Informations', @user.desc) %>
+		</table>
+	
+	<% elsif @act.eql?('edit') %>
+		<%=	link_to_remote	"Annuler", 
+			:url => {:action => 'show_user', :id => @user.id },
+			:update => 'user_body'
+		%>
+		<% form_for(@user, :update => 'user_body', :remote => true, :url => {:action => 'index'}) do |f| %>
+		<%= hidden_field_tag :act, "update" %>				
+		<%= hidden_field_tag :id, @user.id %>				
+		  	<%#= f.error_messages %>
+			<table class=form_layout_content_table>
+				<%= form_tr_text(f, 'Nom', :name) %>
+				<%= form_tr_text(f, 'code', :code) %>
+				<%= form_tr_text(f, 'Entreprise', :societe) %>
+				<%= form_tr_text(f, 'Tel fixe', :tel_fixe) %>
+				<%= form_tr_text(f, 'Tel Portable', :tel_portable) %>
+				<%= form_tr_text(f, 'Tel Autre', :tel_3) %>
+				<%= form_tr_text(f, 'Adresse', :adresse_1) %>
+				<%= form_tr_text(f, 'Adresse (suite)', :adresse_2) %>
+				<%= form_tr_text(f, 'CP', :adresse_cp) %>
+				<%= form_tr_text(f, 'Ville', :adresse_ville) %>
+				<%= form_tr_text_area(f, 'Informations', :desc, :size => "30x4") %>
+			</table>
+			</p>
+			<%= f.submit "Enregistrer" %>
+			</p>
+			<% end -%>
+
+		<% elsif @act.eql?('new') %>
+			<%= link_to "Annuler", users_url %>
+			<% form_for(@user, :update => 'user_body', :remote => true, :url => {:action => 'index'}) do |f| %>
+			<%= hidden_field_tag :act, "new" %>				
+			  	<%#= f.error_messages %>
+				<table class=form_layout_content_table>
+					<%= form_tr_text(f, 'Nom', :name) %>
+					<%= form_tr_text(f, 'code', :code) %>
+					<%= form_tr_text(f, 'Entreprise', :societe) %>
+					<%= form_tr_text(f, 'Tel fixe', :tel_fixe) %>
+					<%= form_tr_text(f, 'Tel Portable', :tel_portable) %>
+					<%= form_tr_text(f, 'Tel Autre', :tel_3) %>
+					<%= form_tr_text(f, 'Adresse', :adresse_1) %>
+					<%= form_tr_text(f, 'Adresse (suite)', :adresse_2) %>
+					<%= form_tr_text(f, 'CP', :adresse_cp) %>
+					<%= form_tr_text(f, 'Ville', :adresse_ville) %>
+					<%= form_tr_text_area(f, 'Informations', :desc, :size => "30x4") %>
+				</table>
+				</p>
+				<%= f.submit "Enregistrer" %>
+				</p>
+		<% end -%>
+	<% else %>
+	pas d'action definie : user=<%= @user.id %><br>
+	formulaire identique a update.
+	<%=	link_to_remote	"Annuler", 
+		:url => {:action => 'show_user', :id => @user.id },
+		:update => 'user_body'
+	%>
+	<% form_for(@user, :update => 'user_body', :remote => true, :url => {:action => 'index'}) do |f| %>
+	<%= hidden_field_tag :act, "update" %>
+	<%= hidden_field_tag :id, @user.id %>				
+	  	<%#= f.error_messages %>
+		<table class=form_layout_content_table>
+			<%= form_tr_text(f, 'Nom', :name) %>
+			<%= form_tr_text(f, 'code', :code) %>
+			<%= form_tr_text(f, 'Entreprise', :societe) %>
+			<%= form_tr_text(f, 'Tel fixe', :tel_fixe) %>
+			<%= form_tr_text(f, 'Tel Portable', :tel_portable) %>
+			<%= form_tr_text(f, 'Tel Autre', :tel_3) %>
+			<%= form_tr_text(f, 'Adresse', :adresse_1) %>
+			<%= form_tr_text(f, 'Adresse (suite)', :adresse_2) %>
+			<%= form_tr_text(f, 'CP', :adresse_cp) %>
+			<%= form_tr_text(f, 'Ville', :adresse_ville) %>
+			<%= form_tr_text_area(f, 'Informations', :desc, :size => "30x4") %>
+		</table>
+		</p>
+		<%= f.submit "Enregistrer" %>
+		</p>
+		<% end -%>
+	<% end %>
+<% end %>
+

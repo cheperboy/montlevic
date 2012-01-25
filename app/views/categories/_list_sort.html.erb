@@ -1,0 +1,30 @@
+<table class=sortable>
+	<thead>
+		<tr class=bold>
+			<td>Type</td>
+			<th>Categorie Superieure</th>
+			<th>Nom</th>
+			<% if admin? %>
+				<th></th>
+			<% end %>
+		</tr>
+	<thead>
+
+	<tbody>
+	<% for category in @categories %>
+	  <tr>
+		<% if category.upcategory.name.eql?("facture") %>
+	    	<td><%=h category.factcat.name %></td>
+		<% else %>
+	    	<td></td>
+		<% end %>
+	    <td><%=h category.upcategory.name %></td>
+	    <td><%=h category.name %></td>
+	    <td><%= link_to 'Modifier', edit_category_path(category) %></td>
+		<% if admin? %>
+	    	<td><%= link_to 'Supprimer', category, :confirm => 'Are you sure?', :method => :delete %></td>
+		<% end %>
+	  </tr>
+	<% end %>
+	<tbody>
+</table>

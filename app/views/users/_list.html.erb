@@ -1,18 +1,27 @@
-<table class=table_data>
-  <tr>
-    <td class=bold>Nom</td>
-    <td></td>
-    <% if admin? %>
-		<td></td>
+
+<div class=div_contain_table_scroll>
+	<table class=table_scroll>
+	<!-- <table class=table_data> -->
+	  <tr>
+	    <td class=bold>Nom</td>
+	    <td></td>
+	    <td></td>
+	    <% if admin? %>
+			<td></td>
+		<% end %>
+	  </tr>
+	<% @users.each do |user| %>
+
+	<tr ondblclick="<%= remote_function(
+						:update => 'user_body', 
+						:url => {:action => 'show_user', :id => user}) 
+					%>">
+	    <td><%= user.name %></td>
+	    <td><%=	link_to_remote	get_img_show(), 
+			:url => {:action => 'show_user', :id => user},
+			:update => 'user_body'
+		%></td> 
+	  </tr>
 	<% end %>
-  </tr>
-<% @users.each do |user| %>
-  <tr>
-    <td><%= user.name %></td>
-    <td><%= link_to 'Editer', edit_user_path(user) %></td>
-    <% if admin? %>
-		<td><%= link_to 'Supprimer', user, :confirm => 'Are you sure?', :method => :delete %></td>
-	<% end %>
-  </tr>
-<% end %>
-</table>
+	</table>
+</div>

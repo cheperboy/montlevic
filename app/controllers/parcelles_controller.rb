@@ -1,6 +1,7 @@
 class ParcellesController < ApplicationController
 
   def index
+    @typecultures = Typeculture.find_for_saison()
     @parcelles = Parcelle.find_by_saison(:all)
     @saison = Setting.find(:first).saison
 
@@ -43,6 +44,7 @@ class ParcellesController < ApplicationController
   end
 
   def edit
+    @typecultures = Typeculture.find_for_saison()
     @saison = Setting.find(:first).saison
     @parcelles = Parcelle.find_by_saison(:all)
     @parcelle = Parcelle.find(params[:id])

@@ -3,9 +3,15 @@
 	border: 1px solid #DDDDDD;
  }
 
+.table_list tr.odd { 
+	border: 1px solid #DDDDDD;
+ }
+
 .table_list { border-collapse:collapse; }
 
-.table_list tr.list-row:hover { background-color: #FFFFBB; }
+.table_list tr.list-row:hover { background-color: #FFFFDD; }
+.table_list tr.even						{ background-color: #EEEEFF; }
+/*.table_list tr.even						{ background-color: #FFFFDD; }*/
 
 .table_list td { 	
 	padding-left: 0.5em;

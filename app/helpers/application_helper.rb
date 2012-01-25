@@ -196,6 +196,110 @@ module ApplicationHelper
     out += '</table>'
   end  
   
+  def draw_table_with_find_js(headers, elements, controller, *args)
+    options = args.extract_options!
+    sort = ":0" 
+    out = ""
+    sort = ":#{options[:sort]}" unless options[:sort].nil?
+    head_size = headers.count
+    link_size = 3
+
+    out += 
+"<table class='table_list table-stripeclass:even table-autosort#{sort}'>
+<thead>
+"
+    #Head - 1
+    out += "
+    <tr class=bold>
+    "        
+    headers.each do |header|
+      num_type = header[HEADER_VALUE].to_s
+      if header[HEADER_TRI].eql?(true)
+        out += "<th class='list-elt-left table-sortable:#{header[HEADER_TYPE].to_s} table-sortable'>#{header[HEADER_VALUE].to_s}</th>"
+      else
+        out += "<th class='list-elt-left'>#{header[HEADER_VALUE].to_s}</th>"        
+      end
+    end
+    out += "<th colspan='#{link_size.to_s}'></th>"
+    out += "</tr>
+  	"        
+    #Head - 2
+    out += "
+    <tr class=bold>
+    "        
+    headers.each do |header|
+      if header[HEADER_FILTER].eql?(true)
+        out += "<th><input name='filter' size='4' onkeyup='Table.filter(this,this)'></th>"
+      else
+        out += "<th></th>"
+      end
+    end
+    out += "<th colspan='#{link_size.to_s}'></th>"
+    out += "</tr>
+  	"        
+
+    out += "
+    </thead>
+  	<tbody>
+  	"        
+
+    #Elements
+    alt = 0
+    elements.each do |element|
+      alt += 1
+      # Premier tr de l'element  
+      out += "<tr class='list-row'>
+      "        
+      
+      headers.each do |header|
+        value = element.send(header[HEADER_KEY])
+        #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)
+        if header[HEADER_KEY].eql?("star")
+          out += "<td>"
+          out += check_box_tag 'element[star]', "1", element.star?, :onclick => toggle_star(element, controller)
+          out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
+          out += "</td>
+          "
+        elsif header[HEADER_KEY].eql?("adu")
+          out += "<td>"
+          out += check_box_tag 'element[adu]', "1", element.adu?, :onclick => toggle_adu(element, controller)
+          out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
+          out += "</td>"
+        elsif header[HEADER_KEY].eql?("dosage")
+          out += "<td class='list-elt-right'>"
+          out += element.dosage.to_s + ' ' + element.unit
+          out += "</td>"
+        else  
+          #class css du td : align_right ou align_left
+          td_class = "list-elt-right"
+          if    value.class == String then td_class = "list-elt-left"
+          elsif value.class.eql?(Float) then td_class = "list-elt-right"
+          elsif value.class.eql?(Fixnum) then td_class = "list-elt-right"
+          end
+          
+          #si value est un float, on le tronque pour l'affichage
+          if value.class.eql?(Float) then value = value.display end
+          
+          out += "<td class='#{td_class}'>"
+          out += "#{value} #{header[HEADER_UNIT]}"
+          out += "</td>
+          "
+        end
+      end
+      
+      #Liens
+      out += '<td>'+ link_to_show(controller.singularize, element.id) +'</td>'
+      out += '<td>'+ link_to_edit(controller.singularize, element.id) +'</td>'
+      out += '<td>'+ link_to_delete(controller.singularize, element.id) +'</td>'
+      out += '</tr>'    
+    end
+
+    out += "
+      <tbody>
+  	</table>
+  	"
+  end  
+  
   def draw_table(headers, elements, print_stars=false)
 
     out = ''
@@ -305,26 +409,27 @@ module ApplicationHelper
     return (link_to image_tag('img-voir.png'), send(url, object), :class => "link_yellow")
   end
   
-  # def link_to_show2(modele, id)
-  #   url = modele.to_s.downcase.pluralize + '/' + id.to_s
-  #   return (link_to image_tag('img-voir.png'), url, :class => "link_yellow")
-  # end
-
-  # def link_to_edit(modele, id)
-  #   url = modele.to_s.downcase.pluralize + '/' + id.to_s + '/edit'
-  #   return (link_to image_tag('img-modif.png'), url, :class => "link_yellow")
-  # end
-
+  def get_img_show
+    image_tag('img-voir.png')
+  end
+  
   def link_to_edit(modele, object)
     url = "edit_#{modele.to_s.downcase}_path"
     return (link_to image_tag('img-modif.png'), send(url, object), :class => "link_yellow")
   end
 
+  def get_img_edit
+    image_tag('img-modif.png')
+  end
+  
   def link_to_delete(modele, id)
     url = modele.to_s.downcase.pluralize + '/' + id.to_s
     return (link_to image_tag('img-delete.png'), url, :confirm => 'Are you sure?', :method => :delete, :class => "link_yellow")
   end
   	
+  def get_img_delete
+    image_tag('img-delete.png')
+  end
   def tr_text(key, value, unit=nil)
     out = ''
     out += '<tr><td class="label">'
@@ -340,10 +445,12 @@ module ApplicationHelper
   end
 
   def form_tr_text(form, name, col, options=nil)
+    disable = false
     value = ''
     size = 25
     unit = ''
     if options
+      disable = 'disabled' if options[:disable]
       size = options[:size] if options[:size]
       value = options[:value].to_s if options[:value]
       unit = ' ' + options[:unit].to_s  if options[:unit]
@@ -354,9 +461,33 @@ module ApplicationHelper
     out += ' : </td>'
     out += '<td class="field">'
     if options && options[:value]
-      out += form.text_field col.to_sym, :value => value, :size => size, :class => "text_field"
+      out += form.text_field col.to_sym, :value => value, :size => size, :class => "text_field", :disabled => disable
     else 
-      out += form.text_field col.to_sym, :size => size, :class => "text_field"
+      out += form.text_field col.to_sym, :size => size, :class => "text_field", :disabled => disable
+    end
+    out += unit
+    out += '</td></tr>'
+    return out
+  end
+
+  def tr_text_new(name, col, options=nil)
+    value = ''
+    size = 25
+    unit = ''
+    if options
+      size = options[:size] if options[:size]
+      value = options[:value].to_s if options[:value]
+      unit = ' ' + options[:unit].to_s  if options[:unit]
+    end
+    out = ''
+    out += '<tr><td class="label">'
+    out += label col, name
+    out += ' : </td>'
+    out += '<td class="field">'
+    if options && options[:value]
+      out += text_field col.to_sym, :value => value, :size => size, :class => "text_field", :disabled => 'disabled'
+    else 
+      out += text_field col.to_sym, :size => size, :class => "text_field", :disabled => 'disabled'
     end
     out += unit
     out += '</td></tr>'
@@ -535,7 +666,7 @@ module ApplicationHelper
   # end
 
   def shortstring(text)
-    truncate(text, :length => 11, :omission => '...')
+    truncate(text, :length => 11, :omission => '..')
   end
 
   def odd(id)

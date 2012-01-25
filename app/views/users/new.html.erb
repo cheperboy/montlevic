@@ -1,9 +1,26 @@
-<% title "Prestataires et Clients" %>
+<% title "NEW.HTML" %>
 
-<%= render :partial => 'list' %>
+<%#= link_to 'Créer un nouveau Client', new_user_path %>
+<%=	link_to_remote	'Créer un nouveau Client', 
+	:url => {:action => 'new_user'},
+	:update => 'user_body'
+%>
+<br>
+<table class=form_layout>
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Clients</td>
+		<td class=form_layout_title_right>Formulaire</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<%= render :partial => 'list' %>
+		</td>
+		<td class=form_layout_content_right>
+			<div id="user_body">
+				<%= render  :partial => 'user_body' %>
+			</div>
+		</td>
+	</tr>
+</table>
 
-<br />
 
-<h2>Nouveau</h2>
-<%= render :partial => 'form' %>
-<%= link_to 'Retour', users_path %>

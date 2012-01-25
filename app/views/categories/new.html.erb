@@ -8,8 +8,21 @@
     <%= f.text_field :name %>
   </p>
   <p>
+	<%= f.label :code %><br />
+    <%= f.text_field :code %>
+  </p>
+  <p>
 		Type : 
-    <%= select("category", "upcategory_id", Upcategory.find(:all).collect{ |c| [ c.name, c.id] }) %>
+		<%= form_tr_select(f, 'Category Sup', 
+							:upcategory_id, 
+							Upcategory.find(:all, :order => :name), 
+							:id, :name) %>
+  </p>
+  <p>
+		<%= form_tr_select(f, 'Factcat', 
+							:factcat_id, 
+							Factcat.find(:all, :order => :name), 
+							:id, :name) %>
   </p>
   <p>
     <%= f.submit "Creer" %>

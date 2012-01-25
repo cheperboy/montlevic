@@ -1,0 +1,72 @@
+<% @factcats.each do |factcat| %>
+	<% @factcat = factcat %>
+	<tr class="level-1">
+		<td class=col1><b><%= link_to factcat.name, "javascript: toggleLevel2('#{factcat.code}');" %></b></td>
+		<td class=col2></td>
+		<td class=col3></td>
+		<% if factcat.id.eql?(1) %>
+			<td class="saison"><b><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :ha).display(:z => true) %></b></td>
+			<td class="saison"><b><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :total).display(:z => true) %></b></td>
+		<% else %>
+			<td class="saison"><b><%= @test.res.get_saison_line(@test.sid, :factures, :factcat, factcat.id, :ha).display(:z => true) %></b></td>
+			<td class="saison"><b><%= @test.res.get_saison_line(@test.sid, :factures, :factcat, factcat.id, :total).display(:z => true) %></b></td>
+		<% end %>
+		<% rang = 0 %>
+		<% @colonnes.each do |colonne| %>
+			<% rang += 1 %>
+			<% if factcat.id.eql?(1) %>
+				<% cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_charges, :ha).display %>
+				<% cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_charges, :total).display %>
+			<% else %>
+				<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :factcat, factcat.id, :ha).display %>
+				<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :factcat, factcat.id, :total).display %>
+			<% end %>
+			<td class="<%= odd(rang) %>"><b><%=h cout_ha %></b></td>
+			<td class="<%= odd(rang) %>"><b><%=h cout_total %></b></td>
+		<% end %>
+	</tr>
+	<% categories = Category.find(:all, :conditions => {:upcategory_id => Upcategory.find_by_name('facture').id, :factcat_id => factcat.id}) %>
+	<% categories.each do |cat| %>
+		<tr class="level-2_<%= factcat.code %>"> 
+			<td class=col1></td>
+			<td class=col2><b><%= link_to cat.name, "javascript: toggleLevel3('#{factcat.code}.#{cat.code}');" %></b></td>
+			<td class=col3></td>
+			<td class="saison"><span class=green><%= @test.res.get_saison_line(@test.sid, :factures, :category, cat.id, :ha).display(:z => true) %></span></td>
+			<td class="saison"><span class=green><%= @test.res.get_saison_line(@test.sid, :factures, :category, cat.id, :total).display(:z => true) %></span></td>
+			<% rang = 0 %>
+			<% @colonnes.each do |colonne| %>
+				<% rang += 1 %>
+				<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :category, cat.id, :ha).display(:z => true) %>
+				<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :category, cat.id, :total).display(:z => true) %>
+				<td class="<%= odd(rang) %>"><span class=green><%= cout_ha %></span></td>
+				<td class="<%= odd(rang) %>"><span class=green><%= cout_total %></span></td>
+			<% end %>
+		</tr>
+		<% cat.factures.each do |facture| %>
+			<% @facture = facture %>		
+			<% @factcat = factcat %>		
+			<% @cat = cat %>		
+			<% datas = @test.res.get_saison_line_datas(@test.sid, :factures, facture.id) %>
+			<tr name=visible class="level-3_<%= factcat.code %>.<%= cat.code %>">
+				<td class=col1></td>
+				<td class=col2></td>
+				<td class=col3><%= link_popup_facture(datas[:id]) %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :factures, :all, facture.id, :ha).display(:z => true) %></td>
+				<td class="saison"><%= @test.res.get_saison_line(@test.sid, :factures, :all, facture.id, :total).display(:z => true) %></td>
+				<% rang = 0 %>
+				<% @colonnes.each do |colonne| %>
+					<% rang += 1 %>
+					<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :all, facture.id, :ha) %>
+					<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :all, facture.id, :total) %>
+					<td class="<%= odd(rang) %>"><%= cout_ha.display(:z => true) %></td>
+					<td class="<%= odd(rang) %>"><%= cout_total.display(:z => true) %></td>
+				<% end %>
+			</tr>
+		<% end %>
+		<% if cat.code.eql?('produits_phyto') %>
+			<%= render(:partial => "calculate/categories/produits_used") %>	
+		<% end %>
+	<% end %>
+	<tr>
+	</tr>
+<% end %>

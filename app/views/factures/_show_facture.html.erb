@@ -16,6 +16,9 @@
 			<%= tr_text('Ref perso', @facture.ref) %>
 			<%= tr_text('Date', @facture.print_date) %>
 			<%= tr_text('Prestataire', @facture.user.name) %>
+			<% if @facture.class.eql?(Report) %>
+				<%= tr_text('Report', "lien vers la <br>facture Reportable : #{link_to @facture.reportable.name, {:controller => :factures, :action => :show, :id => @facture.reportable.id}}") %>
+			<% end %>
 			</table>
 		</td>
 		<td class=form_layout_content_right>

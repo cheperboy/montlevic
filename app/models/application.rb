@@ -1,5 +1,8 @@
 class Application < ActiveRecord::Base
-
+# TODO
+# changer les valeurs TYPE en 'num' ou 'default' (fait pour produit)
+# 
+# 
   
   # Veleurs utilisees dans les listes deroulante
   DEFAULT = 0
@@ -69,18 +72,18 @@ class Application < ActiveRecord::Base
 
   VENTE_HEAD = 
   [
-    # KEY                   VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY           GREEN_RED COLOR
-    ['star',                'star',       '',     true,         :check_box,   true,   'star',           false,    'black'],
-  # ['pp_paye',             'paye',       '',     true,         :check_box,   true,   'paye',           false,    'black'], 
-   	['id',                  'id',         '',     false,        false,        true,   'id',             false,    'grey'],
-  	['category_name',       'Categorie',  '',     false,        false,        true,   'category_id',    false,    'grey'],
-  	['user_name',           'Prestataire','',     false,        false,        true,   'user_id',        false,    'black'],
-  	['name',                'nom',        '',     false,        false,        true,   'name',           false,    'black'],
-  	['prix',                'Prix',       '€',    false,        false,        true,   'prix',           false,    'black'],
-    ['ref',                 'Ref',        '',     false,        false,        true,   'ref',            false,    'grey'],
-  	['print_date',          'date',       '',     false,        false,        true,   'date',           false,    'grey'],
-    ['adu',                 'adu',        '',     true,         :check_box,   true,   'adu',            false,    'black'], 
-   	['get_info_popup',      '?',          '',     false,        true,         true,   '"info"',         false,    'black']
+    # KEY                   VALUE         UNIT    FILTER        TYPE              TRI     TRI_KEY           GREEN_RED COLOR
+    ['star',                'star',       '',     false,        'default',        true,   'star',           false,    'black'],
+  # ['pp_paye',             'paye',       '',     true,         'default',        true,   'paye',           false,    'black'], 
+   	['id',                  'id',         '',     true,         'numeric',        true,   'id',             false,    'grey'],
+  	['category_name',       'Categorie',  '',     true,         'default',        true,   'category_id',    false,    'grey'],
+  	['user_name',           'Prestataire','',     true,         'default',        true,   'user_id',        false,    'black'],
+  	['name',                'nom',        '',     true,         'default',        true,   'name',           false,    'black'],
+  	['prix',                'Prix',       '€',    true,         'numeric',        true,   'prix',           false,    'black'],
+    ['ref',                 'Ref',        '',     true,         'default',        true,   'ref',            false,    'grey'],
+  	['print_date',          'date',       '',     false,        'default',        true,   'date',           false,    'grey'],
+    ['adu',                 'adu',        '',     false,        'default',        true,   'adu',            false,    'black'], 
+   	['get_info_popup',      '?',          '',     false,        'default',        true,   '"info"',         false,    'black']
   ]
 
   FACTURE_HEAD = 
@@ -122,23 +125,23 @@ class Application < ActiveRecord::Base
   PRODUIT_HEAD = 
   [
     # KEY                       VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
-    ['star',                    'star',       '',     true,         :check_box,   true,   'star'        ],
-    ['adu',                     'adu',        '',     true,         :check_box,   true,   'adu'         ],
+    ['star',                    'star',       '',     true,         'default',    true,   'star'        ],
+    ['adu',                     'adu',        '',     true,         'default',    true,   'adu'         ],
     ['stock_vs_used_pp',        'S',          '',     true,         false,        false,  ''            ],
-   	['id',                      'id',         '',     false,        false,        true,   'id'          ],
-   	['category_name',           'categorie',  '',     false,        :text_field,  true,   'category_id' ],
-   	['name',                    'nom',        '',     true,         :text_field,  true,   'name'        ],
-    ['get_cout_total',          'Achat',      '€',    false,        false,        false,  ''            ], 
-   	['get_quantite',            'Quantite',   '',     false,        false,        false,  ''            ],
+   	['id',                      'id',         '',     false,        'numeric',    true,   'id'          ],
+   	['category_name',           'categorie',  '',     false,        'default',    true,   'category_id' ],
+   	['name',                    'nom',        '',     true,         'default',    true,   'name'        ],
+    ['get_cout_total',          'Achat',      '€',    false,        'numeric',    false,  ''            ], 
+   	['get_quantite',            'Quantite',   '',     false,        'numeric',    false,  ''            ],
    	['unit',                    '',           '',     false,        false,        true,   'unit'        ],
 
-    ['get_stock',               'Stock',      '',     false,        false,        false,  ''            ], 
+    ['get_stock',               'Stock',      '',     false,        'numeric',    false,  ''            ], 
    	['unit',                    '',           '',     false,        false,        true,   'unit'        ],
-    ['stock_percent_pp',        'reste',      '%',    true,         false,        false,  ''            ],
+    ['stock_percent_pp',        'reste',      '%',    true,         'numeric',    false,  ''            ],
 
-    ['get_prix_unitaire',       'Prix',       '',     false,        false,        false,  ''            ],
+    ['get_prix_unitaire',       'Prix',       '',     false,        'numeric',    false,  ''            ],
     ['get_prix_unitaire_unit',  '',           '',     false,        false,        false,  ''            ], 
-    ['number_of_use',           '',           '',     false,        false,        false,  ''            ]
+    ['number_of_use',           '',           '',     false,        'numeric',    false,  ''            ]
   ]
   
   # Used in Print.rb

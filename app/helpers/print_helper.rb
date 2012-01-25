@@ -78,13 +78,16 @@ module PrintHelper
 
     #affichage popup
     out += '
-    <span>        
+    <span>      
     <fieldset class="popup">
     <legend class="popup"><b>'+ facture.name + '</b></legend>'
 
     #REPORT
     if facture.class.equal?(Report)
-      out += '<p>Origine :<b>' + facture.reportable.name + '</b> (' + facture.reportable.cout.to_s + euros + ')</p>'
+      out += '<p>Report de la facture: <b>' + facture.reportable.name + '</b></p>'
+    end
+    if facture.class.equal?(Reportable)
+      out += '<p>Facture Reportable</p>'
     end
 
     #Description
@@ -92,6 +95,7 @@ module PrintHelper
     <table class="table_data">
     ' + tr_text("Id", facture.id) + '
     ' + tr_text("Categorie", facture.category.name) + '
+    ' + tr_text("Prestataire", facture.user.name) + '
     ' + tr_text("Surface", facture.sum_surfaces.display, 'Ha') + '
     ' + tr_text("Cout", facture.get_cout_total_sans_reduc.display, '€')
     if facture.charges? || facture.class.equal?(Reportable)
@@ -111,7 +115,7 @@ module PrintHelper
           <td>Nom</td>
           <td>Ha</td>
         </tr>'
-      for parcelle in facture.parcelles
+      for parcelle in facture.parcelles.find(:all, :order => :typeculture_id)
         out += '<tr>'
           out += '<td>' + parcelle.typeculture.name + '</td>'
           out += '<td>' + parcelle.name + '</td>'
@@ -209,7 +213,7 @@ module PrintHelper
   		end
       if facture.sum_putoproduits_associated > 0  
          out += "<tr>
-  		    <td>Produits : </td>
+  		    <td>Produits Consommés : </td>
   		    <td><b>-</b></td>
   		    <td><b>#{facture.sum_putoproduits_used.display()}</b></td>
   		  </tr>"
@@ -241,7 +245,7 @@ module PrintHelper
     end
     #affichage tableau
     out = '
-    <a href=" '+ edit_labour_path(labour) +'" class="tip">'+ labour.name 
+    <a href=" '+ labour_path(labour) +'" class="tip">'+ labour.name 
 
     #affichage popup
     out += '
@@ -310,7 +314,7 @@ module PrintHelper
   def link_popup_pulve(data)
     pulve = Pulve.find(data[:id])
     #affichage tableau
-    out = '<a href=" '+ edit_pulve_path(pulve) +'" class="tip">'+ pulve.name 
+    out = '<a href=" '+ pulve_path(pulve) +'" class="tip">'+ pulve.name 
 
     #affichage popup
     out += '
@@ -322,6 +326,7 @@ module PrintHelper
     <table class = "table_popup">
     ' + tr_text("Id", data[:id]) + '
     ' + tr_text("Nom", data[:name]) + '
+    ' + tr_text("Date", data[:date]) + '
     ' + tr_text("Surface", data[:sum_surfaces], 'Ha') + '
     ' + tr_text("Cout Ha", data[:cout_ha_passage], '€/Ha') + '
     ' + tr_text("Cout Total", data[:cout_total_passage], '€') +'
@@ -370,17 +375,18 @@ module PrintHelper
       putoproduit = Putoproduit.find(data[:id])
     end
     #affichage tableau
-    out = '<a href=" '+ edit_pulve_path(putoproduit.pulve) +'" class="tip">'+ putoproduit.pulve.name + ' - ' + putoproduit.produit.name 
+    out = '<a href=" '+ pulve_path(putoproduit.pulve) +'" class="tip">'+ putoproduit.pulve.name + ' - ' + putoproduit.produit.name 
 
     #affichage popup
     out += '
     <span>        
     <fieldset class    = "popup">
-    <legend class    = "popup"><b>Pulve :: '+ putoproduit.produit.name + '</b></legend>'
+    <legend class    = "popup"><b>Produit :: '+ putoproduit.produit.name + '</b></legend>'
 
     out += '
     <table class = "table_popup">
     ' + tr_text("Id", data[:id]) + '
+    ' + tr_text("Date passage", data[:date]) + '
     ' + tr_text("Categorie", data[:category_name]) + '
     ' + tr_text("Surface", data[:sum_surfaces], 'Ha') + '
     ' + tr_text("Cout Ha", data[:cout_ha], '€/Ha') + '

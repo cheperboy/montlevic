@@ -30,7 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :zones
 
-  map.resources :users
+  map.resources :users, :collection => { :test => :any}
 
   map.resources :typecultures
 

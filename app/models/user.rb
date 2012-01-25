@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :pulves
-  validates_presence_of :name
+  validates_presence_of :name, :message => "le nom ne doit pas etre vide"
+  validates_presence_of :code
 
   def self.find_by_name(name)
     self.find(:first, :conditions => ["name = ?", name])
