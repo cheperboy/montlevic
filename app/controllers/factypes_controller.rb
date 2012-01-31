@@ -1,4 +1,7 @@
 class FactypesController < ApplicationController
+  before_filter :edit_access,
+                :only => [:update, :destroy]
+
   # GET /factypes
   # GET /factypes.xml
   def index

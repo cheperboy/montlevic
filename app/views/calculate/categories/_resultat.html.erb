@@ -9,8 +9,8 @@
 			<% rang += 1 %>
 			<% cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :benef, :ha).display %>
 			<% cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :benef, :total).display %>
-			<td class="<%= odd(rang) %>_subtotal"><b><%= cout_ha %></b></td>
-			<td class="<%= odd(rang) %>_subtotal"><b><%= cout_total %></b></td>
+			<td class="color_culture_<%= colonne.code %>_strong"><b><%= cout_ha %></b></td>
+			<td class="color_culture_<%= colonne.code %>_strong"><b><%= cout_total %></b></td>
 		<% end %>
 	</tr>
 

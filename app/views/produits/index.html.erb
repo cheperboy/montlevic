@@ -8,21 +8,24 @@
 	<span class=link><%= lien1 %></span>
 </div>
 
-<%= draw_table_with_find(Application::PRODUIT_HEAD, @produits_used, 'produits', 'index', params) %>
+<%#= draw_table_with_find(Application::PRODUIT_HEAD, @produits_used, 'produits', 'index', params) %>
+<%= draw_table_with_find_js(Application::PRODUIT_HEAD, @produits_used, 'produits', :search => true, :sort => 3) %>
 
 <br /><br /><br />
 <div id="title_h1">
 	<span class=title>Produits non utilises</span>
 </div>
 
-<%= draw_table_with_find(Application::PRODUIT_HEAD, @produits_not_used, 'produits', 'index', params) %>
+<%#= draw_table_with_find(Application::PRODUIT_HEAD, @produits_not_used, 'produits', 'index', params) %>
+<%= draw_table_with_find_js(Application::PRODUIT_HEAD, @produits_not_used, 'produits', :search => true, :sort => 3) %>
 
 <br /><br /><br />
 <div id="title_h1">
 	<span class=title>Produits non achetes</span>
 </div>
 
-<%= draw_table_with_find(Application::PRODUIT_HEAD, @produits_non_achetes, 'produits', 'index', params) %>
+<%#= draw_table_with_find(Application::PRODUIT_HEAD, @produits_non_achetes, 'produits', 'index', params) %>
+<%= draw_table_with_find_js(Application::PRODUIT_HEAD, @produits_non_achetes, 'produits', :search => true, :sort => 3) %>
 
 
 

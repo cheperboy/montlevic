@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
     user = Myuser.authenticate(params[:login], params[:password]) 
     if user
       session[:user_id] = user.id
+      session[:edit_access] = user.admin?
       session[:admin] = user.admin?
       session[:user_login] = user.login
       current_saison_id = Setting.find(:first).saison.id
@@ -15,7 +16,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "Bonjour #{user.login}!"
       redirect_to parcelles_path
     else
-      flash[:error] = "Invalid email/password combination!"
+      flash[:error] = "login/mot de passe invalide !"
       redirect_to new_session_path
       #render :controller => :sessions, :action => :new
     end
@@ -23,7 +24,7 @@ class SessionsController < ApplicationController
   
   def destroy
     reset_session 
-    flash[:notice] = "You've been logged out." 
+    flash[:notice] = "Vous n'etes plus identifie" 
     redirect_to new_session_path
   end  
 

@@ -8,7 +8,7 @@
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
 	<% rang += 1 %>
-	<td class="<%= odd(rang) %>-head-name" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> >
+	<td class="color_culture_<%= colonne.code %>_strong" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> >
 		<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :name) %> <br>
 		<!-- [<%=h colonne.id %>] -->
 	</td>
@@ -25,7 +25,8 @@
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
 	<% rang += 1 %>
-	<td class="<%= odd(rang) %>-head-surface" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> ><b>
+
+	<td class="color_culture_<%= colonne.code %>_strong" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> ><b>
 	<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :surface).display(1) %> Ha <br>
 	
 	<% if @test.c.to_s == "parcelles" %>
@@ -49,7 +50,7 @@
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
 	<% rang += 1 %>
-	<td class="<%= odd(rang) %>">c/ha</td>
-	<td class="<%= odd(rang) %>">Total</td>
+	<td class="color_culture_<%= colonne.code %>">c/ha</td>
+	<td class="color_culture_<%= colonne.code %>">Total</td>
 <% end %>
 </tr>	

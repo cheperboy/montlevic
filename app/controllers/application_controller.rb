@@ -23,13 +23,23 @@ class ApplicationController < ActionController::Base
 
   def login_required 
     unless session[:user_id]
-      flash[:notice] = "Please log in"
+      flash[:notice] = "Identification"
       redirect_to new_session_path
     end
   end
   
-  def logged_in?
-    return session[:user_id].nil?
+  def edit_access
+    unless session[:edit_access]
+      flash[:error] = "vous n'avez pas acces en ecriture"
+      redirect_to :back
+    end
+  end
+
+  def admin_access
+    unless session[:admin]
+      flash[:notice] = "Identification en tant qu'admin"
+      redirect_to new_session_path
+    end
   end
 
   # def update_current_saison_id

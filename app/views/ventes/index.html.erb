@@ -8,7 +8,7 @@
 	<span class=link><%= lien1 %></span>
 </div>
 
-<%= draw_table_with_find_js(Application::VENTE_HEAD, @ventes, 'ventes') %>
+<%= draw_table_with_find_js(Application::VENTE_HEAD, @ventes, 'ventes', :search => true, :sort => 3) %>
 
 
 

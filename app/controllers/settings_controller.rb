@@ -1,4 +1,5 @@
 class SettingsController < ApplicationController
+before_filter :admin_access
 
   def update
     @setting = Setting.find(params[:id])
@@ -18,7 +19,7 @@ class SettingsController < ApplicationController
       end
     end
   end
-
+  
   def index
     respond_to do |format|
       format.html { redirect_to :action => "edit", :id => Setting.find(:first).id}
@@ -32,47 +33,47 @@ class SettingsController < ApplicationController
 
   # POST /settings
   # POST /settings.xml
-  def create
-    @setting = Setting.new(params[:setting])
+  # def create
+  #   @setting = Setting.new(params[:setting])
+  # 
+  #   respond_to do |format|
+  #     if @setting.save
+  #       flash[:notice] = 'Setting was successfully created.'
+  #       format.html { redirect_to(@setting) }
+  #       format.xml  { render :xml => @setting, :status => :created, :location => @setting }
+  #     else
+  #       format.html { render :action => "new" }
+  #       format.xml  { render :xml => @setting.errors, :status => :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
-    respond_to do |format|
-      if @setting.save
-        flash[:notice] = 'Setting was successfully created.'
-        format.html { redirect_to(@setting) }
-        format.xml  { render :xml => @setting, :status => :created, :location => @setting }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @setting.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  def destroy
-    @setting = Setting.find(params[:id])
-    @setting.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(settings_url) }
-      format.xml  { head :ok }
-    end
-  end
-  def show
-    @setting = Setting.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @setting }
-    end
-  end
-
+  # def destroy
+  #   @setting = Setting.find(params[:id])
+  #   @setting.destroy
+  # 
+  #   respond_to do |format|
+  #     format.html { redirect_to(settings_url) }
+  #     format.xml  { head :ok }
+  #   end
+  # end
+  # def show
+  #   @setting = Setting.find(params[:id])
+  # 
+  #   respond_to do |format|
+  #     format.html # show.html.erb
+  #     format.xml  { render :xml => @setting }
+  #   end
+  # end
+  # 
   # GET /settings/new
   # GET /settings/new.xml
-  def new
-    @setting = Setting.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @setting }
-    end
-  end
+  # def new
+  #   @setting = Setting.new
+  # 
+  #   respond_to do |format|
+  #     format.html # new.html.erb
+  #     format.xml  { render :xml => @setting }
+  #   end
+  # end
 end

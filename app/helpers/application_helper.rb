@@ -198,7 +198,7 @@ module ApplicationHelper
   
   def draw_table_with_find_js(headers, elements, controller, *args)
     options = args.extract_options!
-    sort = ":0" 
+    sort = "" 
     out = ""
     sort = ":#{options[:sort]}" unless options[:sort].nil?
     head_size = headers.count
@@ -223,27 +223,31 @@ module ApplicationHelper
     out += "<th colspan='#{link_size.to_s}'></th>"
     out += "</tr>
   	"        
-    #Head - 2
-    out += "
-    <tr class=bold>
-    "        
-    headers.each do |header|
-      if header[HEADER_FILTER].eql?(true)
-        out += "<th><input name='filter' size='4' onkeyup='Table.filter(this,this)'></th>"
-      else
-        out += "<th></th>"
+    
+    if options[:search].eql?(true)
+      #Head - 2
+      out += "
+      <tr class=bold>
+      "        
+      headers.each do |header|
+        if header[HEADER_FILTER].eql?(true)
+          out += "<th><input name='filter' size='1' onkeyup='Table.filter(this,this)'></th>"
+        else
+          out += "<th></th>"
+        end
       end
+      out += "<th colspan='#{link_size.to_s}'></th>"
+      out += "</tr>
+    	"        
+      out += "
+      </thead>
+    	"
     end
-    out += "<th colspan='#{link_size.to_s}'></th>"
-    out += "</tr>
-  	"        
-
-    out += "
-    </thead>
-  	<tbody>
-  	"        
-
+    
     #Elements
+    out += "
+  	<tbody>
+  	"
     alt = 0
     elements.each do |element|
       alt += 1
@@ -649,9 +653,13 @@ module ApplicationHelper
 #  end
   
   def admin?
-    session[:admin] == (true)
+    session[:admin]
   end
-  
+
+  def edit_access?
+    session[:edit_access]
+  end
+
   def root?
     session[:root] == (true)
   end

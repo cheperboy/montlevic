@@ -1,4 +1,6 @@
 class VentesController < ApplicationController
+  before_filter :edit_access,
+                :only => [:update, :destroy]
 
   def toggle_star
     @vente = Vente.find(params[:id])
@@ -27,12 +29,7 @@ class VentesController < ApplicationController
   # GET /ventes
   # GET /ventes.xml
   def index
-    @ventes = Vente.find_by_saison(:all, :order => :id) 
-    # if params[:tri]
-    #   @ventes = Vente.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
-    #   @tri = params[:tri]
-    #   @sens = params[:sens]
-    # end
+    @ventes = Vente.find_by_saison(:all)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @ventes }

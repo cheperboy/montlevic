@@ -1,4 +1,7 @@
 class CategoriesController < ApplicationController
+  before_filter :edit_access,
+                :only => [:update, :destroy]
+
   # GET /categories
   # GET /categories.xml
   
@@ -81,7 +84,7 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.xml
   def destroy
-    if session[:admin]
+    if admin?
       @category = Category.find(params[:id])
       @category.destroy
   

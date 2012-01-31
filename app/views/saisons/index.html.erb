@@ -14,9 +14,10 @@
   <tr>
     <td><%=h saison.name %></td>
     <td><%=h saison.year.to_s %></td>
+    <td><%= button_to "selectionner", :action => :select_saison, :id => saison %></td>
     <td><%= link_to 'Modifier', edit_saison_path(saison) %></td>
     <% if admin? %>
-		<td><%= link_to 'Supprimer', saison, :confirm => 'Supprimer vraiment?', :method => :delete %></td>
+		<td><%= link_to_delete(Saison, saison.id) %></td>
 	<% end %>
   </tr>
 <% end %>

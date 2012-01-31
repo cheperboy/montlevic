@@ -1,4 +1,6 @@
 class UpcategoriesController < ApplicationController
+  before_filter :admin_access
+
   # GET /upcategories
   # GET /upcategories.xml
   def index

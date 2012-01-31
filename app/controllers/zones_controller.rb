@@ -1,5 +1,6 @@
 class ZonesController < ApplicationController
-
+  before_filter :edit_access,
+                :only => [:update, :destroy]
   def index
     @zones = Zone.all
 

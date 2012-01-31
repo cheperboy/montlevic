@@ -163,10 +163,10 @@ cat_vente_avoir = Category.create!({:factcat => factcat_agri, :upcategory => upc
   trochet = User.find_by_name('Trochet')
 
   myuser = Myuser.create!([
-    {:login => "admin",     :password => "admin",     :admin => true},
-    {:login => "matthieu",  :password => "",          :admin => false},
-    {:login => "elisabeth", :password => "elisabeth", :admin => false},
-    {:login => "thierry",   :password => "thierry",   :admin => false}
+    {:login => "admin",     :password => "admin",       :admin => true},
+    {:login => "matthieu",  :password => "matthieu",    :admin => false},
+    {:login => "elisabeth", :password => "elisabeth",   :admin => false},
+    {:login => "thierry",   :password => "thierry",     :admin => false}
   ])
 
 end # if SEEDS_BASIC

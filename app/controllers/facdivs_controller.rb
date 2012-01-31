@@ -1,4 +1,6 @@
 class FacdivsController < ApplicationController
+  before_filter :edit_access,
+                :only => [:update, :destroy]
   
   before_filter :find_facture
 

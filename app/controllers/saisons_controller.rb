@@ -1,4 +1,7 @@
 class SaisonsController < ApplicationController
+before_filter :edit_access,
+              :only => [:update, :destroy]
+
   # GET /saisons
   # GET /saisons.xml
   def index
@@ -11,10 +14,11 @@ class SaisonsController < ApplicationController
   end
 
   def select_saison
+    logger.error "params:#{params}"
     @setting = Setting.find(:first)
     @saisons = Saison.all
     respond_to do |format|
-      if @setting.update_attribute(:saison_id, params[:select_saison][:id])
+      if @setting.update_attribute(:saison_id, params[:id])
         @setting.reload
         # Update Session variable
         # current_saison_id = Setting.find(:first).saison.id

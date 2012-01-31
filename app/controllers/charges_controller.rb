@@ -1,12 +1,4 @@
 class ChargesController < ApplicationController
-  
-  def modif
-    @facture = Charge.find(:all)
-    @facture.each do |facture|
-      facture.type = 'Debit'
-      facture.save
-    end   
-  end
      
   def toggle_star
     @facture = Charge.find(params[:id])

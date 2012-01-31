@@ -1,4 +1,5 @@
 class VerifsController < ApplicationController
+  before_filter :admin_access
 
   def index
     #partie Verif de bug

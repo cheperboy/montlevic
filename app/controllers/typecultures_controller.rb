@@ -1,4 +1,7 @@
 class TypeculturesController < ApplicationController
+  before_filter :edit_access,
+                :only => [:update, :destroy]
+                
   # GET /typecultures
   # GET /typecultures.xml
   def index

@@ -9,8 +9,8 @@
 			<% rang += 1 %>
 			<% cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_ventes, :ha).display(:z => true) %>
 			<% cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_ventes, :total).display(:z => true) %>
-			<td class="<%= odd(rang) %>_subtotal"><b><%= cout_ha %></b></td>
-			<td class="<%= odd(rang) %>_subtotal"><b><%= cout_total %></b></td>
+			<td class="color_culture_<%= colonne.code %>_strong"><b><%= cout_ha %></b></td>
+			<td class="color_culture_<%= colonne.code %>_strong"><b><%= cout_total %></b></td>
 		<% end %>
 	</tr>
 
@@ -27,8 +27,8 @@
 				<% rang += 1 %>
 				<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :ha).display(:z => true) %>
 				<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :total).display(:z => true) %>
-				<td class="<%= odd(rang) %>"><span class=green><%= cout_ha %></span></td>
-				<td class="<%= odd(rang) %>"><span class=green><%= cout_total %></span></td>
+				<td class="color_culture_<%= colonne.code %>"><span class=green><%= cout_ha %></span></td>
+				<td class="color_culture_<%= colonne.code %>"><span class=green><%= cout_total %></span></td>
 			<% end %>
 		</tr>
 		<% cat.ventes.each do |vente| %>
@@ -44,8 +44,8 @@
 					<% rang += 1 %>
 					<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :ha).display(:z => true) %>
 					<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :total).display(:z => true) %>
-					<td class="<%= odd(rang) %>"><%= cout_ha %></td>
-					<td class="<%= odd(rang) %>"><%= cout_total %></td>
+					<td class="color_culture_<%= colonne.code %>"><%= cout_ha %></td>
+					<td class="color_culture_<%= colonne.code %>"><%= cout_total %></td>
 				<% end %>
 			</tr>
 		<% end %>

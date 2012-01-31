@@ -158,7 +158,8 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer  "category_id",   :null => false
     t.integer  "saison_id",     :null => false
     t.string   "name",          :null => false
-    t.string   "desc"
+    t.text     "desc"
+    t.text     "info"
     t.string   "unit"
     t.integer  "star"
     t.integer  "adu"

@@ -9,8 +9,8 @@
 				<% rang += 1 %>
 				<% cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_putoproduits, :ha).display(:z => true) %>
 				<% cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_putoproduits, :total).display(:z => true) %>
-				<td class="<%= odd(rang) %>"><span class=green><%=h cout_ha %></span></td>
-				<td class="<%= odd(rang) %>"><span class=green><%=h cout_total %></span></td>
+				<td class="color_culture_<%= colonne.code %>"><span class=green><%=h cout_ha %></span></td>
+				<td class="color_culture_<%= colonne.code %>"><span class=green><%=h cout_total %></span></td>
 			<% end %>
 		</tr>
 		<% sub_categories = Category.find(:all, :conditions => {:upcategory_id => Upcategory.find_by_name('pulve').id}) %>
@@ -26,8 +26,8 @@
 					<% rang += 1 %>
 					<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :category, pulve_cat.id, :ha).display(:z => true) %>
 					<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :category, pulve_cat.id, :total).display(:z => true) %>
-					<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
-					<td class="<%= odd(rang) %>"><%=h cout_total %></td>
+					<td class="color_culture_<%= colonne.code %>"><%=h cout_ha %></td>
+					<td class="color_culture_<%= colonne.code %>"><%=h cout_total %></td>
 				<% end %>
 			</tr>
 		
@@ -46,8 +46,8 @@
 								<% rang += 1 %>
 								<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :all, putoproduit.id, :ha).display(:z => true) %>
 								<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :all, putoproduit.id, :total).display(:z => true) %>
-								<td class="<%= odd(rang) %>"><%=h cout_ha %></td>
-								<td class="<%= odd(rang) %>"><%=h cout_total %></td>
+								<td class="color_culture_<%= colonne.code %>"><%=h cout_ha %></td>
+								<td class="color_culture_<%= colonne.code %>"><%=h cout_total %></td>
 							<% end %>
 						</tr>
 					<% end %>

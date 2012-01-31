@@ -1,4 +1,6 @@
 class ParcellesController < ApplicationController
+  before_filter :edit_access,
+                :only => [:update, :destroy]
 
   def index
     @typecultures = Typeculture.find_for_saison()

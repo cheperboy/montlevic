@@ -8,7 +8,8 @@
 	<span class=link><%= lien1 %></span>
 </div>
 
-<%= draw_table_with_find(Application::PULVE_HEAD, @pulves, 'pulves', 'index', params) %>
+<%#= draw_table_with_find(Application::PULVE_HEAD, @pulves, 'pulves', 'index', params) %>
+<%= draw_table_with_find_js(Application::PULVE_HEAD, @pulves, 'pulves', :search => true, :sort => 3) %>
 
 <br />
 <br />

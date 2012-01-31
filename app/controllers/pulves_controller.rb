@@ -1,14 +1,9 @@
 class PulvesController < ApplicationController
+  before_filter :edit_access,
+                :only => [:update, :destroy]
+
   # GET /pulves
   # GET /pulves.xml
-  def multiple_select
-    # logger.error params.inspect
-    respond_to do |format|
-      format.html { redirect_to(pulves_url) }
-      format.xml  { head :ok }
-    end
-  end
-  
   def index
     @pulves = Pulve.find_by_saison(:all, :order => :id) 
     if params[:tri]
@@ -96,21 +91,6 @@ class PulvesController < ApplicationController
     end
   end
 
-  def actualize
-    @pulve = Pulve.find(params[:id])
-
-    respond_to do |format|
-      if @pulve.update_attributes(params[:pulve])
-        flash[:notice] = 'Pulve was successfully updated.'
-        format.html { redirect_to(@pulve) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @pulve.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /pulves/1
   # DELETE /pulves/1.xml
   def destroy
@@ -171,27 +151,4 @@ class PulvesController < ApplicationController
     end
   end
 
-  # def toggle_star
-  #   @obj = Pulve.find(params[:id])
-  #   if @obj.star != 1
-  #      @obj.star = 1
-  #   else
-  #     @obj.star = 0
-  #   end
-  #   if @obj.save
-  #     render(:layout => false)
-  #   end
-  # end  
-  # 
-  # def toggle_adu
-  #   @obj = Pulve.find(params[:id])
-  #   if @obj.adu != 1
-  #      @obj.adu = 1
-  #   else
-  #     @obj.adu = 0
-  #   end
-  #   if @obj.save
-  #     render(:layout => false)
-  #   end
-  # end  
 end

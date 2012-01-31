@@ -1,5 +1,7 @@
 class ProduitsController < ApplicationController
-
+  before_filter :edit_access,
+                :only => [:update, :destroy]
+                
   def modif
     @produits = Produit.find_all
     @produits.each do |produit|
@@ -19,31 +21,7 @@ class ProduitsController < ApplicationController
       produit.save!
     end
   end
-   
-  # def toggle_star
-  #   @produit = Produit.find(params[:id])
-  #   if @produit.star != 1
-  #      @produit.star = 1
-  #   else
-  #     @produit.star = 0
-  #   end
-  #   if @produit.save
-  #     render(:layout => false)
-  #   end
-  # end
-  # 
-  # def toggle_adu
-  #   @produit = Produit.find(params[:id])
-  #   if @produit.adu != 1
-  #      @produit.adu = 1
-  #   else
-  #     @produit.adu = 0
-  #   end
-  #   if @produit.save
-  #     render(:layout => false)
-  #   end
-  # end
-  
+     
   def export
     @produits_used = Produit.all
     

@@ -1,39 +1,8 @@
 class FacturesController < ApplicationController
+  before_filter :edit_access,
+                :only => [:update, :destroy, :create_debit_to_reportable]
 
 
-  # def modif
-  #   @factures = Facture.find_by_sql("select * from 'factures'")
-  #   @factures.each do |facture|
-  #     facture[:type] = 'Debit'
-  #     logger.info 'modif facture : ' + facture.id
-  #     facture.save!
-  #   end
-  # end
-   
-  # def toggle_star
-  #   @facture = Facture.find(params[:id])
-  #   if @facture.star != 1
-  #      @facture.star = 1
-  #   else
-  #     @facture.star = 0
-  #   end
-  #   if @facture.save
-  #     render(:layout => false)
-  #   end
-  # end
-  # 
-  # def toggle_adu
-  #   @facture = Facture.find(params[:id])
-  #   if @facture.adu != 1
-  #      @facture.adu = 1
-  #   else
-  #     @facture.adu = 0
-  #   end
-  #   if @facture.save
-  #     render(:layout => false)
-  #   end
-  # end
-  # 
   def index
     @factures = Facture.find_by_saison(:all) 
     if params[:tri]
@@ -107,26 +76,6 @@ class FacturesController < ApplicationController
   def edit
     @facture = Facture.find(params[:id])
   end
-
-# A SUPPRIMER?
-  # def update_categories
-  #   logger.error "UPDATING CATEGORIES"
-  #   factcat = Factcat.find(params[:factcat_id])
-  #   upcategory = Upcategory.find_by_name("facture")
-  #   logger.error "selected factcat=#{factcat.name}"
-  #   categories = Category.find_by_factcat_and_upcategory(factcat.id, upcategory.id)
-  #   
-  #   logger.error "selected cats=#{categories.inspect}"
-  #   categories.each do |cat| 
-  #         logger.error "selected cat << #{cat.name}"      
-  #   end
-  # 
-  #   render :update do |page|
-  #     page.replace_html 'categories', :partial => 'categories', :object => categories
-  #     page[:categories].visual_effect :highlight
-  #     # page.replace_html 'songs',   :partial => 'songs',   :object => songs
-  #   end
-  # end
 
   def new
     @facture ||= Facture.new

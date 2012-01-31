@@ -13,35 +13,40 @@
   </ul>
   <strong>Factures</strong>
   <ul>
-	<li><%= link_to "Nouveau", 	:controller => :factures, :action => :new  %></li>
 	<li><%= link_to "Liste", 	:controller => :factures  %></li>
-	<li><%= link_to "Payées", 	:controller => :factures, :action => :index_paye %></li>
+	<!-- <li><%= link_to "Payées", 	:controller => :factures, :action => :index_paye %></li> -->
+	<li><%= link_to "Nouveau", 	:controller => :factures, :action => :new  %></li>
   </ul>
   <strong>Ventes</strong>
   <ul>
-	<li><%= link_to "Nouveau", 	:controller => :ventes, :action => :new  %></li>
 	<li><%= link_to "Liste", 	:controller => :ventes  %></li>
+	<li><%= link_to "Nouveau", 	:controller => :ventes, :action => :new  %></li>
   </ul>
   <strong>Travaux</strong>
   <ul>
-    <%- [Labour, Pulve, Produit].each do |model| -%>
+    <%- [Labour, Pulve].each do |model| -%>
     <li>
-      <%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url") %>  
-			<%= link_to "New", eval("new_#{model.name.downcase}_url")  %>
+      	<%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url") %>  
+		<%= link_to "New", eval("new_#{model.name.downcase}_url")  %>
     </li>
     <%- end -%>
   </ul>
+  <strong>Produits</strong>
+  <ul>
+	<li><%= link_to "Liste", 	:controller => :produits  %></li>
+	<li><%= link_to "Nouveau", 	:controller => :produits, :action => :new  %></li>
+  </ul>
   <strong>Données</strong>
   <ul>
-    <%- [Zone, Parcelle, Typeculture, Saison].each do |model| -%>
+    <%- [Zone, Parcelle, Saison, Typeculture, Category].each do |model| -%>
     <li><%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url")  %></li>
     <%- end -%>
 	<li><%= link_to "Clients", 	:controller => :users  %></li>
   </ul>
-  <% if session[:admin] %>
+  <% if admin? %>
 	  <strong>Admin</strong>
 	  <ul>
-	    <%- [Category, Setting, Myuser, Verif].each do |model| -%>
+	    <%- [Setting, Myuser, Verif].each do |model| -%>
 	    <li><%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url")  %></li>
 	    <%- end -%>
 	  </ul>

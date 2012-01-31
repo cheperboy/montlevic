@@ -29,18 +29,17 @@
 }
 
 .table_scroll {
-	padding: 0; 
+/*	padding: 0; 
 	margin: 0; 
-/*	width: 900px;*/
 	border: 1px solid grey; 
 	border-collapse:collapse;
-}
+*/}
 
 .table_scroll td { 
-	padding: 0; 
+/*	padding: 0; 
 	margin: 0; 
 	border: 1px solid grey; 
-}
+*/}
 
 td.col1 	{width: 130px; text-align:left;}
 td.col2 	{width: 170px; text-align:left;}

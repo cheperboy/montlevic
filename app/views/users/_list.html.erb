@@ -1,17 +1,16 @@
 
 <div class=div_contain_table_scroll>
-	<table class=table_scroll>
+	<table class="table_scroll table_data">
 	<!-- <table class=table_data> -->
 	  <tr>
-	    <td class=bold>Nom</td>
-	    <td></td>
-	    <td></td>
-	    <% if admin? %>
-			<td></td>
+	    <th class=bold>Nom</th>
+	    <th></th>
+	    <% if admin? || edit_access? %>
+			<th></th>
 		<% end %>
 	  </tr>
-	<% @users.each do |user| %>
 
+	<% @users.each do |user| %>
 	<tr ondblclick="<%= remote_function(
 						:update => 'user_body', 
 						:url => {:action => 'show_user', :id => user}) 
@@ -21,6 +20,10 @@
 			:url => {:action => 'show_user', :id => user},
 			:update => 'user_body'
 		%></td> 
+	    <% if admin? || edit_access? %>
+			<td><%= link_to_delete(User, user.id) %></td>
+		<% end %>
+		
 	  </tr>
 	<% end %>
 	</table>

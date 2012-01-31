@@ -21,8 +21,8 @@
 				<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :factcat, factcat.id, :ha).display %>
 				<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :factcat, factcat.id, :total).display %>
 			<% end %>
-			<td class="<%= odd(rang) %>"><b><%=h cout_ha %></b></td>
-			<td class="<%= odd(rang) %>"><b><%=h cout_total %></b></td>
+			<td class="color_culture_<%= colonne.code %>"><b><%=h cout_ha %></b></td>
+			<td class="color_culture_<%= colonne.code %>"><b><%=h cout_total %></b></td>
 		<% end %>
 	</tr>
 	<% categories = Category.find(:all, :conditions => {:upcategory_id => Upcategory.find_by_name('facture').id, :factcat_id => factcat.id}) %>
@@ -38,8 +38,8 @@
 				<% rang += 1 %>
 				<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :category, cat.id, :ha).display(:z => true) %>
 				<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :category, cat.id, :total).display(:z => true) %>
-				<td class="<%= odd(rang) %>"><span class=green><%= cout_ha %></span></td>
-				<td class="<%= odd(rang) %>"><span class=green><%= cout_total %></span></td>
+				<td class="color_culture_<%= colonne.code %>"><span class=green><%= cout_ha %></span></td>
+				<td class="color_culture_<%= colonne.code %>"><span class=green><%= cout_total %></span></td>
 			<% end %>
 		</tr>
 		<% cat.factures.each do |facture| %>
@@ -58,8 +58,8 @@
 					<% rang += 1 %>
 					<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :all, facture.id, :ha) %>
 					<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :all, facture.id, :total) %>
-					<td class="<%= odd(rang) %>"><%= cout_ha.display(:z => true) %></td>
-					<td class="<%= odd(rang) %>"><%= cout_total.display(:z => true) %></td>
+					<td class="color_culture_<%= colonne.code %>"><%= cout_ha.display(:z => true) %></td>
+					<td class="color_culture_<%= colonne.code %>"><%= cout_total.display(:z => true) %></td>
 				<% end %>
 			</tr>
 		<% end %>

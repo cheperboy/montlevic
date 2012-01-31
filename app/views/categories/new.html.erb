@@ -4,22 +4,24 @@
   <%= f.error_messages %>
 
   <p>
-	<%= f.label :name %><br />
+	<%= f.label "Nom" %>
     <%= f.text_field :name %>
   </p>
   <p>
-	<%= f.label :code %><br />
+	<%= f.label "Code" %>
     <%= f.text_field :code %>
   </p>
   <p>
-		Type : 
-		<%= form_tr_select(f, 'Category Sup', 
+		<%= form_tr_select(f, 'Type de categorie', 
 							:upcategory_id, 
 							Upcategory.find(:all, :order => :name), 
 							:id, :name) %>
   </p>
   <p>
-		<%= form_tr_select(f, 'Factcat', 
+  <p>
+	Si le type de categorie est different de "facture" <br>(c'est a dire "pulve", "labour" ou "vente") alors le Classement est forcement "Agricole" 
+  </p>
+		<%= form_tr_select(f, 'Classement Facture', 
 							:factcat_id, 
 							Factcat.find(:all, :order => :name), 
 							:id, :name) %>

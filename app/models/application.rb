@@ -1,8 +1,5 @@
 class Application < ActiveRecord::Base
-# TODO
-# changer les valeurs TYPE en 'num' ou 'default' (fait pour produit)
-# 
-# 
+
   
   # Veleurs utilisees dans les listes deroulante
   DEFAULT = 0
@@ -55,56 +52,56 @@ class Application < ActiveRecord::Base
   PULVE_HEAD = 
   [
     # KEY                       VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
-   	['star',                    'star',       '',     true,         :check_box,   true,   'star'    ], 
-   	['id',                      'id',         '',     false,        false,        true,   'id'      ], 
-   	['typecultures',            'Cultures',   '',     false,        false,        false,  ''        ], 
-    ['print_produits',          'Produits',   '',     :text_field,  false,        false,  ''        ], 
-   	['user_name',               'Presta',     '',     false,        :text_field,  true,   'user_id' ], 
-    ['name',                    'nom',        '',     true,         :text_field,  true,   'name'    ], 
-   	['sum_surfaces',            'surface',    'ha',   true,         :text_field,  false,  ''        ], 
-  # ['get_cout_ha',             'Cout Ha',    '€/ha', false,        false,        false,  ''        ], 
-  # ['get_cout_total_passage',  'passage',    '€',    false,        false,        false,  ''        ], 
-   	['get_cout_total_produits', 'produits',   '€',    false,        false,        false,  ''        ], 
-   	['print_date',              'date',       '',     false,        true,         true,   'date'    ],
-   	['adu',                     'adu',        '',     true,         :check_box,   true,   'adu'     ], 
-   	['get_info_popup',          '?',          '',     false,        true,         true,   '"info"'  ]
+   	['star',                    'star',       '',     true,         'ignorecase', true,   'star'    ], 
+   	['id',                      'id',         '',     true,         'numeric',    true,   'id'      ], 
+   	['typecultures',            'Cultures',   '',     true,         'ignorecase', true,  ''        ], 
+    ['print_produits',          'Produits',   '',     true,         'ignorecase', true,  ''        ], 
+   	['user_name',               'Presta',     '',     true,         'ignorecase', true,   'user_id' ], 
+    ['name',                    'nom',        '',     true,         'ignorecase', true,   'name'    ], 
+   	['sum_surfaces',            'surface',    'ha',   true,         'numeric',    true,  ''        ], 
+  # ['get_cout_ha',             'Cout Ha',    '€/ha', true,         'ignorecase', true,  ''        ], 
+  # ['get_cout_total_passage',  'passage',    '€',    true,         'ignorecase', true,  ''        ], 
+   	['get_cout_total_produits', 'produits',   '€',    true,         'numeric',    true,  ''        ], 
+   	['print_date',              'date',       '',     true,         'ignorecase', true,   'date'    ],
+   	['adu',                     'adu',        '',     false,        'ignorecase', true,   'adu'     ], 
+   	['get_info_popup',          '?',          '',     false,        'ignorecase', true,   '"info"'  ]
   ]
 
   VENTE_HEAD = 
   [
     # KEY                   VALUE         UNIT    FILTER        TYPE              TRI     TRI_KEY           GREEN_RED COLOR
-    ['star',                'star',       '',     false,        'default',        true,   'star',           false,    'black'],
-  # ['pp_paye',             'paye',       '',     true,         'default',        true,   'paye',           false,    'black'], 
+    ['star',                'star',       '',     false,        'ignorecase',     true,   'star',           false,    'black'],
+  # ['pp_paye',             'paye',       '',     true,         'ignorecase',     true,   'paye',           false,    'black'], 
    	['id',                  'id',         '',     true,         'numeric',        true,   'id',             false,    'grey'],
-  	['category_name',       'Categorie',  '',     true,         'default',        true,   'category_id',    false,    'grey'],
-  	['user_name',           'Prestataire','',     true,         'default',        true,   'user_id',        false,    'black'],
-  	['name',                'nom',        '',     true,         'default',        true,   'name',           false,    'black'],
+  	['category_name',       'Categorie',  '',     true,         'ignorecase',     true,   'category_id',    false,    'grey'],
+  	['user_name',           'Prestataire','',     true,         'ignorecase',     true,   'user_id',        false,    'black'],
+  	['name',                'nom',        '',     true,         'ignorecase',     true,   'name',           false,    'black'],
   	['prix',                'Prix',       '€',    true,         'numeric',        true,   'prix',           false,    'black'],
-    ['ref',                 'Ref',        '',     true,         'default',        true,   'ref',            false,    'grey'],
-  	['print_date',          'date',       '',     false,        'default',        true,   'date',           false,    'grey'],
-    ['adu',                 'adu',        '',     false,        'default',        true,   'adu',            false,    'black'], 
-   	['get_info_popup',      '?',          '',     false,        'default',        true,   '"info"',         false,    'black']
+    ['ref',                 'Ref',        '',     true,         'ignorecase',     true,   'ref',            false,    'grey'],
+  	['print_date',          'date',       '',     false,        'ignorecase',     true,   'date',           false,    'grey'],
+    ['adu',                 'adu',        '',     false,        'ignorecase',     true,   'adu',            false,    'black'], 
+   	['get_info_popup',      '?',          '',     false,        'ignorecase',     true,   '"info"',         false,    'black']
   ]
 
   FACTURE_HEAD = 
   [
-    # KEY                   VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY           GREEN_RED COLOR
-    ['star',                'star',       '',     true,         :check_box,   true,   'star',           false,    'black'], 
-    ['pp_paye',             'paye',       '',     true,         :check_box,   true,   'paye',           false,    'black'], 
-   	['id',                  'id',         '',     false,        false,        true,   'id',             false,    'grey'],
-  	['category_name',       'Categorie',  '',     false,        false,        true,   'category_id',    false,    'grey'],
-    # ['factcat_name',      'class',      '',     false,        false,        true,   'factcat_id',     false,    'grey'],
-  	['print_factype',       'compta',     '',     false,        false,        true,   'factype_id',     false,    'grey'],
-  	['type',                'type',       '',     false,        false,        true,   'type',           false,    'grey'],
-  	['user_name',           'Prestataire','',     false,        false,        true,   'user_id',        false,    'black'],
-  	['name',                'nom',        '',     false,        false,        true,   'name',           false,    'black'],
-  	['cout',                'Cout',       '€',    false,        false,        true,   'cout',           false,    'black'],
-  # ['get_cout_total',      'Comptable',  '€',    false,        false,        true,   'get_cout_total', true,     'black'],
-    ['ref_client',          'Ref Client', '',     false,        false,        true,   'ref_client',     false,    'black'],
-    ['ref',                 'Ref',        '',     false,        false,        true,   'ref',            false,    'grey'],
-  	['print_date',          'date',       '',     false,        false,        true,   'date',           false,    'grey'],
-    ['adu',                 'adu',        '',     true,         :check_box,   true,   'adu',            false,    'black'], 
-   	['get_info_popup',      '?',          '',     false,        true,         true,   '"info"',         false,    'black']
+    # KEY                   VALUE         UNIT    FILTER        TYPE            TRI     TRI_KEY           GREEN_RED COLOR
+    ['star',                'star',       '',     false,        'ignorecase',   true,   'star',           false,    'black'], 
+    ['pp_paye',             'paye',       '',     false,        'ignorecase',   true,   'paye',           false,    'black'], 
+   	['id',                  'id',         '',     true,         'numeric',      true,   'id',             false,    'grey'],
+  	['category_name',       'Categorie',  '',     true,         'ignorecase',   true,   'category_id',    false,    'grey'],
+    # ['factcat_name',      'class',      '',     true,         'ignorecase',   true,   'factcat_id',     false,    'grey'],
+  	['print_factype',       'compta',     '',     true,         'ignorecase',   true,   'factype_id',     false,    'grey'],
+  	['type',                'type',       '',     true,         'ignorecase',   true,   'type',           false,    'grey'],
+  	['user_name',           'Prestataire','',     true,         'ignorecase',   true,   'user_id',        false,    'black'],
+  	['name',                'nom',        '',     true,         'ignorecase',   true,   'name',           false,    'black'],
+  	['cout',                'Cout',       '€',    true,         'numeric',      true,   'cout',           false,    'black'],
+  # ['get_cout_total',      'Comptable',  '€',    true,         'ignorecase',   true,   'get_cout_total', true,     'black'],
+    ['ref_client',          'Ref Client', '',     true,         'ignorecase',   true,   'ref_client',     false,    'black'],
+    ['ref',                 'Ref',        '',     true,         'ignorecase',   true,   'ref',            false,    'grey'],
+  	['print_date',          'date',       '',     true,         'ignorecase',   true,   'date',           false,    'grey'],
+    ['adu',                 'adu',        '',     false,        'ignorecase',   true,   'adu',            false,    'black'], 
+   	['get_info_popup',      '?',          '',     false,        'ignorecase',   true,   '"info"',         false,    'black']
   ]
 
   FACTURE_HEAD_PAYEES = 
@@ -125,23 +122,23 @@ class Application < ActiveRecord::Base
   PRODUIT_HEAD = 
   [
     # KEY                       VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
-    ['star',                    'star',       '',     true,         'default',    true,   'star'        ],
-    ['adu',                     'adu',        '',     true,         'default',    true,   'adu'         ],
-    ['stock_vs_used_pp',        'S',          '',     true,         false,        false,  ''            ],
-   	['id',                      'id',         '',     false,        'numeric',    true,   'id'          ],
-   	['category_name',           'categorie',  '',     false,        'default',    true,   'category_id' ],
+    ['star',                    'star',       '',     false,        'default',    true,   'star'        ],
+    ['stock_vs_used_pp',        'S',          '',     false,         false,        true,   ''            ],
+   	['id',                      'id',         '',     true,         'numeric',    true,   'id'          ],
+   	['category_name',           'categorie',  '',     true,         'default',    true,   'category_id' ],
    	['name',                    'nom',        '',     true,         'default',    true,   'name'        ],
-    ['get_cout_total',          'Achat',      '€',    false,        'numeric',    false,  ''            ], 
-   	['get_quantite',            'Quantite',   '',     false,        'numeric',    false,  ''            ],
-   	['unit',                    '',           '',     false,        false,        true,   'unit'        ],
+    ['get_cout_total',          'Achat',      '€',    true,         'numeric',    true,   ''            ], 
+   	['get_quantite',            'Quantite',   '',     true,         'numeric',    true,   ''            ],
+   	['unit',                    '',           '',     true,         false,        true,   'unit'        ],
 
-    ['get_stock',               'Stock',      '',     false,        'numeric',    false,  ''            ], 
+    ['get_stock',               'Stock',      '',     true,         'numeric',    true,   ''            ], 
    	['unit',                    '',           '',     false,        false,        true,   'unit'        ],
-    ['stock_percent_pp',        'reste',      '%',    true,         'numeric',    false,  ''            ],
+    ['stock_percent_pp',        'reste',      '%',    true,         'numeric',    true,   ''            ],
 
-    ['get_prix_unitaire',       'Prix',       '',     false,        'numeric',    false,  ''            ],
-    ['get_prix_unitaire_unit',  '',           '',     false,        false,        false,  ''            ], 
-    ['number_of_use',           '',           '',     false,        'numeric',    false,  ''            ]
+    ['get_prix_unitaire',       'Prix',       '',     true,         'numeric',    true,   ''            ],
+    ['get_prix_unitaire_unit',  '',           '',     false,        false,        false,   ''            ], 
+    ['number_of_use',           'passages',   '',     false,        'numeric',    true,   ''            ],
+    ['adu',                     'adu',        '',     false,        'default',    true,   'adu'         ]
   ]
   
   # Used in Print.rb

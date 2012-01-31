@@ -17,8 +17,8 @@
 	<% rang = 0 %>
 	<% @colonnes.each do |colonne| %>
 		<% rang += 1 %>
-		<td class="<%= odd(rang) %>"><b></b></td>
-		<td class="<%= odd(rang) %>"><b></b></td>
+		<td class="color_culture_<%= colonne.code %>"><b></b></td>
+		<td class="color_culture_<%= colonne.code %>"><b></b></td>
 	<% end %>
 </tr>
 <tr>
