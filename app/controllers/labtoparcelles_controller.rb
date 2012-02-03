@@ -61,7 +61,7 @@ class LabtoparcellesController < ApplicationController
 
     respond_to do |format|
       if @labtoparcelle.update_attributes(params[:labtoparcelle])
-        flash[:notice] = 'Labtoparcelle was successfully updated.'
+        flash[:notice] = 'Labtoparcelle mis a jour!.'
         format.html { redirect_to(@labtoparcelle) }
         format.xml  { head :ok }
       else

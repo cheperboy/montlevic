@@ -11,7 +11,7 @@
   <tr>
     <td><%= typeculture.name %></td>
     <td class=center><%= typeculture.parcelles.size %></td>
-    <td><%= link_to 'Editer', edit_typeculture_path(typeculture) %></td>
+    <td><%= link_to_show (Typeculture, typeculture) %></td>
     <% if admin? %>
 		<td><%= link_to 'Supprimer', typeculture, :confirm => 'Are you sure?', :method => :delete %></td>
 	<% end %>

@@ -1,8 +1,19 @@
 <div id="bloc_up">
 	<% if logged_in? %>
+			<% if edit_access? %>
+				<span class='link_red'>
+					| <%= link_to "Mode Ecriture", :controller => :sessions, :action => :read_only %> |
+				</span>
+			<% else %>
+				<span class='link_green'>
+					| <%= link_to "Mode lecture seule", :controller => :sessions, :action => :edit_access %> | 
+				</span>
+			<% end %>
 		  	Campagne: <strong><span class=red><%= Saison.find(current_saison_id).name %></strong></class> |
 		  	<%= session[:user_login] %> | 
-		  	<%= ENV['RAILS_ENV'].to_s %> | 
+			<% if admin? %>
+		  		<%= ENV['RAILS_ENV'].to_s %> | 
+			<% end %>
 			<%= link_to 'Logout', session_path, :method => :delete %>
 	<% end %>
 </div>

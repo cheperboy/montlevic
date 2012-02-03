@@ -1,3 +1,20 @@
 
-<%= link_to 'Edit', edit_typeculture_path(@typeculture) %> |
 <%= link_to 'Back', typecultures_path %>
+
+<table class=table_data>
+  <tr class=bold>
+    <td>id</td>
+    <td>Parcelle</td>
+    <td>surface vraie</td>
+    <td>surface pac</td>
+  </tr>
+<% @typeculture.parcelles.each do |parcelle| %>
+  <tr>
+    <td><%= parcelle.id %></td>
+    <td><%= parcelle.name %></td>
+    <td class='right'><%= parcelle.surface.display(2) %> ha</td>
+    <td class='right'><%= parcelle.surface_pac.display(2) %>ha</td>
+    <td><%= link_to_show (Parcelle, parcelle) %></td>
+  </tr>
+<% end %>
+</table>

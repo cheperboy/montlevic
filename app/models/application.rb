@@ -157,5 +157,6 @@ class Application < ActiveRecord::Base
     return val if precision == 0
     return (val * 10 ** precision).round.to_f / 10 ** precision
   end
-  
+
+ 
 end

@@ -63,7 +63,7 @@ class MyusersController < ApplicationController
 
     respond_to do |format|
       if @myuser.update_attributes(params[:myuser])
-        flash[:notice] = 'Myuser was successfully updated.'
+        flash[:notice] = 'Myuser mis a jour!.'
         format.html { redirect_to(@myuser) }
         format.xml  { head :ok }
       else

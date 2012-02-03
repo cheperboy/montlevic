@@ -68,7 +68,7 @@ class LaboursController < ApplicationController
       if @labour.update_attributes(params[:labour])
         @labour.update_typecultures(params[:typecultures])
         @labour.uniq_parcelles
-        flash[:notice] = 'Labour was successfully updated.'
+        flash[:notice] = 'Labour mis a jour!.'
         format.html { redirect_to(@labour) }
         format.xml  { head :ok }
       else

@@ -14,6 +14,17 @@ a img {
 a { color: #0000FF; }
 a.link_yellow:hover { background-color: #F0F6FC; }
 
+.link_red a	{ 
+	background-color: #FF7777;
+	color: black;
+	font-weight:bold;
+}
+
+.link_green a { 
+	background-color: #00EE00;
+	color: black; 
+}
+
 
 /* div principaux. mise en page. */
 #container {
@@ -178,3 +189,4 @@ h1 {
 
 
 /* .table_print tr:hover { background-color: #eee; } */
+

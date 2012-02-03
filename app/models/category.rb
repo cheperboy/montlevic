@@ -5,6 +5,7 @@ class Category < ActiveRecord::Base
   has_many :charges
   has_many :factures
   has_many :ventes
+  has_many :produits
 
   CategoryOption = Struct.new(:id, :name)
 
@@ -55,12 +56,16 @@ class Category < ActiveRecord::Base
     find_by_upcategory('labour')
   end
     
+  def self.produits
+    find_by_upcategory('produit')
+  end
+    
   def self.pulves
-    find_by_upcategory('pulve')
+    find_by_upcategory('produit')
   end
     
   def self.putoproduits
-    find_by_upcategory('pulve')
+    find_by_upcategory('produit')
   end
     
   def self.factures

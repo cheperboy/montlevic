@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     user = Myuser.authenticate(params[:login], params[:password]) 
     if user
       session[:user_id] = user.id
-      session[:edit_access] = user.admin?
+      session[:edit_access] = false
       session[:admin] = user.admin?
       session[:user_login] = user.login
       current_saison_id = Setting.find(:first).saison.id
@@ -22,6 +22,16 @@ class SessionsController < ApplicationController
     end
   end
   
+  def read_only
+    session[:edit_access] = false
+    redirect_to :back
+  end  
+
+  def edit_access
+    session[:edit_access] = true
+    redirect_to :back
+  end  
+
   def destroy
     reset_session 
     flash[:notice] = "Vous n'etes plus identifie" 

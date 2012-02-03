@@ -27,7 +27,7 @@ factcat_invest = Factcat.create!({ :code => 'invest', :name => 'Investissement'}
 
 #Upcaegories
 upcategory_facture = Upcategory.create!({ :name => 'facture'})
-upcategory_pulve = Upcategory.create!({ :name => 'pulve'})
+upcategory_produit = Upcategory.create!({ :name => 'produit'})
 upcategory_labour = Upcategory.create!({ :name => 'labour'})
 upcategory_vente = Upcategory.create!({ :name => 'vente'})
 
@@ -43,15 +43,15 @@ cat_agri_frais_generaux = Category.create!({:factcat => factcat_agri, :upcategor
 cat_agri_materiel = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'materiel', :code => 'materiel'})
 cat_agri_fermage = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'fermage', :code => 'fermage'})
 cat_agri_divers = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'divers', :code => 'divers'})
-cat_agri_oligo = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'oligo', :code => 'oligo'})
-cat_agri_azote = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'azote', :code => 'azote'})
-cat_agri_engrais = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'engrais', :code => 'engrais'})
-cat_agri_semis = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'semis', :code => 'semis'})
-cat_agri_soufre = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'soufre', :code => 'soufre'})
-cat_agri_desherbant = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'desherbant', :code => 'desherbant'})
-cat_agri_fongicide = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'fongicide', :code => 'fongicide'})
-cat_agri_herbicide = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'herbicide', :code => 'herbicide'})
-cat_agri_insecticide = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_pulve, :name => 'insecticide', :code => 'insecticide'})
+cat_agri_semence = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_facture, :name => 'semence', :code => 'semence'})
+cat_agri_oligo = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_produit, :name => 'oligo', :code => 'oligo'})
+cat_agri_azote = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_produit, :name => 'azote', :code => 'azote'})
+cat_agri_engrais = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_produit, :name => 'engrais', :code => 'engrais'})
+cat_agri_semis = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_produit, :name => 'semence', :code => 'semis'})
+cat_agri_soufre = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_produit, :name => 'soufre', :code => 'soufre'})
+cat_agri_fongicide = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_produit, :name => 'fongicide', :code => 'fongicide'})
+cat_agri_herbicide = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_produit, :name => 'herbicide', :code => 'herbicide'})
+cat_agri_insecticide = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_produit, :name => 'insecticide', :code => 'insecticide'})
 cat_agri_moisson = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_labour, :name => 'moisson', :code => 'moisson'})
 cat_agri_covercrop = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_labour, :name => 'covercrop', :code => 'covercrop'})
 cat_agri_vibro = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_labour, :name => 'vibro', :code => 'vibro'})
@@ -66,15 +66,17 @@ cat_invest_materiel = Category.create!({:factcat => factcat_invest, :upcategory 
 cat_invest_batiment = Category.create!({:factcat => factcat_invest, :upcategory => upcategory_facture, :name => 'batiment', :code => 'batiment'})
 
 #Categories Vente
+cat_vente_paille_foin = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'paille foin', :code => 'paille_foin'})
 cat_vente_paille_ble = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'paille ble', :code => 'paille_ble'})
 cat_vente_paille_colza = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'paille colza', :code => 'paille_colza'})
 cat_vente_foin = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'foin', :code => 'foin'})
 cat_vente_ble = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'ble', :code => 'ble'})
 cat_vente_colza = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'colza', :code => 'colza'})
-cat_vente_tournesol = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'tournesol', :code => 'tournesol'})
 cat_vente_assurance = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'Assurance', :code => 'assurance'})
 cat_vente_pac = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'PAC', :code => 'pac'})
 cat_vente_avoir = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'avoir', :code => 'avoir'})
+cat_vente_tournesol = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'tournesol', :code => 'tournesol'})
+
 
 # Typecultures
   ble = Typeculture.create!({:name => "Ble", :code => "ble"})

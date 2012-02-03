@@ -18,15 +18,15 @@ cat_agri_frais_generaux = Category.find(:first, :conditions => { :upcategory_id 
 cat_agri_materiel = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('facture').id, :code => 'materiel', :factcat_id => Factcat.find_by_code('agri').id})
 cat_agri_fermage = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('facture').id, :code => 'fermage', :factcat_id => Factcat.find_by_code('agri').id})
 cat_agri_divers = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('facture').id, :code => 'divers', :factcat_id => Factcat.find_by_code('agri').id})
-cat_agri_oligo = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('pulve').id, :code => 'oligo', :factcat_id => Factcat.find_by_code('agri').id})
-cat_agri_azote = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('pulve').id, :code => 'azote', :factcat_id => Factcat.find_by_code('agri').id})
-cat_agri_engrais = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('pulve').id, :code => 'engrais', :factcat_id => Factcat.find_by_code('agri').id})
-cat_agri_semis = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('pulve').id, :code => 'semis', :factcat_id => Factcat.find_by_code('agri').id})
-cat_agri_soufre = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('pulve').id, :code => 'soufre', :factcat_id => Factcat.find_by_code('agri').id})
-cat_agri_desherbant = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('pulve').id, :code => 'desherbant', :factcat_id => Factcat.find_by_code('agri').id})
-cat_agri_fongicide = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('pulve').id, :code => 'fongicide', :factcat_id => Factcat.find_by_code('agri').id})
-cat_agri_herbicide = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('pulve').id, :code => 'herbicide', :factcat_id => Factcat.find_by_code('agri').id})
-cat_agri_insecticide = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('pulve').id, :code => 'insecticide', :factcat_id => Factcat.find_by_code('agri').id})
+cat_agri_semence = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('facture').id, :code => 'semence', :factcat_id => Factcat.find_by_code('agri').id})
+cat_agri_oligo = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('produit').id, :code => 'oligo', :factcat_id => Factcat.find_by_code('agri').id})
+cat_agri_azote = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('produit').id, :code => 'azote', :factcat_id => Factcat.find_by_code('agri').id})
+cat_agri_engrais = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('produit').id, :code => 'engrais', :factcat_id => Factcat.find_by_code('agri').id})
+cat_agri_semis = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('produit').id, :code => 'semis', :factcat_id => Factcat.find_by_code('agri').id})
+cat_agri_soufre = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('produit').id, :code => 'soufre', :factcat_id => Factcat.find_by_code('agri').id})
+cat_agri_fongicide = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('produit').id, :code => 'fongicide', :factcat_id => Factcat.find_by_code('agri').id})
+cat_agri_herbicide = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('produit').id, :code => 'herbicide', :factcat_id => Factcat.find_by_code('agri').id})
+cat_agri_insecticide = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('produit').id, :code => 'insecticide', :factcat_id => Factcat.find_by_code('agri').id})
 cat_agri_moisson = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('labour').id, :code => 'moisson', :factcat_id => Factcat.find_by_code('agri').id})
 cat_agri_covercrop = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('labour').id, :code => 'covercrop', :factcat_id => Factcat.find_by_code('agri').id})
 cat_agri_vibro = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('labour').id, :code => 'vibro', :factcat_id => Factcat.find_by_code('agri').id})
@@ -41,15 +41,16 @@ cat_invest_materiel = Category.find(:first, :conditions => { :upcategory_id => U
 cat_invest_batiment = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('facture').id, :code => 'batiment', :factcat_id => Factcat.find_by_code('invest').id})
 
 
+cat_vente_paille_foin = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'paille_foin', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_paille_ble = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'paille_ble', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_paille_colza = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'paille_colza', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_foin = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'foin', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_ble = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'ble', :factcat_id => Factcat.find_by_code('agri').id})
-cat_vente_colza =     Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'colza', :factcat_id => Factcat.find_by_code('agri').id})
-cat_vente_tournesol = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'tournesol', :factcat_id => Factcat.find_by_code('agri').id})
+cat_vente_colza = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'colza', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_assurance = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'assurance', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_pac = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'pac', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_avoir = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'avoir', :factcat_id => Factcat.find_by_code('agri').id})
+cat_vente_tournesol = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'tournesol', :factcat_id => Factcat.find_by_code('agri').id})
 
 
 
@@ -123,7 +124,7 @@ parcelle = Parcelle.create!(:name => 'Guiberons', :code => 'guiberons', :saison 
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find_by_code('la_cote')
-parcelle = Parcelle.create!(:name => 'la cote', :code => 'la_cote', :saison =>  saison_2010_2011, :typeculture => luzerne, :surface => 2, :surface_pac => 2)
+parcelle = Parcelle.create!(:name => 'la cote', :code => 'la_cote', :saison =>  saison_2010_2011, :typeculture => foin, :surface => 2, :surface_pac => 2)
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 zone = Zone.find_by_code('feuillets')
@@ -175,7 +176,6 @@ parcelle = Parcelle.create!(:name => 'Le bourg', :code => 'le_bourg', :saison =>
 zonetopa = Zonetopa.create!(:parcelle => parcelle, :zone => zone, :value => parcelle.surface)
 
 
-
 # set variables parcelles cultures
 parcelles_ble = []
 ble.parcelles.find_by_saison(:all, saison_2010_2011).each {|parcelle| parcelles_ble << parcelle}
@@ -197,7 +197,7 @@ zero2525 = Produit.create!(:name => '0-25-25', :unit =>'kg', :category => cat_ag
 cp151515 = Produit.create!(:name => '15-15-15', :unit =>'kg', :category => cat_agri_engrais, :saison => saison_2010_2011, :desc => '')
 altigo = Produit.create!(:name => 'Altigo', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => '')
 amistar_xtra = Produit.create!(:name => 'Amistar Xtra', :unit =>'L', :category => cat_agri_fongicide, :saison => saison_2010_2011, :desc => '')
-ariane = Produit.create!(:name => 'Ariane', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
+ariane = Produit.create!(:name => 'Ariane', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 autan = Produit.create!(:name => 'Autan', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => '')
 azomag = Produit.create!(:name => 'Azomag', :unit =>'kg', :category => cat_agri_soufre, :saison => saison_2010_2011, :desc => '')
 azomag20 = Produit.create!(:name => 'Azomag20', :unit =>'kg', :category => cat_agri_soufre, :saison => saison_2010_2011, :desc => '')
@@ -206,41 +206,41 @@ bravo_elite = Produit.create!(:name => 'Bravo Elite', :unit =>'L', :category => 
 campo = Produit.create!(:name => 'Campo', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => '')
 campus = Produit.create!(:name => 'Campus', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => '')
 catalino = Produit.create!(:name => 'Catalino', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => '')
-celtic = Produit.create!(:name => 'Celtic', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
-challenge = Produit.create!(:name => 'Challenge', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
-chardol = Produit.create!(:name => 'Chardol', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
-chrono = Produit.create!(:name => 'Chrono', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
-cline = Produit.create!(:name => 'Cline', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
-colzamid = Produit.create!(:name => 'Colzamid', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
+celtic = Produit.create!(:name => 'Celtic', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
+challenge = Produit.create!(:name => 'Challenge', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
+chardol = Produit.create!(:name => 'Chardol', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
+chrono = Produit.create!(:name => 'Chrono', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
+cline = Produit.create!(:name => 'Cline', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
+colzamid = Produit.create!(:name => 'Colzamid', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 comet_player = Produit.create!(:name => 'Comet Player', :unit =>'L', :category => cat_agri_fongicide, :saison => saison_2010_2011, :desc => '')
-folyr = Produit.create!(:name => 'Folyr', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
+folyr = Produit.create!(:name => 'Folyr', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 fury = Produit.create!(:name => 'Fury', :unit =>'L', :category => cat_agri_insecticide, :saison => saison_2010_2011, :desc => '')
-glifonet = Produit.create!(:name => 'Glifonet', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
-harmony = Produit.create!(:name => 'Harmony', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => 'MAISON - pour le jardin')
+glifonet = Produit.create!(:name => 'Glifonet', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
+harmony = Produit.create!(:name => 'Harmony', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => 'MAISON - pour le jardin')
 huile = Produit.create!(:name => 'Huile', :unit =>'L', :category => cat_agri_divers, :saison => saison_2010_2011, :desc => '')
 imperio = Produit.create!(:name => 'Imperio', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => '')
 karate = Produit.create!(:name => 'Karate', :unit =>'L', :category => cat_agri_insecticide, :saison => saison_2010_2011, :desc => '')
-lontrel = Produit.create!(:name => 'Lontrel', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
+lontrel = Produit.create!(:name => 'Lontrel', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 mas91 = Produit.create!(:name => 'MAS 91', :unit =>'L', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => '')
 novrel = Produit.create!(:name => 'Novrel', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => '')
 nuvagrain = Produit.create!(:name => 'Nuvagrain', :unit =>'L', :category => cat_agri_insecticide, :saison => saison_2010_2011, :desc => 'STOCKAGE SILO')
 ovation = Produit.create!(:name => 'Ovation', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => 'pour ble')
 paledor = Produit.create!(:name => 'Paledor', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => 'MAISON - pour arbres fruitiers')
 picabore = Produit.create!(:name => 'Picabore', :unit =>'kg', :category => cat_agri_oligo, :saison => saison_2010_2011, :desc => '')
-picosolo = Produit.create!(:name => 'Picosolo', :unit =>'kg', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
+picosolo = Produit.create!(:name => 'Picosolo', :unit =>'kg', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 pr = Produit.create!(:name => 'Pr', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => '')
 proca = Produit.create!(:name => 'proca', :unit =>'L', :category => cat_agri_fongicide, :saison => saison_2010_2011, :desc => '')
 proteus = Produit.create!(:name => 'Proteus', :unit =>'L', :category => cat_agri_insecticide, :saison => saison_2010_2011, :desc => '')
-pulsar = Produit.create!(:name => 'Pulsar', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => 'GLYPHOSATE')
-radar = Produit.create!(:name => 'Radar', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
+pulsar = Produit.create!(:name => 'Pulsar', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => 'GLYPHOSATE')
+radar = Produit.create!(:name => 'Radar', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 richepain = Produit.create!(:name => 'Richepain', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => '')
 spartan = Produit.create!(:name => 'spartan', :unit =>'L', :category => cat_agri_divers, :saison => saison_2010_2011, :desc => 'ammonitrate')
-springbok = Produit.create!(:name => 'Springbok', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
-stratos = Produit.create!(:name => 'Stratos', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
+springbok = Produit.create!(:name => 'Springbok', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
+stratos = Produit.create!(:name => 'Stratos', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 super45 = Produit.create!(:name => 'Super45', :unit =>'kg', :category => cat_agri_engrais, :saison => saison_2010_2011, :desc => 'pour ble')
 surnog = Produit.create!(:name => 'Surnog', :unit =>'L', :category => cat_agri_fongicide, :saison => saison_2010_2011, :desc => '')
-traxos = Produit.create!(:name => 'Traxos', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
-vip = Produit.create!(:name => 'Vip', :unit =>'L', :category => cat_agri_desherbant, :saison => saison_2010_2011, :desc => '')
+traxos = Produit.create!(:name => 'Traxos', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
+vip = Produit.create!(:name => 'Vip', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 vitavax = Produit.create!(:name => 'Vitavax', :unit =>'L', :category => cat_agri_divers, :saison => saison_2010_2011, :desc => '')
 aubisque = Produit.create!(:name => 'aubisque', :unit =>'L', :category => cat_agri_divers, :saison => saison_2010_2011, :desc => 'pour prairies?')
 
@@ -901,19 +901,19 @@ vente = Vente.create!(:name => 'Demanus - paille colza', :date => '2011-08-01', 
 parcelles_colza.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
 vente = Vente.create!(:name => 'Dumont - paille colza', :date => '2011-08-01', :prix => 1685, :ref_client => '', :ref => '003', :user => User.find_by_name('Dumont'),:category => cat_vente_paille_colza, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_colza.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Dumont - foin', :date => '2011-08-01', :prix => 5852, :ref_client => '', :ref => '003', :user => User.find_by_name('Dumont'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+vente = Vente.create!(:name => 'Dumont - foin', :date => '2011-08-01', :prix => 5852, :ref_client => '', :ref => '003', :user => User.find_by_name('Dumont'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Medard - foin', :date => '2011-08-01', :prix => 4240, :ref_client => '', :ref => '004', :user => User.find_by_name('Medard'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+vente = Vente.create!(:name => 'Medard - foin', :date => '2011-08-01', :prix => 4240, :ref_client => '', :ref => '004', :user => User.find_by_name('Medard'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Medard - foin', :date => '2011-08-01', :prix => 400, :ref_client => '', :ref => '004', :user => User.find_by_name('Medard'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 1, :adu => 0)
+vente = Vente.create!(:name => 'Medard - foin', :date => '2011-08-01', :prix => 400, :ref_client => '', :ref => '004', :user => User.find_by_name('Medard'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 1, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Aussourd - foin', :date => '2011-08-01', :prix => 1976, :ref_client => '', :ref => '005', :user => User.find_by_name('Aussourd'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+vente = Vente.create!(:name => 'Aussourd - foin', :date => '2011-08-01', :prix => 1976, :ref_client => '', :ref => '005', :user => User.find_by_name('Aussourd'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Aussourd - foin', :date => '2011-08-01', :prix => 988, :ref_client => '', :ref => '005', :user => User.find_by_name('Aussourd'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+vente = Vente.create!(:name => 'Aussourd - foin', :date => '2011-08-01', :prix => 988, :ref_client => '', :ref => '005', :user => User.find_by_name('Aussourd'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Coutillet - foin', :date => '2011-08-01', :prix => 2050, :ref_client => '', :ref => '006', :user => User.find_by_name('Coutillet'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+vente = Vente.create!(:name => 'Coutillet - foin', :date => '2011-08-01', :prix => 2050, :ref_client => '', :ref => '006', :user => User.find_by_name('Coutillet'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
-vente = Vente.create!(:name => 'Coutillet - foin', :date => '2011-08-01', :prix => 2050, :ref_client => '', :ref => '006', :user => User.find_by_name('Coutillet'),:category => cat_vente_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
+vente = Vente.create!(:name => 'Coutillet - foin', :date => '2011-08-01', :prix => 2050, :ref_client => '', :ref => '006', :user => User.find_by_name('Coutillet'),:category => cat_vente_paille_foin, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_foin.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
 vente = Vente.create!(:name => 'Groupama - Assurance', :date => '2011-08-02', :prix => 21647, :ref_client => '', :ref => '007', :user => User.find_by_name('Groupama'),:category => cat_vente_assurance, :desc => '',:saison => saison_2010_2011, :star => 0, :adu => 0)
 parcelles_ble.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
@@ -944,7 +944,12 @@ vente = Vente.create!(:name => 'Dauger - Colza', :date => '2011-11-07', :prix =>
 parcelles_colza.each {|p| ventoparcelle = Ventoparcelle.create!(:parcelle => p, :vente => vente)}
 
 
+
+
 # FIN VENTES - from xls
+
+
+
 
 
 

@@ -164,7 +164,7 @@ class Calculate < ActiveRecord::Base
   def run_pulves
     for pulve in @pulves
       for col in @cols
-        #valeur ha et total pour chaque col affecté a la pulve
+        #valeur ha et total pour chaque col affecté au pulve
         @res.set_line(@sid, @c, col.id, :pulves, :all, pulve.id, :ha, pulve.get_cout_ha_passage_col(col))
         @res.set_line(@sid, @c, col.id, :pulves, :all, pulve.id, :total, pulve.get_cout_total_passage_col(col))
       end
@@ -200,7 +200,7 @@ class Calculate < ActiveRecord::Base
       @res.add_other_line_for_saison(@sid, :resultats, :total_pulves, :total, pulve.get_cout_total_passage)
     
       #totaux par categorie de pulves
-      for cat in Category.pulves
+      for cat in Category.produits
         # if (pulve.produit.category_id == cat.id)
         #   @res.add_saison_line(@sid, :pulves, :category, cat.id, :ha, pulve.get_cout_ha_moyen(@surface_of_saison))
         #   @res.add_saison_line(@sid, :pulves, :category, cat.id, :total, pulve.get_cout_total)
@@ -359,7 +359,7 @@ class Calculate < ActiveRecord::Base
           #valeur totale du produits pour cette colonne
           total = @res.get_line(@sid, @c, col.id, :putoproduits, :all, putoproduit.id, :total)
           sum_total += total
-          for cat in Category.pulves
+          for cat in Category.produits
             if (putoproduit.produit.category_id == cat.id)
               # valeur totale du produit pour cette categorie
               @res.add_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :total, total)
@@ -376,7 +376,7 @@ class Calculate < ActiveRecord::Base
         @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
         @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
         #totaux par categorie de labour
-        for cat in Category.pulves
+        for cat in Category.produits
           cout_total = @res.get_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :total)
           @res.set_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :ha, cout_total/col.surface)
         end        
@@ -406,7 +406,7 @@ class Calculate < ActiveRecord::Base
           @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
         end
         #totaux par categorie de labour
-        for cat in Category.pulves
+        for cat in Category.produits
           cout_total = @res.get_line(@sid, @c, col.id, :pulves, :category, cat.id, :total)
           @res.set_line(@sid, @c, col.id, :pulves, :category, cat.id, :ha, cout_total/col.surface)
         end        

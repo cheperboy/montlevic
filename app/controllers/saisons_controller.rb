@@ -84,7 +84,7 @@ before_filter :edit_access,
 logger.error "update saison"
     respond_to do |format|
       if @saison.update_attributes(params[:saison])
-        flash[:notice] = 'Saison was successfully updated.'
+        flash[:notice] = 'Saison mis a jour!.'
         format.html { redirect_to(@saison) }
         format.xml  { head :ok }
       else

@@ -64,7 +64,7 @@ class FactypesController < ApplicationController
 
     respond_to do |format|
       if @factype.update_attributes(params[:factype])
-        flash[:notice] = 'Factype was successfully updated.'
+        flash[:notice] = 'Factype mis a jour!.'
         format.html { redirect_to(factypes_url) }
         format.xml  { head :ok }
       else

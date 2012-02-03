@@ -138,7 +138,7 @@ class Print < ActiveRecord::Base
           self.Tcols[col.id][:labours][:category][:total][cat.id] = 0
           self.Tcols[col.id][:labours][:category][:ha][cat.id] = 0
         end
-        for cat in Category.pulves
+        for cat in Category.produits
           self.Tcols[col.id][:pulves][:category][:total][cat.id] = 0  
           self.Tcols[col.id][:pulves][:category][:ha][cat.id] = 0
         end
@@ -296,7 +296,7 @@ class Print < ActiveRecord::Base
     @Tpulves[:ha][:category] = {}
     
     # init des categories de pulve
-    for cat in Category.pulves
+    for cat in Category.produits
       @Tpulves[:total][:category][cat.id] = 0 
       @Tpulves[:ha][:category][cat.id] = 0   
     end
@@ -369,7 +369,7 @@ class Print < ActiveRecord::Base
       @Tpulves[:ha][:sum] += @Tpulves[pulve.id][:ha]
       
       #totaux par categorie de pulves
-      for cat in Category.pulves
+      for cat in Category.produits
         if (@Tpulves[pulve.id][:category] == cat.id)
           @Tpulves[:total][:category][cat.id] += @Tpulves[pulve.id][:total]
           @Tpulves[:ha][:category][cat.id] += @Tpulves[pulve.id][:ha]   
@@ -486,7 +486,7 @@ class Print < ActiveRecord::Base
         @Tcols[col.id][:benef][:total][:sum] -= cout_total
       
         #totaux par categorie de pulve
-        for cat in Category.pulves
+        for cat in Category.produits
           if (@Tpulves[pulve.id][:category] == cat.id)
             @Tcols[col.id][:pulves][:category][:ha][cat.id] += cout_ha
             @Tcols[col.id][:pulves][:category][:total][cat.id] += cout_total

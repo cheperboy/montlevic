@@ -57,7 +57,7 @@ class ZonesController < ApplicationController
 
     respond_to do |format|
       if @zone.update_attributes(params[:zone])
-        flash[:notice] = 'Zone was successfully updated.'
+        flash[:notice] = 'Zone mis a jour!.'
         format.html { redirect_to(zones_url) }
         format.xml  { head :ok }
       else

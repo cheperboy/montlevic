@@ -63,7 +63,7 @@ class UpcategoriesController < ApplicationController
 
     respond_to do |format|
       if @upcategory.update_attributes(params[:upcategory])
-        flash[:notice] = 'Upcategory was successfully updated.'
+        flash[:notice] = 'Upcategory mis a jour!.'
         format.html { redirect_to(@upcategory) }
         format.xml  { head :ok }
       else

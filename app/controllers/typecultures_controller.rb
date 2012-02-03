@@ -67,7 +67,7 @@ class TypeculturesController < ApplicationController
 
     respond_to do |format|
       if @typeculture.update_attributes(params[:typeculture])
-        flash[:notice] = 'Typeculture was successfully updated.'
+        flash[:notice] = 'Typeculture mis a jour!.'
         format.html { redirect_to(typecultures_url) }
         format.xml  { head :ok }
       else

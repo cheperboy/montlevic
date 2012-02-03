@@ -96,7 +96,7 @@ class DisplaysController < ApplicationController
 
     respond_to do |format|
       if @display.update_attributes(params[:display])
-        flash[:notice] = 'Display was successfully updated.'
+        flash[:notice] = 'Display mis a jour!.'
         format.html { redirect_to(@display) }
         format.xml  { head :ok }
       else

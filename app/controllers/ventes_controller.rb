@@ -90,7 +90,7 @@ class VentesController < ApplicationController
       if @vente.update_attributes(params[:vente])
         @vente.update_typecultures(params[:typecultures])
         @vente.uniq_parcelles
-        flash[:notice] = 'Vente was successfully updated.'
+        flash[:notice] = 'Vente mis a jour!.'
         format.html { redirect_to(@vente) }
         format.xml  { head :ok }
       else

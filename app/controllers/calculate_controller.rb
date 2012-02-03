@@ -43,7 +43,7 @@ class CalculateController < ApplicationController
     @types = Factcat.all
     @labour_categories = Category.labours
     @facture_categories = Category.factures
-    @pulve_categories = Category.pulves
+    @pulve_categories = Category.produits
     @vente_categories = Category.ventes
     
     respond_to do |format|
@@ -107,7 +107,7 @@ class CalculateController < ApplicationController
     @types = Factcat.all
     @labour_categories = Category.labours
     @facture_categories = Category.factures
-    @pulve_categories = Category.pulves
+    @pulve_categories = Category.produits
     @vente_categories = Category.ventes
     
     respond_to do |format|
@@ -173,7 +173,7 @@ class CalculateController < ApplicationController
     @types = Factcat.all
     @labour_categories = Category.labours
     @facture_categories = Category.factures
-    @pulve_categories = Category.pulves
+    @pulve_categories = Category.produits
     @vente_categories = Category.ventes
     
     respond_to do |format|

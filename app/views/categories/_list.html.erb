@@ -21,10 +21,9 @@
 	    	<th>
 				<select onchange="Table.filter(this,this)">
 					<option value="">-</option>
-					<option value="pulve">pulve</option>
-					<option value="vente">vente</option>
-					<option value="facture">facture</option>
-					<option value="labour">labour</option>
+					<% Upcategory.all.each do |upcat| %>
+						<option value="<%= upcat.name %>"><%= upcat.name %></option> %>
+					<% end %>
 			</th>
 		
 			<th><input name="filter" size="8" onkeyup="Table.filter(this,this)"></th>

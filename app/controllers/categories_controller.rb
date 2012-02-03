@@ -71,7 +71,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.update_attributes(params[:category])
-        flash[:notice] = 'Category was successfully updated.'
+        flash[:notice] = 'Category mis a jour!.'
         format.html { redirect_to(categories_url) }
         format.xml  { head :ok }
       else
