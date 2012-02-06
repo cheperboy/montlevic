@@ -51,7 +51,7 @@ class VentesController < ApplicationController
   # GET /ventes/new.xml
   def new
     @vente = Vente.new
-
+    @action = 'new'
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @vente }
@@ -61,6 +61,7 @@ class VentesController < ApplicationController
   # GET /ventes/1/edit
   def edit
     @vente = Vente.find(params[:id])
+    @action = 'edit'
   end
 
   # POST /ventes
@@ -68,12 +69,14 @@ class VentesController < ApplicationController
   def create
     @vente = Vente.new(params[:vente])
     @vente.saison_id = current_saison_id
+    @vente.set_prix
     respond_to do |format|
       if @vente.save
         flash[:notice] = 'Vente was successfully created.'
         format.html { redirect_to(@vente) }
         format.xml  { render :xml => @vente, :status => :created, :location => @vente }
       else
+        @action = 'edit'
         add_errors_to_model(@vente.errors)
         format.html { render :action => "new" }
         format.xml  { render :xml => @vente.errors, :status => :unprocessable_entity }
@@ -85,15 +88,16 @@ class VentesController < ApplicationController
   # PUT /ventes/1.xml
   def update
     @vente = Vente.find(params[:id])
-
     respond_to do |format|
       if @vente.update_attributes(params[:vente])
+        @vente.set_prix
         @vente.update_typecultures(params[:typecultures])
         @vente.uniq_parcelles
         flash[:notice] = 'Vente mis a jour!.'
         format.html { redirect_to(@vente) }
         format.xml  { head :ok }
       else
+        @action = 'edit'
         add_errors_to_model(@vente.errors)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @vente.errors, :status => :unprocessable_entity }

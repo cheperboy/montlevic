@@ -2,8 +2,8 @@
 
 <table class=table_data>
   <tr class=bold>
-    <td>Saison</td>
-    <td>Annee</td>
+    <td>Campagne</td>
+    <td>Recolte</td>
     <td></td>
     <% if admin? %>
     	<td></td>
@@ -11,14 +11,18 @@
   </tr>
 
 <% @saisons.each do |saison| %>
-  <tr>
-    <td><%=h saison.name %></td>
-    <td><%=h saison.year.to_s %></td>
-    <td><%= button_to "selectionner", :action => :select_saison, :id => saison %></td>
-    <td><%= link_to 'Modifier', edit_saison_path(saison) %></td>
-    <% if admin? %>
-		<td><%= link_to_delete(Saison, saison.id) %></td>
+	<% if saison.selected? %>
+	<tr class=bold>
+	<% else %>
+	<tr>
 	<% end %>
+	    <td><%=h saison.name %></td>
+	    <td><%=h saison.year.to_s %></td>
+	    <td><%= button_to "selectionner", :action => :select_saison, :id => saison %></td>
+	    <td><%= link_to 'Modifier', edit_saison_path(saison) %></td>
+	    <% if admin? %>
+			<td><%= link_to_delete(Saison, saison.id) %></td>
+		<% end %>
   </tr>
 <% end %>
 </table>

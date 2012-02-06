@@ -21,7 +21,10 @@
 		<td class=form_layout_content_left>
 			<table class=form_layout_content_table>
 				<%= tr_text('Nom', 				@vente.name) %>
-				<%= tr_text('Cout Total', 		@vente.get_cout_total, euro) %>
+				<%= tr_text('Prix Total', 		@vente.get_cout_total, euro) %>
+				<%= tr_text('Prix Unitaire', 	@vente.prix_unitaire, euro) %>
+				<%= tr_text('Quantite', 		@vente.quantite, '') %>
+				<%= tr_text('Ajustement', 		@vente.ajust, euro) %>
 				<%= tr_text('Prestataire', 		@vente.user.name) %>
 			</table>
 		</td>

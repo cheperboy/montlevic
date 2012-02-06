@@ -303,12 +303,15 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
   end
 
   create_table "ventes", :force => true do |t|
-    t.integer  "category_id", :null => false
-    t.integer  "saison_id",   :null => false
-    t.float    "prix",        :null => false
-    t.date     "date",        :null => false
-    t.integer  "user_id",     :null => false
-    t.string   "name",        :null => false
+    t.integer  "category_id",   :null => false
+    t.integer  "saison_id",     :null => false
+    t.float    "prix",          :null => false
+    t.float    "quantite"     
+    t.float    "prix_unitaire"
+    t.float    "ajust"
+    t.date     "date",          :null => false
+    t.integer  "user_id",       :null => false
+    t.string   "name",          :null => false
     t.integer  "ref"
     t.string   "ref_client"
     t.integer  "star"

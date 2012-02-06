@@ -92,10 +92,10 @@ class ProduitsController < ApplicationController
     respond_to do |format|
       if @produit.update_attributes(params[:produit])
         flash[:notice] = 'Modification du produit ok'
-        # format.html { redirect_to(produit_url(@produit)) }
+        format.html { redirect_to(produit_url(@produit)) }
       else
         add_errors_to_model(@produit.errors)
-        # format.html { render :action => "edit" }
+        format.html { render :action => "edit" }
         format.xml  { render :xml => @produit.errors, :status => :unprocessable_entity }
       end
     end

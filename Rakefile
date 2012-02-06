@@ -29,6 +29,12 @@ namespace :data do
     sh %{rake db:seed}
   end
 
+  desc "seed database from file saison_2011_2012.rb"
+  task :saison_2012 => :environment do 
+    file = File.join(Rails.root, 'db', 'datas', 'saison_2011_2012.rb')
+    load(file) if File.exist?(file)
+  end
+
   desc "seed database from file saison_2010_2011.rb"
   task :saison_2011 => :environment do 
     file = File.join(Rails.root, 'db', 'datas', 'saison_2010_2011.rb')

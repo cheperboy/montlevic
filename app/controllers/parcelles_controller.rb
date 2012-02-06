@@ -4,8 +4,8 @@ class ParcellesController < ApplicationController
 
   def index
     @typecultures = Typeculture.find_for_saison()
-    @parcelles = Parcelle.find_by_saison(:all)
     @saison = Setting.find(:first).saison
+    # @parcelles = @saison.parcelles
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,8 +14,8 @@ class ParcellesController < ApplicationController
   end
 
   def index_edit
-    @parcelles = Parcelle.find_by_saison(:all)
     @saison = Setting.find(:first).saison
+    @parcelles = @saison.parcelles
 
     respond_to do |format|
       format.html # index.html.erb

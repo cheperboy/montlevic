@@ -17,11 +17,46 @@
 		<td class=form_layout_content_left>
 			<table class=form_layout_content_table>
 				<%= form_tr_text(f, 'Nom', :name) %>
-				<%= form_tr_text(f, 'Prix total', 
+				<% if @action.eql?('new') %>
+					<%= form_tr_text(f, 'Prix total', 
 									:prix,
 									:unit => euro,
 									:prix => (@vente.prix || 0),
 									:size => 4) %>
+				<% end %>
+				<% if @action.eql?('edit') %>
+					<% if @vente.quantite %>
+						<%= form_tr_text(f, 'Prix total', 
+									:prix,
+									:unit => euro,
+									:prix => (@vente.prix || 0),
+									:size => 4,
+									:disable => true) %>
+					<% else %>
+						<%= form_tr_text(f, 'Prix total', 
+									:prix,
+									:unit => euro,
+									:prix => (@vente.prix || 0),
+									:size => 4) %>
+					<% end %>
+				<% end %>
+				
+				<%= form_tr_text(f, 'Quantite', 
+									:quantite,
+									:unit => "tonnes ou bottes",
+									:quantite => (@vente.quantite || 0),
+									:size => 4) %>
+				<%= form_tr_text(f, 'Prix Unitaire', 
+									:prix_unitaire,
+									:unit => "#{euro}/t ou #{euro}/botte",
+									:prix_unitaire => (@vente.prix_unitaire || 0),
+									:size => 4) %>
+				<%= form_tr_text(f, 'Ajustement', 
+									:ajust,
+									:unit => euro,
+									:ajust => (@vente.ajust || 0),
+									:size => 4) %>
+
 				<%= form_tr_select(f, 'Prestataire', 
 									:user_id, 
 									User.find(:all, :order => :name), 

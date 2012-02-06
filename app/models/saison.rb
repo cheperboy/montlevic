@@ -22,6 +22,10 @@ class Saison < ActiveRecord::Base
     end
   end
     
+  def selected?
+    self.id.eql?(Application::SAISON_ID)
+  end
+    
   # retourne les id des pulves des parcelles de la saison (ou nil)
   def putoproduits
     putoproduits = []

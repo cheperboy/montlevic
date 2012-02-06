@@ -86,6 +86,8 @@ cat_vente_tournesol = Category.create!({:factcat => factcat_agri, :upcategory =>
   jachere = Typeculture.create!({:name => "Jachere", :code => "jachere"})
   luzerne = Typeculture.create!({:name => "Luzerne", :code => "luzerne"})
   foin = Typeculture.create!({:name => "Foin", :code => "foin"})
+  na = Typeculture.create!({:name => "Non Valorise", :code => "na"})
+  trefle = Typeculture.create!({:name => "Trefle", :code => "trefle"})
   typeculture = Typeculture.find(:first)
 
   factypes = Factype.create!([
