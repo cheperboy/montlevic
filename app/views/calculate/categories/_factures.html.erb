@@ -42,10 +42,10 @@
 				<td class="color_culture_<%= colonne.code %>"><span class=green><%= cout_total %></span></td>
 			<% end %>
 		</tr>
-		<% cat.factures.each do |facture| %>
+		<% cat.factures.find_by_saison(:all).each do |facture| %>
 			<% @facture = facture %>		
 			<% @factcat = factcat %>		
-			<% @cat = cat %>		
+			<% @cat = cat %>
 			<% datas = @test.res.get_saison_line_datas(@test.sid, :factures, facture.id) %>
 			<tr name=visible class="level-3_<%= factcat.code %>.<%= cat.code %>">
 				<td class=col1></td>

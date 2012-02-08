@@ -86,8 +86,10 @@ cat_vente_tournesol = Category.create!({:factcat => factcat_agri, :upcategory =>
   jachere = Typeculture.create!({:name => "Jachere", :code => "jachere"})
   luzerne = Typeculture.create!({:name => "Luzerne", :code => "luzerne"})
   foin = Typeculture.create!({:name => "Foin", :code => "foin"})
-  na = Typeculture.create!({:name => "Non Valorise", :code => "na"})
+  gel = Typeculture.create!({:name => "Gel", :code => "gel"})
   trefle = Typeculture.create!({:name => "Trefle", :code => "trefle"})
+  autre = Typeculture.create!({:name => "autre", :code => "autre"})
+  miscanthus = Typeculture.create!({:name => "Miscanthus", :code => "miscanthus"})
   typeculture = Typeculture.find(:first)
 
   factypes = Factype.create!([
@@ -176,26 +178,30 @@ cat_vente_tournesol = Category.create!({:factcat => factcat_agri, :upcategory =>
 end # if SEEDS_BASIC
 
 zones = Zone.create!([
-  {:name => 'Bons Pains', :code => 'bons_pains', :surface => 14},
-  {:name => 'Mitant', :code => 'mitant', :surface => 5},
-  {:name => 'La Rue', :code => 'la_rue', :surface => 46.55},
+  {:name => 'Bons Pains', :code => 'bons_pains', :surface => 14.03},
+  {:name => 'Mitant', :code => 'mitant', :surface => 5.1},
+  {:name => 'La Rue', :code => 'la_rue', :surface => 46.63},
 
-  {:name => 'Basse-cour', :code => 'basse_cour', :surface => 2},
-  {:name => 'Vallees', :code => 'vallees', :surface => 11},
-  {:name => 'Guiberons', :code => 'guiberons', :surface => 2.5},
-  {:name => 'La cote', :code => 'la_cote', :surface => 2},
-  {:name => 'Feuillets', :code => 'feuillets', :surface => 16},
+  {:name => 'Vallees', :code => 'vallees', :surface => 13.7},
+
+  {:name => 'Guiberons', :code => 'guiberons', :surface => 3},
+  {:name => 'Feuillets', :code => 'feuillets', :surface => 16.08},
 
   {:name => 'Brandes', :code => 'brandes', :surface => 2.97},
-  {:name => 'Taillis', :code => 'taillis', :surface => 19.32},
-  {:name => 'Varennes', :code => 'varennes', :surface => 15.86},
-  {:name => 'Patureaux', :code => 'patureaux', :surface => 8.87},
-  {:name => 'Chevaux', :code => 'chevaux', :surface => 13.26},
-  {:name => 'Sous Eglise', :code => 'sous_eglise', :surface => 1.35},
+
+  {:name => 'Taillis', :code => 'taillis', :surface => 19.35},
+
+  {:name => 'Varennes', :code => 'varennes', :surface => 15.89},
+
+  {:name => 'Patureaux', :code => 'patureaux', :surface => 8.88},
+  {:name => 'Prairies Chevaux', :code => 'chevaux', :surface => 13.28},
+
+  {:name => 'Le bourg', :code => 'le_bourg', :surface => 1.36},
   {:name => 'Reserve', :code => 'reserve', :surface => 2.55},
+
   {:name => 'Lavernier', :code => 'lavernier', :surface => 0.75},
-  {:name => 'Le bourg', :code => 'le_bourg', :surface => 0.52},
-  # zones pour test
+    
+    # zones pour test
   {:name => 'test - 1', :code => 'zone_test_1', :surface => 10},
   {:name => 'test - 2', :code => 'zone_test_2', :surface => 10},
   

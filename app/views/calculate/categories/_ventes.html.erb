@@ -31,7 +31,7 @@
 				<td class="color_culture_<%= colonne.code %>"><span class=green><%= cout_total %></span></td>
 			<% end %>
 		</tr>
-		<% cat.ventes.each do |vente| %>
+		<% cat.ventes.find_by_saison(:all).each do |vente| %>
 			<% datas = @test.res.get_saison_line_datas(@test.sid, :ventes, vente.id) %>
 			<tr class="level-3_vente.<%= cat.code %>">
 				<td class=col1></td>
