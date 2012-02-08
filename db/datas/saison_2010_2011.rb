@@ -26,6 +26,7 @@ cat_agri_semis = Category.find(:first, :conditions => { :upcategory_id => Upcate
 cat_agri_soufre = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('produit').id, :code => 'soufre', :factcat_id => Factcat.find_by_code('agri').id})
 cat_agri_fongicide = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('produit').id, :code => 'fongicide', :factcat_id => Factcat.find_by_code('agri').id})
 cat_agri_herbicide = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('produit').id, :code => 'herbicide', :factcat_id => Factcat.find_by_code('agri').id})
+cat_agri_autre = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('produit').id, :code => 'autre', :factcat_id => Factcat.find_by_code('agri').id})
 cat_agri_insecticide = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('produit').id, :code => 'insecticide', :factcat_id => Factcat.find_by_code('agri').id})
 cat_agri_moisson = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('labour').id, :code => 'moisson', :factcat_id => Factcat.find_by_code('agri').id})
 cat_agri_covercrop = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('labour').id, :code => 'covercrop', :factcat_id => Factcat.find_by_code('agri').id})
@@ -51,6 +52,10 @@ cat_vente_assurance = Category.find(:first, :conditions => { :upcategory_id => U
 cat_vente_pac = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'pac', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_avoir = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'avoir', :factcat_id => Factcat.find_by_code('agri').id})
 cat_vente_tournesol = Category.find(:first, :conditions => { :upcategory_id => Upcategory.find_by_name('vente').id, :code => 'tournesol', :factcat_id => Factcat.find_by_code('agri').id})
+
+
+
+
 
 
 
@@ -228,7 +233,7 @@ azomag20 = Produit.create!(:name => 'Azomag20', :unit =>'kg', :category => cat_a
 azote = Produit.create!(:name => 'Azote', :unit =>'kg', :category => cat_agri_azote, :saison => saison_2010_2011, :desc => '')
 bravo_elite = Produit.create!(:name => 'Bravo Elite', :unit =>'L', :category => cat_agri_fongicide, :saison => saison_2010_2011, :desc => '')
 campo = Produit.create!(:name => 'Campo', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => 'semance de colza achetee en 2009')
-campus = Produit.create!(:name => 'Campus', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => 'semence tournesol')
+#campus = Produit.create!(:name => 'Campus', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => 'semence tournesol')
 catalino = Produit.create!(:name => 'Catalino', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => 'semance de colza achetee en 2009 ou fermiere')
 celtic = Produit.create!(:name => 'Celtic', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 challenge = Produit.create!(:name => 'Challenge', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
@@ -242,7 +247,7 @@ folyr = Produit.create!(:name => 'Folyr', :unit =>'L', :category => cat_agri_her
 fury = Produit.create!(:name => 'Fury', :unit =>'L', :category => cat_agri_insecticide, :saison => saison_2010_2011, :desc => '')
 glifonet = Produit.create!(:name => 'Glifonet', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 harmony = Produit.create!(:name => 'Harmony', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
-huile = Produit.create!(:name => 'Huile', :unit =>'L', :category => cat_agri_divers, :saison => saison_2010_2011, :desc => '')
+huile = Produit.create!(:name => 'Huile', :unit =>'L', :category => cat_agri_autre, :saison => saison_2010_2011, :desc => '')
 imperio = Produit.create!(:name => 'Imperio', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => 'semance tournesol')
 karate = Produit.create!(:name => 'Karate', :unit =>'L', :category => cat_agri_insecticide, :saison => saison_2010_2011, :desc => '')
 lontrel = Produit.create!(:name => 'Lontrel', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => 'specifique chardon marie, fausse luzerne. A faire sur des parties de colza')
@@ -259,20 +264,16 @@ proteus = Produit.create!(:name => 'Proteus', :unit =>'L', :category => cat_agri
 pulsar = Produit.create!(:name => 'Pulsar', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => 'desherbant tournesol')
 radar = Produit.create!(:name => 'Radar', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 richepain = Produit.create!(:name => 'Richepain', :unit =>'kg', :category => cat_agri_semis, :saison => saison_2010_2011, :desc => '')
-spartan = Produit.create!(:name => 'spartan', :unit =>'L', :category => cat_agri_divers, :saison => saison_2010_2011, :desc => 'HUILE')
+spartan = Produit.create!(:name => 'spartan', :unit =>'L', :category => cat_agri_autre, :saison => saison_2010_2011, :desc => 'HUILE')
 springbok = Produit.create!(:name => 'Springbok', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 stratos = Produit.create!(:name => 'Stratos', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 super45 = Produit.create!(:name => 'Super45', :unit =>'kg', :category => cat_agri_engrais, :saison => saison_2010_2011, :desc => 'pour ble')
 surnog = Produit.create!(:name => 'Surnog', :unit =>'L', :category => cat_agri_fongicide, :saison => saison_2010_2011, :desc => 'pou colza')
 traxos = Produit.create!(:name => 'Traxos', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
 vip = Produit.create!(:name => 'Vip', :unit =>'L', :category => cat_agri_herbicide, :saison => saison_2010_2011, :desc => '')
-vitavax = Produit.create!(:name => 'Vitavax', :unit =>'L', :category => cat_agri_divers, :saison => saison_2010_2011, :desc => 'traitement semence ble pour eviter pietin echaudage. IMPUTER SUR BLE.')
+vitavax = Produit.create!(:name => 'Vitavax', :unit =>'L', :category => cat_agri_autre, :saison => saison_2010_2011, :desc => 'traitement semence ble pour eviter pietin echaudage. IMPUTER SUR BLE.')
 zero2030 = Produit.create!(:name => '0-20-30', :unit =>'kg', :category => cat_agri_engrais, :saison => saison_2010_2011, :desc => '')
 zero2525 = Produit.create!(:name => '0-25-25', :unit =>'kg', :category => cat_agri_engrais, :saison => saison_2010_2011, :desc => '')
-
-
-
-
 
 # FACTURES - from xls
 

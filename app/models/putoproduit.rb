@@ -5,12 +5,38 @@ class Putoproduit < Charge
   belongs_to :saison
   
   validates_presence_of :produit_id, :message => "Selectionner un produit (creer si produit inexistant)"
-  validates_presence_of :dosage, :message => "dosage ne doit pas etre nul"
-  validates_numericality_of :dosage, :message => "n'est pas un nombre"
+  # validates_numericality_of :dosage, :message => "indiauer le dosage ou la quantite ou chcher 'destocker'",
+  #                           :if => Proc.new { |u| (u.quantite.blank? && u.destocker.blank?) }
+
+  validates_presence_of :quantite, :message => "indiauer le dosage ou la quantite ou cocher destocker",
+                        :if => Proc.new { |u| (u.dosage.blank? && u.destocker.eql?(0)) }
+ # && u.destocker.eql?(0)
+  # validates_presence_of :dosage, :message => "dosage ne doit pas etre nul"
 
   # Callback
   def before_save 
     self.saison ||= Application::SAISON
+    # on force une valeur de dosage qui sera ecrasee par update_dosage_after_save()
+    self.dosage = -6.6 if self.dosage.blank?
+  end
+   
+  def destocker?
+    return self.destocker.eql?(1)
+  end
+  
+  def update_dosage_after_save
+    unless self.quantite.blank?
+      self.dosage = self.quantite / self.pulve.sum_surfaces
+    end    
+    if self.destocker?
+      stock = self.produit.get_stock
+      #au stock restant il faut ajouter la quantite de produit deja associee via ce putoproduit.
+      # cependant le dosage n'existe pas encore on create:
+      stock += self.dosage * self.pulve.sum_surfaces if self.dosage?
+      self.dosage = stock / self.pulve.sum_surfaces
+    end
+    self.destocker = 0
+    self.save!
   end
    
   # correspond au cout_ha_produit d'un pulve!

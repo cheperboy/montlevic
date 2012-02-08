@@ -51,6 +51,7 @@ cat_agri_semis = Category.create!({:factcat => factcat_agri, :upcategory => upca
 cat_agri_soufre = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_produit, :name => 'soufre', :code => 'soufre'})
 cat_agri_fongicide = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_produit, :name => 'fongicide', :code => 'fongicide'})
 cat_agri_herbicide = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_produit, :name => 'herbicide', :code => 'herbicide'})
+cat_agri_autre = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_produit, :name => 'autre', :code => 'autre'})
 cat_agri_insecticide = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_produit, :name => 'insecticide', :code => 'insecticide'})
 cat_agri_moisson = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_labour, :name => 'moisson', :code => 'moisson'})
 cat_agri_covercrop = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_labour, :name => 'covercrop', :code => 'covercrop'})
@@ -76,6 +77,10 @@ cat_vente_assurance = Category.create!({:factcat => factcat_agri, :upcategory =>
 cat_vente_pac = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'PAC', :code => 'pac'})
 cat_vente_avoir = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'avoir', :code => 'avoir'})
 cat_vente_tournesol = Category.create!({:factcat => factcat_agri, :upcategory => upcategory_vente, :name => 'tournesol', :code => 'tournesol'})
+
+
+
+
 
 
 # Typecultures

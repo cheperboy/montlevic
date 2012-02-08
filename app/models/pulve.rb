@@ -1,6 +1,7 @@
 class Pulve < Charge
 
   def after_save 
+    self.putoproduits.each { |putoproduit| putoproduit.update_dosage_after_save }
     self.produits.each { |produit| produit.update_protofacture_stock }
   end
 

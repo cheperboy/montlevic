@@ -184,6 +184,8 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.integer  "produit_id"
     t.float    "dosage"
     t.float    "dosage_vrai"
+    t.float    "quantite"
+    t.integer  "destocker",   :limit => 2
     t.string   "desc"
     t.datetime "created_at"
     t.datetime "updated_at"

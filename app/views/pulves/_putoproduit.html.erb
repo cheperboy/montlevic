@@ -1,13 +1,21 @@
-<div clasproduits="putoproduit">
-  <p>
+<div class="putoproduit">
+	
     <%= f.label :produit_id, "produit : " %>
 	<% unless Produit.find_by_saison(:first).nil? %>
 	    <%= f.collection_select (:produit_id, Produit.find_by_saison(:all), :id, :name_for_select ) %>
 	<% end %>	
 	
-	<%= f.label :value, "dosage: " %>
+	<%= f.label :dosage, "dosage: " %>
     <%= f.text_field :dosage, :size => 3 %>
     
-<%= remove_link_unless_new_record(f) -%>
-  </p>
+	<%= f.label :dosage_vrai, "dosage vrai: " %>
+    <%= f.text_field :dosage_vrai, :size => 3 %> 
+    
+	<%= f.label :quantite, "quantite: " %>
+    <%= f.text_field :quantite, :size => 3 %> 
+    
+	<%= f.label :destocker, "Destocker: " %>
+    <%= f.check_box :destocker %> 
+    
+	<%= remove_link_unless_new_record(f) -%>
 </div>
