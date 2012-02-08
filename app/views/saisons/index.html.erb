@@ -12,9 +12,9 @@
 
 <% @saisons.each do |saison| %>
 	<% if saison.selected? %>
-	<tr class=bold>
+		<tr class=bold>
 	<% else %>
-	<tr>
+		<tr>
 	<% end %>
 	    <td><%=h saison.name %></td>
 	    <td><%=h saison.year.to_s %></td>
