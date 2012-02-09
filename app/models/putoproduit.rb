@@ -15,7 +15,7 @@ class Putoproduit < Charge
 
   # Callback
   def before_save 
-    self.saison ||= Application::SAISON
+    self.saison ||= Setting.find(1).saison
     # on force une valeur de dosage qui sera ecrasee par update_dosage_after_save()
     self.dosage = -6.6 if self.dosage.blank?
   end

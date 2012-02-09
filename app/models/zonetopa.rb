@@ -10,7 +10,7 @@ class Zonetopa < ActiveRecord::Base
   
 # Callbacks
   def before_save 
-    self.saison ||= Application::SAISON
+    self.saison ||= Setting.find(1).saison
   end
 
   # TODO : ajouter la saison dans les conditions

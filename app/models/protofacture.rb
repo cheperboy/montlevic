@@ -15,7 +15,7 @@ class Protofacture < ActiveRecord::Base
   end
 
   def before_save 
-    self.saison ||= Application::SAISON
+    self.saison ||= Setting.find(1).saison
   end
   
   def get_used

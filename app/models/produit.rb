@@ -22,7 +22,7 @@ class Produit < ActiveRecord::Base
   validates_presence_of :category_id, :message => "Categorie ne doit pas etre vide"
   validates_presence_of :unit, :message => "Unite ne doit pas etre vide"
 
-  named_scope :by_saison, :conditions => ["saison_id = ?", Application::SAISON_ID]
+  named_scope :by_saison, :conditions => ["saison_id = ?", Setting.find(1).saison_id]
   named_scope :starred, :conditions => ["star = ?", 1]
   named_scope :not_starred, :conditions => ["star = ?", 0]
 
@@ -54,7 +54,7 @@ class Produit < ActiveRecord::Base
   #TODO finir cette methode!
   # classement par cout?
   def self.find_with_order()
-    saison = Saison.find(Application::SAISON_ID)
+    saison = Saison.find(Setting.find(1).saison_id)
     produits = saison.produits.find(:all, :order => :category_id)
   end
 
@@ -105,7 +105,7 @@ class Produit < ActiveRecord::Base
   end
   
   def self.find_by_saison(*args)
-    with_scope(:find => { :conditions => ["saison_id = ?", Application::SAISON_ID],
+    with_scope(:find => { :conditions => ["saison_id = ?", Setting.find(1).saison_id],
                           :order => :category_id}) do
         find(*args)
       end

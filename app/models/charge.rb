@@ -18,7 +18,7 @@ class Charge < ActiveRecord::Base
 
   def self.find_by_saison(*args)
     with_scope(:find => 
-                {:conditions => ["saison_id = ?", Application::SAISON_ID] }) do
+                {:conditions => ["saison_id = ?", Setting.find(1).saison_id] }) do
         find(*args)
       end
   end

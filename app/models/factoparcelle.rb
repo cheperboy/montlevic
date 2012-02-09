@@ -9,7 +9,7 @@ class Factoparcelle < ActiveRecord::Base
 
 # Callbacks
   def before_save 
-    self.saison ||= Application::SAISON
+    self.saison ||= Setting.find(1).saison
     self.value = 1
   end
   

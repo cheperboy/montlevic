@@ -23,7 +23,7 @@ class Saison < ActiveRecord::Base
   end
     
   def selected?
-    self.id.eql?(session[:current_saison_id])
+    self.id.eql?(Setting.find(1).saison_id)
   end
     
   # retourne les id des pulves des parcelles de la saison (ou nil)

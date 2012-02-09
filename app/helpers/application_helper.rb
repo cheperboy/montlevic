@@ -49,8 +49,8 @@ module ApplicationHelper
   # Obsolete, non utilise
   def collection_parcelle_and_culture(form, parcelle_id, parcelles, id, name)
     options = []
-    Application::SAISON.typecultures.each {|c| options << c }
-    Application::SAISON.parcelles.each {|p| options << p }
+    Setting.find(1).saison.typecultures.each {|c| options << c }
+    Setting.find(1).saison.parcelles.each {|p| options << p }
     return form.collection_select(:parcelle_id, options, :id, :name_for_select )
   end
   
