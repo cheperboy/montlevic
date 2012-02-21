@@ -70,11 +70,12 @@ class Charge < ActiveRecord::Base
 
   # transforme les checkbox Typeculture en parcelles
   def update_typecultures(typecultures)
+    saison = Setting.get_saison_id
     unless typecultures.nil?
       typecultures.each do |typeculture_array|
         culture = Typeculture.find(typeculture_array[0])
         unless culture.nil?
-          culture.parcelles.each do |parcelle|
+          culture.parcelles.select{|p| p.saison_id.eql?(saison)}.each do |parcelle|
             self.add_parcelle!(parcelle)
             self.save!
           end

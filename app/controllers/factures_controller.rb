@@ -84,6 +84,9 @@ class FacturesController < ApplicationController
     end
     @facture.saison_id = current_saison_id
     @facture.factcat_id = Category.find(params[:facture][:category_id]).factcat_id
+    # transforme les checkbox Typeculture en Factoparcelles
+    @facture.update_typecultures(params[:typecultures])
+    @facture.uniq_parcelles
     respond_to do |format|
       if @facture.save
         flash[:notice] = 'Enregistrement facture OK.'
@@ -251,10 +254,6 @@ class FacturesController < ApplicationController
       if @facture.update_attributes(params[param_type])
         # extract factcat from category and save it
         @facture.update_factcat
-        # @facture.factcat_id = Category.get_factcat(params[param_type][:category_id]).id
-        logger.error "Category.find(params[param_type][:category_id]).factcat_id : #{Category.find(params[param_type][:category_id]).factcat_id}"
-        logger.error "Category.find(31).factcat_id #{Category.find(31).factcat_id}"
-        logger.error "@facture.factcat_id #{@facture.factcat_id}"
         
         # transforme les checkbox Typeculture en Factoparcelles
         @facture.update_typecultures(params[:typecultures])

@@ -31,6 +31,10 @@ class Setting < ActiveRecord::Base
     @current_saison_id = Setting.find(:first).saison
   end
 
+  def self.get_saison_id
+    Setting.find(:first).saison_id
+  end
+
   
 
   

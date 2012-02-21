@@ -70,6 +70,8 @@ class VentesController < ApplicationController
     @vente = Vente.new(params[:vente])
     @vente.saison_id = current_saison_id
     @vente.set_prix
+    @vente.update_typecultures(params[:typecultures])
+    @vente.uniq_parcelles
     respond_to do |format|
       if @vente.save
         flash[:notice] = 'Vente was successfully created.'
