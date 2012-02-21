@@ -14,6 +14,7 @@ class Pulve < Charge
   # belongs_to :category
   belongs_to :user
   belongs_to :saison
+  belongs_to :category
   
   has_many :parcelles, :through => :putoparcelles
   has_many :putoparcelles, :dependent => :destroy

@@ -21,6 +21,7 @@
 		<td class=form_layout_content_left>
 			<table class=form_layout_content_table>
 				<%= tr_text('Nom', 				@pulve.name) %>
+				<%= tr_text('Categorie',		@pulve.category.name) %>
 				<%= tr_text('Prestataire', 		@pulve.user.name) %>
 				<%= tr_text('Date', 			@pulve.print_date) %>
 			</table>

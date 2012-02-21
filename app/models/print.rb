@@ -134,15 +134,15 @@ class Print < ActiveRecord::Base
         self.Tcols[col.id][:benef][:total][:sum] = 0
         self.Tcols[col.id][:benef][:ha][:sum] = 0
   
-        for cat in Category.labours
+        for cat in Category.labours_cats
           self.Tcols[col.id][:labours][:category][:total][cat.id] = 0
           self.Tcols[col.id][:labours][:category][:ha][cat.id] = 0
         end
-        for cat in Category.produits
+        for cat in Category.produits_cats
           self.Tcols[col.id][:pulves][:category][:total][cat.id] = 0  
           self.Tcols[col.id][:pulves][:category][:ha][cat.id] = 0
         end
-        for cat in Category.factures
+        for cat in Category.factures_cats
           self.Tcols[col.id][:charges][:category][:total][cat.id] = 0  
           self.Tcols[col.id][:charges][:category][:ha][cat.id] = 0
         end
@@ -177,7 +177,7 @@ class Print < ActiveRecord::Base
         @Tfactures[:total][:factcat][factcat.id] = 0 
         @Tfactures[:ha][:factcat][factcat.id] = 0    
       end
-      for cat in Category.factures
+      for cat in Category.factures_cats
         @Tfactures[:total][:category][cat.id] = 0 
         @Tfactures[:ha][:category][cat.id] = 0    
       end
@@ -262,7 +262,7 @@ class Print < ActiveRecord::Base
     @Tlabours[:ha][:category] = {}
 
     # init des categories de labours
-    for cat in Category.labours
+    for cat in Category.labours_cats
       @Tlabours[:total][:category][cat.id] = 0
       @Tlabours[:ha][:category][cat.id] = 0
     end
@@ -296,7 +296,7 @@ class Print < ActiveRecord::Base
     @Tpulves[:ha][:category] = {}
     
     # init des categories de pulve
-    for cat in Category.produits
+    for cat in Category.produits_cats
       @Tpulves[:total][:category][cat.id] = 0 
       @Tpulves[:ha][:category][cat.id] = 0   
     end
@@ -339,7 +339,7 @@ class Print < ActiveRecord::Base
       @Tlabours[:ha][:sum] += @Tlabours[labour.id][:ha]
       
       #totaux par categorie de labours
-      for cat in Category.labours
+      for cat in Category.labours_cats
         if (@Tlabours[labour.id][:category] == cat.id)
           @Tlabours[:total][:category][cat.id] +=  @Tlabours[labour.id][:total]
           @Tlabours[:ha][:category][cat.id] +=  @Tlabours[labour.id][:ha]
@@ -369,7 +369,7 @@ class Print < ActiveRecord::Base
       @Tpulves[:ha][:sum] += @Tpulves[pulve.id][:ha]
       
       #totaux par categorie de pulves
-      for cat in Category.produits
+      for cat in Category.produits_cats
         if (@Tpulves[pulve.id][:category] == cat.id)
           @Tpulves[:total][:category][cat.id] += @Tpulves[pulve.id][:total]
           @Tpulves[:ha][:category][cat.id] += @Tpulves[pulve.id][:ha]   
@@ -410,7 +410,7 @@ class Print < ActiveRecord::Base
       end
       
       #totaux par categorie de factures
-      for cat in Category.factures
+      for cat in Category.factures_cats
         if (@Tfactures[facture.id][:category] == cat.id)
           @Tfactures[:total][:category][cat.id] += total 
           @Tfactures[:ha][:category][cat.id] += total_ha   
@@ -459,7 +459,7 @@ class Print < ActiveRecord::Base
         @Tcols[col.id][:benef][:total][:sum] -= cout_total
       
         #totaux par categorie de labour
-        for cat in Category.labours
+        for cat in Category.labours_cats
           if (@Tlabours[labour.id][:category] == cat.id)
             @Tcols[col.id][:labours][:category][:ha][cat.id] += cout_ha
             @Tcols[col.id][:labours][:category][:total][cat.id] += cout_total
@@ -486,7 +486,7 @@ class Print < ActiveRecord::Base
         @Tcols[col.id][:benef][:total][:sum] -= cout_total
       
         #totaux par categorie de pulve
-        for cat in Category.produits
+        for cat in Category.produits_cats
           if (@Tpulves[pulve.id][:category] == cat.id)
             @Tcols[col.id][:pulves][:category][:ha][cat.id] += cout_ha
             @Tcols[col.id][:pulves][:category][:total][cat.id] += cout_total
@@ -521,7 +521,7 @@ class Print < ActiveRecord::Base
         end
         
         #totaux par categorie de factures
-        for cat in Category.factures
+        for cat in Category.factures_cats
           if (@Tfactures[facture.id][:category] == cat.id)
             @Tcols[col.id][:charges][:category][:ha][cat.id] += cout_ha
             @Tcols[col.id][:charges][:category][:total][cat.id] += cout_total

@@ -14,9 +14,9 @@
 	    	<th>
 				<select onchange="Table.filter(this,this)">
 					<option value="">-</option>
-					<option value="Agricole">Agricole</option>
-					<option value="Maison">Maison</option>
-					<option value="Investissement">Investissement</option>
+					<% Factcat.all.each do |cat| %>
+						<option value="<%= cat.name %>"><%= cat.name %></option> %>
+					<% end %>
 			</th>
 	    	<th>
 				<select onchange="Table.filter(this,this)">

@@ -31,7 +31,7 @@
 	    <td><%= parcelle.name %></td>
 	    <td class=right><%= parcelle.surface.display(2) %></td>
 	    <td class=right><%= parcelle.surface_pac.display(2) %></td>
-	    <td><%= link_to_show (parcelle.class, parcelle.id) %></td>
+	    <td><%= link_to_show(parcelle.class, parcelle.id) %></td>
 	
 		<% if admin? %>
 		    <td><%= link_to_edit(parcelle.class, parcelle.id) %></td>

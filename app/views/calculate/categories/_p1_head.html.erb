@@ -8,7 +8,7 @@
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
 	<% rang += 1 %>
-	<td class="color_culture_<%= colonne.code %>_strong" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> >
+	<td class="color_culture_<%= colonne.code %>_strong" colspan=2>
 		<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :name) %> <br>
 		<!-- [<%=h colonne.id %>] -->
 	</td>
@@ -26,7 +26,7 @@
 <% @colonnes.each do |colonne| %>
 	<% rang += 1 %>
 
-	<td class="color_culture_<%= colonne.code %>_strong" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> ><b>
+	<td class="color_culture_<%= colonne.code %>_strong" colspan=2><b>
 	<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :surface).display(1) %> Ha <br>
 	
 	<% if @test.c.to_s == "parcelles" %>

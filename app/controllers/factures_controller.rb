@@ -5,22 +5,11 @@ class FacturesController < ApplicationController
 
   def index
     @factures = Facture.find_by_saison(:all) 
-    if params[:tri]
-      @factures = Facture.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
-      @tri = params[:tri]
-      @sens = params[:sens]
-    end
-# calcul des sommes 
-    @total_cout = 0
-    @total_diff = 0
-    @factures.each do |facture|
-      if facture.class != Reportable
-        @total_cout += facture.cout 
-        if facture.comptable_diff?
-          @total_diff += facture.cout 
-        end
-      end
-    end
+    # if params[:tri]
+    #   @factures = Facture.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
+    #   @tri = params[:tri]
+    #   @sens = params[:sens]
+    # end
     respond_to do |format|
       format.html
     end

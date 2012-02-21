@@ -142,7 +142,7 @@ class Application < ActiveRecord::Base
     ['number_of_use',           'passages',   '',     false,        'numeric',    true,   ''            ],
     ['adu',                     'adu',        '',     false,        'default',    true,   'adu'         ]
   ]
-  
+      
   # Used in Print.rb
   def get_value_or_blank(var, value)
     val = var[value.to_sym]

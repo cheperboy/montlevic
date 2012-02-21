@@ -6,6 +6,7 @@ class Category < ActiveRecord::Base
   has_many :factures
   has_many :ventes
   has_many :produits
+  has_many :pulves
 
   CategoryOption = Struct.new(:id, :name)
 
@@ -34,6 +35,12 @@ class Category < ActiveRecord::Base
     categories
   end
   
+  def self.find_by_upcategory_and_code(upcategory, code)
+    up_id = Upcategory.find(:first, :conditions => { :name => upcategory })
+    category = Category.find(:first, :conditions => { :upcategory_id => up_id, :code => code })
+    category
+  end
+  
   def self.find_by_factcat_and_upcategory(factcat_id, upcategory_id)
     categories = Category.find(:all, :conditions => ["factcat_id = ? AND upcategory_id = ?", factcat_id, upcategory_id])
     categories
@@ -52,38 +59,29 @@ class Category < ActiveRecord::Base
     return categories
   end
     
-  def self.labours
+  def self.labours_cats
     find_by_upcategory('labour')
   end
     
-  def self.produits
+  def self.produits_cats
+    find_by_upcategory('produit')
+  end
+
+  def self.pulves_cats
+    find_by_upcategory('pulve')
+  end
+    
+  def self.putoproduits_cats
     find_by_upcategory('produit')
   end
     
-  def self.pulves
-    find_by_upcategory('produit')
-  end
-    
-  def self.putoproduits
-    find_by_upcategory('produit')
-  end
-    
-  def self.factures
+  def self.factures_cats
     find_by_upcategory('facture')
   end
 
-  def self.ventes
+  def self.ventes_cats
     find_by_upcategory('vente')
-  end
-
-  # def self.factures
-  #   find_by_upcategory('facture')
-  # end
-  
-  # def self.for_factures
-  #   find_by_factcat_and_upcategory_name('agri', 'facture')
-  # end
-    
+  end    
   def self.for_factures
     find_by_upcategory('facture')
   end

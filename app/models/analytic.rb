@@ -137,7 +137,12 @@ class Analytic < ActiveRecord::Base
   #pour chaque colonne, categories et types de chaque type de ligne (labours.categories, factures.types, ...)
   def init_sections(saison, col_type, col_id, line_type)
     # self.saisons[saison_id][col_type][col_id][line_type][section] = {} 
-    Category.send(line_type).each do |cat|
+
+    # les deux lignes suivantes permettent d'appeler les categories de produits 
+    # lorsqu'on itere les pulves (au lieu d'appeler les categories de pulve)
+    category = line_type
+    category = "produits" if line_type.eql?(:pulves)    
+    Category.send("#{category}_cats").each do |cat|
       self.saisons[saison.id][col_type][col_id][line_type][:category][cat.id] = {} 
       self.saisons[saison.id][col_type][col_id][line_type][:category][cat.id][:ha] = 0
       self.saisons[saison.id][col_type][col_id][line_type][:category][cat.id][:total] = 0
@@ -150,20 +155,22 @@ class Analytic < ActiveRecord::Base
         self.saisons[saison.id][col_type][col_id][line_type][:all][line.id][:total] = 0
       end
     end
-    if line_type == :factures
+    if line_type.eql?(:factures)
       Factcat.all.each do |factcat|
         self.saisons[saison.id][col_type][col_id][line_type][:factcat][factcat.id] = {} 
         self.saisons[saison.id][col_type][col_id][line_type][:factcat][factcat.id][:ha] = 0
         self.saisons[saison.id][col_type][col_id][line_type][:factcat][factcat.id][:total] = 0
         self.saisons[saison.id][col_type][col_id][line_type][:factcat][factcat.id][:name] = factcat.name
-      end 
-    end    
+      end
+    end
   end
   
   #commun a chaque colonne, categories et types de chaque type de lingne 
   def init_sections_for_saison(saison, line_type)
     # self.saisons[saison_id][col_type][col_id][line_type][section] = {} 
-    Category.send(line_type).each do |cat|
+    category = line_type
+    category = "produits" if line_type.eql?(:pulves)    
+    Category.send("#{category}_cats").each do |cat|
       self.saisons[saison.id][line_type][:category][cat.id] = {} 
       self.saisons[saison.id][line_type][:category][cat.id][:ha] = 0
       self.saisons[saison.id][line_type][:category][cat.id][:total] = 0

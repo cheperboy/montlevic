@@ -1,5 +1,5 @@
 class PrintController < ApplicationController
-  facture_categories = Category.factures
+  facture_categories = Category.factures_cats
 
   def csv
     unless params[:model] == nil
@@ -37,7 +37,7 @@ class PrintController < ApplicationController
     @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Factcat.all
     @labour_categories = Category.find_by_upcategory("labour")
-    @facture_categories = Category.factures
+    @facture_categories = Category.factures_cats
 
     respond_to do |format|
       @test = Print.new(Parcelle)
@@ -62,7 +62,7 @@ class PrintController < ApplicationController
     @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Factcat.all
     @labour_categories = Category.find_by_upcategory("labour")
-    @facture_categories = Category.factures
+    @facture_categories = Category.factures_cats
 
     respond_to do |format|
       @test = Print.new(Zone)
@@ -86,8 +86,8 @@ class PrintController < ApplicationController
     @factures = @saison.factures.find(:all, :order => :cout)
     @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Factcat.all
-    @labour_categories = Category.labours
-    @facture_categories = Category.factures
+    @labour_categories = Category.labours_cats
+    @facture_categories = Category.factures_cats
 
     respond_to do |format|
       @test = Print.new(Typeculture)
@@ -136,8 +136,8 @@ class PrintController < ApplicationController
     @factures = @saison.factures.find(:all, :order => :cout)
     @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Factcat.all
-    @labour_categories = Category.labours
-    @facture_categories = Category.factures
+    @labour_categories = Category.labours_cats
+    @facture_categories = Category.factures_cats
     @pulves = @saison.pulves
     
     @test = Print.new(model)
@@ -185,9 +185,9 @@ class PrintController < ApplicationController
     @factures = @saison.factures.find(:all, :order => :cout)
     @ventes = @saison.ventes.find(:all, :order => "category_id")
     @types = Factcat.all
-    @labour_categories = Category.labours
-    @facture_categories = Category.factures
-    @pulve_categories = Category.produits
+    @labour_categories = Category.labours_cats
+    @facture_categories = Category.factures_cats
+    @pulve_categories = Category.produits_cats
     @pulves = @saison.pulves
     
     respond_to do |format|
