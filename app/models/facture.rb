@@ -56,7 +56,7 @@ class Facture < Charge
 #TODO finir cette methode!
 # classement par cout?
   def self.find_with_order()
-    saison = Saison.find(Setting.find(:first).saison_id)
+    saison = Setting.get_saison
     all_factures = saison.factures.find(:all, :order => :cout)
     order= []
     reportable_todo = true
@@ -82,7 +82,7 @@ class Facture < Charge
   end
 
   def self.find_by_saison(*args)
-    with_scope(:find => { :conditions => ["saison_id = ?", Setting.find(1).saison_id],
+    with_scope(:find => { :conditions => ["saison_id = ?", Setting.get_saison_id],
                           :order => :adu}) do
         find(*args)
       end
@@ -90,7 +90,7 @@ class Facture < Charge
   
   def self.find_total(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id = ?", 
-                                          Setting.find(:first).saison_id,
+                                          Setting.get_saison_id,
                                           Factype.find_by_name('total').id],
                           :order => :category_id}) do
         find(*args)
@@ -99,7 +99,7 @@ class Facture < Charge
   
   def self.find_diff(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id = ?", 
-                                          Setting.find(:first).saison_id,
+                                          Setting.get_saison_id,
                                           Factype.find_by_name('diff').id],
                           :order => :category_id}) do
         find(*args)
@@ -109,7 +109,7 @@ class Facture < Charge
   #old find_papier
   def self.find_null(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id = ?", 
-                                          Setting.find(:first).saison_id,
+                                          Setting.get_saison_id,
                                           Factype.find_by_name('null').id],
                           :order => :category_id}) do
         find(*args)
@@ -119,7 +119,7 @@ class Facture < Charge
   #old find_not_papier
   def self.find_real_by_saison(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND type != ?", 
-                                          Setting.find(:first).saison_id,
+                                          Setting.get_saison_id,
                                           'Report'],
                           :order => :category_id}) do
         find(*args)

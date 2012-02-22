@@ -27,13 +27,17 @@ class Parcelle < ActiveRecord::Base
 
 # ----- Finders -----
 
+  named_scope :find_by_saison,
+    :conditions => {:saison_id => Setting.get_saison_id}
+
+
   # ATTENTION utiliser comme suit : saison_20XX.parcelles.find_by_code("the_code")
   def self.find_by_code(code)
     self.find(:first, :conditions => ["code = ?", code])
   end
 
   def self.find_for_saison()
-    saison = Saison.find(Setting.find(:first).saison_id)
+    saison = Setting.get_saison
     if saison.parcelles.size == 0
       return nil
     end
@@ -41,8 +45,8 @@ class Parcelle < ActiveRecord::Base
   end
 
   def self.find_by_saison(*args)
-    with_scope(:find => 
-                {:conditions => ["saison_id = ?", Setting.find(:first).saison_id], :order => :typeculture_id }) do
+    with_scope(:find =>
+                {:conditions => ["saison_id = ?", Setting.get_saison_id], :order => :typeculture_id }) do
         find(*args)
       end
   end
@@ -51,7 +55,7 @@ class Parcelle < ActiveRecord::Base
     parcelles = []
     zonetopas = Zonetopa.find(:all, :conditions => ["zone_id = ?", zone_id])
     zonetopas.each do |zonetopa|
-      if zonetopa.parcelle.saison_id == Setting.find(:first).saison_id
+      if zonetopa.parcelle.saison_id == Setting.get_saison_id
         parcelles << zonetopa.parcelle
       end
     end

@@ -10,7 +10,7 @@
 <% @typecultures.each do |typeculture| %>
   <tr>
     <td><%= typeculture.name %></td>
-    <td class=center><%= typeculture.parcelles.size %></td>
+    <td class=center><%= typeculture.parcelles.find_by_saison.size %></td>
     <td><%= link_to_show (Typeculture, typeculture) %></td>
     <% if admin? %>
 		<td><%= link_to 'Supprimer', typeculture, :confirm => 'Are you sure?', :method => :delete %></td>

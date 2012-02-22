@@ -35,6 +35,10 @@ class Setting < ActiveRecord::Base
     Setting.find(:first).saison_id
   end
 
+  def self.get_saison
+    Setting.find(:first).saison
+  end
+
   
 
   

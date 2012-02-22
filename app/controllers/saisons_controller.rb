@@ -23,7 +23,7 @@ before_filter :edit_access,
         # Update Session variable
         # current_saison_id = Setting.find(:first).saison.id
         # session[:saison_name] = Setting.find(:first).saison.name
-        session[:current_saison_id] = Setting.find(:first).saison_id
+        session[:current_saison_id] = Setting.get_saison_id
         flash[:notice] = 'Saison selectionnee.'
         
       else
