@@ -2,6 +2,7 @@
   <tr class=bold>
     <td>Nom</td>
     <td class=center>Nombre de parcelles</td>
+    <td class=center>Surface</td>
     <td></td>
     <% if admin? %>
 		<td></td>
@@ -10,7 +11,8 @@
 <% @typecultures.each do |typeculture| %>
   <tr>
     <td><%= typeculture.name %></td>
-    <td class=center><%= typeculture.parcelles.find_by_saison.size %></td>
+    <td class=center><%= typeculture.parcelles.scope_by_saison.size %></td>
+    <td class=right><%= Parcelle::sum_surfaces(typeculture.parcelles.scope_by_saison).display(1) %> ha</td>
     <td><%= link_to_show (Typeculture, typeculture) %></td>
     <% if admin? %>
 		<td><%= link_to 'Supprimer', typeculture, :confirm => 'Are you sure?', :method => :delete %></td>

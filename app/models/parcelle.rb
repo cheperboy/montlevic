@@ -27,9 +27,8 @@ class Parcelle < ActiveRecord::Base
 
 # ----- Finders -----
 
-  named_scope :find_by_saison,
+  named_scope :scope_by_saison,
     :conditions => {:saison_id => Setting.get_saison_id}
-
 
   # ATTENTION utiliser comme suit : saison_20XX.parcelles.find_by_code("the_code")
   def self.find_by_code(code)
@@ -72,8 +71,8 @@ class Parcelle < ActiveRecord::Base
     @name_for_select = "Parcelle :: " + name + " - " + typeculture.name + " - " + surface.to_s + " Ha" 
   end
     
-  #retourne la somme des surface d'un jeu de parcelles
-  def sum_surfaces(parcelles)
+  #retourne la somme des surface d'un tableau de parcelles
+  def self.sum_surfaces(parcelles)
     s=0
     parcelles.each do |parcelle| 
       s = s + parcelle.surface

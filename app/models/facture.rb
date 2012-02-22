@@ -52,6 +52,14 @@ class Facture < Charge
   validates_presence_of :cout
 
   # ----- Finders -----
+
+  named_scope :scope_by_saison, 
+  :conditions => {:saison_id => Setting.get_saison_id}
+
+  named_scope :scope_by_phyto, 
+  :conditions => {:category_id => Category.find_by_upcategory_and_code('facture', 'produits_phyto')}
+
+
   #test 14 avril 2011
 #TODO finir cette methode!
 # classement par cout?
