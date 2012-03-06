@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
-  has_ancestry
+  # has_ancestry
   belongs_to :factcat
   belongs_to :upcategory
   has_many :charges
@@ -16,7 +16,7 @@ class Category < ActiveRecord::Base
     def initialize(name)
       @type_name = name
       @options = []
-    end 
+    end
   
     def <<(option)
       @options << option
