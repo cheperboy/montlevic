@@ -7,6 +7,17 @@ RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
+
+  if Gem::VERSION >= "1.3.6" 
+    module Rails
+      class GemDependency
+        def requirement
+          r = super
+          (r == Gem::Requirement.default) ? nil : r
+        end
+      end
+    end
+  end
   
   #Ajouté par matthieu
   require 'extensions'
