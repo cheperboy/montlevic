@@ -18,7 +18,10 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.string   "code",          :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ancestry"
   end
+
+  add_index "categories", ["ancestry"], :name => "index_categories_on_ancestry"
 
   create_table "charges", :id => false, :force => true do |t|
     t.integer "toto"
@@ -206,7 +209,6 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.text     "info"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "category_id",     :null => false
   end
 
   create_table "putofactures", :force => true do |t|

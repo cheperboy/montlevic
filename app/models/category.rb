@@ -1,5 +1,6 @@
 class Category < ActiveRecord::Base
-  # has_ancestry
+  has_ancestry
+  
   belongs_to :factcat
   belongs_to :upcategory
   has_many :charges
@@ -23,6 +24,13 @@ class Category < ActiveRecord::Base
     end
   end
   # End of For Select List by Group
+  
+  
+  def self.find_by_factcat_id(factcat_id)
+      categories = Category.find(:all, :conditions => { :factcat_id => factcat_id })
+  end
+
+  # fin de Temporaire
 
   def name_for_select_for_facture
     @name_for_select = self.factcat.name + " - " + self.name
@@ -59,6 +67,10 @@ class Category < ActiveRecord::Base
     return categories
   end
     
+  def self.root_facture
+    Category.find(:first, :conditions => { :name => "facture" })
+  end
+    
   def self.labours_cats
     find_by_upcategory('labour')
   end
@@ -87,6 +99,21 @@ class Category < ActiveRecord::Base
   end
     
   def self.grouped_for_factures
+    myoptions = []
+    root = Category.find(:first, :conditions => { :name => 'facture' })
+    root.children.each do |upcat|
+      myupcat = CategoryUptype.new(upcat.name)
+      categories = upcat.children
+      categories.each do |cat|
+        myupcat << CategoryOption.new(cat.id, cat.name)
+      end
+      myoptions << myupcat
+    end
+    return myoptions
+  end
+
+
+  def self.grouped_for_factures_old
     cats = find_by_upcategory('facture')
     upcategory_id = Upcategory.find(:first, :conditions => { :name => 'facture' }).id
     

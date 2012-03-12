@@ -25,11 +25,11 @@
 			</table>
 		</td>
 		<td class=form_layout_content_right>
-			<table class=form_layout_content_table>
-				<%#= form_tr_select(f, 'Catégorie', :category_id, Category.for_factures, :id, :name_for_select_for_facture) %>
-				<%= form_tr_select_with_groups(f, 'Catégorie', :category_id, Category.grouped_for_factures, :id, @facture,  :name_for_select_for_facture) %>
-				<%#= form_tr_select(f, 'Classement', :factcat_id, Factcat.find(:all, :order => :name), :id, :name) %>
-				<%#= form_tr_select(f, 'Categorie', :category_id, Category.factures_cats, :id, :name) %>
+			<table class=form_layout_content_table>				
+				<%= form_tr_select_cat_from_tree(f, @facture.class.to_s.downcase, Category.root_facture, 'Catégorie', :category_id, :id, :name, @facture) %>
+
+				<%#= form_tr_select_with_groups(f, 'Catégorie', :category_id, Category.grouped_for_factures, :id, @facture,  :name_for_select_for_facture) %>
+				
 				<%= form_tr_select(f, 'Comptabilisation', :factype_id, Factype.find(:all, :order => :name), :id, :name) %>
 
 				<%= form_tr_check(f, 'Payé', :paye) %>

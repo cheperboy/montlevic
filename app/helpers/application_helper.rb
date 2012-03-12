@@ -556,29 +556,6 @@ module ApplicationHelper
     return out
   end
 
-  def form_tr_select_with_groups_old(form, name, col, collection, id, theclass, display, options = nil)
-  #   out = ""
-  #   out << "<tr><td class='label'>"
-  #   out += form.label col.to_sym, name
-  #   out += " : </td>"
-  #   out += "<td class='field'>"
-  #   nom = ''
-  #   nom = theclass.to_s.downcase
-  #   nom += '['
-  #   nom += col.to_s
-  #   nom += ']'
-  # 
-  #   out += "<select id=#{theclass.to_s.downcase}_#{col} name='#{nom}'>"
-  #           # <select id="facture_category_id" name="facture[category_id]">
-  #   unless options.nil?
-  #     out += option_groups_from_collection_for_select(collection, :options, :type_name, :id,:name, options[:selected])
-  #   else
-  #     out += option_groups_from_collection_for_select(collection, :options, :type_name, :id,:name)
-  #   end
-  #   out += '</td></tr>'
-  #   return out
-  end
-
   def form_tr_select_with_groups(form, name, col, collection, id, object, options = nil)
     out = ""
     out << "<tr><td class='label'>"
