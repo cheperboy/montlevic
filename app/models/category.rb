@@ -30,7 +30,19 @@ class Category < ActiveRecord::Base
       categories = Category.find(:all, :conditions => { :factcat_id => factcat_id })
   end
 
-  # fin de Temporaire
+  #nouveau pour Tree
+  def self.root_facture
+    Category.find(:first, :conditions => { :name => "facture" })
+  end
+
+  def get_factcat_from_category
+    factcat = self.parent
+    factcat = factcat.parent while !cat.depth.eql?(1)
+    factcat
+  end
+  #nouveau pour Tree (fin)
+
+
 
   def name_for_select_for_facture
     @name_for_select = self.factcat.name + " - " + self.name
@@ -66,11 +78,7 @@ class Category < ActiveRecord::Base
     categories = Category.find(:all, :conditions => { :upcategory_id => upcategory_id })
     return categories
   end
-    
-  def self.root_facture
-    Category.find(:first, :conditions => { :name => "facture" })
-  end
-    
+
   def self.labours_cats
     find_by_upcategory('labour')
   end

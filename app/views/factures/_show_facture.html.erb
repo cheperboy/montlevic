@@ -23,7 +23,7 @@
 		</td>
 		<td class=form_layout_content_right>
 			<table class=form_layout_content_table>
-			<%= tr_text('Classement', @facture.factcat.name) %>
+			<%= tr_text('Classement', @facture.category.get_factcat_from_category.name) %>
 			<%= tr_text('Categorie', @facture.category.name) %>
 			<%= tr_text('Comptabilisation', @facture.factype.name) %>
 			<%= tr_text('Star', @facture.star) %>

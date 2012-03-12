@@ -80,6 +80,5 @@ module CategoryHelper
     out += '</td></tr>'
     return out
   end
-
     
 end

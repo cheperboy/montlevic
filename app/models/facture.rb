@@ -268,8 +268,8 @@ class Facture < Charge
   
   def update_factcat
     cat = Category.find(self.category_id)
-    self.factcat_id = Factcat.find(cat.factcat_id).id
-    self.save!
+    # self.factcat_id = Factcat.find(cat.get_factcat_from_category).id
+    # self.save!
   end
     
 # ----- Verifs ------
