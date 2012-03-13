@@ -36,7 +36,8 @@
 			</td>
 			<td class=form_layout_content_right>
 				<table class=form_layout_content_table>
-					<%= form_tr_select(f, 'Categorie', :category_id, Category.find_by_type("labour"), :id, :name) %>
+					<%#= form_tr_select(f, 'Categorie', :category_id, Category.find_by_type("labour"), :id, :name) %>
+					<%= form_tr_select_cat_from_tree(f, @labour.class.to_s.downcase, Category.root_labour, 'Catégorie', :category_id, :id, :name, @labour) %>
 					<%= form_tr_date(f, 'Date', :date ) %>
 					<%= form_tr_check(f, 'Star', :star) %>
 					<%= form_tr_check(f, 'ADU', :adu) %>

@@ -1,4 +1,4 @@
-# Cette migration ajoute un champ category aux pulve
+# Cette migration ajoute un champ category aux pulves
 # permet de differrencier les pulve qui sont vraiement des traitement de ceux 
 # qui sont des utilisation manuelles des produits (traitement des semences par exemple)
 
@@ -8,7 +8,7 @@
 
 class AddColumnPulveCategory < ActiveRecord::Migration
   def self.up
-    down
+    # down
     add_column :pulves, :category_id, :integer
 
     # Creation upcategory pulve
@@ -36,9 +36,13 @@ class AddColumnPulveCategory < ActiveRecord::Migration
   def self.down
     category = Category.find_by_upcategory_and_code('pulve', 'traitement')
     category.destroy unless category.nil?
+    category = Category.find_by_upcategory_and_code('pulve', 'semis')
+    category.destroy unless category.nil?
+    category = Category.find_by_upcategory_and_code('pulve', 'manuel')
+    category.destroy unless category.nil?
 
     new_upcat = Upcategory.find_by_name("pulve")
     new_upcat.destroy unless new_upcat.nil?
-    # remove_column :pulves, :category_id if Pulve.id
+    remove_column :pulves, :category_id
   end
 end

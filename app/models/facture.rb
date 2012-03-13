@@ -190,7 +190,9 @@ class Facture < Charge
   end
     
   def factcat_name
-    self.factcat.name
+    # 12/03/13 modification car Factcat obsolete
+    # self.factcat.name
+    self.category.get_factcat_from_category.name
   end
 
   # ----- Methodes de calcul -----
@@ -267,9 +269,10 @@ class Facture < Charge
   end
   
   def update_factcat
+    # 12/03/13 modification car Factcat obsolete
     cat = Category.find(self.category_id)
-    # self.factcat_id = Factcat.find(cat.get_factcat_from_category).id
-    # self.save!
+    self.factcat_id = cat.get_factcat_from_category.id
+    self.save!
   end
     
 # ----- Verifs ------

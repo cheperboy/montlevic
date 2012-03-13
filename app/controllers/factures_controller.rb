@@ -83,7 +83,9 @@ class FacturesController < ApplicationController
       @facture = Debit.new(params[:facture])
     end
     @facture.saison_id = current_saison_id
-    @facture.factcat_id = Category.find(params[:facture][:category_id]).factcat_id
+    # 12/03/13 suppression car Factcat obsolete
+    # @facture.factcat_id = Category.find(params[:facture][:category_id]).factcat_id
+    
     # transforme les checkbox Typeculture en Factoparcelles
     @facture.update_typecultures(params[:typecultures])
     @facture.uniq_parcelles
@@ -252,8 +254,10 @@ class FacturesController < ApplicationController
     param_type = @facture.class.to_s.downcase.to_sym
     respond_to do |format|
       if @facture.update_attributes(params[param_type])
+        
+        # 12/03/13 suppression car Factcat obsolete
         # extract factcat from category and save it
-        @facture.update_factcat
+        # @facture.update_factcat
         
         # transforme les checkbox Typeculture en Factoparcelles
         @facture.update_typecultures(params[:typecultures])

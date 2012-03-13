@@ -1,11 +1,12 @@
 class AddAncestryToCategories < ActiveRecord::Migration
   def self.up
+    down
     # Structure
     # unless Category.column_names.find?('ancestry')
       add_column :categories, :ancestry, :string
       add_index :categories, :ancestry
     # end
-         
+
     # Datas
     Factcat.all.each do |factcat|   #['Agricole', 'Maison', 'Investissement']
       Category.create!(:factcat_id => 20, :upcategory_id => 20, :name => factcat.name, :code => factcat.code).save!
@@ -47,7 +48,7 @@ class AddAncestryToCategories < ActiveRecord::Migration
       cat.update_attribute(:parent_id, vente.id)
     end
     pulve = Category.find(:first, :conditions => { :name => "pulve", :upcategory_id => 10})
-    Category.find_by_factcat_and_upcategory(1,5).each do |cat|
+    Category.find_by_factcat_and_upcategory(1, 5).each do |cat|
       cat.update_attribute(:parent_id, pulve.id)
     end
     

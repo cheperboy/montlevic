@@ -34,12 +34,26 @@ class Category < ActiveRecord::Base
   def self.root_facture
     Category.find(:first, :conditions => { :name => "facture" })
   end
+  def self.root_labour
+    Category.find(:first, :conditions => { :name => "labour" })
+  end
+  def self.root_pulve
+    Category.find(:first, :conditions => { :name => "pulve" })
+  end
+  def self.root_vente
+    Category.find(:first, :conditions => { :name => "vente" })
+  end
 
   def get_factcat_from_category
     factcat = self.parent
-    factcat = factcat.parent while !cat.depth.eql?(1)
+    factcat = factcat.parent while !factcat.depth.eql?(1)
     factcat
   end
+  
+  def get_factcats
+    return self.root_facture.children
+  end
+  
   #nouveau pour Tree (fin)
 
 
