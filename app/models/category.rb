@@ -1,8 +1,8 @@
 class Category < ActiveRecord::Base
   has_ancestry
   
-  belongs_to :factcat
-  belongs_to :upcategory
+  # belongs_to :factcat
+  # belongs_to :upcategory
   has_many :charges
   has_many :factures
   has_many :ventes

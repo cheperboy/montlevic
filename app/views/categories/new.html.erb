@@ -12,16 +12,20 @@
     <%= f.text_field :code %>
   </p>
   <p>
-		<%= form_tr_select(f, 'Type de categorie', 
-							:upcategory_id, 
-							Upcategory.find(:all, :order => :name), 
-							:id, :name) %>
-  </p>
+<%#= form_tr_select(f, 'Categorie Superieure', 
+					:parent_id, 
+					Category.find(:all, :order => :name), 
+					:id, :name) %>
+
+	
+		<%= form_tr_select_cat_from_tree(f, @category.class.to_s.downcase, Category.roots, 'Catégorie: ', :parent_id, :id, :name, @category, options = {:root => true}) %>
+	  </p>
+
   <p>
-  <p>
+  <!-- <p>
 	Si le type de categorie est different de "facture" <br>(c'est a dire "pulve", "labour" ou "vente") alors le Classement est forcement "Agricole" 
-  </p>
-		<%= form_tr_select(f, 'Classement Facture', 
+  </p> -->
+		<%#= form_tr_select(f, 'Classement Facture', 
 							:factcat_id, 
 							Factcat.find(:all, :order => :name), 
 							:id, :name) %>
