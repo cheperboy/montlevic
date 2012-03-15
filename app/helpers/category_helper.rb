@@ -50,13 +50,7 @@ module CategoryHelper
   def select_cat_from_tree(obj, col, root, selected_obj, options = nil)
     select_name = obj + '[' + col.to_s + ']'
     out = "<select name='#{select_name}'>"
-    if (!options.nil? && options[:root].eql?(true))
-      Category.roots.each do |root|
-        out << select_cat_from_root_recurs(root, selected_obj)
-      end
-    else
-      out << select_cat_from_tree_recurs(root, selected_obj)
-    end
+    out << select_cat_from_tree_recurs(root, selected_obj)
     out << "</select>"
   end
 
@@ -83,18 +77,36 @@ module CategoryHelper
     out
   end
   
-  def select_cat_from_root_recurs(root, selected_obj)
-    to_select = false
-    selected = "notselected"
-    out = ""
-    out << "<option  value=#{root.id} #{selected}>"
-    out << space(root.depth)
-    out << "#{root.name}</option>"
-    root.children.each do |cat|
+  def form_tr_select_cat_from_root(form, obj, root, name, col, id, display_name, selected_obj, *args)
+    options = args.extract_options!
+    out = ''
+    out += '<tr><td class="label">'
+    out += form.label col.to_sym, name
+    out += ' : </td>'
+    out += '<td class="field">'
+    out += select_cat_from_root(obj, col, root, selected_obj, options)
+    out += '</td></tr>'
+    return out
+  end
+
+  def select_cat_from_root(obj, col, root, selected_obj, options = nil)
+    select_name = obj + '[' + col.to_s + ']'
+    out = "<select name='#{select_name}'>"
+    Category.roots.each do |root|
       selected = ''
-      if (selected_obj && selected_obj.id && (cat.id == selected_obj.id))
-        selected = 'selected="selected"'
-      end
+      selected = 'selected="selected"' if (selected_obj && selected_obj.id && (cat.id == selected_obj.id))
+      out << "<option value=#{root.id} #{selected}>"
+      out << "#{root.name.camelize}</option>"
+      out << select_cat_from_root_recurs(root, selected_obj)
+    end
+    out << "</select>"
+  end
+
+  def select_cat_from_root_recurs(upcat, selected_obj)
+    out = ""
+    upcat.children.each do |cat|
+      selected = ''
+      selected = 'selected="selected"' if (selected_obj && selected_obj.id && (cat.id == selected_obj.id))
       out << "<option  value=#{cat.id} #{selected}>"
       out << space(cat.depth)
       out << "#{cat.name}</option>"

@@ -50,6 +50,8 @@ class CategoriesController < ApplicationController
   # POST /categories
   # POST /categories.xml
   def create
+    params[:category][:factcat_id] = 11
+    params[:category][:upcategory_id] = 11
     @category = Category.new(params[:category])
 
     respond_to do |format|

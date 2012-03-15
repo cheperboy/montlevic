@@ -12,13 +12,8 @@
     <%= f.text_field :code %>
   </p>
   <p>
-<%#= form_tr_select(f, 'Categorie Superieure', 
-					:parent_id, 
-					Category.find(:all, :order => :name), 
-					:id, :name) %>
-
-	
-		<%= form_tr_select_cat_from_tree(f, @category.class.to_s.downcase, Category.roots, 'Catégorie: ', :parent_id, :id, :name, @category, options = {:root => true}) %>
+ 	
+		<%= form_tr_select_cat_from_root(f, @category.class.to_s.downcase, Category.roots, 'Catégorie: ', :parent_id, :id, :name, @category, options = {:root => true}) %>
 	  </p>
 
   <p>

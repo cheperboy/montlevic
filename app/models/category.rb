@@ -1,8 +1,8 @@
 class Category < ActiveRecord::Base
   has_ancestry
   
-  # belongs_to :factcat
-  # belongs_to :upcategory
+  belongs_to :factcat
+  belongs_to :upcategory
   has_many :charges
   has_many :factures
   has_many :ventes
@@ -32,16 +32,16 @@ class Category < ActiveRecord::Base
 
   #nouveau pour Tree
   def self.root_facture
-    Category.find(:first, :conditions => { :name => "facture" })
+    Category.find(:first, :conditions => { :name => "Facture"})
   end
   def self.root_labour
-    Category.find(:first, :conditions => { :name => "labour" })
+    Category.find(:first, :conditions => { :name => "Labour" })
   end
   def self.root_pulve
-    Category.find(:first, :conditions => { :name => "pulve" })
+    Category.find(:first, :conditions => { :name => "Pulve" })
   end
   def self.root_vente
-    Category.find(:first, :conditions => { :name => "vente" })
+    Category.find(:first, :conditions => { :name => "Vente" })
   end
 
   def get_factcat_from_category

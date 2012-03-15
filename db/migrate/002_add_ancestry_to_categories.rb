@@ -1,11 +1,21 @@
+
+# rake db:reset
+# eventuellement remettre les associations dans category.rb (belongs_to :factcat et :upcategory) 
+# pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b010.dump
+# rake db:migrate:up VERSION=1 --trace
+# remettre l'appel a "has_ancestry" dans category.rb
+# rake db:migrate:up VERSION=2 --trace
+
 class AddAncestryToCategories < ActiveRecord::Migration
   def self.up
-    down
+    # down
+    say "Running Version=2 up"
     # Structure
-    # unless Category.column_names.find?('ancestry')
-      add_column :categories, :ancestry, :string
-      add_index :categories, :ancestry
-    # end
+      # add_column  :categories, :ancestry, :string
+      # add_index   :categories, :ancestry
+      # add_column  :categories, :ancestry_depth, :integer, :default => 0
+      # change_column :categories, :factcat_id, :integer
+      # change_column :categories, :upcategory_id, :integer
 
     # Datas
     Factcat.all.each do |factcat|   #['Agricole', 'Maison', 'Investissement']
@@ -52,7 +62,12 @@ class AddAncestryToCategories < ActiveRecord::Migration
       cat.update_attribute(:parent_id, pulve.id)
     end
     
+    # fill the ancestry_depth column
+    #Category.rebuild_depth_cache!
     
+    Category.all.each do |cat|
+      cat.update_attribute(:name, cat.name.camelize)
+    end
     
     # test
     cat = Category.find(8)
@@ -60,12 +75,13 @@ class AddAncestryToCategories < ActiveRecord::Migration
     Category.find_by_factcat_and_upcategory(40,40).each do |toto|
       toto.update_attribute(:parent_id, cat.id)
     end
-    
-    
+
   end
 
   def self.down
+    say "Running Version=2 down"
     Category.all.each do |cat|
+      say "cat.update to nil #{cat.id}"
       cat.update_attribute(:ancestry, nil)
     end
     
@@ -89,7 +105,13 @@ class AddAncestryToCategories < ActiveRecord::Migration
     #   end
     # end
     
+    say "remove_index :categories, :ancestry"
     remove_index :categories, :ancestry # if Category.column_names.map(coancestry)?
     remove_column :categories, :ancestry
+    remove_column :categories, :ancestry_depth
+
+    # change_column :categories, :factcat_id, :integer, :null => false
+    # change_column :categories, :upcategory_id, :integer, :null => false
+    
   end
 end
