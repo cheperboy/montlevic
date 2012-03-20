@@ -147,8 +147,13 @@ class CalculateController < ApplicationController
     @vente_categories =   Category.ventes_cats
     
     respond_to do |format|
-      set_cache(@saison.id, coltype, reload_cache)
-      @test = get_cache(@saison.id, coltype)
+
+      # set_cache(@saison.id, coltype, reload_cache)
+      # @test = get_cache(@saison.id, coltype)
+
+      @test = Calculate.new(coltype)
+      @test.calculate
+
       unless @test.nil?
         format.html
       else

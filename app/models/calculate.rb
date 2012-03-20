@@ -111,6 +111,14 @@ class Calculate < ActiveRecord::Base
           @res.add_saison_line(@sid, :labours, :category, cat.id, :total, cout_total)
          end
       end
+      
+      #TEST ANCESTRY
+      for cat in Category.labours_cats
+        if (labour.category_id == cat.id)
+          @res.add_saison_line(@sid, :labours, :category, cat.id, :ha, cout_ha_for_saison)
+          @res.add_saison_line(@sid, :labours, :category, cat.id, :total, cout_total)
+         end
+      end
     # 2- Total COLONNE
     
     

@@ -45,6 +45,7 @@ class Category < ActiveRecord::Base
   end
 
   def get_factcat_from_category
+    return "root" if self.is_root?
     factcat = self.parent
     factcat = factcat.parent while !factcat.depth.eql?(1)
     factcat

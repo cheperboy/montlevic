@@ -1,0 +1,268 @@
+/* Begin : Table Datas : Category, Zone, Parcelle, User, ... */
+
+
+.table_data { border-collapse:collapse; margin-top: 10px; margin-bottom: 30px;}
+.table_data { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
+.table_data th{ 
+	border:1px solid #DDDDDD; 
+	background-color: #EDEDED;
+}
+.table_data td, th, tr { 
+	text-align: left;
+	border: 1px solid #DDDDDD; 
+	padding-left: 10px;
+	padding-right: 12px;	
+}
+
+.table_data th.invisible {
+	border: 1px solid white; 
+	background-color: #FFF;
+}
+
+.table_data td.invisible {	border-right: 1px solid white; }
+ 
+.table_data td.center	{ text-align: center; }
+.table_data th.right	{ text-align: right; }
+.table_data th.right	{ text-align: right; }
+.table_data td.right	{ text-align: right; }
+.table_data th.left		{ text-align: left; }
+.table_data td.left		{ text-align: left; }
+.table_data tr.bold		{ font-weight: bold; }
+.table_data td.bold		{ font-weight: bold; }
+.table_data tr:hover 	{ background-color: #FFFFBB; color: #000}
+
+.table_data th.value, td.value {
+	border-right-color :transparent;
+	text-align: right;
+	padding-right: 6px;
+}
+.table_data th.unit, td.unit { 
+text-align: left;
+padding-left: 0px;
+}
+
+/* End : Table Datas */
+
+
+
+/* Begin : Table Invisible */
+.table_invisible { 
+	}
+
+.table_invisible td, th, tr { 
+	text-align: left;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	padding-right: 12px;	
+}
+
+.table_invisible th.left{ 
+	text-align: left; 
+	color: grey; 
+	}
+.table_invisible th.right{ text-align: right; }
+.table_invisible td.left{ text-align: left; }
+.table_invisible td.right{ text-align: left; color: grey; 
+}
+.table_invisible td.center{ text-align: center; }
+.table_invisible tr.bold{ font-weight: bold; }
+.table_invisible td.bold{ font-weight: bold; }
+.table_invisible tr:hover { background-color: #FFFFBB; color: #000}
+
+.table_invisible th.value, td.value {
+	border-right-color :transparent;
+	text-align: right;
+	padding-right: 6px;
+}
+.table_invisible th.unit, td.unit { 
+	text-align: left;
+	padding-left: 0px;
+}
+
+
+
+/* End : Table Datas */
+
+/* Begin : Table print */
+
+.table_print { border-collapse:collapse; }
+.table_print { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
+
+.table_print td, th, tr { 
+ border-width:1px;
+ border-style:solid; 
+ border-color:grey;
+ }
+
+.table_print tr.subtotal { color: green; }
+.table_print tr.total { color: red; }
+.table_print span.td-total { font-weight:700; }
+
+
+.table_print td, tr{ text-align: right; padding-right: 10px; }
+
+.table_print th.left					{ text-align: left; padding-right: 10px; /*width: 25em;*/ }
+.table_print td.left					{ text-align: left; padding-right: 10px; /*width: 25em;*/ }
+.table_print td.date					{ max-width: 7em; 	padding-right: 10px; text-align: left; }
+
+.table_print td.saison							{ background-color: #eecfa1; }
+.table_print th.saison							{ background-color: #eecfa1; }
+.table_print td.saison-head-name 		{ background-color: #eecfa1; text-align: center; }
+.table_print td.saison-head-surface { background-color: #eecfa1; text-align: center; }
+
+.table_print td.even 								{ background-color: #FFFACD; padding-right: 8px; }
+.table_print td.even_subtotal 			{ background-color: #eecfa1; padding-right: 8px; }
+.table_print td.even-head-name 			{ background-color: #FFFACD; padding-right: 8px; text-align:center; }
+.table_print td.even-head-surface 	{ background-color: #FFFACD; padding-right: 8px; text-align:center; }
+
+.table_print td.odd 								{ background-color: #e0eee0; padding-right: 8px; }
+.table_print td.odd_subtotal 				{ background-color: #c1cdc1; padding-right: 8px; }
+.table_print td.odd-head-name 			{ background-color: #e0eee0; padding-right: 8px; text-align:center; }
+.table_print td.odd-head-surface 		{ background-color: #e0eee0; padding-right: 8px; text-align:center; }
+
+.table_print tr:hover { background-color: #eee; }
+
+/* End : Table list */
+
+/* Begin : Verif */
+
+.table_verif { 
+	border: 1px;
+	border-style :solid;
+ 	border-collapse:collapse; 
+}
+
+.table_verif td, th { 
+ border-width: 1px;
+ border-style: solid; 
+ border-color: grey;
+ text-align: left;
+} 
+
+.table_verif td.true { background-color: green; }
+.table_verif td.false { background-color: red; }
+.table_verif td.green { background-color: green; }
+.table_verif td.red { background-color: red; font-weight: bold;}
+.table_verif td.orange { background-color: orange; }
+
+/* End : Verif */
+
+/* Begin : form_layout table */
+/* Mise en page des vues edit et show */
+
+table.form_layout { }
+table.form_layout tr.form_layout_title td  { 
+	
+}
+
+table.form_layout tr.form_layout_title td { 
+	border-top: 1px solid #6B90DA;
+	min-width: 300px;
+	padding-left: 20px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	font-weight:bold;
+	text-align:left;
+	font-size:12pt;
+	background-color: #EBEFF9;
+}
+
+/* td (titre) cote gauche : bordure a droite pour creer un espace */
+table.form_layout tr.form_layout_title td.form_layout_title_left { 
+	border-right: 15px solid #FFF;
+}
+
+/* td (titre) cote droit : bordure a gauche pour creer un espace */
+table.form_layout tr.form_layout_title td.form_layout_title_right { 
+	border-left: 15px solid #FFF;
+}
+
+/* grand td (contenu) sur toute la largeur */
+table.form_layout tr.form_layout_content td.form_layout_content { 
+	padding-left: 20px;
+	padding-bottom: 50px;
+}
+
+/* td (contenu) cote droit : bordure a gauche pour creer un espace */
+table.form_layout tr.form_layout_content td.form_layout_content_right { 
+	padding-left: 20px;
+	padding-bottom: 50px;
+	border-left: 15px solid #FFF;
+	max-width: 400px;
+}
+
+/* td (contenu) cote gauche : bordure a droite pour creer un espace */
+table.form_layout tr.form_layout_content td.form_layout_content_left { 
+	padding-left: 20px;
+	padding-bottom: 50px;
+	border-right: 15px solid #FFF;
+}
+
+/* lien dans la barre de titre ("Ajouter une parcelle" par exemple)*/
+table.form_layout tr.form_layout_title a {
+	font-size:10pt;
+	font-weight:normal;
+	margin-left: 15px;
+	text-decoration:none;
+}
+table.form_layout tr.form_layout_title a:hover {text-decoration:underline; 	font-weight:bold; background-color: #FFFFBB;}
+
+/* End : form_layout */
+
+/* Begin : form_layout_content_table */
+/* Table a l'interieur d'un td d'une table form_layout */
+/* pour affichage de donnees simples : label gris et champ en noir. */
+
+table.form_layout_content_table {
+	border: 0px solid grey;
+}
+
+table.form_layout_content_table td {
+	border: 0px solid grey;
+	padding-bottom: 5px;
+}
+
+
+table.form_layout_content_table td.label{ 
+	text-align:left;
+	color: #666666;
+	padding-right: 15px;
+}
+table.form_layout_content_table td.field{ text-align:left; }
+
+/* End : form_layout */
+
+/* Couleurs des <tr> Types de cultures */
+
+tr.color_culture_ble,
+td.color_culture_ble 							{ background-color: #FFFFBB;}
+tr.color_culture_ble:hover,
+tr.color_culture_ble_strong,
+td.color_culture_ble_strong				{ background-color: #eeee00;}
+
+tr.color_culture_colza,
+td.color_culture_colza 						{ background-color: #B8E2B8;}
+tr.color_culture_colza:hover,
+tr.color_culture_colza_strong,
+td.color_culture_colza_strong			{ background-color: #80CC80;}
+
+tr.color_culture_tournesol,
+td.color_culture_tournesol				{ background-color: #B8F3FE;}
+tr.color_culture_tournesol:hover,
+tr.color_culture_tournesol_strong,
+td.color_culture_tournesol_strong { background-color: #6AB6D8;}
+
+tr.color_culture_foin,
+td.color_culture_foin			 				{ background-color: #E2C671;}
+tr.color_culture_foin:hover,
+tr.color_culture_foin_strong,
+td.color_culture_foin_strong 			{ background-color: #D6A742;}
+
+tr.color_culture_luzerne,
+td.color_culture_luzerne			 				{ background-color: #E2C671;}
+tr.color_culture_luzerne:hover,
+tr.color_culture_luzerne_strong,
+td.color_culture_luzerne_strong 			{ background-color: #D6A742;}
+/* End Couleurs des <tr> Types de cultures */
+
