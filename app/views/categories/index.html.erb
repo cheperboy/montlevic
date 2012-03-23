@@ -1,5 +1,8 @@
 <% title "Categories" %>
 
+<% c = Category.find(48) %>
+c.is_maison?: <%= c.is_maison? %>
+
 
 <%= link_to 'Nouvelle categorie', new_category_path %>
 <br /><br />

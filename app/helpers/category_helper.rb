@@ -6,7 +6,7 @@ module CategoryHelper
       out << "<li>#{root.name}</li>"
       out << "<ul>"
       root.children.each do |cat|
-        out << "<li>#{cat.name}</li>"
+        out << "<li>#{cat.name} - #{cat.is_maison?}</li>"
         out << print_tree_recurs(cat)
       end
     out << "</ul>"
@@ -18,7 +18,7 @@ module CategoryHelper
     if cat.has_children?
       out = "<ul>"
       cat.children.each do |cat|
-        out << "<li>#{cat.depth} :: #{cat.name}</li>"
+        out << "<li>#{cat.name} - #{cat.is_maison?}</li>"
         out << print_tree_recurs(cat) if cat.has_children?
       end
       out << "</ul>"

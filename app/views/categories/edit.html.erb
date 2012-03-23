@@ -4,6 +4,11 @@
 	<span class=title><%= titre %></span>
 	<span class=link><%= lien1 %></span>
 </div>
+<% @category.path.each do |cat| %>
+<%= cat.name %>>
+<% end %>
+<br><br>
+
 
 
 <% form_for(@category) do |f| %>
@@ -25,5 +30,34 @@
 </table>
 
 <%= f.submit "Enregistrer" %>
-
 <% end %>
+
+ancestors: <%= @category.ancestor_ids.to_s %>
+
+<br><br><%= @category.descendants.at_depth(3).count %> descendants.at_depth(3):
+<% @category.descendants.at_depth(3).each do |cat| %>
+<%= cat.name %>>
+<% end %>
+
+<br><br><%= @category.ancestors.count %> ancestors:
+<% @category.ancestors.each do |cat| %>
+<%= cat.name %>>
+<% end %>
+
+<br><br><%= @category.subtree.count %> Subtree:
+<% @category.subtree.each do |cat| %>
+<%= cat.name %>>
+<% end %>
+
+<br><br><%= @category.descendants.count %> Descendants:
+<% @category.descendants.each do |cat| %>
+<%= cat.name %>>
+<% end %>
+
+<br><br><%= Category.siblings_of(@category).count %> Siblings:
+<% Category.siblings_of(@category).each do |cat| %>
+<%= cat.name %>>
+<% end %>
+
+
+

@@ -14,7 +14,7 @@ class AddAncestryToCategories < ActiveRecord::Migration
     # Structure
       add_column  :categories, :ancestry, :string
       add_index   :categories, :ancestry
-      # add_column  :categories, :ancestry_depth, :integer, :default => 0
+      add_column  :categories, :ancestry_depth, :integer, :default => 0
       # change_column :categories, :factcat_id, :integer
       # change_column :categories, :upcategory_id, :integer
 
@@ -78,7 +78,9 @@ class AddAncestryToCategories < ActiveRecord::Migration
     Category.find_by_factcat_and_upcategory(40,40).each do |toto|
       toto.update_attribute(:parent_id, cat.id)
     end
-
+    
+    Category.rebuild_depth_cache!
+  
   end
 
   def self.down

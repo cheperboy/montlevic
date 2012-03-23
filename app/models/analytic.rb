@@ -156,7 +156,7 @@ class Analytic < ActiveRecord::Base
       end
     end
     if line_type.eql?(:factures)
-      Factcat.all.each do |factcat|
+      Category.get_factcats.each do |factcat|
         self.saisons[saison.id][col_type][col_id][line_type][:factcat][factcat.id] = {} 
         self.saisons[saison.id][col_type][col_id][line_type][:factcat][factcat.id][:ha] = 0
         self.saisons[saison.id][col_type][col_id][line_type][:factcat][factcat.id][:total] = 0
@@ -185,7 +185,7 @@ class Analytic < ActiveRecord::Base
       end
     end
     if line_type == :factures
-      Factcat.all.each do |factcat|
+      Category.get_factcats.each do |factcat|
         self.saisons[saison.id][line_type][:factcat][factcat.id] = {} 
         self.saisons[saison.id][line_type][:factcat][factcat.id][:ha] = 0
         self.saisons[saison.id][line_type][:factcat][factcat.id][:total] = 0

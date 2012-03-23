@@ -12,13 +12,14 @@
 ActiveRecord::Schema.define(:version => 20100330165713) do
 
   create_table "categories", :force => true do |t|
-    t.integer  "factcat_id",    :null => false
-    t.integer  "upcategory_id", :null => false
-    t.string   "name",          :null => false
-    t.string   "code",          :null => false
+    t.integer  "factcat_id",                    :null => false
+    t.integer  "upcategory_id",                 :null => false
+    t.string   "name",                          :null => false
+    t.string   "code",                          :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "ancestry"
+    t.integer  "ancestry_depth", :default => 0
   end
 
   add_index "categories", ["ancestry"], :name => "index_categories_on_ancestry"

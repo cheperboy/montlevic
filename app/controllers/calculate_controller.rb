@@ -131,7 +131,9 @@ class CalculateController < ApplicationController
       coltype = params[:column].camelize.constantize unless params[:column].nil?
       reload_cache = true if params[:reload_cache]
     end
-    @factcats =     Factcat.find(:all)
+    @factcats =     Category.get_factcats
+    @factcats.each { |f| logger.error "#{f.id} - #{f.name}"}
+      
     @saison =       Saison.find(session[:current_saison_id])
     @colonnes =     coltype.find_for_saison()
     @labours =      @saison.labours
@@ -140,7 +142,6 @@ class CalculateController < ApplicationController
     @putoproduits = @saison.putoproduits
     @factures =     @saison.factures.find(:all, :order => :id)
     @ventes =       @saison.ventes.find(:all, :order => "category_id")
-    @types =        Factcat.all
     @labour_categories =  Category.labours_cats
     @facture_categories = Category.factures_cats
     @pulve_categories =   Category.produits_cats

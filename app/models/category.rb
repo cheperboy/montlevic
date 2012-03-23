@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
-  has_ancestry
+  has_ancestry :cache_depth => true
   
   belongs_to :factcat
   belongs_to :upcategory
@@ -31,9 +31,19 @@ class Category < ActiveRecord::Base
   end
 
   #nouveau pour Tree
+
   def self.root_facture
     Category.find(:first, :conditions => { :name => "Facture"})
   end
+    def self.root_maison
+      Category.find(:first, :conditions => { :name => "Maison"})
+    end
+    def self.root_invest
+      Category.find(:first, :conditions => { :name => "Investissement"})
+    end
+    def self.root_agri
+      Category.find(:first, :conditions => { :name => "Agricole"})
+    end
   def self.root_labour
     Category.find(:first, :conditions => { :name => "Labour" })
   end
@@ -44,6 +54,24 @@ class Category < ActiveRecord::Base
     Category.find(:first, :conditions => { :name => "Vente" })
   end
 
+# OLD FACTCATS
+  def is_agri?
+    Category.root_agri.children.exists?(:id => self.id)
+  end
+  def is_maison?
+    Category.root_maison.children.exists?(:id => self.id)
+  end
+  def is_invest?
+    Category.root_invest.children.exists?(:id => self.id)
+  end
+
+# CATEGORIES RESERVED
+  def is_produit?
+    Category.root_agri.children.exists?(:id => self.id)
+  end
+
+
+
   def get_factcat_from_category
     return "root" if self.is_root?
     factcat = self.parent
@@ -51,11 +79,11 @@ class Category < ActiveRecord::Base
     factcat
   end
   
-  def get_factcats
+  def self.get_factcats
     return self.root_facture.children
   end
   
-  #nouveau pour Tree (fin)
+  #End of nouveau pour Tree (end)
 
 
 

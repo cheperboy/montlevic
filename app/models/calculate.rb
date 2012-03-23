@@ -1,3 +1,13 @@
+# OPTIMIZE cout ha pour la colonne saison
+# pour optimiser la vitesse de traitement, on peu calculer uniquement les cout totaux puis refaire une boucle 
+# (for facture in @factures) pour le calcul du cout ha de saison.
+# cf les lignes suivantes en commentaire
+# for facture in @factures
+#   @res.set_saison_line(@sid, :factures, :all, facture.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
+# end
+# facture_total = @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
+# @res.set_other_line_for_saison(@sid, :resultats, :total_factures, :ha, (facture_total/@surface_of_saison))     
+
 class Calculate < ActiveRecord::Base
 
   PRESTA_LAB_PU = false
@@ -27,7 +37,7 @@ class Calculate < ActiveRecord::Base
       @putoproduits = @saison.putoproduits
       @factures = @saison.factures
       @ventes = @saison.ventes
-      @types_facture = Factcat.all
+      @types_facture = Category.get_factcats
     else
       return nil
     end
@@ -218,46 +228,45 @@ class Calculate < ActiveRecord::Base
   end
 
   def run_factures
+    # pour chaque facture
     for facture in @factures
+      # pour chaque colonne
       for col in @cols
-        #valeur ha et total pour chaque col
+        # set les valeurs ha et total de la facture pour chaque colonne (sauf col saison)
         @res.set_line(@sid, @c, col.id, :factures, :all, facture.id, :ha, facture.get_cout_ha_col(col))
         @res.set_line(@sid, @c, col.id, :factures, :all, facture.id, :total, facture.get_cout_total_col(col))
       end
       
-      # champs :datas de la facture
+      # set les champs :datas de la facture
       datas = { :id => facture.id, :name => facture.name, :category_id => facture.category_id,
                 :category_name => facture.category.name, :user_id => facture.user_id,
                 :cout_total => facture.get_cout_total, :charges_assoc => facture.charges?, :date => facture.date, 
-                :parcelles_length => facture.parcelles.length, :surface_total => facture.sum_surfaces, :sum_charges => facture.sum_charges}
-      
+                :parcelles_length => facture.parcelles.length, :surface_total => facture.sum_surfaces, :sum_charges => facture.sum_charges}      
       @res.set_saison_line_datas(@sid, :factures, facture.id, datas)
       
-      #total de la facture
+      # set les valeurs ha et total de la facture pour la colonne saison (total de la facture)
       @res.set_saison_line(@sid, :factures, :all, facture.id, :total, facture.get_cout_total)
       @res.set_saison_line(@sid, :factures, :all, facture.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
       
-      # Total des factures
-      # TODO : agir ici pour mettre une option sur la prise en compte des factures produits non pulverises
-      # if ((facture.factcat.code.eql?('invest')) && (Setting::CHARGES_INCLUDE_INVEST.eql?(true)) || 
-      #     (facture.factcat.code.eql?('maison')) && (Setting::CHARGES_INCLUDE_MAISON.eql?(true)) || 
-      #     (facture.factcat.code.eql?('agri')))
-      # if facture.factcat_id.eql?(1)
-      if facture.factcat.code.eql?('agri')
+      # set le champ [:resultats, :total_factures] (par defaut: toutes les factures type Agricole)
+      if facture.category.is_agri?
         @res.add_other_line_for_saison(@sid, :resultats, :total_factures, :total, facture.get_cout_total)
         @res.add_other_line_for_saison(@sid, :resultats, :total_factures, :ha, facture.get_cout_ha_moyen(@surface_of_saison))     
       end
       
-      #totaux par types de factures
+      # Totaux par types de factures:
+      # set le champ [:factcat, factcat_id] si la facture appartient a cette factcat (Argi, Maison ou Invest)
       for factcat in self.types_facture
-        if (facture.factcat_id == factcat.id)
+        if (facture.category.parent.id == factcat.id)
           @res.add_saison_line(@sid, :factures, :factcat, factcat.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
           @res.add_saison_line(@sid, :factures, :factcat, factcat.id, :total, facture.get_cout_total)
         end
       end
       
       #totaux par categorie de factures
-      for cat in Category.factures_cats
+      # set le champ [:category, category_id] si la facture appartient a cette Categorie (Frais generaux, Assurance, ...)
+      # for cat in Category.factures_cats
+      for cat in Category.root_facture.descendants
         if (facture.category_id == cat.id)
           @res.add_saison_line(@sid, :factures, :category, cat.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
           @res.add_saison_line(@sid, :factures, :category, cat.id, :total, facture.get_cout_total)
@@ -265,7 +274,7 @@ class Calculate < ActiveRecord::Base
       end
       
       #synthese des quantites et stocks Produits
-      if (facture.category?('produits phyto'))
+      if (facture.category.is_produit?)
         @res.add_saison_line(@sid, :factures, :produits, :quantite, :total, facture.sum_putoproduits_associated)
         @res.add_saison_line(@sid, :factures, :produits, :stock, :total, facture.sum_putoproduits_stock)
         @res.add_saison_line(@sid, :factures, :produits, :used, :total, facture.sum_putoproduits_used)
@@ -275,15 +284,6 @@ class Calculate < ActiveRecord::Base
     # logger.error "stock #{@res.get_saison_line(@sid, :factures, :produits, :stock, :total)}"
     # logger.error "used #{@res.get_saison_line(@sid, :factures, :produits, :used, :total)}"
     if nil?
-    # OPTIMIZE cout ha pour la colonne saison
-    # pour optimiser la vitesse de traitement, on peu calculer uniquement les cout totaux puis refaire une boucle 
-    # (for facture in @factures) pour le calcul du cout ha de saison.
-    # cf les lignes suivantes en commentaire
-    # for facture in @factures
-    #   @res.set_saison_line(@sid, :factures, :all, facture.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
-    # end
-    # facture_total = @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
-    # @res.set_other_line_for_saison(@sid, :resultats, :total_factures, :ha, (facture_total/@surface_of_saison))     
     end
   end
 
@@ -431,13 +431,12 @@ class Calculate < ActiveRecord::Base
           #valeur totale de la facture pour cette colonne
           total = @res.get_line(@sid, @c, col.id, :factures, :all, facture.id, :total)
           # TODO : agir ici pour mettre une option sur la prise en compte des factures maison et invest dans le resultat
-          # if ((option_charges_include_agri && facture.factcat.agri?) || (option_charges_include_invest && facture.factcat.invest?))
-          # if facture.factcat_id.eql?(1)
-          if facture.factcat.code.eql?('agri')
+          if facture.category.is_agri?
             sum_total += total
           end
           for factcat in self.types_facture
-            if (facture.factcat_id == factcat.id)
+            # if (facture.factcat_id == factcat.id)
+            if (facture.category.parent.id == factcat.id)
               @res.add_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :total, total)
             end
           end
