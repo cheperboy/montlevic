@@ -230,6 +230,7 @@ class Calculate < ActiveRecord::Base
   def run_factures
     # pour chaque facture
     for facture in @factures
+      logger.error "facture :#{facture.id} - #{facture.name}"
       # pour chaque colonne
       for col in @cols
         # set les valeurs ha et total de la facture pour chaque colonne (sauf col saison)
@@ -257,20 +258,21 @@ class Calculate < ActiveRecord::Base
       # Totaux par types de factures:
       # set le champ [:factcat, factcat_id] si la facture appartient a cette factcat (Argi, Maison ou Invest)
       for factcat in self.types_facture
-        if (facture.category.parent.id == factcat.id)
+        if (facture.category.is_descendant_of?(factcat))
           @res.add_saison_line(@sid, :factures, :factcat, factcat.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
           @res.add_saison_line(@sid, :factures, :factcat, factcat.id, :total, facture.get_cout_total)
+          # @res.saisons[@sid].factures.factcat[factcat.id].total += facture.get_cout_total
         end
       end
-      
+
       #totaux par categorie de factures
       # set le champ [:category, category_id] si la facture appartient a cette Categorie (Frais generaux, Assurance, ...)
-      # for cat in Category.factures_cats
-      for cat in Category.root_facture.descendants
-        if (facture.category_id == cat.id)
-          @res.add_saison_line(@sid, :factures, :category, cat.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
-          @res.add_saison_line(@sid, :factures, :category, cat.id, :total, facture.get_cout_total)
-        end
+      cat = facture.category
+      while (cat.depth > 1)
+        @res.add_saison_line(@sid, :factures, :category, cat.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
+        @res.add_saison_line(@sid, :factures, :category, cat.id, :total, facture.get_cout_total)
+        # on impute la facture sur sa category parent
+        cat = cat.parent
       end
       
       #synthese des quantites et stocks Produits
@@ -279,11 +281,6 @@ class Calculate < ActiveRecord::Base
         @res.add_saison_line(@sid, :factures, :produits, :stock, :total, facture.sum_putoproduits_stock)
         @res.add_saison_line(@sid, :factures, :produits, :used, :total, facture.sum_putoproduits_used)
       end
-    end
-    # logger.error "quantite #{@res.get_saison_line(@sid, :factures, :produits, :quantite, :total)}"
-    # logger.error "stock #{@res.get_saison_line(@sid, :factures, :produits, :stock, :total)}"
-    # logger.error "used #{@res.get_saison_line(@sid, :factures, :produits, :used, :total)}"
-    if nil?
     end
   end
 
@@ -428,25 +425,37 @@ class Calculate < ActiveRecord::Base
         total = 0
         # somme de toutes les cellules facture d'une colonne 
         for facture in @factures       
-          #valeur totale de la facture pour cette colonne
+          #total = valeur de la facture imputee sur cette colonne uniquement
           total = @res.get_line(@sid, @c, col.id, :factures, :all, facture.id, :total)
-          # TODO : agir ici pour mettre une option sur la prise en compte des factures maison et invest dans le resultat
+
           if facture.category.is_agri?
             sum_total += total
           end
+          
+          # Totaux par types de factures:
+          # set le champ [:factcat, factcat_id] si la facture appartient a cette factcat (Argi, Maison ou Invest)
           for factcat in self.types_facture
-            # if (facture.factcat_id == factcat.id)
-            if (facture.category.parent.id == factcat.id)
+            if (facture.category.is_descendant_of?(factcat))
               @res.add_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :total, total)
             end
           end
-          for cat in Category.factures_cats
-            if (facture.category_id == cat.id)
-              # valeur totale de la facture pour cette categorie
-              @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :total, total)
-            end
+
+          cat = facture.category
+          @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :total, total)
+          @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :ha, total/col.surface)
+          # on impute la facture sur ses category parents
+          n=0
+          cat = facture.category
+          while (cat.depth > 1)
+            @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :total, total)
+            @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :ha, total/col.surface)
+            # on impute la facture sur sa category parent
+            cat = cat.parent
           end
         end
+
+        # for each facture.category.is_agri? :
+        # set le champ [:resultats, :total_factures] (par defaut: toutes les factures type Agricole: sum_total = somme des factures agri)
         #somme des factures par col
         @res.set_other_line(@sid, @c, col.id, :resultats, :total_factures, :total, sum_total)     
         @res.set_other_line(@sid, @c, col.id, :resultats, :total_factures, :ha, sum_total/col.surface)
@@ -461,10 +470,6 @@ class Calculate < ActiveRecord::Base
           cout_total = @res.get_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :total)
           @res.set_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :ha, cout_total/col.surface)
         end
-        for cat in Category.factures_cats
-          cout_total = @res.get_line(@sid, @c, col.id, :factures, :category, cat.id, :total)
-          @res.set_line(@sid, @c, col.id, :factures, :category, cat.id, :ha, cout_total/col.surface)
-        end        
       end
     end
     
@@ -530,6 +535,7 @@ class Calculate < ActiveRecord::Base
     total_ventes = @res.get_other_line_for_saison(@sid, :resultats, :total_ventes, :total)
     total_charges = @res.get_other_line_for_saison(@sid, :resultats, :total_charges, :total)
     @res.set_other_line_for_saison(@sid, :resultats, :benef, :total, total_ventes - total_charges)   
+    # logger.error "#{@res.saisons[@sid].to_json}"
   end
   
   def verif

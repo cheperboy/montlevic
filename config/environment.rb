@@ -22,6 +22,7 @@ Rails::Initializer.run do |config|
   #Ajouté par matthieu
   require 'extensions'
   config.gem 'ancestry'
+  # config.gem 'hashie'
   # config.gem "haml"
   
   #Date::DATE_FORMATS[:dmy] = '%d/%m/%Y'

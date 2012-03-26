@@ -125,6 +125,7 @@ class CalculateController < ApplicationController
   end  
   
   def categories
+    logger.error "cat"
     coltype = Typeculture
     reload_cache = false
     if request.post?

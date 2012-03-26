@@ -15,6 +15,13 @@ class VerifsController < ApplicationController
     end
   end
   
+  def list_categories
+    @categories = Category.find(:all)  
+    respond_to do |format|
+      format.html
+    end
+  end
+  
   def list_factoparcelles
     @factoparcelles = Factoparcelle.find(:all)  
     respond_to do |format|

@@ -53,16 +53,26 @@ class Category < ActiveRecord::Base
   def self.root_vente
     Category.find(:first, :conditions => { :name => "Vente" })
   end
+  def self.root_produit
+    Category.find(:first, :conditions => { :name => "Produit" })
+  end
+  def self.root_putoproduit
+    Category.find(:first, :conditions => { :name => "Produit" })
+  end
 
-# OLD FACTCATS
+# old factcats (agri, maison, invest)
+
+  def is_descendant_of?(cat)
+    cat.descendants.exists?(:id => self.id)
+  end
   def is_agri?
-    Category.root_agri.children.exists?(:id => self.id)
+    Category.root_agri.descendants.exists?(:id => self.id)
   end
   def is_maison?
-    Category.root_maison.children.exists?(:id => self.id)
+    Category.root_maison.descendants.exists?(:id => self.id)
   end
   def is_invest?
-    Category.root_invest.children.exists?(:id => self.id)
+    Category.root_invest.descendants.exists?(:id => self.id)
   end
 
 # CATEGORIES RESERVED

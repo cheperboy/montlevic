@@ -102,7 +102,7 @@ class Analytic < ActiveRecord::Base
   def init_line_type(saison_id, col_type, col_id, line_type)
     self.saisons[saison_id][col_type][col_id][line_type] = {}
     self.lines_type_sections[line_type].each do |section|
-      self.saisons[saison_id][col_type][col_id][line_type][section] = {} 
+      self.saisons[saison_id][col_type][col_id][line_type][section] = {}
     end
   end
   
@@ -140,9 +140,9 @@ class Analytic < ActiveRecord::Base
 
     # les deux lignes suivantes permettent d'appeler les categories de produits 
     # lorsqu'on itere les pulves (au lieu d'appeler les categories de pulve)
-    category = line_type
-    category = "produits" if line_type.eql?(:pulves)    
-    Category.send("#{category}_cats").each do |cat|
+    category = line_type.to_s.singularize
+    category = "produit" if line_type.eql?(:pulves)    
+    Category.send("root_#{category}").descendants.each do |cat|
       self.saisons[saison.id][col_type][col_id][line_type][:category][cat.id] = {} 
       self.saisons[saison.id][col_type][col_id][line_type][:category][cat.id][:ha] = 0
       self.saisons[saison.id][col_type][col_id][line_type][:category][cat.id][:total] = 0
@@ -157,7 +157,7 @@ class Analytic < ActiveRecord::Base
     end
     if line_type.eql?(:factures)
       Category.get_factcats.each do |factcat|
-        self.saisons[saison.id][col_type][col_id][line_type][:factcat][factcat.id] = {} 
+        self.saisons[saison.id][col_type][col_id][line_type][:factcat][factcat.id] = {}
         self.saisons[saison.id][col_type][col_id][line_type][:factcat][factcat.id][:ha] = 0
         self.saisons[saison.id][col_type][col_id][line_type][:factcat][factcat.id][:total] = 0
         self.saisons[saison.id][col_type][col_id][line_type][:factcat][factcat.id][:name] = factcat.name
@@ -168,9 +168,9 @@ class Analytic < ActiveRecord::Base
   #commun a chaque colonne, categories et types de chaque type de lingne 
   def init_sections_for_saison(saison, line_type)
     # self.saisons[saison_id][col_type][col_id][line_type][section] = {} 
-    category = line_type
-    category = "produits" if line_type.eql?(:pulves)    
-    Category.send("#{category}_cats").each do |cat|
+    category = line_type.to_s.singularize
+    category = "produit" if line_type.eql?(:pulves)    
+    Category.send("root_#{category}").descendants.each do |cat|
       self.saisons[saison.id][line_type][:category][cat.id] = {} 
       self.saisons[saison.id][line_type][:category][cat.id][:ha] = 0
       self.saisons[saison.id][line_type][:category][cat.id][:total] = 0
@@ -230,6 +230,7 @@ class Analytic < ActiveRecord::Base
   end
   def add_saison_line(s_id, line_type, section, line_id, cost, value)
     self.saisons[s_id][line_type][section][line_id][cost] += value
+    #           @sid, :factures, :category,cat.id, :total += facture.get_cout_total)
   end
   def get_saison_line(s_id, line_type, section, line_id, cost)
     self.saisons[s_id][line_type][section][line_id][cost]

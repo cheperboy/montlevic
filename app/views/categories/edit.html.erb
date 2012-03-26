@@ -31,11 +31,21 @@
 
 <%= f.submit "Enregistrer" %>
 <% end %>
-
+<br>
+Depth: <%= @category.depth %>
+<br>
 ancestors: <%= @category.ancestor_ids.to_s %>
+<br>
+parent: <%= @category.parent.name.to_s %>
 
-<br><br><%= @category.descendants.at_depth(3).count %> descendants.at_depth(3):
-<% @category.descendants.at_depth(3).each do |cat| %>
+<% depth = @category.depth %>
+<br><br><%= @category.descendants.at_depth(depth+1).count %> descendants.at_depth(<%= depth+1 %>):
+<% @category.descendants.at_depth(depth+1).each do |cat| %>
+<%= cat.name %>>
+<% end %>
+
+<br><br><%= @category.children.count %> Children:
+<% @category.children.each do |cat| %>
 <%= cat.name %>>
 <% end %>
 

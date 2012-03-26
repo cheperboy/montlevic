@@ -28,12 +28,20 @@ module CategoryHelper
 
   def print_tree_with_links
     out = "<table class=table_data>"
+    out << "<tr>"
+    out << "<th>Nom</th>"
+    out << "<th></th>"
+    out << "<th>Depth</th>"
+    out << "<th>Leaf?</th>"
+    out << "<th>Factures</th>"
+    out << "</tr>"
     Category.roots.each do |root|
       out << "<tr>"
       out << "<td>#{root.name}</td>"
       out << "<td>"
       out <<  link_to_edit(root.class, root.id)
       out << "</td>"
+      out << print_td_info(root)
       out << "</tr>"
       root.children.each do |cat|
         out << "<tr>"
@@ -41,6 +49,7 @@ module CategoryHelper
         out << "<td>"
         out <<  link_to_edit(cat.class, cat.id)
         out << "</td>"
+        out << print_td_info(cat)
         out << "</tr>"
         out << print_tree_with_links_recurs(cat)
       end
@@ -58,12 +67,29 @@ module CategoryHelper
         out << "<td>"
         out <<  link_to_edit(cat.class, cat.id)
         out << "</td>"
+        out << print_td_info(cat)
         out << "</tr>"
         out << print_tree_with_links_recurs(cat) if cat.has_children?
       end
     end
     return out
   end
+
+  def print_td_info(cat)
+    out = ""
+    out << "<td>#{cat.depth}</td>"
+    out << "<td>#{cat.is_childless?}</td>"
+    out << "<td>#{cat.factures.count}</td>"
+    out << "<td>"
+    if cat.factures.count>0 && cat.has_children?
+		  out << image_tag('img-nok.png')
+		else
+		  out << image_tag('img-ok.png')
+		end
+    out << "</td>"
+    return out
+  end
+    
 
   def space(num)
     out = ""
