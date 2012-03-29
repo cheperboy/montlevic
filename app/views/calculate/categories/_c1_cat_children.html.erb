@@ -1,0 +1,33 @@
+<% if cat.code.eql?('produits_phyto') %>
+	<%= render(:partial => "calculate/categories/c2_produits") %>	
+<% end %>
+
+
+<tr class="level-2_<%= factcat.code %>"> 
+	<td class=col1></td>
+	<td class=col2><b>
+		<%= indent_cat_name(cat.depth-2, "") %>
+		<%= link_to cat.name, "javascript: toggleLevel3('#{factcat.code}.#{cat.code}');" %></b>
+	</td>
+	<td class=col3></td>
+	<td class="saison"><span class=green><%= @test.res.get_saison_line(@test.sid, :factures, :category, cat.id, :ha).display(:z => true) %></span></td>
+	<td class="saison"><span class=green><%= @test.res.get_saison_line(@test.sid, :factures, :category, cat.id, :total).display(:z => true) %></span></td>
+	<% rang = 0 %>
+	<% @colonnes.each do |colonne| %>
+		<% rang += 1 %>
+		<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :category, cat.id, :ha).display(:z => true) %>
+		<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :category, cat.id, :total).display(:z => true) %>
+		<td class="color_culture_<%= colonne.code %>"><span class=green><%= cout_ha %></span></td>
+		<td class="color_culture_<%= colonne.code %>"><span class=green><%= cout_total %></span></td>
+	<% end %>
+</tr>
+<% if cat.has_children? %>
+	<% cat.children.each do |cat| %>
+	    <%= render(:partial => "calculate/categories/c1_cat_children", :locals => { :cat => cat, :factcat => factcat }) %>
+	<% end %>
+<% else %>
+	<% cat.factures.find_by_saison(:all).each do |facture| %>
+		<%= render(:partial => "calculate/categories/c1_cat_factures", :locals => { :cat => cat, :factcat => factcat, :facture => facture }) %>
+	<% end %>
+<% end %>
+	

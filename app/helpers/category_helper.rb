@@ -45,7 +45,9 @@ module CategoryHelper
       out << "</tr>"
       root.children.each do |cat|
         out << "<tr>"
-        out << "<td><span style='padding-left: #{cat.depth*15}px;'>#{cat.name}</span></td>"
+        out << "<td>"
+        out << indent_cat_name(cat.depth, cat.name)
+        out << "</td>"
         out << "<td>"
         out <<  link_to_edit(cat.class, cat.id)
         out << "</td>"
@@ -63,7 +65,10 @@ module CategoryHelper
     if cat.has_children?
       cat.children.each do |cat|
         out << "<tr>"
-        out << "<td><span style='padding-left: #{cat.depth*15}px;'>#{cat.name}</span></td>"
+        out << "<td>"
+        out << indent_cat_name(cat.depth, cat.name)
+        # <span style='padding-left: #{cat.depth*15}px;'>#{cat.name}</span></td>"
+        out << "</td>"
         out << "<td>"
         out <<  link_to_edit(cat.class, cat.id)
         out << "</td>"

@@ -1,3 +1,34 @@
+function toggleCat(cat) {
+	// var motif0 = /level:[0-9](_code:[A-Za-z0-9-]*(cat))/;
+	// var motif1 = Regexp.new('^mat');
+	var motif1 = /(mytest)/;
+	// var motif2 = /[A-Za-z0-9._-]*(agri)[A-Za-z0-9_.-]*/;
+	// var motif = /[A-Za-z0-9._-]*/;
+	var els = document.getElementsByTagName("tr");
+  var i;
+	var show = 'yes'
+	// if (this.name == 'hide') { 
+	if (this.style.display == 'block') { 
+		show = 'no';
+		this.name = 'show';
+	}
+	else {
+		show = 'yes';
+		this.name = 'hide';
+	}
+	
+	for (i = 0; i < els.length; i += 1) {
+		if ((show == 'yes') && (motif1.test(els[i].className))) {
+			els[i].style.display = 'block'; 
+		} 
+		if ((show == 'no') &&  (motif1.test(els[i].className))) {
+			els[i].style.display = 'none';
+		}
+	}
+}
+
+
+
 function toggleLevel_by_name(name) {
     var els = document.getElementsByClassName(name);
     var i;

@@ -1,0 +1,20 @@
+<% produit.putoproduits.each do |putoproduit| %>
+	<% if putoproduit.produit.category_id.eql?(cat.id) %>
+		<% datas = @test.res.get_saison_line_datas(@test.sid, :putoproduits, putoproduit.id) %>
+		<tr name=visible class="level-4_<%= factcat.code %>.produits_used.<%= cat.code %>">
+			<td class=col1></td>
+			<td class=col2></td>
+			<td class=col3><%= link_popup_putoproduit(datas) %></td>
+			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :putoproduits, :all, putoproduit.id, :ha).display(:z => true) %></td>
+			<td class="saison"><%= @test.res.get_saison_line(@test.sid, :putoproduits, :all, putoproduit.id, :total).display(:z => true) %></td>
+			<% rang = 0 %>
+			<% @colonnes.each do |colonne| %>
+				<% rang += 1 %>
+				<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :all, putoproduit.id, :ha).display(:z => true) %>
+				<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :all, putoproduit.id, :total).display(:z => true) %>
+				<td class="color_culture_<%= colonne.code %>"><%=h cout_ha %></td>
+				<td class="color_culture_<%= colonne.code %>"><%=h cout_total %></td>
+			<% end %>
+		</tr>
+	<% end %>
+<% end %>

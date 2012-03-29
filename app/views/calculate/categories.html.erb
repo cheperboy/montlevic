@@ -6,7 +6,6 @@
 <%= render :partial => 'calculate/categories/search' %>
 </div>
 
-
 <table class=table_print>
 <%= render(:partial => "calculate/categories/p1_head") %>
 <tr>
@@ -32,11 +31,7 @@
 		<td></td>
 	<% end %>
 </tr>
-
-<%= render(:partial => "calculate/categories/factures") %>
-<%= render(:partial => "calculate/categories/ventes") %>
-<%= render(:partial => "calculate/categories/resultat") %>
-
-
-
+	<%= render(:partial => "calculate/categories/c1_factures") %>
+	<%= render(:partial => "calculate/categories/ventes") %>
+	<%= render(:partial => "calculate/categories/resultat") %>
 </table>

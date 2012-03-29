@@ -230,7 +230,6 @@ class Calculate < ActiveRecord::Base
   def run_factures
     # pour chaque facture
     for facture in @factures
-      logger.error "facture :#{facture.id} - #{facture.name}"
       # pour chaque colonne
       for col in @cols
         # set les valeurs ha et total de la facture pour chaque colonne (sauf col saison)

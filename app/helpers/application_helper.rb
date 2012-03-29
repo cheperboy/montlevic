@@ -851,7 +851,13 @@ module ApplicationHelper
     out+= ""
   end
  
-  
+ 
+  # ajoute un espace proportionnel au level devant le nom de la categorie
+  def indent_cat_name(depth, name)
+    out = "<span style='padding-left: #{depth*15}px;'>#{name}</span>"
+    return out
+  end
+   
 # ----- Nested Forms -----
   
   def remove_link_unless_new_record(fields)

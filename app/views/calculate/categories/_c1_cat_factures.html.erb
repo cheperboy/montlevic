@@ -1,0 +1,19 @@
+	<% @facture = facture %>		
+	<% @factcat = factcat %>		
+	<% @cat = cat %>
+	<% datas = @test.res.get_saison_line_datas(@test.sid, :factures, facture.id) %>
+	<tr name=visible class="level-3_<%= factcat.code %>.<%= cat.code %>">
+		<td class=col1></td>
+		<td class=col2></td>
+		<td class=col3><%= link_popup_facture(datas[:id]) %></td>
+		<td class="saison"><%= @test.res.get_saison_line(@test.sid, :factures, :all, facture.id, :ha).display(:z => true) %></td>
+		<td class="saison"><%= @test.res.get_saison_line(@test.sid, :factures, :all, facture.id, :total).display(:z => true) %></td>
+		<% rang = 0 %>
+		<% @colonnes.each do |colonne| %>
+			<% rang += 1 %>
+			<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :all, facture.id, :ha) %>
+			<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :all, facture.id, :total) %>
+			<td class="color_culture_<%= colonne.code %>"><%= cout_ha.display(:z => true) %></td>
+			<td class="color_culture_<%= colonne.code %>"><%= cout_total.display(:z => true) %></td>
+		<% end %>
+	</tr>

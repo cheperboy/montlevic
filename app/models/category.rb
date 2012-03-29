@@ -1,6 +1,6 @@
 class Category < ActiveRecord::Base
   has_ancestry :cache_depth => true
-  
+
   belongs_to :factcat
   belongs_to :upcategory
   has_many :charges
@@ -8,6 +8,12 @@ class Category < ActiveRecord::Base
   has_many :ventes
   has_many :produits
   has_many :pulves
+
+  validates_uniqueness_of :code
+  
+  validates_format_of :code,
+                      :with	=> /^\w+$/,
+                      :message => "ne doit pas contenir d'espaces"  
 
   CategoryOption = Struct.new(:id, :name)
 
