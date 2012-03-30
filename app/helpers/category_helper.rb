@@ -1,5 +1,13 @@
 module CategoryHelper
 
+  def print_way(cat)
+    out = ""
+    while (cat.depth > 1)
+      out += "#{cat.name}."
+      cat = cat.parent
+    end  
+  end
+
   def print_tree
     out = "<ul>"
     Category.roots.each do |root|

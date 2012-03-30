@@ -2,12 +2,14 @@
 	<%= render(:partial => "calculate/categories/c2_produits") %>	
 <% end %>
 
-
-<tr class="level-2_<%= factcat.code %>"> 
+print_way_for_table(cat)
+<!-- <tr class="level-2_<%#= factcat.code %>.<%#= cat.code %>">  -->
+<tr class="level-2_<%= factcat.code %>.<% print_way(cat) %>"> 
 	<td class=col1></td>
 	<td class=col2><b>
 		<%= indent_cat_name(cat.depth-2, "") %>
-		<%= link_to cat.name, "javascript: toggleLevel3('#{factcat.code}.#{cat.code}');" %></b>
+		<%#= link_to cat.name, "javascript: toggleLevel3('#{factcat.code}.#{cat.code}');" %></b>
+		<%= link_to cat.name, "javascript: toggleCat('#{factcat.code}.#{cat.code}');" %> +</b>
 	</td>
 	<td class=col3></td>
 	<td class="saison"><span class=green><%= @test.res.get_saison_line(@test.sid, :factures, :category, cat.id, :ha).display(:z => true) %></span></td>
