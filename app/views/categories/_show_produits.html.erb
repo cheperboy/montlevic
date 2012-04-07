@@ -1,0 +1,14 @@
+<table class=table_data>
+	<tr>
+		<th>Id</th>
+		<th>Nom</th>
+		<th></th>
+	</tr>
+<%- produits.each do |produit| -%>
+	<tr>
+		<td><%=h produit.id.to_s %></td>
+		<td><%= link_to produit.name, produit_path(produit) %></td>
+		<td><%= popup_show(image_tag('img-voir.png'), pop_content(produit), "popup-show-content") %></td>
+	</tr>
+<%- end -%>
+</table>

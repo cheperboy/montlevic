@@ -1,0 +1,16 @@
+<table class=table_data>
+	<tr>
+		<th>Id</th>
+		<th>Date</th>
+		<th>Nom</th>
+		<th></th>
+	</tr>
+<%- labours.each do |labour| -%>
+	<tr>
+		<td><%=h labour.id.to_s %></td>
+		<td><%=h labour.date.to_s %></td>
+		<td><%= link_to labour.name, labour_path(labour) %></td>
+		<td><%= popup_show(image_tag('img-voir.png'), pop_content(labour), "popup-show-content") %></td>
+	</tr>
+<%- end -%>
+</table>

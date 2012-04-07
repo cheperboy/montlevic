@@ -8,6 +8,7 @@ class Category < ActiveRecord::Base
   has_many :ventes
   has_many :produits
   has_many :pulves
+  has_many :labours
 
   validates_uniqueness_of :code
   
@@ -66,8 +67,57 @@ class Category < ActiveRecord::Base
     Category.find(:first, :conditions => { :name => "Produit" })
   end
 
+  def move_elements_to_new_leaf
+    out = ""
+    parent = self.parent
+    unless parent.factures.size.eql?(0)
+      out << "<b>Factures</b><br>"
+      parent.factures.each do |facture|
+        facture.update_attribute(:category_id, @category.id)
+        out << "- : #{facture.name}<br>"
+      end
+    end
+    unless parent.ventes.size.eql?(0)
+      out << "<b>Ventes</b><br>"
+      parent.ventes.each do |vente|
+        vente.update_attribute(:category_id, @category.id)
+        out << "- : #{vente.name}<br>"
+      end
+    end
+    unless parent.pulves.size.eql?(0)
+      out << "<b>Pulves</b><br>"
+      parent.pulves.each do |pulve|
+        pulve.update_attribute(:category_id, @category.id)
+        out << "- : #{pulve.name}<br>"
+      end
+    end
+    unless parent.labours.size.eql?(0)
+      out << "<b>Labours</b><br>"
+      parent.labours.each do |labours|
+        labour.update_attribute(:category_id, @category.id)
+        out << "- : #{labour.name}<br>"
+      end
+    end
+    unless parent.produits.size.eql?(0)
+      out << "<b>Produits</b><br>"
+      parent.produits.each do |produit|
+        produit.update_attribute(:category_id, @category.id)
+        out << "- : #{produit.name}<br>"
+      end
+    end
+    return out
+  end
+
 # old factcats (agri, maison, invest)
 
+  def has_elements?
+    return !( self.factures.size.eql?(0) && 
+              self.ventes.size.eql?(0) && 
+              self.produits.size.eql?(0) &&
+              self.labours.size.eql?(0) &&
+              self.pulves.size.eql?(0))
+  end
+  
   def is_descendant_of?(cat)
     cat.descendants.exists?(:id => self.id)
   end
@@ -224,6 +274,15 @@ class Category < ActiveRecord::Base
     Factcat.find(category.factcat_id)
   end
     
+  def valid_is_not_leaf_has_elements?
+	  out = ""
+  	if ((self.has_children?) && (self.factures.count>0 || self.ventes.count>0 || self.pulves.count>0 || self.labours.count>0 || self.produits.count>0))
+  	  return false
+  	else
+  	  return true
+  	end
+  end
+  
 end
 
 

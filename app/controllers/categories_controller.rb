@@ -50,13 +50,21 @@ class CategoriesController < ApplicationController
   # POST /categories
   # POST /categories.xml
   def create
+    #TODO supprimer ces deux lignes obsoletes
     params[:category][:factcat_id] = 11
     params[:category][:upcategory_id] = 11
+    
+    parent = Category.find(params[:category][:parent_id])
+    move_elements_to_new_leaf = true if parent.has_elements?
     @category = Category.new(params[:category])
-
+    
     respond_to do |format|
       if @category.save
-        flash[:notice] = 'Category was successfully created.'
+        if move_elements_to_new_leaf
+          out = "les elements suivants sont deplaces de : #{parent.name} a #{@category.name}<br>" 
+          out << @category.move_elements_to_new_leaf
+        end
+        flash[:notice] = "Category crée. <br> #{out}"
         format.html { redirect_to(categories_url) }
         format.xml  { render :xml => @category, :status => :created, :location => @category }
       else

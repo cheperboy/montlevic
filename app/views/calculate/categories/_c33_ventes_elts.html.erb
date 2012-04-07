@@ -1,0 +1,16 @@
+<% datas = @test.res.get_saison_line_datas(@test.sid, :ventes, vente.id) %>
+<tr class="level-3_vente.<%= cat.code %>">
+	<td class=col1></td>
+	<td class=col2></td>
+	<td class=col3><%= link_popup_vente(datas[:id]) %></td>
+	<td class="saison"><%= @test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :ha).display(:z => true) %></td>
+	<td class="saison"><%= @test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :total).display(:z => true) %></td>		
+	<% rang = 0 %>
+	<% @colonnes.each do |colonne| %>
+		<% rang += 1 %>
+		<% cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :ha).display(:z => true) %>
+		<% cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :total).display(:z => true) %>
+		<td class="color_culture_<%= colonne.code %>"><%= cout_ha %></td>
+		<td class="color_culture_<%= colonne.code %>"><%= cout_total %></td>
+	<% end %>
+</tr>

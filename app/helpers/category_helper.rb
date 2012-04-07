@@ -1,11 +1,13 @@
 module CategoryHelper
 
-  def print_way(cat)
+  def print_way(cat)    
     out = ""
-    while (cat.depth > 1)
-      out += "#{cat.name}."
-      cat = cat.parent
-    end  
+    if (cat.ancestors.include?(Category.root_facture))
+      cat.path(:from_depth => -(cat.depth-2), :to_depth => cat.depth).each{|c| out += ".#{c.code}"}
+    else # Produit, Labour, Vente ou Pulve
+      cat.path(:from_depth => -(cat.depth-1), :to_depth => cat.depth).each{|c| out += ".#{c.code}"}
+    end
+    return out
   end
 
   def print_tree
@@ -39,71 +41,59 @@ module CategoryHelper
     out << "<tr>"
     out << "<th>Nom</th>"
     out << "<th></th>"
-    out << "<th>Depth</th>"
-    out << "<th>Leaf?</th>"
-    out << "<th>Factures</th>"
+    out << "<th></th>"
+    if admin?
+      out << "<th>Depth</th>"
+      out << "<th>Leaf?</th>"
+      out << "<th>Factures</th>"
+      out << "<th>Ancestry</th>"
+    end
     out << "</tr>"
     Category.roots.each do |root|
-      out << "<tr>"
-      out << "<td>#{root.name}</td>"
-      out << "<td>"
-      out <<  link_to_edit(root.class, root.id)
-      out << "</td>"
-      out << print_td_info(root)
-      out << "</tr>"
-      root.children.each do |cat|
-        out << "<tr>"
-        out << "<td>"
-        out << indent_cat_name(cat.depth, cat.name)
-        out << "</td>"
-        out << "<td>"
-        out <<  link_to_edit(cat.class, cat.id)
-        out << "</td>"
-        out << print_td_info(cat)
-        out << "</tr>"
-        out << print_tree_with_links_recurs(cat)
-      end
+      out << print_tree_with_links_tr(root)
+      out << print_tree_with_links_recurs(root)
     end
     out << "</table>"
     return out.to_s
   end
-
   def print_tree_with_links_recurs(cat)
     out = ""
     if cat.has_children?
       cat.children.each do |cat|
-        out << "<tr>"
-        out << "<td>"
-        out << indent_cat_name(cat.depth, cat.name)
-        # <span style='padding-left: #{cat.depth*15}px;'>#{cat.name}</span></td>"
-        out << "</td>"
-        out << "<td>"
-        out <<  link_to_edit(cat.class, cat.id)
-        out << "</td>"
-        out << print_td_info(cat)
-        out << "</tr>"
+        out << print_tree_with_links_tr(cat)
         out << print_tree_with_links_recurs(cat) if cat.has_children?
       end
     end
     return out
   end
-
-  def print_td_info(cat)
+  def print_tree_with_links_tr(cat)
     out = ""
+    out << "<tr>"
+    out << "<td>" << indent_cat_name(cat.depth, cat.name) << "</td>"
+    # out << print_td_info(cat)
+    out << "<td>" <<  link_to_show(cat.class, cat.id) << "</td>"
+    out << "<td>" <<  link_to_edit(cat.class, cat.id) << "</td>"
+    out << "<td>" <<  link_to_delete(cat.class, cat.id) << "</td>"
     out << "<td>#{cat.depth}</td>"
     out << "<td>#{cat.is_childless?}</td>"
     out << "<td>#{cat.factures.count}</td>"
+    out << "<td>#{print_way(cat)}</td>"
     out << "<td>"
+    if cat.valid_is_not_leaf_has_elements?
+		  out << image_tag('img-ok.png')
+		else
+		  out << image_tag('img-nok.png')
+		end
     if cat.factures.count>0 && cat.has_children?
 		  out << image_tag('img-nok.png')
 		else
 		  out << image_tag('img-ok.png')
 		end
     out << "</td>"
+    out << "</tr>"
     return out
   end
-    
-
+  
   def space(num)
     out = ""
     num.times do 
@@ -151,7 +141,7 @@ module CategoryHelper
     end
     out
   end
-  
+
   def form_tr_select_cat_from_root(form, obj, root, name, col, id, display_name, selected_obj, *args)
     options = args.extract_options!
     out = ''
@@ -163,15 +153,26 @@ module CategoryHelper
     out += '</td></tr>'
     return out
   end
-  def select_cat_from_root(obj, col, root, selected_obj, options = nil)
+  def select_cat_from_root(obj, col, roots, selected_obj, options = nil)
     select_name = obj + '[' + col.to_s + ']'
     out = "<select name='#{select_name}'>"
-    Category.roots.each do |root|
+    # si une seule categorie est passe en parametre
+    if roots.class.eql?(Category)
+      root = roots
       selected = ''
       selected = 'selected="selected"' if (selected_obj && selected_obj.id && (root.id == selected_obj.id))
       out << "<option value=#{root.id} #{selected}>"
       out << "#{root.name.camelize}</option>"
       out << select_cat_from_root_recurs(root, selected_obj)
+      # si plusieurs categories sont passees en parametre
+    else
+      roots.each do |root|
+        selected = ''
+        selected = 'selected="selected"' if (selected_obj && selected_obj.id && (root.id == selected_obj.id))
+        out << "<option value=#{root.id} #{selected}>"
+        out << "#{root.name.camelize}</option>"
+        out << select_cat_from_root_recurs(root, selected_obj)
+      end
     end
     out << "</select>"
   end

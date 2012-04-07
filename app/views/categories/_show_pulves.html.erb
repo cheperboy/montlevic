@@ -1,0 +1,15 @@
+<table class=table_data>
+	<tr>
+		<th>Id</th>
+		<th>Date</th>
+		<th></th>
+	</tr>
+<%- pulves.each do |pulve| -%>
+	<tr>
+		<td><%=h pulve.id.to_s %></td>
+		<td><%=h pulve.date.to_s %></td>
+		<td><%= link_to pulve.name, pulve_path(pulve) %></td>
+		<td><%= popup_show(image_tag('img-voir.png'), pop_content(pulve), "popup-show-content") %></td>
+	</tr>
+<%- end -%>
+</table>

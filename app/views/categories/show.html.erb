@@ -1,13 +1,76 @@
+<% titre = "Modif Categorie #{@category.name}" %>
+<% lien1 = link_to "Annuler", categories_url %>
+<% lien2 = link_to 'Modifier', edit_category_path(@category) %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+	<span class=link><%= lien2 %></span>
+</div>
+<% @category.path.each do |cat| %>
+<%= cat.name %>>
+<% end %>
+<br><br>
+
 <p>
   <b>Nom:</b>
   <%=h @category.name %>
 </p>
-
 <p>
-  <b>Type:</b>
-  <%=h @category.upcategory.name %>
+  <b>Code:</b>
+  <%=h @category.code %>
 </p>
+<% unless @category.is_root? %>
+	<p>
+	  <b>Parent:</b>
+	  <%=h @category.try(:parent).try(:name) %>
+	</p>
+<% end %>				
 
 
-<%= link_to 'Modifier', edit_category_path(@category) %> |
-<%= link_to 'Retour', categories_path %>
+<%= render(:partial => "show_elements") %>
+
+
+<br>
+has_elements?: <%= @category.has_elements?.to_s %>
+<br>
+test: <% Category.descendants_of(@category).each { |c| c.name } %>
+<br>
+Depth: <%= @category.depth %>
+<br>
+ancestors: <%= @category.try(:ancestor_ids).to_s %>
+<br>
+parent:   <%=h @category.try(:parent).try(:name).to_s %>
+
+<% depth = @category.depth %>
+<br><br><%= @category.descendants.at_depth(depth+1).count %> descendants.at_depth(<%= depth+1 %>):
+<% @category.descendants.at_depth(depth+1).each do |cat| %>
+<%= cat.name %>>
+<% end %>
+
+<br><br><%= @category.children.count %> Children:
+<% @category.children.each do |cat| %>
+<%= cat.name %>>
+<% end %>
+
+<br><br><%= @category.ancestors.count %> ancestors:
+<% @category.ancestors.each do |cat| %>
+<%= cat.name %>>
+<% end %>
+
+<br><br><%= @category.subtree.count %> Subtree:
+<% @category.subtree.each do |cat| %>
+<%= cat.name %>>
+<% end %>
+
+<br><br><%= @category.descendants.count %> Descendants:
+<% @category.descendants.each do |cat| %>
+<%= cat.name %>>
+<% end %>
+
+<br><br><%= Category.siblings_of(@category).count %> Siblings:
+<% Category.siblings_of(@category).each do |cat| %>
+<%= cat.name %>>
+<% end %>
+
+
+

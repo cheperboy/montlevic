@@ -18,12 +18,11 @@
 	<tr class=form_layout_content>
 		<td colspan=2 class=form_layout_content>
 			<table>
-				<%#= tr_text('Type', @category.get_factcat_from_category.try(name)) %>
-				<%#= tr_text('categorie superieure', @category.parent.name) %>
 				<%= form_tr_text(f, 'Nom', :name) %>
 				<%= form_tr_text(f, 'Code', :code) %>
-				<%= form_tr_select_cat_from_root(f, @category.class.to_s.downcase, Category.roots, 'Catégorie superieur', :parent_id, :id, :name, @category, options = {:root => true}) %>
-				
+				<% unless @category.is_root? %>
+					<%= form_tr_select_cat_from_root(f, 'category', @category.root, 'Catégorie superieur', :parent_id, :id, :name, @category.parent, options = {:root => true}) %>
+				<% end %>				
 			</table>
 		</td class=form_layout_content>
 	</tr>
@@ -31,12 +30,19 @@
 
 <%= f.submit "Enregistrer" %>
 <% end %>
+
+
+<%= render(:partial => "show_elements") %>
+
+
+<br>
+test: <% Category.descendants_of(@category).each { |c| c.name } %>
 <br>
 Depth: <%= @category.depth %>
 <br>
 ancestors: <%= @category.ancestor_ids.to_s %>
 <br>
-parent: <%= @category.parent.name.to_s %>
+parent: <%= @category.try(:parent).try(:name).to_s %>
 
 <% depth = @category.depth %>
 <br><br><%= @category.descendants.at_depth(depth+1).count %> descendants.at_depth(<%= depth+1 %>):

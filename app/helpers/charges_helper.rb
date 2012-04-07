@@ -93,12 +93,12 @@ module ChargesHelper
 			
     elsif elt.kind_of?(Vente)
       out += content_tag :span, elt.name.to_s, :class => "pop-title"
-      out += "<br><span class=grey>Cout : </span> #{elt.cout.to_s} #{euro}"
+      out += "<br><span class=grey>Prix : </span> #{elt.prix.to_s} #{euro}"
       out += "<br><span class=grey>Ref compta : </span> #{elt.ref.to_s}"
       out += "<br><span class=grey>Ref client : </span> #{elt.ref_client.to_s}"
     elsif elt.kind_of?(Produit)
       out += content_tag :span, elt.name.to_s, :class => "pop-title"
-      out += "<br><span class=grey>Cout : </span> #{elt.date.to_s} #{euro}"
+      out += "<br><span class=grey>Nom : </span> #{elt.name.to_s} #{euro}"
     else
       out+= "NOTHING"
     end

@@ -2,7 +2,7 @@
 	<% @factcat = factcat %>		
 	<% @cat = cat %>
 	<% datas = @test.res.get_saison_line_datas(@test.sid, :factures, facture.id) %>
-	<tr name=visible class="level-3_<%= factcat.code %>.<%= cat.code %>.<%= facture.id %>">
+	<tr name="show" class="level-3_<%= factcat.code %><%= print_way(cat) %>.<%= facture.id %>">
 		<td class=col1></td>
 		<td class=col2></td>
 		<td class=col3><%= link_popup_facture(datas[:id]) %></td>

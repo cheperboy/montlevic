@@ -1,0 +1,20 @@
+<table class=table_data>
+	<tr>
+		<th>Id</th>
+		<th>Date</th>
+		<th>Ref</th>
+		<th>Nom</th>
+		<th>Cout</th>
+		<th></th>
+	</tr>
+<%- factures.each do |facture| -%>
+	<tr>
+		<td><%=h facture.id.to_s %></td>
+		<td><%=h facture.date.to_s %></td>
+		<td><%=h facture.ref %></td>
+		<td><%= link_to facture.name, facture_path(facture) %></td>
+		<td class=right><%=h facture.cout.display %> <%= euro %></td>
+		<td><%= popup_show(image_tag('img-voir.png'), pop_content(facture), "popup-show-content") %></td>
+	</tr>
+<%- end -%>
+</table>

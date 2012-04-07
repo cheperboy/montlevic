@@ -1,0 +1,20 @@
+<table class=table_data>
+	<tr>
+		<th>Id</th>
+		<th>Date</th>
+		<th>Ref</th>
+		<th>Nom</th>
+		<th>Prix</th>
+		<th></th>
+	</tr>
+<%- ventes.each do |vente| -%>
+	<tr>
+		<td><%=h vente.id.to_s %></td>
+		<td><%=h vente.date.to_s %></td>
+		<td><%=h vente.ref %></td>
+		<td><%= link_to vente.name, vente_path(vente) %></td>
+		<td class=right><%=h vente.prix.display %> <%= euro %></td>
+		<td><%= popup_show(image_tag('img-voir.png'), pop_content(vente), "popup-show-content") %></td>
+	</tr>
+<%- end -%>
+</table>

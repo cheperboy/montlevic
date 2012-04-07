@@ -1,0 +1,49 @@
+
+<%- Saison.find(:all).each do |saison| -%>
+<h3><%= saison.name %></h3>
+	<% if @category.root.eql?(Category.root_facture) %>	
+		<%- factures = @category.factures.find(:all, :conditions => {:saison_id => saison.id}) -%>
+		<%- unless factures.size.eql?(0) -%>
+			<h3>Factures</h3>
+			<%= render(:partial => "show_factures", :locals => { :factures => factures }) %>
+		<%- else -%>
+			<p>pas de Factures</p>
+		<%- end -%>
+	<%- end -%>
+	<% if @category.root.eql?(Category.root_vente) %>	
+		<%- ventes = @category.ventes.find(:all, :conditions => {:saison_id => saison.id}) -%>
+		<%- unless ventes.size.eql?(0) -%>
+			<h3>Ventes</h3>
+			<%= render(:partial => "show_ventes", :locals => { :ventes => ventes }) %>
+		<%- else -%>
+			<p>pas de Ventes</p>
+		<%- end -%>
+	<%- end -%>
+	<% if @category.root.eql?(Category.root_pulve) %>	
+		<%- pulves = @category.pulves.find(:all, :conditions => {:saison_id => saison.id}) -%>
+		<%- unless pulves.size.eql?(0) -%>
+			<h3>Pulves</h3>
+			<%= render(:partial => "show_pulves", :locals => { :pulves => pulves }) %>
+		<%- else -%>
+			<p>pas de Pulves</p>
+		<%- end -%>
+	<%- end -%>
+	<% if @category.root.eql?(Category.root_labour) %>	
+		<%- labours = @category.labours.find(:all, :conditions => {:saison_id => saison.id}) -%>
+		<%- unless labours.size.eql?(0) -%>
+			<h3>Labours</h3>
+			<%= render(:partial => "show_labours", :locals => { :labours => labours }) %>
+		<%- else -%>
+			<p>pas de Labours</p>
+		<%- end -%>
+	<%- end -%>
+	<% if @category.root.eql?(Category.root_produit) %>	
+		<%- produits = @category.produits.find(:all, :conditions => {:saison_id => saison.id}) -%>
+		<%- unless produits.size.eql?(0) -%>
+			<h3>Produits</h3>
+			<%= render(:partial => "show_produits", :locals => { :produits => produits }) %>
+		<%- else -%>
+			<p>pas de produits</p>
+		<%- end -%>
+	<%- end -%>
+<%- end -%>

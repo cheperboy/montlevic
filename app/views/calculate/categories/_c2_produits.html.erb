@@ -1,8 +1,9 @@
-<tr class="level-2_<%= @factcat.code %>"> 
+<tr name='visible' class="level-2_<%= @factcat.code %>.produits_used"> 
 	<td class=col1></td>
 	<td class=col2><b>
 		<%= indent_cat_name(0, "") %>
-		<%= link_to 'Produits Utilisés', "javascript: toggleLevel3('#{@factcat.code}.produits_used');" %></b>
+		<%#= link_to 'Produits Utilisés', "javascript: toggleLevel3('#{@factcat.code}.produits_used');" %></b>
+		<%= link_to 'Produits Utilisés', "javascript: toggleCat('#{@factcat.code}.produits_used');" %></b>
 	</td>
 	<td class=col3></td>
 	<td class="saison"><span class=green><%= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_putoproduits, :ha).display(:z => true) %></span></td>
