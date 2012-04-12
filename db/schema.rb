@@ -308,6 +308,9 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.text     "info"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "calcul_auto"
+    t.string   "unit"
+    t.integer  "poids_botte"
   end
 
   create_table "ventoparcelles", :force => true do |t|

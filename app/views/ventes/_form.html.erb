@@ -44,12 +44,10 @@
 				
 				<%= form_tr_text(f, 'Quantite', 
 									:quantite,
-									:unit => "tonnes ou bottes",
+									:unit => select_vente_units(f, :unit),
 									:quantite => (@vente.quantite || 0),
 									:size => 4) %>
-				
-				<%= form_tr_simple_select(f, 'Unite', :unit, Application::VENTE_UNITS) %>
-				
+													
 				<%= form_tr_text(f, 'Prix Unitaire', 
 									:prix_unitaire,
 									:unit => "#{euro}/t ou #{euro}/botte",
@@ -65,8 +63,6 @@
 									:user_id, 
 									User.find(:all, :order => :name), 
 									:id, :name) %>
-				<%= form_tr_text(f, 'Ref client', :ref_client) %>
-				<%= form_tr_text(f, 'Ref perso', :ref) %>
 				
 				<tr><td>Calcul Prix auto = </td><td>(quantite x prix unitaire) + ajustement</td></tr>
 			</table>
@@ -79,6 +75,8 @@
 				<%= form_tr_date(f, 'Date', :date) %>
 				<%= form_tr_check(f, 'Star', :star) %>
 				<%= form_tr_check(f, 'ADU', :adu) %>
+				<%= form_tr_text(f, 'Ref client', :ref_client) %>
+				<%= form_tr_text(f, 'Ref perso', :ref) %>
 			</table>
 		</td>
 	</tr>

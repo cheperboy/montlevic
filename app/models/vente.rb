@@ -14,29 +14,24 @@ class Vente < Charge
   validates_presence_of :user, :message => "Prestataire doit etre indique"
   validates_presence_of :prix, 
                         :message => "Prix doit etre indique",
-                        :if => Proc.new { |u| (u.prix_unitaire.blank? && u.quantite.blank? && u.calcul_auto.eql?(0)) }
+                        :if => Proc.new { |u| (u.calcul_auto.eql?(0)) }
   validates_numericality_of :prix,
                             :message => "Prix doit etre un nombre",
                             :if => Proc.new { |u| (!u.prix.blank?) }
   
   validates_presence_of :quantite,
                         :message => "quantite doit etre indique",
-                        :if => Proc.new { |u| (!u.calcul_auto.eql?(0)) }
+                        :if => Proc.new { |u| (u.calcul_auto.eql?(1)) }
   validates_numericality_of :quantite,
                         :message => "quantite doit etre un nombre",
                         :if => Proc.new { |u| (!u.quantite.blank?) }
 
   validates_presence_of :prix_unitaire,
                         :message => "prix_unitaire doit etre indique",
-                        :if => Proc.new { |u| (!u.calcul_auto.eql?(0)) }
-  validates_presence_of :prix_unitaire,
+                        :if => Proc.new { |u| (u.calcul_auto.eql?(1)) }
+  validates_numericality_of :prix_unitaire,
                         :message => "prix_unitaire doit etre un nombre",
                         :if => Proc.new { |u| (!u.prix_unitaire.blank?) }
-
-  validates_presence_of :prix,
-                        :message => "cocher la case calcul auto ou indiquer un prix",
-                        :if => Proc.new { |u| (u.prix.blank? && u.calcul_auto.eql?(0)) }
-
 
   validates_associated :ventoparcelles
 
@@ -82,5 +77,13 @@ class Vente < Charge
   #   end
   #   return cout_ha_parcelle
   # end
+
+# ----- Affichage ------
+  def get_prix_unitaire_unit
+    return "" if self.unit.blank?
+    return "€/" + self.unit
+  end
+  
+
 
 end

@@ -2,6 +2,45 @@ class PulvesController < ApplicationController
   before_filter :edit_access,
                 :only => [:update, :destroy]
 
+  REF = 0
+  DESC = 1
+  PRIX = 2
+
+  def import
+    # lecture
+    # chaque elements est valide?
+    # transaction et import
+    # affichage du log et des erreurs
+
+    book = Spreadsheet.open Rails.root.join('public', 'import', 'test', 'import.xls')
+    sheet = book.worksheet 'pulves'
+    row_num = 0
+    rows = []
+    pulves = []
+    sheet.each do |row|
+      unless (row[XLS_NAME].nil? || row[0].eql?('#'))
+        row_num += 1
+        rows[row_num] = false
+        pulve = Pulve.new( 
+        # :num => row_num, 
+        :name => row[XLS_NAME], 
+        :user => row[XLS_USER], 
+        :cout_ha_passage => row[COUT_HA_PASSAGE]) 
+        pulves << pulve
+        if pulve.valid?
+          rows[row_num] = true
+          
+      end
+    end
+    # Cbm.all.each do |cbm|
+    #   cbm.name = cbm.desc.downcase
+    #   cbm.save!
+    # end
+    respond_to do |format|
+      format.html { redirect_to(cbms_url) }
+    end
+  end
+
   # GET /pulves
   # GET /pulves.xml
   def index

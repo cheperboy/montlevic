@@ -1,5 +1,10 @@
 class Pulve < Charge
 
+  # ----- Constantes -----
+  XLS_NAME = 1
+  XLS_USER = 2
+  XLS_COUT_HA_PASSAGE = 3
+
   def after_save 
     self.putoproduits.each { |putoproduit| putoproduit.update_dosage_after_save }
     self.produits.each { |produit| produit.update_protofacture_stock }

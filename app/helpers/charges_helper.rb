@@ -51,6 +51,10 @@ module ChargesHelper
     form.select(col, Application::PRODUIT_QUANTITE_UNITS)
   end
 
+  def select_vente_units(form, col)
+    form.select(col, Application::VENTE_UNITS)
+  end
+
   #kklass=popup-show-content ou popup-show-content-large
   def popup_show(link, content, kklass)
     if (link.nil? || content.nil?)

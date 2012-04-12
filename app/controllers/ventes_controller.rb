@@ -70,13 +70,14 @@ class VentesController < ApplicationController
     @vente = Vente.new(params[:vente])
     @vente.saison_id = current_saison_id
     # si calcul_auto? alors on set le prix
-    if params[:vente][:calcul_auto].to_i.eql?(1)
-      @vente.set_prix 
-    end
+    # if params[:vente][:calcul_auto].to_i.eql?(1)
+    #   @vente.set_prix 
+    # end
     @vente.update_typecultures(params[:typecultures])
     @vente.uniq_parcelles
     respond_to do |format|
       if @vente.save
+        @vente.set_prix if @vente.calcul_auto.eql?(1)
         flash[:notice] = 'Vente was successfully created.'
         format.html { redirect_to(@vente) }
         format.xml  { render :xml => @vente, :status => :created, :location => @vente }
@@ -94,15 +95,13 @@ class VentesController < ApplicationController
   def update
     @vente = Vente.find(params[:id])
     # si calcul_auto? alors on set un prix fake pour passer la validation
-    if params[:vente][:calcul_auto].to_i.eql?(1) 
-      params[:vente][:prix] = 0
-    end
+    # if params[:vente][:calcul_auto].to_i.eql?(1) 
+    #   params[:vente][:prix] = 0
+    # end
     respond_to do |format|
       if @vente.update_attributes(params[:vente])
         # si calcul_auto? alors on set le prix
-        if params[:vente][:calcul_auto].to_i.eql?(1)
-          @vente.set_prix
-        end
+        @vente.set_prix if @vente.calcul_auto.eql?(1)
         @vente.update_typecultures(params[:typecultures])
         @vente.uniq_parcelles
         flash[:notice] = 'Vente mis a jour!.'

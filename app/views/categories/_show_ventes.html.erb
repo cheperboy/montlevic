@@ -1,20 +1,60 @@
+<% sum_quantite = 0 %>
+<% sum_prix = 0 %>
+<% moy_prix_unitaire = 0 %>
+<% num_vente = 0 %>
+<% unit = '' %>
+<% prix_unitaire_unit = '' %>
+<% consistency = true %>
+
 <table class=table_data>
-	<tr>
-		<th>Id</th>
-		<th>Date</th>
-		<th>Ref</th>
-		<th>Nom</th>
-		<th>Prix</th>
-		<th></th>
-	</tr>
-<%- ventes.each do |vente| -%>
-	<tr>
-		<td><%=h vente.id.to_s %></td>
-		<td><%=h vente.date.to_s %></td>
-		<td><%=h vente.ref %></td>
-		<td><%= link_to vente.name, vente_path(vente) %></td>
-		<td class=right><%=h vente.prix.display %> <%= euro %></td>
-		<td><%= popup_show(image_tag('img-voir.png'), pop_content(vente), "popup-show-content") %></td>
-	</tr>
-<%- end -%>
+	<tbody>
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Date</th>
+			<th>Ref</th>
+			<th>Nom</th>
+			<th>Quantite</th>
+			<th>Prix Unitaire</th>
+			<th>Prix</th>
+			<th></th>
+		</tr>
+	</thead>
+	<%- ventes.each do |vente| -%>
+		<% consistency = false if ((vente.unit != unit) && (unit != '')) %>
+		<% sum_quantite += vente.quantite %>
+		<% sum_prix += vente.prix %>
+		<% moy_prix_unitaire += vente.prix_unitaire %>
+		<% num_vente += 1 %>
+		<% unit = vente.unit %>
+		<% prix_unitaire_unit = vente.get_prix_unitaire_unit %>
+		
+		<tr>
+			<td><%=h vente.id.to_s %></td>
+			<td><%=h vente.date.to_s %></td>
+			<td><%=h vente.ref %></td>
+			<td><%= link_to vente.name, vente_path(vente) %></td>
+			<td class=right><%=h vente.quantite.display %> <%= vente.unit %></td>
+			<td class=right><%=h vente.prix_unitaire.display %> <%= vente.get_prix_unitaire_unit %></td>
+			<td class=right><%=h vente.prix.display %> <%= euro %></td>
+			<td><%= popup_show(image_tag('img-voir.png'), pop_content(vente), "popup-show-content") %></td>
+		</tr>
+	<%- end -%>
+	<% moy_prix_unitaire = moy_prix_unitaire/num_vente %>
+	<tfoot>
+		<tr>
+			<th colspan=4>Somme</th>
+			<th class=right><%= sum_quantite.display %> <%= unit %></th>
+			<th class=right><%= moy_prix_unitaire.display %> <%= prix_unitaire_unit %></th>
+			<th><%= sum_prix.display %> <%= euro %></th>
+			<th></th>
+		</tr>
+	</tfoot>
+	</tbody>
 </table>
+
+<% if consistency == false %>
+	<p>Les unités (qt, kg, ...)ne sont pas les memes pour chaque ventes. la somme est donc inexacte.</p>
+<% end %>
+
+

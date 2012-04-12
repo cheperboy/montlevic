@@ -18,7 +18,7 @@ class Application < ActiveRecord::Base
   PRODUIT_QUANTITE_UNITS = [['L', 'L'], ['kg', 'kg']]
   TAUX_TVA = [['-', DEFAULT], ['5,5%', TVA_5_5], ['19,6%', TVA_19_6]]
   TYPE_REGLEMENT = [['-', DEFAULT], ['Cheque', CHEQUE], ['Liquide', ESPECE]]
-  VENTE_UNITS = [['bottes', 'bottes'], ['tonnes', 't'], ['kg', 'kg']]
+  VENTE_UNITS = [['bottes', 'b'], ['tonnes', 't'], ['quintaux', 'qt'], ['kg', 'kg']]
 
   SAISON_ID = Setting.find(1).saison_id
   SAISON = Setting.find(1).saison
@@ -70,20 +70,22 @@ class Application < ActiveRecord::Base
 
   VENTE_HEAD = 
   [
-    # KEY                   VALUE           UNIT    FILTER        TYPE              TRI     TRI_KEY           GREEN_RED COLOR
-    ['star',                'star',         '',     false,        'ignorecase',     true,   'star',           false,    'black'],
-  # ['pp_paye',             'paye',         '',     true,         'ignorecase',     true,   'paye',           false,    'black'], 
-   	['id',                  'id',           '',     true,         'numeric',        true,   'id',             false,    'grey'],
-  	['category_name',       'Categorie',    '',     true,         'ignorecase',     true,   'category_id',    false,    'grey'],
-  	['user_name',           'Prestataire',  '',     true,         'ignorecase',     true,   'user_id',        false,    'black'],
-  	['name',                'nom',          '',     true,         'ignorecase',     true,   'name',           false,    'black'],
-  	['prix',                'Prix',         '€',    true,         'numeric',        true,   'prix',           false,    'black'],
-  	['prix_unitaire',       'Prix Unitaire','€',    true,         'numeric',        true,   'prix_unitaire',  false,    'black'],
-  	['quantite',            'Quantite',     '€',    true,         'numeric',        true,   'quantite',       false,    'black'],
-    ['ref',                 'Ref',          '',     true,         'ignorecase',     true,   'ref',            false,    'grey'],
-  	['print_date',          'date',         '',     false,        'ignorecase',     true,   'date',           false,    'grey'],
-    ['adu',                 'adu',          '',     false,        'ignorecase',     true,   'adu',            false,    'black'], 
-   	['get_info_popup',      '?',            '',     false,        'ignorecase',     true,   '"info"',         false,    'black']
+    # KEY                     VALUE           UNIT    FILTER        TYPE              TRI     TRI_KEY           GREEN_RED COLOR
+    ['star',                  'star',         '',     false,        'ignorecase',     true,   'star',           false,    'black'],
+  # ['pp_paye',               'paye',         '',     true,         'ignorecase',     true,   'paye',           false,    'black'], 
+   	['id',                    'id',           '',     true,         'numeric',        true,   'id',             false,    'grey'],
+  	['category_name',         'Categorie',    '',     true,         'ignorecase',     true,   'category_id',    false,    'grey'],
+  	['user_name',             'Prestataire',  '',     true,         'ignorecase',     true,   'user_id',        false,    'black'],
+  	['name',                  'nom',          '',     true,         'ignorecase',     true,   'name',           false,    'black'],
+  	['prix',                  'Prix',         '€',    true,         'numeric',        true,   'prix',           false,    'black'],
+  	['prix_unitaire',         'Prix Unitaire','',     true,         'numeric',        true,   'prix_unitaire',  false,    'black'],
+    ['get_prix_unitaire_unit','',           '',     false,        false,        false,   ''            ], 
+  	['quantite',              'Quantite',     '',     true,         'numeric',        true,   'quantite',       false,    'black'],
+  	['unit',                  '',             '',     true,         'numeric',        true,   'unit',           false,    'black'],
+    ['ref',                   'Ref',          '',     true,         'ignorecase',     true,   'ref',            false,    'grey'],
+  	['print_date',            'date',         '',     false,        'ignorecase',     true,   'date',           false,    'grey'],
+    ['adu',                   'adu',          '',     false,        'ignorecase',     true,   'adu',            false,    'black'], 
+   	['get_info_popup',        '?',            '',     false,        'ignorecase',     true,   '"info"',         false,    'black']
   ]
 
   FACTURE_HEAD = 
