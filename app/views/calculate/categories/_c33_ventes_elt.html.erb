@@ -1,5 +1,5 @@
 <% datas = @test.res.get_saison_line_datas(@test.sid, :ventes, vente.id) %>
-<tr class="level-3_vente.<%= cat.code %>">
+<tr class="level-3_<%= name %>.<%= vente.id %>">
 	<td class=col1></td>
 	<td class=col2></td>
 	<td class=col3><%= link_popup_vente(datas[:id]) %></td>

@@ -18,15 +18,15 @@ class AddColumnPulveCategory < ActiveRecord::Migration
     # Creation category pulve.traitement, pulve.manuel, pulve.semis
     factcat = Factcat.find_by_code('agri')
     upcategory = Upcategory.find_by_name('pulve')
-    new_cat = Category.new(:factcat_id => factcat.id, :upcategory_id => upcategory.id, :name => 'Traitement', :code => 'traitement')
+    new_cat = Category.new(:factcat_id => factcat.id, :upcategory_id => upcategory.id, :name => 'Traitement', :code => 'pulve_traitement')
     new_cat.save!
-    new_cat = Category.new(:factcat_id => factcat.id, :upcategory_id => upcategory.id, :name => 'Semis', :code => 'semis')
+    new_cat = Category.new(:factcat_id => factcat.id, :upcategory_id => upcategory.id, :name => 'Semis', :code => 'pulve_semis')
     new_cat.save!
-    new_cat = Category.new(:factcat_id => factcat.id, :upcategory_id => upcategory.id, :name => 'Manuel', :code => 'manuel')
+    new_cat = Category.new(:factcat_id => factcat.id, :upcategory_id => upcategory.id, :name => 'Manuel', :code => 'pulve_manuel')
     new_cat.save!
 
     #recherche de la nouvelle category qui va etre affectee a tout les pulves deja enregistres
-    category = Category.find_by_upcategory_and_code('pulve', 'traitement')
+    category = Category.find_by_upcategory_and_code('pulve', 'pulve_traitement')
     Pulve.update_all("category_id	=	#{category.id}" )
     
     # ajout de la contrainte :null => false pour la nouvelle colonne
@@ -34,11 +34,11 @@ class AddColumnPulveCategory < ActiveRecord::Migration
   end
 
   def self.down
-    category = Category.find_by_upcategory_and_code('pulve', 'traitement')
+    category = Category.find_by_upcategory_and_code('pulve', 'pulve_traitement')
     category.destroy unless category.nil?
-    category = Category.find_by_upcategory_and_code('pulve', 'semis')
+    category = Category.find_by_upcategory_and_code('pulve', 'pulve_semis')
     category.destroy unless category.nil?
-    category = Category.find_by_upcategory_and_code('pulve', 'manuel')
+    category = Category.find_by_upcategory_and_code('pulve', 'pulve_manuel')
     category.destroy unless category.nil?
 
     new_upcat = Upcategory.find_by_name("pulve")

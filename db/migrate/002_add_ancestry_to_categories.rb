@@ -71,14 +71,7 @@ class AddAncestryToCategories < ActiveRecord::Migration
     Category.all.each do |cat|
       cat.update_attribute(:name, cat.name.camelize)
     end
-    
-    # test
-    cat = Category.find(8)
-    Category.new(:factcat_id => 40, :upcategory_id => 40, :name => 'toto', :code => 'toto').save!
-    Category.find_by_factcat_and_upcategory(40,40).each do |toto|
-      toto.update_attribute(:parent_id, cat.id)
-    end
-    
+        
     Category.rebuild_depth_cache!
   
   end

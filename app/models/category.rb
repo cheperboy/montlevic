@@ -73,36 +73,36 @@ class Category < ActiveRecord::Base
     unless parent.factures.size.eql?(0)
       out << "<b>Factures</b><br>"
       parent.factures.each do |facture|
-        facture.update_attribute(:category_id, @category.id)
-        out << "- : #{facture.name}<br>"
+        facture.update_attribute(:category_id, self.id)
+        out << "- #{facture.name}<br>"
       end
     end
     unless parent.ventes.size.eql?(0)
       out << "<b>Ventes</b><br>"
       parent.ventes.each do |vente|
-        vente.update_attribute(:category_id, @category.id)
-        out << "- : #{vente.name}<br>"
+        vente.update_attribute(:category_id, self.id)
+        out << "- #{vente.name}<br>"
       end
     end
     unless parent.pulves.size.eql?(0)
       out << "<b>Pulves</b><br>"
       parent.pulves.each do |pulve|
-        pulve.update_attribute(:category_id, @category.id)
-        out << "- : #{pulve.name}<br>"
+        pulve.update_attribute(:category_id, self.id)
+        out << "- #{pulve.name}<br>"
       end
     end
     unless parent.labours.size.eql?(0)
       out << "<b>Labours</b><br>"
       parent.labours.each do |labours|
-        labour.update_attribute(:category_id, @category.id)
-        out << "- : #{labour.name}<br>"
+        labour.update_attribute(:category_id, self.id)
+        out << "- #{labour.name}<br>"
       end
     end
     unless parent.produits.size.eql?(0)
       out << "<b>Produits</b><br>"
       parent.produits.each do |produit|
-        produit.update_attribute(:category_id, @category.id)
-        out << "- : #{produit.name}<br>"
+        produit.update_attribute(:category_id, self.id)
+        out << "- #{produit.name}<br>"
       end
     end
     return out

@@ -90,9 +90,9 @@ padding-left: 0px;
 .table_print { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
 
 .table_print td, th, tr { 
- border-width:1px;
- border-style:solid; 
- border-color:grey;
+	border-width:1px;
+	border-style:solid; 
+	border-color:grey;
  }
 
 .table_print tr.subtotal { color: green; }

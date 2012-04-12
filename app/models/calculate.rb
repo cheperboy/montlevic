@@ -129,10 +129,6 @@ class Calculate < ActiveRecord::Base
           @res.add_saison_line(@sid, :labours, :category, cat.id, :total, cout_total)
          end
       end
-    # 2- Total COLONNE
-    
-    
-    
     end
   end
 
@@ -166,12 +162,12 @@ class Calculate < ActiveRecord::Base
         @res.add_other_line_for_saison(@sid, :resultats, :total_putoproduits, :ha, putoproduit.get_cout_ha_moyen(@surface_of_saison))      
         @res.add_other_line_for_saison(@sid, :resultats, :total_putoproduits, :total, putoproduit.get_cout_total)
     
-        #totaux saison par categorie de produits
-        for cat in Category.putoproduits_cats
-          if (putoproduit.produit.category_id == cat.id)
-            @res.add_saison_line(@sid, :putoproduits, :category, cat.id, :ha, putoproduit.get_cout_ha_moyen(@surface_of_saison))
-            @res.add_saison_line(@sid, :putoproduits, :category, cat.id, :total, putoproduit.get_cout_total)
-          end
+        #totaux par categorie de produits
+        cat = putoproduit.produit.category
+        while (cat.depth > 0)
+          @res.add_saison_line(@sid, :putoproduits, :category, cat.id, :ha, putoproduit.get_cout_ha_moyen(@surface_of_saison))
+          @res.add_saison_line(@sid, :putoproduits, :category, cat.id, :total, putoproduit.get_cout_total)
+          cat = cat.parent
         end
       end
     end
@@ -307,12 +303,14 @@ class Calculate < ActiveRecord::Base
       @res.add_other_line_for_saison(@sid, :resultats, :total_ventes, :ha, vente.get_cout_ha_moyen(@surface_of_saison))      
       @res.add_other_line_for_saison(@sid, :resultats, :total_ventes, :total, vente.get_cout_total)
       
-      #totaux par categorie de ventes
-      for cat in Category.ventes_cats
-        if (vente.category_id == cat.id)
-          @res.add_saison_line(@sid, :ventes, :category, cat.id, :ha, vente.get_cout_ha_moyen(@surface_of_saison))
-          @res.add_saison_line(@sid, :ventes, :category, cat.id, :total, vente.get_cout_total)
-        end
+      #totaux par categorie de vente
+      # set le champ [:category, category_id] si la vente appartient a cette Categorie (Pac, Vente ble, ...)
+      cat = vente.category
+      while (cat.depth > 0)
+        @res.add_saison_line(@sid, :ventes, :category, cat.id, :ha, vente.get_cout_ha_moyen(@surface_of_saison))
+        @res.add_saison_line(@sid, :ventes, :category, cat.id, :total, vente.get_cout_total)
+        # on impute la facture sur sa category parent
+        cat = cat.parent
       end
     end
   end
@@ -364,13 +362,18 @@ class Calculate < ActiveRecord::Base
           #valeur totale du produits pour cette colonne
           total = @res.get_line(@sid, @c, col.id, :putoproduits, :all, putoproduit.id, :total)
           sum_total += total
-          for cat in Category.produits_cats
-            if (putoproduit.produit.category_id == cat.id)
-              # valeur totale du produit pour cette categorie
-              @res.add_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :total, total)
-            end
+
+          # Imputation sur category et categories parents
+          cat = putoproduit.produit.category
+          while (cat.depth > 0)
+            @res.add_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :total, total)
+            @res.add_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :ha, total/col.surface)
+            # on impute le produit sur sa category parent
+            cat = cat.parent
           end
         end
+
+        
         #somme des produits par col
         @res.set_other_line(@sid, @c, col.id, :resultats, :total_putoproduits, :total, sum_total)     
         @res.set_other_line(@sid, @c, col.id, :resultats, :total_putoproduits, :ha, sum_total/col.surface)
@@ -380,11 +383,6 @@ class Calculate < ActiveRecord::Base
         #total des benefs par col
         @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, (-sum_total))
         @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, (-sum_total/col.surface))
-        #totaux par categorie de produit
-        for cat in Category.produits_cats
-          cout_total = @res.get_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :total)
-          @res.set_line(@sid, @c, col.id, :putoproduits, :category, cat.id, :ha, cout_total/col.surface)
-        end
       end
     end
     
@@ -439,11 +437,7 @@ class Calculate < ActiveRecord::Base
             end
           end
 
-          cat = facture.category
-          @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :total, total)
-          @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :ha, total/col.surface)
-          # on impute la facture sur ses category parents
-          n=0
+          # Imputation sur category et categories parents
           cat = facture.category
           while (cat.depth > 1)
             @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :total, total)
@@ -452,7 +446,6 @@ class Calculate < ActiveRecord::Base
             cat = cat.parent
           end
         end
-
         # for each facture.category.is_agri? :
         # set le champ [:resultats, :total_factures] (par defaut: toutes les factures type Agricole: sum_total = somme des factures agri)
         #somme des factures par col
@@ -477,29 +470,26 @@ class Calculate < ActiveRecord::Base
       for col in @cols
         sum_total = 0
         total = 0
-        # somme de toutes les cellules Pulve d'une colonne 
+        # somme de toutes les cellules vente d'une colonne 
         for vente in @ventes       
           #valeur totale du pulve pour cette colonne
           total = @res.get_line(@sid, @c, col.id, :ventes, :all, vente.id, :total)
           sum_total += total
-          for cat in Category.ventes_cats
-            if (vente.category_id == cat.id)
-              # valeur totale de la vente pour cette categorie
-              @res.add_line(@sid, @c, col.id, :ventes, :category, cat.id, :total, total)
-            end
+          
+          cat = vente.category
+          while (cat.depth > 0)
+            @res.add_line(@sid, @c, col.id, :ventes, :category, cat.id, :total, total)
+            @res.add_line(@sid, @c, col.id, :ventes, :category, cat.id, :ha, total/col.surface)
+            cat = cat.parent
           end
         end
-        #somme des produits par col
+        
+        #somme des ventes par col
         @res.set_other_line(@sid, @c, col.id, :resultats, :total_ventes, :total, sum_total)     
         @res.set_other_line(@sid, @c, col.id, :resultats, :total_ventes, :ha, sum_total/col.surface)
         #total des benefs par col
         @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :total, sum_total)
         @res.add_other_line(@sid, @c, col.id, :resultats, :benef, :ha, sum_total/col.surface)
-        #totaux par categorie de labour
-        for cat in Category.ventes_cats
-          cout_total = @res.get_line(@sid, @c, col.id, :ventes, :category, cat.id, :total)
-          @res.set_line(@sid, @c, col.id, :ventes, :category, cat.id, :ha, cout_total/col.surface)
-        end        
       end
     end
     

@@ -14,19 +14,29 @@ class Vente < Charge
   validates_presence_of :user, :message => "Prestataire doit etre indique"
   validates_presence_of :prix, 
                         :message => "Prix doit etre indique",
-                        :if => Proc.new { |u| (u.prix_unitaire.blank? && u.quantite.blank?) }
+                        :if => Proc.new { |u| (u.prix_unitaire.blank? && u.quantite.blank? && u.calcul_auto.eql?(0)) }
+  validates_numericality_of :prix,
+                            :message => "Prix doit etre un nombre",
+                            :if => Proc.new { |u| (!u.prix.blank?) }
   
   validates_presence_of :quantite,
                         :message => "quantite doit etre indique",
-                        :if => Proc.new { |u| (u.prix.blank?) }
+                        :if => Proc.new { |u| (!u.calcul_auto.eql?(0)) }
+  validates_numericality_of :quantite,
+                        :message => "quantite doit etre un nombre",
+                        :if => Proc.new { |u| (!u.quantite.blank?) }
 
   validates_presence_of :prix_unitaire,
                         :message => "prix_unitaire doit etre indique",
-                        :if => Proc.new { |u| (u.prix.blank?) }
+                        :if => Proc.new { |u| (!u.calcul_auto.eql?(0)) }
+  validates_presence_of :prix_unitaire,
+                        :message => "prix_unitaire doit etre un nombre",
+                        :if => Proc.new { |u| (!u.prix_unitaire.blank?) }
 
-  validates_numericality_of :prix,
-                            :message => "Prix doit etre un nombre",
-                            :if => Proc.new { |u| (u.prix_unitaire.blank? && u.quantite.blank?) }
+  validates_presence_of :prix,
+                        :message => "cocher la case calcul auto ou indiquer un prix",
+                        :if => Proc.new { |u| (u.prix.blank? && u.calcul_auto.eql?(0)) }
+
 
   validates_associated :ventoparcelles
 
@@ -37,6 +47,7 @@ class Vente < Charge
   # end
   
   def set_prix
+    logger.error "setting prix: #{self.calcul_auto.to_s}" 
     if (self.prix_unitaire? && self.quantite?)
       self.prix = self.prix_unitaire * self.quantite
       self.prix += self.ajust if self.ajust?
@@ -44,13 +55,6 @@ class Vente < Charge
     end
   end
   
-  # def set_prix
-  #   if (!@vente.prix? && @vente.prix_unitaire? && @vente.quantite?) 
-  #     @vente.prix = @vente.prix_unitaire * @vente.quantite
-  #     @vente.prix += @vente.ajust if @vente.ajust? 
-  #   end
-  # end
-  # 
   def self.find_by_saison(*args)
     with_scope(:find => { :conditions => ["saison_id = ?", Setting.find(1).saison_id],
                           :order => :category_id}) do

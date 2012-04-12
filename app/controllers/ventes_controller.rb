@@ -69,7 +69,10 @@ class VentesController < ApplicationController
   def create
     @vente = Vente.new(params[:vente])
     @vente.saison_id = current_saison_id
-    @vente.set_prix
+    # si calcul_auto? alors on set le prix
+    if params[:vente][:calcul_auto].to_i.eql?(1)
+      @vente.set_prix 
+    end
     @vente.update_typecultures(params[:typecultures])
     @vente.uniq_parcelles
     respond_to do |format|
@@ -90,9 +93,16 @@ class VentesController < ApplicationController
   # PUT /ventes/1.xml
   def update
     @vente = Vente.find(params[:id])
+    # si calcul_auto? alors on set un prix fake pour passer la validation
+    if params[:vente][:calcul_auto].to_i.eql?(1) 
+      params[:vente][:prix] = 0
+    end
     respond_to do |format|
       if @vente.update_attributes(params[:vente])
-        @vente.set_prix
+        # si calcul_auto? alors on set le prix
+        if params[:vente][:calcul_auto].to_i.eql?(1)
+          @vente.set_prix
+        end
         @vente.update_typecultures(params[:typecultures])
         @vente.uniq_parcelles
         flash[:notice] = 'Vente mis a jour!.'

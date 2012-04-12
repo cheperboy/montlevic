@@ -1,14 +1,14 @@
 <% if cat.code.eql?('produits_phyto') %>
-	<%= render(:partial => "calculate/categories/c2_produits") %>	
+	<%= render(:partial => "calculate/categories/c21_produits") %>	
 <% end %>
 
-<!-- <tr class="level-2_<%#= factcat.code %>.<%#= cat.code %>">  -->
-<tr class="level-2_<%= factcat.code %><%= print_way(cat) %>" name="show"> 
+<% name = "#{factcat.code}#{print_way(cat)}" %>
+<tr class="level-<%= cat.depth %>_<%= name %>">
+
 	<td class=col1></td>
-	<td class=col2><b>
+	<td class=col2>
 		<%= indent_cat_name(cat.depth-2, "") %>
-		<%#= link_to cat.name, "javascript: toggleLevel3('#{factcat.code}.#{cat.code}');" %></b>
-		<%= link_to cat.name, "javascript: toggleCat('#{factcat.code}#{print_way(cat)}');" %> +</b>
+		<b><%= link_to cat.name, "javascript: toggleCat('#{name}');" , {:name => name} %></b>
 	</td>
 	<td class=col3></td>
 	<td class="saison"><span class=green><%= @test.res.get_saison_line(@test.sid, :factures, :category, cat.id, :ha).display(:z => true) %></span></td>
@@ -24,11 +24,14 @@
 </tr>
 <% if cat.has_children? %>
 	<% cat.children.each do |cat| %>
-	    <%= render(:partial => "calculate/categories/c1_cat_children", :locals => { :cat => cat, :factcat => factcat }) %>
+	    <%= render(:partial => "calculate/categories/c12_factures_cat", :locals => { :cat => cat, :factcat => factcat }) %>
 	<% end %>
 <% else %>
 	<% cat.factures.find_by_saison(:all).each do |facture| %>
-		<%= render(:partial => "calculate/categories/c1_cat_factures", :locals => { :cat => cat, :factcat => factcat, :facture => facture }) %>
+		<%= render(:partial => "calculate/categories/c13_factures_elt", :locals => {:cat => cat, 
+																					:factcat => factcat, 
+																					:facture => facture,
+																					:name => name }) %>
 	<% end %>
 <% end %>
 	

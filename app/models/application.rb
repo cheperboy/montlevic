@@ -18,6 +18,7 @@ class Application < ActiveRecord::Base
   PRODUIT_QUANTITE_UNITS = [['L', 'L'], ['kg', 'kg']]
   TAUX_TVA = [['-', DEFAULT], ['5,5%', TVA_5_5], ['19,6%', TVA_19_6]]
   TYPE_REGLEMENT = [['-', DEFAULT], ['Cheque', CHEQUE], ['Liquide', ESPECE]]
+  VENTE_UNITS = [['bottes', 'bottes'], ['tonnes', 't'], ['kg', 'kg']]
 
   SAISON_ID = Setting.find(1).saison_id
   SAISON = Setting.find(1).saison

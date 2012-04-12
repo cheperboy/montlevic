@@ -8,6 +8,10 @@
 	<span class=link><%= lien1 %></span>
 </div>
 
+<% tot=0 %>
+<% @ventes.each { |vente| tot+= vente.prix } %>
+total ventes = <%= tot %>
+
 <%= draw_table_with_find_js(Application::VENTE_HEAD, @ventes, 'ventes', :search => true, :sort => 3) %>
 
 

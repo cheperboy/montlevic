@@ -55,12 +55,12 @@ class CategoriesController < ApplicationController
     params[:category][:upcategory_id] = 11
     
     parent = Category.find(params[:category][:parent_id])
-    move_elements_to_new_leaf = true if parent.has_elements?
+    need_to_move_elements_to_new_leaf = true if parent.has_elements?
     @category = Category.new(params[:category])
     
     respond_to do |format|
       if @category.save
-        if move_elements_to_new_leaf
+        if need_to_move_elements_to_new_leaf
           out = "les elements suivants sont deplaces de : #{parent.name} a #{@category.name}<br>" 
           out << @category.move_elements_to_new_leaf
         end

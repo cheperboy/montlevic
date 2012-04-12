@@ -1,7 +1,9 @@
 <% @factcats.each do |factcat| %>
 	<% @factcat = factcat %>
 	<tr class="level-1">
-		<td class=col1><b><%= link_to factcat.name, "javascript: toggleLevel2('#{factcat.code}');" %></b></td>
+		<td class=col1><b>
+		<% name = factcat.code %>
+		<%= link_to factcat.name, "javascript: toggleCat('#{name}');" ,{:name => name} %></b></td>		
 		<td class=col2></td>
 		<td class=col3></td>
 		<% if factcat.id.eql?(Category.root_agri.id) %>
@@ -28,12 +30,9 @@
 		<% end %>
 	</tr>
 
-	<%# categories = factcat.descendants %>
 	<% categories = factcat.children %>
 	<% categories.each do |cat| %>
-	    <%= render(:partial => "calculate/categories/c1_cat_children", :locals => { :cat => cat, :factcat => factcat }) %>
+	    <%= render(:partial => "calculate/categories/c12_factures_cat", :locals => { :cat => cat, :factcat => factcat }) %>
 	<% end %>
-	<%# end %>
-	<tr>
-	</tr>
+	<tr></tr>
 <% end %>
