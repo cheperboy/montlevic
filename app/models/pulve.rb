@@ -1,9 +1,41 @@
 class Pulve < Charge
 
   # ----- Constantes -----
-  XLS_NAME = 1
-  XLS_USER = 2
-  XLS_COUT_HA_PASSAGE = 3
+  XLS_ROW_NUM = 1
+  XLS_NAME = 2
+  XLS_USER = 3
+  XLS_COUT_HA_PASSAGE = 4
+
+  def import(sheet)
+    ret = {}
+    ret[:all_valid] = true
+    ret[:row_num] = 0
+    ret[:datas] = [] 
+    ret[:datas][:pulves] = [] #elements 
+    ret[:datas][:desc] = []  #tableau pour les info de validation
+    ret[:datas][:desc][:valid] = []  # true/false resultat de is_valid?
+    ret[:datas][:desc][:errors] = [] #details sur les erreurs si valid==false
+    sheet.each do |row|
+      unless (row[XLS_NAME].nil? || row[0].eql?('#'))
+        id = row[XLS_ROW_NUM]
+        ret[:datas][:desc][:valid][id] = true  # true/false resultat de is_valid?
+        ret[:datas][:desc][:errors][id] = '' #details sur les erreurs si valid==false
+        ret[:row_num] += 1
+        pulve = Pulve.new( 
+                  :name =>            row[XLS_NAME], 
+                  :user =>            row[XLS_USER], 
+                  :cout_ha_passage => row[COUT_HA_PASSAGE]) 
+        ret[:datas][:pulves] << pulve
+        unless pulve.valid?
+          ret[:datas][:desc][:valid][id] = false
+          ret[:datas][:desc][:errors][id] = pulve.errors.to_s
+          ret[:all_valid] = false
+        end
+      end
+    end
+    return(ret)
+  end
+
 
   def after_save 
     self.putoproduits.each { |putoproduit| putoproduit.update_dosage_after_save }

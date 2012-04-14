@@ -11,31 +11,46 @@ class PulvesController < ApplicationController
     # chaque elements est valide?
     # transaction et import
     # affichage du log et des erreurs
-
     book = Spreadsheet.open Rails.root.join('public', 'import', 'test', 'import.xls')
     sheet = book.worksheet 'pulves'
-    row_num = 0
-    rows = []
-    pulves = []
-    sheet.each do |row|
-      unless (row[XLS_NAME].nil? || row[0].eql?('#'))
-        row_num += 1
-        rows[row_num] = false
-        pulve = Pulve.new( 
-        # :num => row_num, 
-        :name => row[XLS_NAME], 
-        :user => row[XLS_USER], 
-        :cout_ha_passage => row[COUT_HA_PASSAGE]) 
-        pulves << pulve
-        if pulve.valid?
-          rows[row_num] = true
-          
+    result = {}
+    result[:import_ok] = true
+    result[:errors] = []
+    data = read_sheet(sheet)
+    if data[:all_valid].eql?(true)
+      #importer tout
+      data[:datas][:pulves].each do |pulve|
+        @pulve = Pulve.new(pulve)
+        @pulve.saison_id = current_saison_id
+        # transforme les checkbox Typeculture en Factoparcelles
+        # @pulve.update_typecultures(params[:typecultures])
+        @pulve.uniq_parcelles
+        if @pulve.save
+          flash[:notice] = 'Pulve ajoute'
+          format.html { redirect_to(@pulve) }
+          format.xml  { render :xml => @pulve, :status => :created, :location => @pulve }
+        else
+          result[:import_ok]
+          result[:errors][pul]
+          add_errors_to_model(@pulve.errors)
+          @pulve = Pulve.new(params[:pulve])
+          format.html { render :action => "new" }
+        end
+      end
+    else
+      # afficher toutes les erreurs
+    end
+    respond_to do |format|
+      if @pulve.save
+        flash[:notice] = 'Pulve ajoute'
+        format.html { redirect_to(@pulve) }
+        format.xml  { render :xml => @pulve, :status => :created, :location => @pulve }
+      else
+        add_errors_to_model(@pulve.errors)
+        @pulve = Pulve.new(params[:pulve])
+        format.html { render :action => "new" }
       end
     end
-    # Cbm.all.each do |cbm|
-    #   cbm.name = cbm.desc.downcase
-    #   cbm.save!
-    # end
     respond_to do |format|
       format.html { redirect_to(cbms_url) }
     end
