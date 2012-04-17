@@ -53,7 +53,6 @@ class Calculate < ActiveRecord::Base
     run_ventes
     run_totaux
     verif
-    # return true
   end
 
   def init_cols

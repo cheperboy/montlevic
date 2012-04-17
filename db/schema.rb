@@ -210,6 +210,7 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.text     "info"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category_id"
   end
 
   create_table "putofactures", :force => true do |t|
@@ -307,6 +308,9 @@ ActiveRecord::Schema.define(:version => 20100330165713) do
     t.text     "info"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "calcul_auto"
+    t.string   "unit"
+    t.integer  "poids_botte"
   end
 
   create_table "ventoparcelles", :force => true do |t|

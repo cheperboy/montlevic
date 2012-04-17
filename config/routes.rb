@@ -36,10 +36,13 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :saisons
 
-  map.resources :pulves, :collection => { :index => :any,
-                                          :export => :any,
-                                          :update_adu => :put,
-                                          :update_star => :put}
+  map.resources :pulves, :collection => { 
+    :index => :any,
+    :export => :any,
+    :import => :any,
+    :update_adu => :put,
+    :update_star => :put
+  }
 
   map.resources :parcelles, :collection => { :index_edit => :get}
 
@@ -55,20 +58,21 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :factypes
 
-  map.resources :factures, :collection => { :reports => :get,
-                                            :new_report => :get,
-                                            :create_report => :post,
-                                            :new_debit_to_reportable => :any,
-                                            :create_debit_to_reportable => :any,
-                                            :new_diverse => :get,
-                                            :create_diverse => :post,
-                                            :index_types => :get,
-                                            :index_paye => :get,
-                                            :edit_facdiv => :get,
-                                            :diverses => :get,
-                                            :modif => :any,
-                                            :update_adu => :put,
-                                            :update_star => :put}
+  map.resources :factures, :collection => { 
+    :new_debit_to_reportable    => :any,
+    :create_debit_to_reportable => :any,
+    :reports        => :get,
+    :new_report     => :get,
+    :create_report  => :post,
+    :new_diverse    => :get,
+    :create_diverse => :post,
+    :index_types    => :get,
+    :index_paye     => :get,
+    :edit_facdiv    => :get,
+    :diverses       => :get,
+    :modif          => :any,
+    :update_adu     => :put,
+    :update_star    => :put}
 
   map.resources :categories, :collection => { :test => :any}
   map.resources :upcategories do |upcat|
@@ -80,6 +84,11 @@ ActionController::Routing::Routes.draw do |map|
     facture.resources :facdivs
   end
     
+  map.resources :import, :collection => { 
+    :import_pulves => :any,
+    :test          => :any
+  }
+
   map.resources :diverses,    :as => :factures, :controller => :factures
   map.resources :debits,      :as => :factures, :controller => :factures    
   map.resources :reports,     :as => :factures, :controller => :factures

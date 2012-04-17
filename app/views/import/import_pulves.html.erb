@@ -1,0 +1,28 @@
+<h1>import Pulves</h1>
+
+<% if @import.all_valid.eql?(true) %>
+	<h2>Import ok</h2>
+<% else %>
+
+	<h2>Import NOT ok</h2>
+	<% @import.datas[:errors].each_index do |index| %>
+		<% unless @import.datas[:errors][index].nil? %>
+			<h3>pulve <%= index.to_s %></h3>
+			<h4>Erreurs</h4>
+			<% @import.datas[:errors][index].each do |msg| %>
+				<p>err : <%= msg.to_s %></p>
+			<% end %>
+			<h4>Warnings</h4>
+			<% @import.datas[:warnings][index].each do |msg| %>
+				<p>err : <%= msg.to_s %></p>
+			<% end %>
+		<% end %>
+	<% end %>
+
+<% end %>
+		
+		
+		
+		
+		
+		

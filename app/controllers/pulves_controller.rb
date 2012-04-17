@@ -7,17 +7,24 @@ class PulvesController < ApplicationController
   PRIX = 2
 
   def import
+    # book = Spreadsheet::Workbook.new
+    # sheet1 = book.create_worksheet :name => 'pulve_test' 
+    # book.write Rails.root.join('doc', 'xls_import', 'pulves_test.xls')
     # lecture
     # chaque elements est valide?
     # transaction et import
     # affichage du log et des erreurs
-    book = Spreadsheet.open Rails.root.join('public', 'import', 'test', 'import.xls')
+    book = Spreadsheet.open Rails.root.join('doc', 'xls_import', 'pulves.xls')
     sheet = book.worksheet 'pulves'
+    sheet.each do |row|
+      logger.error "row :" 
+    end
     result = {}
     result[:import_ok] = true
     result[:errors] = []
-    data = read_sheet(sheet)
+    data = Pulve.read_sheet(sheet)
     if data[:all_valid].eql?(true)
+      flash[:notice] += "Creation des pulves suivants:<br>"
       #importer tout
       data[:datas][:pulves].each do |pulve|
         @pulve = Pulve.new(pulve)
@@ -26,33 +33,21 @@ class PulvesController < ApplicationController
         # @pulve.update_typecultures(params[:typecultures])
         @pulve.uniq_parcelles
         if @pulve.save
-          flash[:notice] = 'Pulve ajoute'
-          format.html { redirect_to(@pulve) }
-          format.xml  { render :xml => @pulve, :status => :created, :location => @pulve }
+          flash[:notice] += "- #{pulve.name}<br>"
         else
-          result[:import_ok]
-          result[:errors][pul]
-          add_errors_to_model(@pulve.errors)
-          @pulve = Pulve.new(params[:pulve])
-          format.html { render :action => "new" }
+          result[:import_ok] = false
+          result[:errors] += @pulve.errors.to_s
         end
       end
     else
-      # afficher toutes les erreurs
+      flash[:errors] += "#{data[:datas][:desc][:errors].to_s}"
     end
     respond_to do |format|
-      if @pulve.save
-        flash[:notice] = 'Pulve ajoute'
-        format.html { redirect_to(@pulve) }
-        format.xml  { render :xml => @pulve, :status => :created, :location => @pulve }
+      if result[:import_ok].eql?(true)
+        format.html { redirect_to(pulves_url) }
       else
-        add_errors_to_model(@pulve.errors)
-        @pulve = Pulve.new(params[:pulve])
-        format.html { render :action => "new" }
+        format.html { redirect_to(pulves_url) }
       end
-    end
-    respond_to do |format|
-      format.html { redirect_to(cbms_url) }
     end
   end
 
