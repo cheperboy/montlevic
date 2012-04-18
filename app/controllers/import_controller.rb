@@ -1,4 +1,10 @@
 class ImportController < ApplicationController
+  MSG_FILE_HAS_WARNINGS = "Verifier les Warnings avant d'importer"
+  MSG_FILE_HAS_INVALIDS = "Fichier non valid. <br>Corriger le fichier puis relancer l'importation"
+  MSG_FILE_HAS_ERRORS   = "Erreurs lors de l'importation. Aucun element n'a ete enregistre"
+  MSG_ALL_IMPORTED_OK   = "Tout les elements ont ete importes avec succes"
+  MSG_FILE_IS_VALID     = "Fichier OK pour l'importation"
+
 
 
   def test
@@ -10,39 +16,35 @@ class ImportController < ApplicationController
   end
 
   def import_pulves
-    sheet = Import.load_sheet('pulves')    
-    @result = {}
-    @result[:import_ok] = true
-    @result[:errors] = []
+    puts "\nImport_pulves"
+    @state = :read
+    @force = false
+    @force = true if params[:force].eql?('true')
     
+    sheet = Import.load_sheet('pulves')    
     @import = Import.new(:pulves)
-    @import.read_sheet(sheet)
-    # puts "datas: #{@datas.inspect}" 
-    # if @all_valid.eql?(true)
-    #   flash[:notice] += "Creation des pulves suivants:<br>"
-    #   #importer tout
-    #   @datas[:datas][:pulves].each do |pulve|
-    #     @pulve = Pulve.new(pulve)
-    #     @pulve.saison_id = current_saison_id
-    #     # transforme les checkbox Typeculture en Factoparcelles
-    #     # @pulve.update_typecultures(params[:typecultures])
-    #     @pulve.uniq_parcelles
-    #     if @pulve.save
-    #       flash[:notice] += "- #{pulve.name}<br>"
-    #     else
-    #       @result[:import_ok] = false
-    #       # @result[:errors] += @pulve.errors.to_s
-    #     end
-    #   end
-    # else
-      puts "from controller. row_num= #{@import.row_num.to_s}"
-      # [1..2].each do |id|
-      #   @datas[:errors][id].each {|msg| puts "\t\t- #{msg}"}
-      # end
-      
-      @import.datas[:errors][1].each {|msg| puts "\t\t- #{msg}"}
-      flash[:error] = "Erreurs, Verifier le Fichier"
-    # end
+    @import.read_elements(sheet)
+
+    if ((@import.has_invalids.eql?(false) && @import.has_warnings.eql?(false)) ||
+    (@import.has_warnings.eql?(true) && @force.eql?(true) && @import.has_invalids.eql?(false)))
+      @state = :import
+      # @import.elts.each_index {|x| puts "\t\t#{x.to_s}" }
+      #importer tout
+      @import.import_elements
+      if @import.has_errors?
+        flash.now[:error] = MSG_FILE_HAS_ERRORS
+      else
+        flash.now[:notice] = "#{MSG_ALL_IMPORTED_OK}<br>#{@import.import_size.to_s} elements importes"
+      end
+    else #state==:analyse
+      if @import.has_warnings?
+        flash.now[:notice] = MSG_FILE_HAS_WARNINGS
+      elsif @import.has_invalids?
+        flash.now[:error] = MSG_FILE_HAS_INVALIDS
+      else
+        flash.now[:notice] = MSG_FILE_IS_VALID
+      end
+    end
     
     respond_to do |format|
       format.html { render(:action => :import_pulves) }
@@ -50,3 +52,7 @@ class ImportController < ApplicationController
   end
 
 end
+
+
+
+ 

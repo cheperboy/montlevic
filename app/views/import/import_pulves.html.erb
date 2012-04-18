@@ -1,24 +1,32 @@
-<h1>import Pulves</h1>
+<% title "Import", false %>
+<% titre = "Pulves" %>
+<% lien1 = button_to("Tester le fichier", :action => :import_pulves, :force => false) %>
+<% lien2 = button_to("Importer malgré les warnings", :action => :import_pulves, :force => true) %>
 
-<% if @import.all_valid.eql?(true) %>
-	<h2>Import ok</h2>
-<% else %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+	<span class=link><%= lien2 %></span>
+</div>
+force: <%= @force %><br>
+has_warnings: <%= @import.has_warnings.to_s %><br>
+has_invalids: <%= @import.has_invalids.to_s %><br>
+state: <%= @state.to_s %><br>
 
-	<h2>Import NOT ok</h2>
-	<% @import.datas[:errors].each_index do |index| %>
-		<% unless @import.datas[:errors][index].nil? %>
-			<h3>pulve <%= index.to_s %></h3>
-			<h4>Erreurs</h4>
-			<% @import.datas[:errors][index].each do |msg| %>
-				<p>err : <%= msg.to_s %></p>
-			<% end %>
-			<h4>Warnings</h4>
-			<% @import.datas[:warnings][index].each do |msg| %>
-				<p>err : <%= msg.to_s %></p>
-			<% end %>
-		<% end %>
+<% if @state.eql?(:read) %>
+	<% if ((@import.has_invalids?) ||
+		(@import.has_warnings? && @force.eql?(false))) %>
+		<h2>Analyse du fichier</h2>
+		<%= render(:partial => "warnings") %>
 	<% end %>
 
+<% elsif @state.eql?(:import) %>
+	<h2>Import des donnees</h2>
+	<% if @import.has_errors? %>
+		<%= render(:partial => "errors") %>
+	<% else %>
+		<p>all imported ok</p>
+	<% end %>
 <% end %>
 		
 		

@@ -1,0 +1,29 @@
+<table class="table_data">
+	<thead>
+		<tr class=bold>
+			<th>num</th>
+			<th>nom</th>
+			<th>erreurs</th>
+			<th>warnings</th>
+		</tr>
+	<thead>
+	<tbody>
+	<% @import.elts.each_index do |index| %>
+		<% unless @import.invalids[index].nil? %>
+		  <tr>
+		    <td><%= index.to_s %></td>
+		    <td><%= Import.print_elt_name(@import.elts[index]) %></td>
+		    <td><% @import.invalids[index].each do |msg| %>
+					- <%= msg.to_s %><br>
+				<% end %>
+			</td>
+		    <td>
+				<% @import.warnings[index].each do |msg| %>
+					- <%= msg.to_s %><br>
+				<% end %>
+			</td>
+		  </tr>
+		<% end %>
+	<% end %>
+	<tbody>
+</table>

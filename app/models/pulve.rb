@@ -41,6 +41,8 @@ class Pulve < Charge
   validates_presence_of :saison_id, :message => "bug logiciel : saison_id nul"
   validates_presence_of :user, :message => "Prestataire ne doit pas etre nul"
   validates_presence_of :cout_ha_passage, :message => "cout ha passage ne doit pas etre nul"
+  validates_presence_of :category_id, :message => "la categorie doit etre definie"
+  validates_presence_of :date, :message => "la date doit etre definie"
   
   # validates_associated :putoparcelles
   # validates_associated :putofactures

@@ -498,3 +498,1003 @@
   614  heroku logs
   615  history
   616  history >> history.txt
+   11  Ajout Champs Facture.tva, .reglement, .paye, EN COURS.
+   12  git commit -am "Ajout des couleur de parcelles par type de culture
+   13  Appel Automatique de update_stock_produit sur modification d'un produit ou d'un pulve.
+   14  Ajout du pourcentage de produit consomme dans la liste des produits
+   15  git commit -am "Ajout des couleur de parcelles par type de culture
+   16  Appel Automatique de update_stock_produit sur modification d'un produit ou d'un pulve.
+   17  Ajout du pourcentage de produit consomme dans la liste des produits
+   18  Ajout de list_protofactures dans controller verif.
+   19  Ajout champs User.adresse, .telephone, ... OK
+   20  Ajout champs Facture.tva, .paye, .reglement, EN COURS"
+   21  git status
+   22  git push
+   23  git push
+   24  git push heroku master
+   25  heroku rake db:reset --trace
+   26  heroku rake data:saison_2011 --trace
+   27  rake db:reset --trace
+   28  rake data:saison_2011 --trace
+   29  rake db:reset --trace
+   30  rake data:saison_2011 --trace
+   31  rake data:saison_2011 --trace
+   32  rake data:saison_2011 --trace
+   33  rake db:reset --trace
+   34  rake data:saison_2011 --trace
+   35  git commit -am "Ajout champs Facture.tva, .paye, .reglement, OK"
+   36  git status
+   37  heroku pg:psql
+   38  heroku pg:info
+   39  heroku pgbackups
+   40  pg_restore -d comptagri doc/export_heroku/b007.dump
+   41  pg_restore --verbose --clean --no-acl --no-owner -h localhosthost -U postgres -d comptagri_dev b007.dump
+   42  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b007.dump
+   43  PGPASSWORD=picasso pg_dump -Fc --no-acl --no-owner -h localhost -U postgres comptagri_dev > 2011-12-28-1.dump
+   44  ls
+   45  PGPASSWORD=picasso pg_dump -Fc --no-acl --no-owner -h localhost -U postgres comptagri_dev > doc/export_local/2011-12-28-1.dump
+   46  heroku pgbackups:restore DATABASE 'https://s3.amazonaws.com/comptagri/2011-12-28-1.dump'
+   47  heroku pgbackups:restore DATABASE 'https://s3.amazonaws.com/comptagri/2011-12-28-1.dump'
+   48  heroku logs --ps postgres
+   49  heroku logs
+   50  heroku logs --tail
+   51  heroku drains
+   52  heroku logs -n 300
+   53  mlv
+   54  gitk
+   55  git status
+   56  git history
+   57  git --help
+   58  git show
+   59  mlv
+   60  git push
+   61  mlv
+   62  git status
+   63  gitk
+   64  git branch
+   65  git log
+   66  git log print_helper.rb
+   67  git log app/helpers/print_helper.rb
+   68  git log /app/helpers/print_helper.rb
+   69  git log ./app/helpers/print_helper.rb
+   70  git status
+   71  git add .
+   72  git status
+   73  git status
+   74  mlv
+   75  script/server
+   76  script/server
+   77  script/server
+   78  script/server
+   79  script/server
+   80  script/server
+   81  script/server
+   82  mlv
+   83  git push
+   84  gitk
+   85  rake db:reset --trace
+   86  rake data:saison_2011 --trace
+   87  rake db:reset --trace
+   88  rake data:saison_2011 --trace
+   89  rake db:reset --trace
+   90  rake data:saison_2011 --trace
+   91  rake db:reset --trace
+   92  rake data:saison_2011 --trace
+   93  rake db:reset --trace
+   94  rake data:saison_2011 --trace
+   95  gitk
+   96  gitk
+   97  git add .
+   98  git commit -am "test update saison_id depuis n'importe auelle vue. abandon car ne fonctionne pas."
+   99  git push
+  100  gem environment
+  101  gem list
+  102  gem search docraptor -r
+  103  gem search doc_raptor -r
+  104  gem install doc_raptor
+  105  sudo gem install doc_raptor
+  106  sudo gem update --system
+  107  sudo gem install doc_raptor
+  108  gem update --system 1.5.3
+  109  sudo gem update --system 1.5.3
+  110  git push heroku master
+  111  git commit -am "sauvegarde"
+  112  git push heroku master
+  113  heroku rake db:reset --trace
+  114  heroku rake data:saison_2011 --trace
+  115  heroku rake db:reset --trace
+  116  heroku rake data:saison_2011 --trace
+  117  rake db:reset --trace
+  118  rake data:saison_2011 --trace
+  119  rake db:reset --trace
+  120  rake data:saison_2011 --trace
+  121  rake db:reset --trace
+  122  rake data:saison_2011 --trace
+  123  rake db:reset --trace
+  124  rake data:saison_2011 --trace
+  125  su -l postgres
+  126  mlv
+  127  script/console
+  128  diskutil verify /
+  129  diskutil
+  130  diskutil verify -h
+  131  diskutil verifyVolume /
+  132  diskutil repairVolume /
+  133  fsck_hfs -l
+  134  diskutil repairVolume /
+  135  fsck_hfs -l
+  136  fsck_hfs -l /
+  137  fsck_hfs -l /
+  138  diskutil repairVolume /
+  139  diskutil info /
+  140  diskutil verify /
+  141  fsck_hfs -l
+  142  df -hl
+  143  df -hl
+  144  sudo fsck_hfs -l /dev/disk0s2
+  145  mlv
+  146  script/console
+  147  mlv
+  148  scritp/server
+  149  script/server
+  150  mlv
+  151  script/server
+  152  script/server
+  153  script/server
+  154  mlv
+  155  rake db:reset --trace
+  156  rake data:saison_2011 --trace
+  157  mlv
+  158  script/server
+  159  mlv
+  160  script:db
+  161  script/db
+  162  rake db
+  163  rake server:db
+  164  mlv
+  165  heroku rake db:reset --trace
+  166  rake db:reset --trace
+  167  rake data:saison_2011 --trace
+  168  git add .
+  169  git commit -am "form ajax for User. in progress.
+  170  table_with_find_JS en cours."
+  171  git push
+  172  mlv
+  173  heroku info --app montlevic
+  174  script/console
+  175  mlv
+  176  script:server
+  177  script/server
+  178  script/server
+  179  script/server
+  180  mlv
+  181  rake db:reset --trace
+  182  rake data:saison_2011 --trace
+  183  rake db:reset --trace
+  184  rake data:saison_2011 --trace
+  185  rake db:reset --trace
+  186  rake data:saison_2011 --trace
+  187  git add .
+  188  - Choix de la saison pour tous.
+  189  git status
+  190  gitk
+  191  git add .
+  192  git commit -am "Excel: suppression de add_p_to_f des formules de l'onglet PULVES qui permettait de lier une facture a un pulve.
+  193  - Choix de la saison pour tous.
+  194  - Impossible de supprimer un User qui a des associations (methode has_associations?).
+  195  - Gestions des permissions (admin vs non-admin)"
+  196  git status
+  197  rake db:reset --trace
+  198  rake db:reset --trace
+  199  rake data:saison_2011 --trace
+  200  rake db:reset --trace
+  201  rake data:saison_2011 --trace
+  202  rake db:reset --trace
+  203  rake data:saison_2011 --trace
+  204  git add .
+  205  git commit -am "on appel maintenant Category.produits pour les categories de produits au lieu de Category.pulves.
+  206  suppression de la categorie 'desherbant'"
+  207  history
+  208  git push heroku master
+  209  heroku rake db:reset --trace
+  210  heroku rake data:saison_2011 --trace
+  211  rake db:reset --trace
+  212  heroku rake data:saison_2011 --trace
+  213  rake data:saison_2011 --trace
+  214  rake db:reset --trace
+  215  rake data:saison_2011 --trace
+  216  rake db:reset --trace
+  217  rake data:saison_2011 --trace
+  218  rake db:reset --trace
+  219  rake data:saison_2011 --trace
+  220  rake db:reset --trace
+  221  rake db:reset --trace
+  222  rake data:saison_2011 --trace
+  223  rake db:reset --trace
+  224  rake data:saison_2011 --trace
+  225  rake db:reset --trace
+  226  rake data:saison_2011 --trace
+  227  rake db:reset --trace
+  228  rake data:saison_2011 --trace
+  229  rake db:reset --trace
+  230  rake data:saison_2011 --trace
+  231  rake db:reset --trace
+  232  rake data:saison_2011 --trace
+  233  rake db:reset --trace
+  234  rake data:saison_2011 --trace
+  235  rake db:reset --trace
+  236  rake data:saison_2011 --trace
+  237  rake db:reset --trace
+  238  rake data:saison_2011 --trace
+  239  rake db:reset --trace
+  240  rake data:saison_2011 --trace
+  241  rake db:reset --trace
+  242  rake data:saison_2011 --trace
+  243  rake data:saison_2012 --trace
+  244  rake data:saison_2012 --trace
+  245  rake data:saison_2012 --trace
+  246  rake data:saison_2012 --trace
+  247  rake data:saison_2012 --trace
+  248  rake data:saison_2012 --trace
+  249  rake db:reset --trace
+  250  rake data:saison_2011 --trace
+  251  rake data:saison_2012 --trace
+  252  rake db:reset --trace
+  253  rake data:saison_2011 --trace
+  254  rake data:saison_2012 --trace
+  255  rake db:reset --trace
+  256  rake data:saison_2012 --trace
+  257  rake db:reset --trace
+  258  rake data:saison_2012 --trace
+  259  rake db:reset --trace
+  260  rake data:saison_2011 --trace
+  261  rake data:saison_2012 --trace
+  262  git add 
+  263  git add .
+  264  git commit -am "creation saison 2012. modification de certains produits semences en factures."
+  265  git push heroku master
+  266  heroku rake db:reset --trace
+  267  rake data:saison_2011 --trace
+  268  rake db:reset --trace
+  269  rake data:saison_2011 --trace
+  270  rake data:saison_2011 --trace
+  271  rake data:saison_2012 --trace
+  272  rake data:saison_2012 --trace
+  273  rake db:reset --trace
+  274  rake db:reset --trace
+  275  rake data:saison_2011 --trace
+  276  rake data:saison_2012 --trace
+  277  rake db:reset --trace
+  278  rake data:saison_2011 --trace
+  279  rake data:saison_2012 --trace
+  280  mlv
+  281  script/db
+  282  script:db
+  283  rake db
+  284  script/db
+  285  db
+  286  rake server:db
+  287  mlv
+  288  script/console
+  289  script/console
+  290  script/console
+  291  user=User.new(:name=>'dd')
+  292  user=User.new(:name=>"dd")
+  293   user=User.new(:name=>'toto')
+  294   user=User.new(:name=>'toto')
+  295   user=User.new(:name=>'toto')
+  296  user
+  297  user = User.new("titi")
+  298  Object
+  299  true.false?
+  300  nil
+  301  script/console
+  302  user=User.new(:name=>'toto')
+  303  script/console
+  304  user=User.new(:name=>'toto')
+  305  script/console
+  306  script/console
+  307  mlv
+  308  script/server
+  309  script/server
+  310  script/server
+  311  script/server
+  312  script/server
+  313  script/server
+  314  script/server
+  315  script/server
+  316  script/server
+  317  script/server
+  318  script/server
+  319  cd ..
+  320  cd bilome/
+  321  ./script/generate model cbm desc:string test:boolean
+  322  ./script/generate scaffold Saline ref:string desc:string
+  323  ./script/plugin install http://svn.techno-weenie.net/projects/plugins/acts_as_paranoid
+  324  rake db:migrate
+  325  ./script/generate scaffold cbm ref:string desc:string name:string
+  326  ./script/genedestroy cbm
+  327  ./script/generate destroy cbm
+  328  cd ..
+  329  rails bilome
+  330  cd bilome
+  331  ./script/generate scaffold cbm ref:string desc:string name:string
+  332  ./script/generate scaffold salina ref:string desc:string name:string
+  333  script/server
+  334  rake db:migrate
+  335  script/server
+  336  ./script/generate scaffold match cbm_id:integer salina_id:integer relevance:integer
+  337  script/server
+  338  rake db:migrate
+  339  script/server
+  340  sudo gem install spreadsheet
+  341  script/server
+  342  script/server
+  343  script/server
+  344  script/server
+  345  script/server
+  346  script/server
+  347  script/server
+  348  script/server
+  349  pwd
+  350  rake db:reset
+  351  script/server
+  352  script/server
+  353  script/server
+  354  ./script/generate scaffold mat ref_cbm:string ref_autre:string desc:string name:string
+  355  script/server
+  356  rake db:migrate:up
+  357  rake db:reset
+  358  script/server
+  359  rake db:create:all
+  360  rake db:migrate
+  361  script/server
+  362  rake db:reset
+  363  script/server
+  364  rake db:reset
+  365  script/server
+  366  rake db:reset
+  367  rake db:create:all
+  368  script/server
+  369  script/server
+  370  script/server
+  371  script/server
+  372  script/server
+  373  script/server
+  374  script/server
+  375  script/server
+  376  script/server
+  377  script/server
+  378  script/server
+  379  script/server
+  380  rake db:reset
+  381  rake db:create:all
+  382  script/server
+  383  script/server
+  384  script/server
+  385  script/server
+  386  script/server
+  387  script/server
+  388  script/server
+  389  script/server
+  390  script/server
+  391  script/server
+  392  script/server
+  393  script/server
+  394  script/server
+  395  script/server
+  396  script/server
+  397  script/server
+  398  script/server
+  399  script/server
+  400  sudo rake gems:install
+  401  sudo rake gems:install --trace
+  402  gem 
+  403  gem -v
+  404  sudo rake gems:install --trace
+  405  ./script/generate scaffold category name:string tag:string desc:string
+  406  ./script/generate migration add_ancestry_to_category ancestry:string
+  407  rake db:migrate
+  408  rake db:migrate
+  409  script/server
+  410  script/server
+  411  mlv
+  412  cd ../bilome
+  413  script/server
+  414  script/server
+  415  script/server
+  416  script/server
+  417  script/server
+  418  script/server
+  419  script/server
+  420  script/server
+  421  /System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java ; exit;
+  422  cd Downloads/
+  423  la
+  424  cd MobileAtlasCreator1.8
+  425  la
+  426  java -Xmx1024 -jar Mobile_atlas_Creator.jar
+  427  java -Xmx1024 -jar Mobile_atlas_Creator.jar
+  428  java -Xmx1024M -jar Mobile_atlas_Creator.jar
+  429  mlv
+  430  rake db:reset
+  431  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b010.dump
+  432  rake db:migrate:up VERSION=1 --trace
+  433  rake db:migrate:up VERSION=1 --trace
+  434  rake db:reset
+  435  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b010.dump
+  436  rake db:migrate:up VERSION=1 --trace
+  437  rake db:migrate:up VERSION=2 --trace
+  438  rake db:reset
+  439  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b010.dump
+  440  script/server
+  441  rake db:start
+  442  rake server:db
+  443  su -l postgres
+  444  mlv
+  445  script/server
+  446  script/server
+  447  history
+  448  mlv
+  449  rake db:reset
+  450  history
+  451  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b007.dump
+  452  rake db:migrate:up VERSION=1 --trace
+  453  rake db:migrate:up VERSION=2 --trace
+  454  rake db:migrate:down VERSION=2 --trace
+  455  rake db:migrate:up VERSION=2 --trace
+  456  rake db:migrate:up VERSION=2 --trace
+  457  rake db:migrate:down VERSION=2 --trace
+  458  rake db:migrate:up VERSION=2 --trace
+  459  rake db:migrate:down VERSION=2 --trace
+  460  rake db:migrate:up VERSION=2 --trace
+  461  rake db:migrate:down VERSION=2 --trace
+  462  rake db:migrate:down VERSION=2 --trace
+  463  rake db:migrate:up VERSION=2 --trace
+  464  rake db:migrate:down VERSION=2 --trace
+  465  rake db:migrate:up VERSION=2 --trace
+  466  rake db:migrate:down VERSION=2 --trace
+  467  rake db:migrate:up VERSION=2 --trace
+  468  rake db:migrate:down VERSION=2 --trace
+  469  rake db:reset
+  470  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b007.dump
+  471  rake -T
+  472  rake db:schema:dump
+  473  rake db:migrate:up VERSION=1 --trace
+  474  rake db:migrate:up VERSION=2 --trace
+  475  rake db:migrate:down VERSION=2 --trace
+  476  rake db:migrate:down VERSION=1 --trace
+  477  rake db:migrate:up VERSION=1 --trace
+  478  rake db:migrate:up VERSION=2 --trace
+  479  rake db:migrate:down VERSION=2 --trace
+  480  rake db:migrate:up VERSION=2 --trace
+  481  rake db:migrate:up VERSION=2 --trace
+  482  rake db:reset
+  483  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b007.dump
+  484  rake db:migrate:up VERSION=1 --trace
+  485  rake db:migrate:up VERSION=2 --trace
+  486  rake db:migrate:up VERSION=2 --trace
+  487  rake db:reset
+  488  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b010.dump
+  489  rake db:migrate:up VERSION=1 --trace
+  490  rake db:migrate:up VERSION=1 --trace
+  491  rake db:migrate:doan VERSION=1 --trace
+  492  rake db:migrate:down VERSION=1 --trace
+  493  rake db:migrate:up VERSION=2 --trace
+  494  rake db:migrate:down VERSION=2 --trace
+  495  rake db:migrate:up VERSION=2 --trace
+  496  rake db:migrate:down VERSION=2 --trace
+  497  rake db:migrate:up VERSION=2 --trace
+  498  mlv
+  499  su -l postgres
+  500  su -l postgres
+  501  mlv
+  502  git add .
+  503  git push
+  504  git commit -am "debut Import"
+  505  git push
+  506  rake db:migrate:up VERSION=4 --trace
+  507  rake db:migrate:up VERSION=4 --trace
+  508  rake db:migrate:up VERSION=4 --trace
+  509  history
+  510  history >> history.txt
+    8  Appel Automatique de update_stock_produit sur modification d'un produit ou d'un pulve.
+    9  Ajout du pourcentage de produit consomme dans la liste des produits
+   10  Ajout de list_protofactures dans controller verif.
+   11  Ajout Champs Facture.tva, .reglement, .paye, EN COURS.
+   12  git commit -am "Ajout des couleur de parcelles par type de culture
+   13  Appel Automatique de update_stock_produit sur modification d'un produit ou d'un pulve.
+   14  Ajout du pourcentage de produit consomme dans la liste des produits
+   15  git commit -am "Ajout des couleur de parcelles par type de culture
+   16  Appel Automatique de update_stock_produit sur modification d'un produit ou d'un pulve.
+   17  Ajout du pourcentage de produit consomme dans la liste des produits
+   18  Ajout de list_protofactures dans controller verif.
+   19  Ajout champs User.adresse, .telephone, ... OK
+   20  Ajout champs Facture.tva, .paye, .reglement, EN COURS"
+   21  git status
+   22  git push
+   23  git push
+   24  git push heroku master
+   25  heroku rake db:reset --trace
+   26  heroku rake data:saison_2011 --trace
+   27  rake db:reset --trace
+   28  rake data:saison_2011 --trace
+   29  rake db:reset --trace
+   30  rake data:saison_2011 --trace
+   31  rake data:saison_2011 --trace
+   32  rake data:saison_2011 --trace
+   33  rake db:reset --trace
+   34  rake data:saison_2011 --trace
+   35  git commit -am "Ajout champs Facture.tva, .paye, .reglement, OK"
+   36  git status
+   37  heroku pg:psql
+   38  heroku pg:info
+   39  heroku pgbackups
+   40  pg_restore -d comptagri doc/export_heroku/b007.dump
+   41  pg_restore --verbose --clean --no-acl --no-owner -h localhosthost -U postgres -d comptagri_dev b007.dump
+   42  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b007.dump
+   43  PGPASSWORD=picasso pg_dump -Fc --no-acl --no-owner -h localhost -U postgres comptagri_dev > 2011-12-28-1.dump
+   44  ls
+   45  PGPASSWORD=picasso pg_dump -Fc --no-acl --no-owner -h localhost -U postgres comptagri_dev > doc/export_local/2011-12-28-1.dump
+   46  heroku pgbackups:restore DATABASE 'https://s3.amazonaws.com/comptagri/2011-12-28-1.dump'
+   47  heroku pgbackups:restore DATABASE 'https://s3.amazonaws.com/comptagri/2011-12-28-1.dump'
+   48  heroku logs --ps postgres
+   49  heroku logs
+   50  heroku logs --tail
+   51  heroku drains
+   52  heroku logs -n 300
+   53  mlv
+   54  gitk
+   55  git status
+   56  git history
+   57  git --help
+   58  git show
+   59  mlv
+   60  git push
+   61  mlv
+   62  git status
+   63  gitk
+   64  git branch
+   65  git log
+   66  git log print_helper.rb
+   67  git log app/helpers/print_helper.rb
+   68  git log /app/helpers/print_helper.rb
+   69  git log ./app/helpers/print_helper.rb
+   70  git status
+   71  git add .
+   72  git status
+   73  git status
+   74  mlv
+   75  script/server
+   76  script/server
+   77  script/server
+   78  script/server
+   79  script/server
+   80  script/server
+   81  script/server
+   82  mlv
+   83  git push
+   84  gitk
+   85  rake db:reset --trace
+   86  rake data:saison_2011 --trace
+   87  rake db:reset --trace
+   88  rake data:saison_2011 --trace
+   89  rake db:reset --trace
+   90  rake data:saison_2011 --trace
+   91  rake db:reset --trace
+   92  rake data:saison_2011 --trace
+   93  rake db:reset --trace
+   94  rake data:saison_2011 --trace
+   95  gitk
+   96  gitk
+   97  git add .
+   98  git commit -am "test update saison_id depuis n'importe auelle vue. abandon car ne fonctionne pas."
+   99  git push
+  100  gem environment
+  101  gem list
+  102  gem search docraptor -r
+  103  gem search doc_raptor -r
+  104  gem install doc_raptor
+  105  sudo gem install doc_raptor
+  106  sudo gem update --system
+  107  sudo gem install doc_raptor
+  108  gem update --system 1.5.3
+  109  sudo gem update --system 1.5.3
+  110  git push heroku master
+  111  git commit -am "sauvegarde"
+  112  git push heroku master
+  113  heroku rake db:reset --trace
+  114  heroku rake data:saison_2011 --trace
+  115  heroku rake db:reset --trace
+  116  heroku rake data:saison_2011 --trace
+  117  rake db:reset --trace
+  118  rake data:saison_2011 --trace
+  119  rake db:reset --trace
+  120  rake data:saison_2011 --trace
+  121  rake db:reset --trace
+  122  rake data:saison_2011 --trace
+  123  rake db:reset --trace
+  124  rake data:saison_2011 --trace
+  125  su -l postgres
+  126  mlv
+  127  script/console
+  128  diskutil verify /
+  129  diskutil
+  130  diskutil verify -h
+  131  diskutil verifyVolume /
+  132  diskutil repairVolume /
+  133  fsck_hfs -l
+  134  diskutil repairVolume /
+  135  fsck_hfs -l
+  136  fsck_hfs -l /
+  137  fsck_hfs -l /
+  138  diskutil repairVolume /
+  139  diskutil info /
+  140  diskutil verify /
+  141  fsck_hfs -l
+  142  df -hl
+  143  df -hl
+  144  sudo fsck_hfs -l /dev/disk0s2
+  145  mlv
+  146  script/console
+  147  mlv
+  148  scritp/server
+  149  script/server
+  150  mlv
+  151  script/server
+  152  script/server
+  153  script/server
+  154  mlv
+  155  rake db:reset --trace
+  156  rake data:saison_2011 --trace
+  157  mlv
+  158  script/server
+  159  mlv
+  160  script:db
+  161  script/db
+  162  rake db
+  163  rake server:db
+  164  mlv
+  165  heroku rake db:reset --trace
+  166  rake db:reset --trace
+  167  rake data:saison_2011 --trace
+  168  git add .
+  169  git commit -am "form ajax for User. in progress.
+  170  table_with_find_JS en cours."
+  171  git push
+  172  mlv
+  173  heroku info --app montlevic
+  174  script/console
+  175  mlv
+  176  script:server
+  177  script/server
+  178  script/server
+  179  script/server
+  180  mlv
+  181  rake db:reset --trace
+  182  rake data:saison_2011 --trace
+  183  rake db:reset --trace
+  184  rake data:saison_2011 --trace
+  185  rake db:reset --trace
+  186  rake data:saison_2011 --trace
+  187  git add .
+  188  - Choix de la saison pour tous.
+  189  git status
+  190  gitk
+  191  git add .
+  192  git commit -am "Excel: suppression de add_p_to_f des formules de l'onglet PULVES qui permettait de lier une facture a un pulve.
+  193  - Choix de la saison pour tous.
+  194  - Impossible de supprimer un User qui a des associations (methode has_associations?).
+  195  - Gestions des permissions (admin vs non-admin)"
+  196  git status
+  197  rake db:reset --trace
+  198  rake db:reset --trace
+  199  rake data:saison_2011 --trace
+  200  rake db:reset --trace
+  201  rake data:saison_2011 --trace
+  202  rake db:reset --trace
+  203  rake data:saison_2011 --trace
+  204  git add .
+  205  git commit -am "on appel maintenant Category.produits pour les categories de produits au lieu de Category.pulves.
+  206  suppression de la categorie 'desherbant'"
+  207  history
+  208  git push heroku master
+  209  heroku rake db:reset --trace
+  210  heroku rake data:saison_2011 --trace
+  211  rake db:reset --trace
+  212  heroku rake data:saison_2011 --trace
+  213  rake data:saison_2011 --trace
+  214  rake db:reset --trace
+  215  rake data:saison_2011 --trace
+  216  rake db:reset --trace
+  217  rake data:saison_2011 --trace
+  218  rake db:reset --trace
+  219  rake data:saison_2011 --trace
+  220  rake db:reset --trace
+  221  rake db:reset --trace
+  222  rake data:saison_2011 --trace
+  223  rake db:reset --trace
+  224  rake data:saison_2011 --trace
+  225  rake db:reset --trace
+  226  rake data:saison_2011 --trace
+  227  rake db:reset --trace
+  228  rake data:saison_2011 --trace
+  229  rake db:reset --trace
+  230  rake data:saison_2011 --trace
+  231  rake db:reset --trace
+  232  rake data:saison_2011 --trace
+  233  rake db:reset --trace
+  234  rake data:saison_2011 --trace
+  235  rake db:reset --trace
+  236  rake data:saison_2011 --trace
+  237  rake db:reset --trace
+  238  rake data:saison_2011 --trace
+  239  rake db:reset --trace
+  240  rake data:saison_2011 --trace
+  241  rake db:reset --trace
+  242  rake data:saison_2011 --trace
+  243  rake data:saison_2012 --trace
+  244  rake data:saison_2012 --trace
+  245  rake data:saison_2012 --trace
+  246  rake data:saison_2012 --trace
+  247  rake data:saison_2012 --trace
+  248  rake data:saison_2012 --trace
+  249  rake db:reset --trace
+  250  rake data:saison_2011 --trace
+  251  rake data:saison_2012 --trace
+  252  rake db:reset --trace
+  253  rake data:saison_2011 --trace
+  254  rake data:saison_2012 --trace
+  255  rake db:reset --trace
+  256  rake data:saison_2012 --trace
+  257  rake db:reset --trace
+  258  rake data:saison_2012 --trace
+  259  rake db:reset --trace
+  260  rake data:saison_2011 --trace
+  261  rake data:saison_2012 --trace
+  262  git add 
+  263  git add .
+  264  git commit -am "creation saison 2012. modification de certains produits semences en factures."
+  265  git push heroku master
+  266  heroku rake db:reset --trace
+  267  rake data:saison_2011 --trace
+  268  rake db:reset --trace
+  269  rake data:saison_2011 --trace
+  270  rake data:saison_2011 --trace
+  271  rake data:saison_2012 --trace
+  272  rake data:saison_2012 --trace
+  273  rake db:reset --trace
+  274  rake db:reset --trace
+  275  rake data:saison_2011 --trace
+  276  rake data:saison_2012 --trace
+  277  rake db:reset --trace
+  278  rake data:saison_2011 --trace
+  279  rake data:saison_2012 --trace
+  280  mlv
+  281  script/db
+  282  script:db
+  283  rake db
+  284  script/db
+  285  db
+  286  rake server:db
+  287  mlv
+  288  script/console
+  289  script/console
+  290  script/console
+  291  user=User.new(:name=>'dd')
+  292  user=User.new(:name=>"dd")
+  293   user=User.new(:name=>'toto')
+  294   user=User.new(:name=>'toto')
+  295   user=User.new(:name=>'toto')
+  296  user
+  297  user = User.new("titi")
+  298  Object
+  299  true.false?
+  300  nil
+  301  script/console
+  302  user=User.new(:name=>'toto')
+  303  script/console
+  304  user=User.new(:name=>'toto')
+  305  script/console
+  306  script/console
+  307  mlv
+  308  script/server
+  309  script/server
+  310  script/server
+  311  script/server
+  312  script/server
+  313  script/server
+  314  script/server
+  315  script/server
+  316  script/server
+  317  script/server
+  318  script/server
+  319  cd ..
+  320  cd bilome/
+  321  ./script/generate model cbm desc:string test:boolean
+  322  ./script/generate scaffold Saline ref:string desc:string
+  323  ./script/plugin install http://svn.techno-weenie.net/projects/plugins/acts_as_paranoid
+  324  rake db:migrate
+  325  ./script/generate scaffold cbm ref:string desc:string name:string
+  326  ./script/genedestroy cbm
+  327  ./script/generate destroy cbm
+  328  cd ..
+  329  rails bilome
+  330  cd bilome
+  331  ./script/generate scaffold cbm ref:string desc:string name:string
+  332  ./script/generate scaffold salina ref:string desc:string name:string
+  333  script/server
+  334  rake db:migrate
+  335  script/server
+  336  ./script/generate scaffold match cbm_id:integer salina_id:integer relevance:integer
+  337  script/server
+  338  rake db:migrate
+  339  script/server
+  340  sudo gem install spreadsheet
+  341  script/server
+  342  script/server
+  343  script/server
+  344  script/server
+  345  script/server
+  346  script/server
+  347  script/server
+  348  script/server
+  349  pwd
+  350  rake db:reset
+  351  script/server
+  352  script/server
+  353  script/server
+  354  ./script/generate scaffold mat ref_cbm:string ref_autre:string desc:string name:string
+  355  script/server
+  356  rake db:migrate:up
+  357  rake db:reset
+  358  script/server
+  359  rake db:create:all
+  360  rake db:migrate
+  361  script/server
+  362  rake db:reset
+  363  script/server
+  364  rake db:reset
+  365  script/server
+  366  rake db:reset
+  367  rake db:create:all
+  368  script/server
+  369  script/server
+  370  script/server
+  371  script/server
+  372  script/server
+  373  script/server
+  374  script/server
+  375  script/server
+  376  script/server
+  377  script/server
+  378  script/server
+  379  script/server
+  380  rake db:reset
+  381  rake db:create:all
+  382  script/server
+  383  script/server
+  384  script/server
+  385  script/server
+  386  script/server
+  387  script/server
+  388  script/server
+  389  script/server
+  390  script/server
+  391  script/server
+  392  script/server
+  393  script/server
+  394  script/server
+  395  script/server
+  396  script/server
+  397  script/server
+  398  script/server
+  399  script/server
+  400  sudo rake gems:install
+  401  sudo rake gems:install --trace
+  402  gem 
+  403  gem -v
+  404  sudo rake gems:install --trace
+  405  ./script/generate scaffold category name:string tag:string desc:string
+  406  ./script/generate migration add_ancestry_to_category ancestry:string
+  407  rake db:migrate
+  408  rake db:migrate
+  409  script/server
+  410  script/server
+  411  mlv
+  412  cd ../bilome
+  413  script/server
+  414  script/server
+  415  script/server
+  416  script/server
+  417  script/server
+  418  script/server
+  419  script/server
+  420  script/server
+  421  /System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java ; exit;
+  422  cd Downloads/
+  423  la
+  424  cd MobileAtlasCreator1.8
+  425  la
+  426  java -Xmx1024 -jar Mobile_atlas_Creator.jar
+  427  java -Xmx1024 -jar Mobile_atlas_Creator.jar
+  428  java -Xmx1024M -jar Mobile_atlas_Creator.jar
+  429  mlv
+  430  rake db:reset
+  431  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b010.dump
+  432  rake db:migrate:up VERSION=1 --trace
+  433  rake db:migrate:up VERSION=1 --trace
+  434  rake db:reset
+  435  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b010.dump
+  436  rake db:migrate:up VERSION=1 --trace
+  437  rake db:migrate:up VERSION=2 --trace
+  438  rake db:reset
+  439  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b010.dump
+  440  script/server
+  441  rake db:start
+  442  rake server:db
+  443  su -l postgres
+  444  mlv
+  445  script/server
+  446  script/server
+  447  history
+  448  mlv
+  449  rake db:reset
+  450  history
+  451  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b007.dump
+  452  rake db:migrate:up VERSION=1 --trace
+  453  rake db:migrate:up VERSION=2 --trace
+  454  rake db:migrate:down VERSION=2 --trace
+  455  rake db:migrate:up VERSION=2 --trace
+  456  rake db:migrate:up VERSION=2 --trace
+  457  rake db:migrate:down VERSION=2 --trace
+  458  rake db:migrate:up VERSION=2 --trace
+  459  rake db:migrate:down VERSION=2 --trace
+  460  rake db:migrate:up VERSION=2 --trace
+  461  rake db:migrate:down VERSION=2 --trace
+  462  rake db:migrate:down VERSION=2 --trace
+  463  rake db:migrate:up VERSION=2 --trace
+  464  rake db:migrate:down VERSION=2 --trace
+  465  rake db:migrate:up VERSION=2 --trace
+  466  rake db:migrate:down VERSION=2 --trace
+  467  rake db:migrate:up VERSION=2 --trace
+  468  rake db:migrate:down VERSION=2 --trace
+  469  rake db:reset
+  470  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b007.dump
+  471  rake -T
+  472  rake db:schema:dump
+  473  rake db:migrate:up VERSION=1 --trace
+  474  rake db:migrate:up VERSION=2 --trace
+  475  rake db:migrate:down VERSION=2 --trace
+  476  rake db:migrate:down VERSION=1 --trace
+  477  rake db:migrate:up VERSION=1 --trace
+  478  rake db:migrate:up VERSION=2 --trace
+  479  rake db:migrate:down VERSION=2 --trace
+  480  rake db:migrate:up VERSION=2 --trace
+  481  rake db:migrate:up VERSION=2 --trace
+  482  rake db:reset
+  483  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b007.dump
+  484  rake db:migrate:up VERSION=1 --trace
+  485  rake db:migrate:up VERSION=2 --trace
+  486  rake db:migrate:up VERSION=2 --trace
+  487  rake db:reset
+  488  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d comptagri_dev doc/export_heroku/b010.dump
+  489  rake db:migrate:up VERSION=1 --trace
+  490  rake db:migrate:up VERSION=1 --trace
+  491  rake db:migrate:doan VERSION=1 --trace
+  492  rake db:migrate:down VERSION=1 --trace
+  493  rake db:migrate:up VERSION=2 --trace
+  494  rake db:migrate:down VERSION=2 --trace
+  495  rake db:migrate:up VERSION=2 --trace
+  496  rake db:migrate:down VERSION=2 --trace
+  497  rake db:migrate:up VERSION=2 --trace
+  498  mlv
+  499  su -l postgres
+  500  su -l postgres
+  501  mlv
+  502  script/server
+  503  script/server
+  504  script/server
+  505  script/server
+  506  script/server
+  507  history >> history.txt

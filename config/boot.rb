@@ -35,7 +35,7 @@ module Rails
 
   class Boot
     def run
-      # modif matthieu for bundler
+# modif matthieu for bundler
 # commented 2 lines
       # load_initializer
       # Rails::Initializer.run(:set_load_path)
