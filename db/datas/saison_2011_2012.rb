@@ -6,16 +6,41 @@ Setting.find(:first).update_attribute(:saison_id,	saison_2011_2012.id )
 
 
 #Typecultures
-ble = Typeculture.find_by_name("Ble")
-tournesol = Typeculture.find_by_name("Tournesol")
-colza = Typeculture.find_by_name("Colza")
-jachere = Typeculture.find_by_name("Jachere")
-luzerne = Typeculture.find_by_name("Luzerne")
-foin = Typeculture.find_by_name("Foin")
-gel = Typeculture.find_by_code("gel")
-trefle = Typeculture.find_by_code("trefle")
+###########################
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+# Attention 
+# Typeculture.find_by_name("Ble") ne prend pas en compte la saison 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+###########################
+ble        = Typeculture.find_by_name("Ble")
+tournesol  = Typeculture.find_by_name("Tournesol")
+colza      = Typeculture.find_by_name("Colza")
+jachere    = Typeculture.find_by_name("Jachere")
+luzerne    = Typeculture.find_by_name("Luzerne")
+foin       = Typeculture.find_by_name("Foin")
+gel        = Typeculture.find_by_code("gel")
+trefle     = Typeculture.find_by_code("trefle")
 miscanthus = Typeculture.find_by_code("miscanthus")
-autre = Typeculture.find_by_code("autre")
+autre      = Typeculture.find_by_code("autre")
 
 
 

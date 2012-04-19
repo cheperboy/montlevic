@@ -30,6 +30,9 @@
 .table_data tr.bold		{ font-weight: bold; }
 .table_data td.bold		{ font-weight: bold; }
 .table_data tr:hover 	{ background-color: #FFFFBB; color: #000}
+.table_data td.bg-red 		{ background-color: red; color: #000}
+.table_data td.bg-green 	{ background-color: green; color: #000}
+.table_data td.bg-orange 	{ background-color: orange; color: #000}
 
 .table_data th.value, td.value {
 	border-right-color :transparent;

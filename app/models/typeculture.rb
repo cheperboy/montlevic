@@ -8,7 +8,22 @@ class Typeculture < ActiveRecord::Base
     @name_for_select = "Typeculture :: " + name + " - " + " - " + surface.to_s + " Ha" 
   end
 
+#########################
+#
+#
+#
+# self.find_by_code(code) ne prend pas en compte 
+# la saison et ne devrait jamais etre appelee
+#
+#
+#
+#
+#
   def self.find_by_code(code)
+    self.find(:first, :conditions => ["code = ?", code])
+  end  
+
+  def self.find_by_code_for_saison(code)
     self.find(:first, :conditions => ["code = ?", code])
   end  
   

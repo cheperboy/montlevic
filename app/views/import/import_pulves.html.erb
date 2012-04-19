@@ -6,27 +6,22 @@
 <div id="title_h1">
 	<span class=title><%= titre %></span>
 	<span class=link><%= lien1 %></span>
-	<span class=link><%= lien2 %></span>
 </div>
-force: <%= @force %><br>
-has_warnings: <%= @import.has_warnings.to_s %><br>
-has_invalids: <%= @import.has_invalids.to_s %><br>
-state: <%= @state.to_s %><br>
+
+<p><% @import.remarks.each do |msg| %>- <%= msg.to_s %><br><% end %></p>
 
 <% if @state.eql?(:read) %>
-	<% if ((@import.has_invalids?) ||
-		(@import.has_warnings? && @force.eql?(false))) %>
-		<h2>Analyse du fichier</h2>
+<h2>Lecture du fichier</h2>
+	<% if (@import.has_invalids? || @import.has_warnings?) %>
 		<%= render(:partial => "warnings") %>
+		<% if (@import.has_warnings? && @force.eql?(false)) %>
+			<span class=link><%= lien2 %></span>
+		<% end %>
 	<% end %>
 
 <% elsif @state.eql?(:import) %>
 	<h2>Import des donnees</h2>
-	<% if @import.has_errors? %>
-		<%= render(:partial => "errors") %>
-	<% else %>
-		<p>all imported ok</p>
-	<% end %>
+	<%= render(:partial => "errors") %>
 <% end %>
 		
 		

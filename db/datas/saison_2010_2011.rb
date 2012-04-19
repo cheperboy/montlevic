@@ -67,6 +67,32 @@ auroy = User.find_by_name('Auroy')
 bernard_peres = User.find_by_name('Bernard Peres')
 
 #Typecultures
+#Typecultures
+###########################
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+# Attention 
+# Typeculture.find_by_name("Ble") ne prend pas en compte la saison 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+#                         # 
+###########################
 ble = Typeculture.find_by_name("Ble")
 bleble = Typeculture.find_by_name("2eme Ble")
 tournesol = Typeculture.find_by_name("Tournesol")

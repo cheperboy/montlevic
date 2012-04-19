@@ -1,13 +1,35 @@
-require "jcode"
+Spreadsheet.client_encoding = 'LATIN1//TRANSLIT//IGNORE'
+
+
+
+
+
+
+
+# Class Pulve: ajouter une validation pour cout_ha_passage>0
+# gerer les conversions texte->integer. faire des tests avec excel
+# 
+# A FAIRE
+# 
+# Import: realiser l'appel a parcelles.uniq avant pulve.save'
+# Import: realiser d'ajout des parcelle d'un pulve
+
+
+
+
+
 
 class Import < ActiveRecord::Base
-  attr_accessor :all_valid, :row_num, 
-    :import_size, #nombre d'elements importes avec succes
-    :type,  # 'pulves', 'factures'
-    :elts,    #:pulves, :factures
-    :warnings, :invalids, :errors,
-    :has_warnings, :has_invalids, :has_errors
-    
+  attr_accessor :row_id,      # nombre d'elements lu lors de l'analyse du fichier
+                :import_size, # nombre d'elements importes avec succes
+                :type,        # 'pulves', 'factures'
+                :elts,        # tableau de Pulves, Factures...
+                :parcelles,   # tableau de parcelles d'un elt
+                :cultures,   # tableau de cultures d'un elt
+                :remarks,     # tableau d'info sur le fichier, non specifique a une row
+                :warnings,      :invalids,      :errors,    #tableaux d'erreurs
+                :has_warnings,  :has_invalids,  :has_errors #presence d'erreur
+
   # ----- Constantes -----
 
   XLS_ROW_NUM                  = 0
@@ -18,38 +40,46 @@ class Import < ActiveRecord::Base
   XLS_PULVE_CATEGORY           = 4
   XLS_PULVE_NAME               = 5
   XLS_PULVE_USER               = 6
+  XLS_PULVE_TYPECULTURS        = 7
+  XLS_PULVE_PARCELLES          = 8
+  XLS_PULVE_DESC               = 9
+  XLS_PULVE_INFO               = 10
 
-  XLS_PUTOPRODUIT_PRODUIT_CODE = 8
-  XLS_PUTOPRODUIT_DOSAGE       = 9
+  XLS_PUTOPRODUIT_PRODUIT_CODE = 11
+  XLS_PUTOPRODUIT_DOSAGE       = 12
 
   def initialize(elt_type)
     @sym = elt_type
+    @saison = Setting.get_saison
     @last_pulve_id = nil
     @import_size   = 0
-    @row_num       = 0
-    @all_valid     = true
+    @row_id        = 0
     @has_errors    = false
     @has_warnings  = false
     @has_invalids  = false
-    @elts     = [] #elements 
-    @invalids = [] #invalids 
-    @warnings = [] #warnings 
-    @errors   = [] #errors 
+    @elts      = []  
+    @parcelles = []
+    @cultures  = []
+    @invalids  = []  
+    @warnings  = []  
+    @errors    = []  
     @remarks   = [] #general errors, not affected to a specific row 
   end
 
   #lecture du fichier
   def read_elements(sheet)
-    @row_num = 0
+    @row_id = 0
     sheet.each do |row|
       unless ignore_this_row(row)
-        @elts[@row_num]     = []
-        @invalids[@row_num] = []
-        @warnings[@row_num] = []
-        @errors[@row_num] = []
+        @elts[@row_id]      = []
+        @parcelles[@row_id] = []
+        @cultures[@row_id] = []
+        @invalids[@row_id]  = []
+        @warnings[@row_id]  = []
+        @errors[@row_id]    = []
         element = read_element(row)
-        @elts[@row_num] = element
-        @row_num += 1
+        @elts[@row_id] = element
+        @row_id += 1
       end
     end
   end
@@ -64,35 +94,44 @@ class Import < ActiveRecord::Base
   end
   def read_pulve(row)
     pulve = Pulve.new()
-    cout_ha_passage = get_cout_ha_passage(row[XLS_PULVE_COUT_HA_PASSAGE], @row_num)
-    category_id = get_category(row[XLS_PULVE_CATEGORY], @row_num)
-    user_id     = get_user_id(row[XLS_PULVE_USER], @row_num)
-    date        = get_date(row[XLS_PULVE_DATE], @row_num)
-    name        = get_name(row[XLS_PULVE_NAME], @row_num)
+    cout_ha_passage = get_cout_ha_passage(row[XLS_PULVE_COUT_HA_PASSAGE], @row_id)
+    category_id = get_category(row[XLS_PULVE_CATEGORY], @row_id)
+    user_id     = get_user_id(row[XLS_PULVE_USER], @row_id)
+    date        = get_date(row[XLS_PULVE_DATE], @row_id)
+    name        = get_name(row[XLS_PULVE_NAME], @row_id)
+    parcelles   = get_parcelles(row[XLS_PULVE_PARCELLES], @row_id)
+    cultures    = get_cultures(row[XLS_PULVE_TYPECULTURS], @row_id)
+    desc        = get_text(row[XLS_PULVE_DESC], @row_id)
+    info        = get_text(row[XLS_PULVE_INFO], @row_id)
+    puts "\t#{@row_id}"
+    @parcelles[@row_id].each {|x| puts "\t\t#{x.name.to_s}" }
     pulve.update_attributes(
       :name            => name,
       :user_id         => user_id, 
       :category_id     => category_id,
       :date            => date, 
       :cout_ha_passage => cout_ha_passage) 
-    check_pulve_already_imported(pulve, @row_num)
+      
+    check_pulve_already_imported(pulve, @row_id)
+      
+    check_parcelles_size(@row_id)
     return(pulve)
   end
   def read_putoproduit(row)
     putoproduit = Putoproduit.new()
-    produit_id = get_putoproduit_produit_id(row[XLS_PUTOPRODUIT_PRODUIT_CODE], @row_num)
-    dosage = get_putoproduit_dosage(row[XLS_PUTOPRODUIT_DOSAGE], @row_num)
+    produit_id = get_putoproduit_produit_id(row[XLS_PUTOPRODUIT_PRODUIT_CODE], @row_id)
+    dosage = get_putoproduit_dosage(row[XLS_PUTOPRODUIT_DOSAGE], @row_id)
     putoproduit.update_attributes(
       :produit_id => produit_id, 
       :dosage     => dosage) 
     return(putoproduit)
   end
   
-# Import des elements
+# Import Elements
   def import_elements
     @elts.each_with_index do |elt, index|
       import_element(elt, index)
-    end  
+    end
   end  
   def import_element(elt, index)
     if elt.class.eql?(Pulve)
@@ -104,7 +143,9 @@ class Import < ActiveRecord::Base
     end
   end
   def import_pulve(elt, index)
-    elt.saison_id = Setting.get_saison_id
+    elt.saison_id = @saison.id
+    
+    # elt.saison_id = Setting.get_saison_id #if (index != 3)
     # transforme les checkbox Typeculture en Factoparcelles
     elt.uniq_parcelles
     if elt.save
@@ -154,6 +195,12 @@ private
     @invalids[id] << "#{invalid}"
     @has_invalids = true
   end
+  def add_parcelle(parcelle, id)
+    @parcelles[id] << parcelle
+  end
+  def add_culture(culture, id)
+    @cultures[id] << culture
+  end
   def add_warning(warning, id)
     @warnings[id] << "#{warning}"
     @has_warnings = true
@@ -166,7 +213,7 @@ private
     @warnings[id].include?(warning)
   end
   
-# Elements
+# Read Element fields
   def get_user_id(user_code, id)
     if user = User.find_by_code(user_code)
       return user.id
@@ -190,16 +237,59 @@ private
       invalid = "la date n'est au bon format"
       add_invalid(invalid, id)
     end
+  end  
+  def get_text(text, id)
+    return text
   end
-  
-# Pulves
-  def get_cout_ha_passage(cout_ha_passage, id)
-    if (cout_ha_passage.class.eql?(Integer) || cout_ha_passage.class.eql?(Float))
-      return cout_ha_passage
-    else
-      invalid = "cout_ha_passage n'est pas un nombre"
-      add_invalid(invalid, id)
+  def get_parcelles(parcelles_raw, id)
+    if parcelles_raw.class.eql?(String)
+      parcelles = parcelles_raw.split(/,\s*/)
+      unless parcelles.size.eql?(0)
+        parcelles.each do |parcelle_code|
+          parcelle = @saison.parcelles.find_by_code(parcelle_code)
+          unless parcelle.nil?
+            add_parcelle(parcelle, id)
+          else
+            invalid = "parcelle '#{parcelle_code}' non trouvee"
+            add_invalid(invalid, id)
+          end
+        end
+      else
+        invalid = "parcelles non valides"
+        add_invalid(invalid, id)        
+      end
     end
+  end
+  def get_cultures(cultures_raw, id)
+    if cultures_raw.class.eql?(String)
+      cultures = cultures_raw.split(/,\s*/)
+      unless cultures.size.eql?(0)
+        cultures.each do |culture_code|
+          culture = @saison.typecultures.find { |t| t.code == culture_code }
+          unless culture.nil?
+            culture.parcelles.each do |parcelle|
+              add_culture(culture, id)
+            end
+          else
+            invalid = "culture '#{culture_code}' non trouvee"
+            add_invalid(invalid, id)
+          end
+        end
+      else
+        invalid = "cultures non valides"
+        add_invalid(invalid, id)
+      end
+    end
+  end
+
+  
+# Read Pulve fields
+  def get_cout_ha_passage(cout_ha_passage, id)
+      return cout_ha_passage
+    # else
+    #   invalid = "cout_ha_passage n'est pas un nombre"
+    #   add_invalid(invalid, id)
+    # end
   end
   def get_category(category_code, id)
     category = Category.find_by_code(category_code)
@@ -210,6 +300,8 @@ private
       add_invalid(invalid, id)
     end
   end
+
+# Check elements
   def check_pulve_already_imported(element, id)
     Pulve.find_by_saison(:all).each do |pulve|
       if (pulve.name.eql?(element.name))
@@ -217,10 +309,15 @@ private
         add_warning(invalid, id) unless warning_already_exist(invalid, id)
       end
     end
+  end  
+  def check_parcelles_size(id)
+    if @parcelles[id].size.eql?(0)
+      warning = "aucune parcelle identifiee"
+      add_warning(warning, id)
+    end
   end
   
-# Putoproduits
-
+# Read Putoproduits fields
   def get_putoproduit_dosage(dosage, id)
     if (dosage.class.eql?(Integer) || dosage.class.eql?(Float))
       return dosage
@@ -240,6 +337,7 @@ private
     end
   end
 
+# Read File
   def self.load_sheet(name)
     book = Spreadsheet.open Rails.root.join('doc', 'xls_import', 'pulves.xls')
     raise 'book not found' if book.nil?
@@ -248,18 +346,7 @@ private
     return sheet
   end
 
-  def find_user_old(code)
-    ret = retour.new()
-    if user = User.find_by_code(code)
-      ret.data = user
-    else
-      ret.invalids = 'user not found'
-      ret.valid = false
-    end
-    return ret
-  end
-
-# Helper
+# Helper methods
   def ignore_this_row(row)
     if ((row[XLS_ROW_NUM].eql?('#')) ||
     ((row[XLS_TYPE].nil?) &&
@@ -277,8 +364,21 @@ private
       return "?" if elt.produit.nil?      
       return elt.try(:produit).try(:code)
     end
-    return elt.name   if elt.class.eql?(Pulve)
+    return elt.name if elt.class.eql?(Pulve)
   end  
-
-
+  def self.print_elt_type(elt)
+    return "?" if elt.nil?
+    return "pulve" if elt.class.eql?(Pulve)
+    return "&nbsp;&nbsp;produit" if elt.class.eql?(Putoproduit)
+  end  
+  def self.import_td_validity_class(error_array)
+    return 'bg-red' if error_array.size>0
+    return 'bg-green'
+  end
+  def self.read_td_validity_class(invalids_array, warnings_array)
+    return 'bg-red'     if invalids_array.size>0
+    return 'bg-orange'  if warnings_array.size>0
+    return 'bg-green'
+  end
+  
 end
