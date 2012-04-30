@@ -1,10 +1,12 @@
 <% title "Import", false %>
 <% titre = "Pulves" %>
-<% lien1 = button_to("Tester le fichier", :action => :import_pulves, :force => false) %>
-<% lien2 = button_to("Importer malgré les warnings", :action => :import_pulves, :force => true) %>
+<% lien0 = button_to("Preparer le fichier", 			:action => :prepare_pulves) %>
+<% lien1 = button_to("Tester le fichier", 				:action => :import_pulves, :force => false) %>
+<% lien2 = button_to("Importer malgré les warnings", 	:action => :import_pulves, :force => true) %>
 
 <div id="title_h1">
 	<span class=title><%= titre %></span>
+	<span class=link><%= lien0 %></span>
 	<span class=link><%= lien1 %></span>
 </div>
 

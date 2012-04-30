@@ -11,15 +11,17 @@
 	<thead>
 	<tbody>
 	<% @import.elts.each_index do |index| %>
+		<% unless @import.elts[index].class.eql?(Putoproduit) %>
 		<% td_class = Import.import_td_validity_class(@import.errors[index]) %>
-		<tr>
-			<td class="<%= td_class %>"><%= (index+1).to_s %></td>
-			<td><%= Import.print_elt_type(@import.elts[index]) %></td>
-			<td><%= Import.print_elt_name(@import.elts[index]) %></td>
-			<td><% @import.errors[index].each do |msg| %>- <%= msg.to_s %><br><% end %></td>
-			<td><% @import.cultures[index].uniq.each do |msg| %><%= msg.name.to_s %>,&nbsp;<% end %></td>
-			<td><% @import.parcelles[index].uniq.each do |msg| %><%= msg.name.to_s %>,&nbsp;<% end %></td>
-		</tr>
+			<tr>
+				<td class="<%= td_class %>"><%= (index+1).to_s %></td>
+				<td><%= Import.print_elt_type(@import.elts[index]) %></td>
+				<td><%= @import.elts[index].name %></td>
+				<td><% @import.errors[index].each do |msg| %>- <%= msg.to_s %><br><% end %></td>
+				<td><% @import.cultures[index].uniq.each do |msg| %><%= msg.name.to_s %>,&nbsp;<% end %></td>
+				<td><% @import.parcelles[index].uniq.each do |msg| %><%= msg.name.to_s %>,&nbsp;<% end %></td>
+			</tr>
+		<% end %>
 	<% end %>
 	<tbody>
 </table>

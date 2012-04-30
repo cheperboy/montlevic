@@ -4,12 +4,16 @@ class Putoparcelle < ActiveRecord::Base
   belongs_to :pulve
   belongs_to :saison
   
+  validates_presence_of :parcelle_id
+  validates_presence_of :pulve_id
+  validates_numericality_of :pulve_id, :message => "n'est pas un nombre"
+  validates_numericality_of :parcelle_id, :message => "n'est pas un nombre"
   # validates_presence_of :value
   # validates_numericality_of :value, :message => "n'est pas un nombre"
 
 # Callbacks
   def before_save 
-    self.saison ||= Setting.find(1).saison
+    self.saison ||= Setting.get_saison
     self.value = 1
   end
   

@@ -4,6 +4,8 @@
 			<th></th>
 			<th>type</th>
 			<th>nom</th>
+			<th>dosage</th>
+			<th>destocker</th>
 			<th>erreurs</th>
 			<th>warnings</th>
 			<th>cultures</th>
@@ -17,6 +19,13 @@
 			<td class="<%= td_class %>"><%= (index+1).to_s %></td>
 		    <td><%= Import.print_elt_type(@import.elts[index]) %></td>
 		    <td><%= Import.print_elt_name(@import.elts[index]) %></td>
+			<% if @import.elts[index].class.eql?(Putoproduit) %>
+				<td><%= @import.elts[index].dosage_vrai.to_s %></td>
+				<td><%= @import.elts[index].destocker.to_s %></td>
+			<% else %>
+				<td></td>
+				<td></td>
+			<% end %>
 		    <td><% @import.invalids[index].each do |msg| %>- <%= msg.to_s %><br><% end %></td>
 		    <td><% @import.warnings[index].each do |msg| %>- <%= msg.to_s %><br><% end %></td>
 		    <td><% @import.cultures[index].uniq.each do |msg| %><%= msg.name.to_s %>,&nbsp;<% end %></td>

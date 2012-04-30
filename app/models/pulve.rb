@@ -7,6 +7,7 @@ class Pulve < Charge
   XLS_COUT_HA_PASSAGE = 3
 
   def after_save 
+    puts "pulve id #{self.id} : after_save called"
     self.putoproduits.each { |putoproduit| putoproduit.update_dosage_after_save }
     self.produits.each { |produit| produit.update_protofacture_stock }
   end

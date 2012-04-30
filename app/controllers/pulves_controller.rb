@@ -59,7 +59,7 @@ class PulvesController < ApplicationController
   # POST /pulves.xml
   def create
     @pulve = Pulve.new(params[:pulve])
-    @pulve.saison_id = current_saison_id
+    @pulve.saison_id ||= Setting.get_saison_id
     # transforme les checkbox Typeculture en Factoparcelles
     @pulve.update_typecultures(params[:typecultures])
     @pulve.uniq_parcelles

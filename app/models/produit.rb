@@ -134,17 +134,25 @@ class Produit < ActiveRecord::Base
     return total
   end
 
+  # TODO : pulve.update. est-ce que cette method actualise correctement le dosage d'un putoproduit lorsque destocker est checked?
   def get_used_quantite
     used = 0
     self.pulves.each do |pulve|
       putoproduit = self.putoproduits.find_by_pulve_id(pulve.id)
-      used += putoproduit.dosage * pulve.sum_surfaces
+      dosage = putoproduit.dosage
+      surface = pulve.sum_surfaces
+      # if this method is called by update_dosage_after_save -> get_stock then 
+      # 'dosage' of the last created puto produit can be blank (if destocker is checked)
+      # in this case, the 'used' by this putoproduit is 0 
+      used += dosage * surface unless dosage.blank?
     end
     return (used)
   end
 
   def get_stock
-    return (get_quantite - get_used_quantite)
+    ret = get_quantite - get_used_quantite
+    puts "\tget_stock #{ret}"
+    return (ret)    
   end  
     
   def stock_percent_pp

@@ -1,42 +1,52 @@
 class Putoproduit < Charge
+# TODO le dosage retourne par update_dosage_after_save peut etre negatif = bug
 
   belongs_to :produit
   belongs_to :pulve
   belongs_to :saison
   
+  # validates_presence_of :pulve_id, :message => "putoproduit.pulve_id non valide"
   validates_presence_of :produit_id, :message => "Selectionner un produit (creer si produit inexistant)"
   # validates_numericality_of :dosage, :message => "indiauer le dosage ou la quantite ou chcher 'destocker'",
   #                           :if => Proc.new { |u| (u.quantite.blank? && u.destocker.blank?) }
 
-  validates_presence_of :quantite, :message => "indiauer le dosage ou la quantite ou cocher destocker",
+  validates_presence_of :quantite, :message => "indiquer le dosage ou la quantite ou cocher destocker",
                         :if => Proc.new { |u| (u.dosage.blank? && u.destocker.eql?(0)) }
  # && u.destocker.eql?(0)
   # validates_presence_of :dosage, :message => "dosage ne doit pas etre nul"
 
   # Callback
-  def before_save 
-    self.saison ||= Setting.find(1).saison
+  def before_save
+    self.saison ||= self.pulve.saison
     # on force une valeur de dosage qui sera ecrasee par update_dosage_after_save()
-    self.dosage = -6.6 if self.dosage.blank?
+    # self.dosage = -6.66 if self.dosage.blank?
   end
    
   def destocker?
+    puts "DESTOCKER == TRUE"    
     return self.destocker.eql?(1)
   end
   
   def update_dosage_after_save
-    unless self.quantite.blank?
+    puts "\t\tputoproduit : #{self.id}"
+    if !self.quantite.blank?
       self.dosage = self.quantite / self.pulve.sum_surfaces
-    end    
-    if self.destocker?
+      puts "\t\tquantite detected"
+      self.destocker = 0
+      self.save!
+    
+    elsif self.destocker?
+      puts "\t\tdestocker checked"
       stock = self.produit.get_stock
-      #au stock restant il faut ajouter la quantite de produit deja associee via ce putoproduit.
+      
+      # au stock restant il faut ajouter la quantite de produit deja associee via ce putoproduit.
       # cependant le dosage n'existe pas encore on create:
       stock += self.dosage * self.pulve.sum_surfaces if self.dosage?
       self.dosage = stock / self.pulve.sum_surfaces
+      puts "\t\tself.dosage: #{self.dosage}"
+      self.destocker = 0
+      self.save!
     end
-    self.destocker = 0
-    self.save!
   end
    
   # correspond au cout_ha_produit d'un pulve!

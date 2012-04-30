@@ -77,7 +77,7 @@ class Charge < ActiveRecord::Base
         unless culture.nil?
           culture.parcelles.select{|p| p.saison_id.eql?(saison)}.each do |parcelle|
             self.add_parcelle!(parcelle)
-            self.save!
+            self.save
           end
         end
       end

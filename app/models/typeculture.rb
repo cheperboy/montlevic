@@ -56,5 +56,5 @@ class Typeculture < ActiveRecord::Base
   def parcelles_count
     return self.parcelles.find_by_saison(:all).count
   end
-    
+
 end
