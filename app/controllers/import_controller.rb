@@ -7,18 +7,18 @@ class ImportController < ApplicationController
 
   def prepare_pulves
     # @state = :prepare
-    book = Import.load_book('pulves_2.xls')  
-    sheet = book.worksheet 'pulves'
+    book = Import.load_book('import_pulves_0.2.xls')  
+    sheet = book.worksheet 'datas'
     raise 'book not found' if sheet.nil?
 
     #recupere l'ensemble des codes user
-    users = []
-    User.all.each do |user|
-      users << user.code
-    end
     Import.prepare_pulve_sheet(sheet, users, :users)
+    # bug spreadsheet
+    sheet = book.worksheet 'pulves'
+    sheet.row(0)[0] = "AA"
+    #eo bug
     
-    book.write Rails.root.join('doc', 'xls_import', 'pulves_2.1.xls')
+    book.write Rails.root.join('doc', 'xls_import', 'pulves_ok.xls')
   end
 
   def import_pulves

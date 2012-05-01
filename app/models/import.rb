@@ -38,7 +38,9 @@ class Import < ActiveRecord::Base
   XLS_PUTOPRODUIT_QUANTITE     = 14
   XLS_PUTOPRODUIT_DESTOCKER    = 15
 
-  XLS_PULVES_USERS_COLUMN      = 31 #col pour ecrir la liste des users codes
+  XLS_PULVES_DATAS_COLUMN_USERS     = 1 #col pour ecrir la liste des users codes
+  XLS_PULVES_DATAS_COLUMN_PARCELLES = 2 #col pour ecrir la liste des parcelles codes
+  XLS_PULVES_DATAS_COLUMN_CULTURES  = 3 #col pour ecrir la liste des typecultures codes
 
   def initialize(elt_type)
     # Pulve.find(:all).each do |pu|
@@ -529,9 +531,19 @@ private
 # File preparation
 
   def self.prepare_pulve_sheet(sheet, users, type)
-    index = 0
-    sheet.each do |row|
-      row[XLS_PULVES_USERS_COLUMN] = users[index]
+    index = 1
+    User.all.each do |elt|
+      sheet.row(index)[XLS_PULVES_DATAS_COLUMN_USERS] = elt
+      index += 1
+    end
+    index = 1
+    Setting.get_saison.parcelles.each do |elt|
+      sheet.row(index)[XLS_PULVES_DATAS_COLUMN_PARCELLES] = elt
+      index += 1
+    end
+    index = 1
+    Setting.get_saison.typecultures.each do |elt|
+      sheet.row(index)[XLS_PULVES_DATAS_COLUMN_CULTURES] = elt
       index += 1
     end
   end
