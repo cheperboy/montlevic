@@ -1,0 +1,35 @@
+<% title "Preparation du fichier xls", false %>
+<% titre = "Pulves" %>
+<% lien1 = button_to("Lire le fichier", :action => :import_pulves) %>
+
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+</div>
+<table>
+	<tr>
+	<% [@users, @produits, @parcelles, @typecultures].each do |elt| %>
+		<% index = 0 %>
+		<td>
+			<table class="table_data">
+				<thead>
+					<tr class=bold>
+						<th><%= elt[index] if elt[index] %></th>
+					</tr>
+				<thead>
+				<tbody>
+					<% index += 1 %>
+					<% continue = true %>
+					<% while(continue) %>
+						<tr>
+							<td><%= elt[index] if elt[index] %></td>
+						</tr>
+						<% continue = false unless (elt[index]) %>
+						<% index += 1 %>
+					<% end %>
+				<tbody>
+			</table>
+		</td>
+	<% end %>
+</tr>
+</table>

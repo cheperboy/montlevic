@@ -1,0 +1,34 @@
+<% title "Import", false %>
+<% titre = "Factures" %>
+<% prepare_file                  = button_to("Preparer le fichier", 			:action => :prepare) %>
+<% read_file              = button_to("Tester le fichier", 				:action => :import_factures, :force => false) %>
+<% do_import              = button_to("Importer le fichier", 			:action => :import_factures, :force => true) %>
+<% lien_import_with_force = button_to("Importer malgré les warnings", 	:action => :import_factures, :force => true) %>
+<% force_print = true %>
+
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= prepare_file %></span>
+	<span class=link><%= read_file %></span>
+</div>
+
+<p><% @import.remarks.each do |msg| %>- <%= msg.to_s %><br><% end %></p>
+
+<% if @state.eql?(:read) %>
+<h2>Lecture du fichier</h2>
+	<% if (@import.has_invalids? || @import.has_warnings? || force_print) %>
+		<%= render(:partial => "warnings") %>
+		<% if (@import.has_warnings? && @force.eql?(false)) %>
+			<span class=link><%= lien_import_with_force %></span>
+		<% end %>
+	<% end %>
+
+<% elsif @state.eql?(:import) %>
+	<h2>Import des donnees</h2>
+	<%= render(:partial => "errors") %>
+<% end %>
+		
+		
+		
+		
+		
