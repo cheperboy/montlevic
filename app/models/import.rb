@@ -12,16 +12,21 @@ class Import < ActiveRecord::Base
                 :elts,        # tableau de Pulves, Factures...
                 :putoprods,   # tableau de produits d'un pulve
                 :parcelles,   # tableau de parcelles d'un elt
-                :cultures,   # tableau de cultures d'un elt
+                :cultures,    # tableau de cultures d'un elt
                 :remarks,     # tableau d'info sur le fichier, non specifique a une row
                 :warnings,      :invalids,      :errors,    #tableaux d'erreurs
                 :has_warnings,  :has_invalids,  :has_errors #presence d'erreur
 
   # ----- Constantes -----
+  # Erreurs
+  IMPORT_TYPE_INVALID = "le fichier comporte un type invalid"
+  IMPORT_TYPE_UNDEFINED = "type non defini"
 
+  # Elements
   XLS_ROW_NUM                  = 0
   XLS_TYPE                     = 1
 
+  # Pulves
   XLS_PULVE_COUT_HA_PASSAGE    = 2
   XLS_PULVE_DATE               = 3
   XLS_PULVE_CATEGORY           = 4
@@ -31,30 +36,54 @@ class Import < ActiveRecord::Base
   XLS_PULVE_PARCELLES          = 8
   XLS_PULVE_DESC               = 9
   XLS_PULVE_INFO               = 10
+  XLS_PULVE_STAR               = 11
+  XLS_PULVE_ADU                = 12
 
-  XLS_PUTOPRODUIT_PRODUIT_CODE = 11
-  XLS_PUTOPRODUIT_DOSAGE       = 12
-  XLS_PUTOPRODUIT_DOSAGE_VRAI  = 13
-  XLS_PUTOPRODUIT_QUANTITE     = 14
-  XLS_PUTOPRODUIT_DESTOCKER    = 15
+  XLS_PUTOPRODUIT_PRODUIT_CODE = 13
+  XLS_PUTOPRODUIT_DOSAGE       = 14
+  XLS_PUTOPRODUIT_QUANTITE     = 15
+  XLS_PUTOPRODUIT_DESTOCKER    = 16
+  XLS_PUTOPRODUIT_DOSAGE_VRAI  = 17
+  XLS_PUTOPRODUIT_DOSAGE_DESC  = 18
 
   XLS_PULVES_DATAS_COLUMN_USERS     = 1 #col pour ecrir la liste des users codes
   XLS_PULVES_DATAS_COLUMN_PARCELLES = 2 #col pour ecrir la liste des parcelles codes
   XLS_PULVES_DATAS_COLUMN_CULTURES  = 3 #col pour ecrir la liste des typecultures codes
 
+  # Factures
+  XLS_FACTURE_COUT           = 2
+  XLS_FACTURE_DATE           = 3
+  XLS_FACTURE_CATEGORY       = 4
+  XLS_FACTURE_NAME           = 5
+  XLS_FACTURE_USER           = 6
+  XLS_FACTURE_REF_PERSO      = 7
+  XLS_FACTURE_REF_CLIENT     = 8
+  XLS_FACTURE_TYPECULTURS    = 9
+  XLS_FACTURE_PARCELLES      = 10
+  XLS_FACTURE_DESC           = 11
+  XLS_FACTURE_INFO           = 12
+  XLS_FACTURE_STAR           = 13
+  XLS_FACTURE_ADU            = 14
+  
+  XLS_PROTOFACTURE_PRODUIT_CODE      = 15
+  XLS_PROTOFACTURE_PRIX_UNIT = 16
+  XLS_PROTOFACTURE_QUANTITE  = 17
+
   def initialize(elt_type)
-    # Pulve.find(:all).each do |pu|
-    #   if pu.id > 77
-    #     puts "delete #{pu.id}"
-    #     pu.destroy
-    #   end
-    # end
-    # Putoproduit.find(:all).each do |pu|
-    #   if pu.pulve_id.nil?
-    #     puts "delete #{pu.id}"
-    #     pu.destroy
-    #   end
-    # end
+    if nil
+      Pulve.find(:all).each do |pu|
+        if pu.id > 77
+          puts "delete #{pu.id}"
+          pu.destroy
+        end
+      end
+      Putoproduit.find(:all).each do |pu|
+        if pu.pulve_id.nil?
+          puts "delete #{pu.id}"
+          pu.destroy
+        end
+      end
+    end
 
     @sym = elt_type
     @saison = Setting.get_saison
@@ -66,6 +95,7 @@ class Import < ActiveRecord::Base
     @has_warnings  = false
     @has_invalids  = false
     @putoprods = [] # Used only for pulves import
+    @protofacs = [] # Used only for factures import
     @elts      = []  
     @parcelles = []
     @cultures  = []
@@ -93,19 +123,39 @@ class Import < ActiveRecord::Base
     end
   end
   def read_element(row)
-    if row[XLS_TYPE].eql?('pulve')
-      @read_size += 1
-      return read_pulve(row)
-    elsif row[XLS_TYPE].eql?('putoproduit')
-      return read_putoproduit(row)
+    case @sym
+    when :pulves
+      puts "when pulves"      
+      if row[XLS_TYPE].eql?('pulve')
+        @read_size += 1
+        return read_pulve(row)
+      elsif row[XLS_TYPE].eql?('produit')
+        return read_putoproduit(row)
+      else
+        read_type_error = true
+      end
+    when :factures
+      puts "when factures"      
+      if row[XLS_TYPE].eql?('facture')
+        @read_size += 1
+        return read_facture(row)
+      elsif row[XLS_TYPE].eql?('produit')
+        return read_protofacture(row)
+      else
+        read_type_error = true
+      end
+    # ajout d'une remark car type non defini
     else
-      add_remark("le fichier comporte un type invalid")
+      add_remark("#{IMPORT_TYPE_UNDEFINED} - #{row}")
     end
+    # ajout d'une remark si un type n'a pas ete reconnu pendant la lecture
+    add_remark("#{IMPORT_TYPE_INVALID} - #{row}") if read_type_error    
   end
+  
   def read_pulve(row)
     pulve = Pulve.new()
     cout_ha_passage = get_cout_ha_passage(row[XLS_PULVE_COUT_HA_PASSAGE], @row_id)
-    category_id = get_category(row[XLS_PULVE_CATEGORY], @row_id)
+    category_id = get_category(row[XLS_PULVE_CATEGORY], @row_id, :pulve)
     user_id     = get_user_id(row[XLS_PULVE_USER], @row_id)
     date        = get_date(row[XLS_PULVE_DATE], @row_id)
     name        = get_name(row[XLS_PULVE_NAME], @row_id)
@@ -113,18 +163,26 @@ class Import < ActiveRecord::Base
     cultures    = get_cultures(row[XLS_PULVE_TYPECULTURS], @row_id)
     desc        = get_text(row[XLS_PULVE_DESC], @row_id)
     info        = get_text(row[XLS_PULVE_INFO], @row_id)
+    star        = get_boolean_field(row[XLS_PULVE_STAR],  @row_id, 'star',  {:invalid => :warning})
+    adu         = get_boolean_field(row[XLS_PULVE_ADU],   @row_id, 'adu',   {:invalid => :warning})
     pulve.update_attributes(
+      :cout_ha_passage => cout_ha_passage,
       :name            => name,
       :user_id         => user_id, 
       :category_id     => category_id,
       :date            => date, 
-      :cout_ha_passage => cout_ha_passage) 
+      :desc            => desc, 
+      :info            => info, 
+      :star            => star, 
+      :adu             => adu
+    ) 
     @last_pulve_read = @row_id
     @putoprods[@last_pulve_read] = []
     check_parcelles_and_cultures_size(@row_id)
     check_pulve_already_imported(pulve, @row_id)
     return(pulve)
   end
+
   def read_putoproduit(row)
     elt             = Putoproduit.new()
     elt.produit_id  = get_putoproduit_produit_id(row[XLS_PUTOPRODUIT_PRODUIT_CODE], @row_id)
@@ -132,13 +190,56 @@ class Import < ActiveRecord::Base
     elt.dosage_vrai = get_numeric_field(row[XLS_PUTOPRODUIT_DOSAGE_VRAI], @row_id, 'dosage vrai', {:if_neg => :error})
     elt.quantite    = get_numeric_field(row[XLS_PUTOPRODUIT_QUANTITE],    @row_id, 'quantite',    {:if_neg => :error})
     elt.destocker   = get_boolean_field(row[XLS_PUTOPRODUIT_DESTOCKER],   @row_id, 'destocker',   {:invalid => :warning})
-    puts "\t#{elt.to_yaml}"
+    # puts "\t#{elt.to_yaml}"
     @putoprods[@last_pulve_read] << elt
 
     check_putoproduit(elt, @row_id)
     return(elt)
   end
   
+  def read_facture(row)
+    fac = Facture.new()
+    cout = get_numeric_field(row[XLS_FACTURE_COUT], @row_id, 'cout', {:if_neg => :error, :invalid => :error})
+    category_id = get_category(row[XLS_FACTURE_CATEGORY], @row_id, :facture)
+    user_id     = get_user_id(row[XLS_FACTURE_USER], @row_id)
+    date        = get_date(row[XLS_FACTURE_DATE], @row_id)
+    name        = get_name(row[XLS_FACTURE_NAME], @row_id)
+    parcelles   = get_parcelles(row[XLS_FACTURE_PARCELLES], @row_id)
+    cultures    = get_cultures(row[XLS_FACTURE_TYPECULTURS], @row_id)
+    desc        = get_text(row[XLS_FACTURE_DESC], @row_id)
+    info        = get_text(row[XLS_FACTURE_INFO], @row_id)
+    star        = get_boolean_field(row[XLS_FACTURE_STAR],   @row_id, 'star',   {:invalid => :warning})
+    adu         = get_boolean_field(row[XLS_FACTURE_ADU],   @row_id, 'adu',   {:invalid => :warning})
+    fac.cout        = cout
+    fac.name        = name
+    fac.user_id     = user_id 
+    fac.category_id = category_id
+    fac.date        = date 
+    fac.desc        = desc 
+    fac.info        = info 
+    fac.star        = star 
+    fac.adu         = adu
+    # fac.saison_id   = 0 # Modifier la structure de la table pour autoriser l'in
+
+    @last_fac_read = @row_id
+    @protofacs[@last_fac_read] = []
+    check_parcelles_and_cultures_size(@row_id)
+    check_facture_already_imported(fac, @row_id)
+    return(fac)
+  end
+  def read_protofacture(row)
+    elt            = Protofacture.new()
+    elt.produit_id = get_putoproduit_produit_id(row[XLS_PROTOFACTURE_PRODUIT_CODE], @row_id)
+    elt.prix_unit  = get_numeric_field(row[XLS_PROTOFACTURE_PRIX_UNIT], @row_id, 'prix unitaire', {:if_neg => :error})
+    elt.quantite   = get_numeric_field(row[XLS_PROTOFACTURE_QUANTITE],    @row_id, 'quantite',    {:if_neg => :error})
+    # puts "\t#{elt.to_yaml}"
+    @protofacs[@last_fac_read] << elt
+
+    check_protofacture(elt, @row_id)
+    return(elt)
+  end
+  
+
 # Import Elements
   def import_elements
     @elts.each_with_index do |elt, index|
@@ -148,7 +249,9 @@ class Import < ActiveRecord::Base
   def import_element(elt, index)
     if elt.class.eql?(Pulve)
       import_pulve(elt, index)
-    elsif elt.class.eql?(Putoproduit)
+    elsif elt.class.eql?(Facture)
+      import_facture(elt, index)
+    # elsif elt.class.eql?(Putoproduit)
       #import_putoproduit(elt, index)
     else
       add_remark("le fichier comporte un type invalid #2")
@@ -326,9 +429,7 @@ private
         cultures.each do |culture_code|
           culture = @saison.typecultures.find { |t| t.code == culture_code }
           unless culture.nil?
-            # culture.parcelles.each do |parcelle|
-              add_culture(culture, id)
-            # end
+            add_culture(culture, id)
           else
             invalid = "culture '#{culture_code}' non trouvee"
             add_invalid(invalid, id)
@@ -349,12 +450,16 @@ private
     #   add_invalid(invalid, id)
     # end
   end
-  def get_category(category_code, id)
+
+  # root = :pulve, :facture, ...
+  def get_category(category_code, id, root_cat)
+    root = Category.root_pulve    if root_cat.eql?(:pulve)
+    root = Category.root_facture  if root_cat.eql?(:facture)
     category = Category.find_by_code(category_code)
-    if (category && category.parent.eql?(Category.root_pulve))
+    if (root && category && category.root.eql?(root))
       return category.id
     else
-      invalid = 'categorie non valide'
+      invalid = "categorie non valide #{category_code}"
       add_invalid(invalid, id)
     end
   end
@@ -393,6 +498,14 @@ private
       end
     end
   end  
+  def check_facture_already_imported(element, id)
+    Facture.find_by_saison(:all).each do |elt|
+      if (elt.name.eql?(element.name))
+        invalid = "semble etre deja importe"
+        add_warning(invalid, id) unless warning_already_exist(invalid, id)
+      end
+    end
+  end  
   def check_parcelles_and_cultures_size(id)
     if @parcelles[id].size.eql?(0) && @cultures[id].size.eql?(0)
       warning = "aucune parcelle identifiee"
@@ -403,6 +516,12 @@ private
   def check_putoproduit(putoproduit, id)
     if putoproduit.destocker.nil? && putoproduit.quantite.blank? && putoproduit.dosage.nil?
       invalid = "indiquer dosage ou quantite ou destocker"
+      add_invalid(invalid, id)
+    end
+  end  
+  def check_protofacture(protofac, id)
+    if protofac.quantite.nil? || protofac.quantite.blank?
+      invalid = "indiquer prix unitaire et quantite"
       add_invalid(invalid, id)
     end
   end
@@ -479,10 +598,10 @@ private
   end
 
 # Read File
-  def self.load_sheet(name)
-    book = Spreadsheet.open Rails.root.join('doc', 'xls_import', 'pulves.xls')
+  def self.load_sheet(file_name, sheet_name)
+    book = Spreadsheet.open Rails.root.join('doc', 'xls_import', file_name)
     raise 'book not found' if book.nil?
-    sheet = book.worksheet name
+    sheet = book.worksheet sheet_name
     raise 'book not found' if sheet.nil?
     return sheet
   end
@@ -531,21 +650,6 @@ private
 # File preparation
 
   def self.prepare_pulve_sheet(sheet, users, type)
-    index = 1
-    User.all.each do |elt|
-      sheet.row(index)[XLS_PULVES_DATAS_COLUMN_USERS] = elt
-      index += 1
-    end
-    index = 1
-    Setting.get_saison.parcelles.each do |elt|
-      sheet.row(index)[XLS_PULVES_DATAS_COLUMN_PARCELLES] = elt
-      index += 1
-    end
-    index = 1
-    Setting.get_saison.typecultures.each do |elt|
-      sheet.row(index)[XLS_PULVES_DATAS_COLUMN_CULTURES] = elt
-      index += 1
-    end
   end
 
   

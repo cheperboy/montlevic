@@ -12,11 +12,12 @@
 	<tbody>
 	<% @import.elts.each_index do |index| %>
 		<% unless @import.elts[index].class.eql?(Putoproduit) %>
-		<% td_class = Import.import_td_validity_class(@import.errors[index]) %>
+			<% cultures_array = Typeculture.get_typecultures_from_parcelle_array(@import.cultures[index]) %>
+			<% td_class = Import.import_td_validity_class(@import.errors[index]) %>
 			<tr>
 				<td class="<%= td_class %>"><%= (index+1).to_s %></td>
 				<td><%= Import.print_elt_type(@import.elts[index]) %></td>
-				<td><%= @import.elts[index].name %></td>
+				<td><%= @import.elts[index].name if @import.elts[index].respond_to?(:name) %></td>
 				<td><% @import.errors[index].each do |msg| %>- <%= msg.to_s %><br><% end %></td>
 				<td><% @import.cultures[index].uniq.each do |msg| %><%= msg.name.to_s %>,&nbsp;<% end %></td>
 				<td><% @import.parcelles[index].uniq.each do |msg| %><%= msg.name.to_s %>,&nbsp;<% end %></td>

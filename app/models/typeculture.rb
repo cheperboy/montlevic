@@ -57,4 +57,22 @@ class Typeculture < ActiveRecord::Base
     return self.parcelles.find_by_saison(:all).count
   end
 
+  # retourne un hash avec un tableau de cultures ret[:typecultures]
+  # et un tableau de parcelles ret[:parcelles] = []
+  def self.get_typecultures_from_parcelle_array(parcelles)
+    ret = {}
+    ret[:typecultures] = []
+    ret[:parcelles] = []
+    Typeculture.find_for_saison.each do |culture|
+      culture_temp = culture
+      parcelles_temp = parcelles
+      if ((parcelles_temp & culture_temp.parcelles) == culture_temp.parcelles)
+        ret[:typecultures] << culture_temp
+        culture_temp -= parcelles_temp
+      end
+      ret[:parcelles] = culture_temp.parcelles
+    end
+    ret
+  end
+
 end
