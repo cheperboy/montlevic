@@ -16,11 +16,11 @@
 
 <% if @state.eql?(:read) %>
 <h2>Lecture du fichier</h2>
-	<% if (@import.has_invalids? || @import.has_warnings? || force_print) %>
-		<%= render(:partial => "warnings") %>
-		<% if (@import.has_warnings? && @force.eql?(false)) %>
-			<span class=link><%= lien_import_with_force %></span>
-		<% end %>
+	<%= render(:partial => "warnings") %>
+	<% if (@import.has_warnings? && @force.eql?(false)) %>
+		<span class=link><%= lien_import_with_force %></span>
+	<% else %>
+		<span class=link><%= do_import %></span>
 	<% end %>
 
 <% elsif @state.eql?(:import) %>

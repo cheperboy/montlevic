@@ -10,7 +10,7 @@ class Import < ActiveRecord::Base
                 :read_size,   # nombre d'elements a importer (pulves, factures, mais pas putoproduits, putoparcelles, ...)
                 :type,        # 'pulves', 'factures'
                 :elts,        # tableau de Pulves, Factures...
-                :putoprods,   # tableau de produits d'un pulve
+                :assoc_produits,   # tableau de produits d'un pulve
                 :parcelles,   # tableau de parcelles d'un elt
                 :cultures,    # tableau de cultures d'un elt
                 :remarks,     # tableau d'info sur le fichier, non specifique a une row
@@ -70,20 +70,26 @@ class Import < ActiveRecord::Base
   XLS_PROTOFACTURE_QUANTITE  = 17
 
   def initialize(elt_type)
-    if nil
-      Pulve.find(:all).each do |pu|
-        if pu.id > 77
-          puts "delete #{pu.id}"
-          pu.destroy
+    # if nil
+      Facture.find(:all).each do |f|
+        if f.id > 154
+          puts "delete #{f.id}"
+          f.destroy
         end
       end
-      Putoproduit.find(:all).each do |pu|
-        if pu.pulve_id.nil?
-          puts "delete #{pu.id}"
-          pu.destroy
-        end
-      end
-    end
+      # Pulve.find(:all).each do |pu|
+      #   if pu.id > 77
+      #     puts "delete #{pu.id}"
+      #     pu.destroy
+      #   end
+      # end
+      # Putoproduit.find(:all).each do |pu|
+      #   if pu.pulve_id.nil?
+      #     puts "delete #{pu.id}"
+      #     pu.destroy
+      #   end
+      # end
+    # end
 
     @sym = elt_type
     @saison = Setting.get_saison
@@ -94,7 +100,7 @@ class Import < ActiveRecord::Base
     @has_errors    = false
     @has_warnings  = false
     @has_invalids  = false
-    @putoprods = [] # Used only for pulves import
+    @assoc_produits = [] # Used only for pulves import
     @protofacs = [] # Used only for factures import
     @elts      = []  
     @parcelles = []
@@ -125,7 +131,6 @@ class Import < ActiveRecord::Base
   def read_element(row)
     case @sym
     when :pulves
-      puts "when pulves"      
       if row[XLS_TYPE].eql?('pulve')
         @read_size += 1
         return read_pulve(row)
@@ -135,7 +140,6 @@ class Import < ActiveRecord::Base
         read_type_error = true
       end
     when :factures
-      puts "when factures"      
       if row[XLS_TYPE].eql?('facture')
         @read_size += 1
         return read_facture(row)
@@ -177,12 +181,11 @@ class Import < ActiveRecord::Base
       :adu             => adu
     ) 
     @last_pulve_read = @row_id
-    @putoprods[@last_pulve_read] = []
+    @assoc_produits[@last_pulve_read] = []
     check_parcelles_and_cultures_size(@row_id)
     check_pulve_already_imported(pulve, @row_id)
     return(pulve)
   end
-
   def read_putoproduit(row)
     elt             = Putoproduit.new()
     elt.produit_id  = get_putoproduit_produit_id(row[XLS_PUTOPRODUIT_PRODUIT_CODE], @row_id)
@@ -191,40 +194,33 @@ class Import < ActiveRecord::Base
     elt.quantite    = get_numeric_field(row[XLS_PUTOPRODUIT_QUANTITE],    @row_id, 'quantite',    {:if_neg => :error})
     elt.destocker   = get_boolean_field(row[XLS_PUTOPRODUIT_DESTOCKER],   @row_id, 'destocker',   {:invalid => :warning})
     # puts "\t#{elt.to_yaml}"
-    @putoprods[@last_pulve_read] << elt
+    @assoc_produits[@last_pulve_read] << elt
 
     check_putoproduit(elt, @row_id)
     return(elt)
   end
   
   def read_facture(row)
-    fac = Facture.new()
-    cout = get_numeric_field(row[XLS_FACTURE_COUT], @row_id, 'cout', {:if_neg => :error, :invalid => :error})
-    category_id = get_category(row[XLS_FACTURE_CATEGORY], @row_id, :facture)
-    user_id     = get_user_id(row[XLS_FACTURE_USER], @row_id)
-    date        = get_date(row[XLS_FACTURE_DATE], @row_id)
-    name        = get_name(row[XLS_FACTURE_NAME], @row_id)
-    parcelles   = get_parcelles(row[XLS_FACTURE_PARCELLES], @row_id)
-    cultures    = get_cultures(row[XLS_FACTURE_TYPECULTURS], @row_id)
-    desc        = get_text(row[XLS_FACTURE_DESC], @row_id)
-    info        = get_text(row[XLS_FACTURE_INFO], @row_id)
-    star        = get_boolean_field(row[XLS_FACTURE_STAR],   @row_id, 'star',   {:invalid => :warning})
-    adu         = get_boolean_field(row[XLS_FACTURE_ADU],   @row_id, 'adu',   {:invalid => :warning})
-    fac.cout        = cout
-    fac.name        = name
-    fac.user_id     = user_id 
-    fac.category_id = category_id
-    fac.date        = date 
-    fac.desc        = desc 
-    fac.info        = info 
-    fac.star        = star 
-    fac.adu         = adu
+    fac             = Debit.new()
+    fac.cout        = get_numeric_field(row[XLS_FACTURE_COUT], @row_id, 'cout', {:if_neg => :error, :invalid => :error})
+    fac.category_id = get_category(row[XLS_FACTURE_CATEGORY], @row_id, :facture)
+    fac.user_id     = get_user_id(row[XLS_FACTURE_USER], @row_id)
+    fac.date        = get_date(row[XLS_FACTURE_DATE], @row_id)
+    fac.name        = get_name(row[XLS_FACTURE_NAME], @row_id)
+    fac.desc        = get_text(row[XLS_FACTURE_DESC], @row_id)
+    fac.info        = get_text(row[XLS_FACTURE_INFO], @row_id)
+    fac.star        = get_boolean_field(row[XLS_FACTURE_STAR],   @row_id, 'star',   {:invalid => :warning})
+    fac.adu         = get_boolean_field(row[XLS_FACTURE_ADU],   @row_id, 'adu',   {:invalid => :warning})
+    fac.factype_id  = Factype::DIFF
+    get_parcelles(row[XLS_FACTURE_PARCELLES], @row_id)
+    get_cultures(row[XLS_FACTURE_TYPECULTURS], @row_id)
     # fac.saison_id   = 0 # Modifier la structure de la table pour autoriser l'in
 
     @last_fac_read = @row_id
-    @protofacs[@last_fac_read] = []
+    @assoc_produits[@last_fac_read] = []
     check_parcelles_and_cultures_size(@row_id)
     check_facture_already_imported(fac, @row_id)
+    # puts "\tread fac #{fac.to_yaml}"
     return(fac)
   end
   def read_protofacture(row)
@@ -233,7 +229,7 @@ class Import < ActiveRecord::Base
     elt.prix_unit  = get_numeric_field(row[XLS_PROTOFACTURE_PRIX_UNIT], @row_id, 'prix unitaire', {:if_neg => :error})
     elt.quantite   = get_numeric_field(row[XLS_PROTOFACTURE_QUANTITE],    @row_id, 'quantite',    {:if_neg => :error})
     # puts "\t#{elt.to_yaml}"
-    @protofacs[@last_fac_read] << elt
+    @assoc_produits[@last_fac_read] << elt
 
     check_protofacture(elt, @row_id)
     return(elt)
@@ -242,6 +238,7 @@ class Import < ActiveRecord::Base
 
 # Import Elements
   def import_elements
+    puts "importing"
     @elts.each_with_index do |elt, index|
       import_element(elt, index)
     end
@@ -249,10 +246,10 @@ class Import < ActiveRecord::Base
   def import_element(elt, index)
     if elt.class.eql?(Pulve)
       import_pulve(elt, index)
-    elsif elt.class.eql?(Facture)
-      import_facture(elt, index)
-    # elsif elt.class.eql?(Putoproduit)
-      #import_putoproduit(elt, index)
+    elsif elt.kind_of?(Facture)
+      import_charge(elt, index)
+    elsif (elt.kind_of?(Putoproduit) || elt.kind_of?(Protofacture))
+      # do nothing
     else
       add_remark("le fichier comporte un type invalid #2")
     end
@@ -268,8 +265,36 @@ class Import < ActiveRecord::Base
         res = import_putoparcelle(elt, parcelle, index)
         import_ok = false if res==false
       end
-      @putoprods[index].each do |putoprod|
-        res = import_putoproduit(elt, putoprod, index)
+      @assoc_produits[index].each do |assoc_produit|
+        res = import_putoproduit(elt, assoc_produit, index)
+        import_ok = false if res==false
+      end
+      elt.reload # get the record from db
+      elt.save!  # force the call to after_save to update putoproduits
+      # elt.putoparcelles.each {|p| puts "\t\t\t\t#{p.parcelle.name}" }
+      if import_ok.eql?(false)
+        elt.destroy
+      else
+        @import_size += 1
+      end
+    else #elt not saved
+      self.add_error(elt.errors, index)
+    end
+  end
+  def import_charge(elt, index)
+    import_ok = true
+    import_failed = true
+    merge_parcelles_and_cultures(elt, index)
+    elt.saison_id = @saison.id
+    if elt.save
+      #import associated parcelles
+      @parcelles[index].each do |assoc_parcelle|
+        res = import_parcelle_assoc(elt, assoc_parcelle, index)
+        import_ok = false if res==false
+      end
+      #import associated products
+      @assoc_produits[index].each do |produit_assoc|
+        res = import_produit_assoc(elt, produit_assoc, index)
         import_ok = false if res==false
       end
       elt.reload # get the record from db
@@ -285,47 +310,48 @@ class Import < ActiveRecord::Base
     end
   end
     
-  def import_putoparcelle(pulve, parcelle, index)
+  def import_parcelle_assoc(elt, parcelle, index)
     import_sucess = false
-    putopar = Putoparcelle.new(
-    :pulve_id     => pulve.id,
-    :parcelle_id  => parcelle.id,
-    :value => 1)
-    
-    if putopar.valid?
-      if putopar.save
+    if elt.kind_of?(Pulve)
+      parcelle_assoc = Putoparcelle.new(
+        :pulve_id    => elt.id,
+        :parcelle_id => parcelle.id,
+        :value       => 1)
+    elsif elt.kind_of?(Facture)
+      parcelle_assoc = Factoparcelle.new(
+        :facture_id    => elt.id,
+        :parcelle_id => parcelle.id,
+        :value       => 1)
+    end
+    if parcelle_assoc && parcelle_assoc.valid?
+      if parcelle_assoc.save
         import_sucess = true
       else
         self.add_error("parcelle '#{parcelle.try(:name)}' non enregistree", index)
-        self.add_error(putopar.errors, index)
+        self.add_error(parcelle_assoc.errors, index)
       end
     else # putopar not valid
       self.add_error("parcelle '#{parcelle.try(:name)}' non valide", index)
-      self.add_error(putopar.errors, index)
+      self.add_error(parcelle_assoc.errors, index)
       return false
     end
     return import_sucess
   end
-  def import_putoproduit(pulve, putoprod, index)
+  def import_produit_assoc(elt, produit_assoc, index)
     import_ok = true
-    putoprod.pulve_id = pulve.id
-    if putoprod.save
+    produit_assoc.facture_id = elt.id if elt.kind_of?(Facture)
+    produit_assoc.pulve_id = elt.id if elt.kind_of?(Pulve)
+    if produit_assoc.save
       import_ok = true
     else
       import_ok = false
-      produit = putoprod.try(:produit).try(:name) || ''
+      produit = produit_assoc.try(:produit).try(:name) || ''
       self.add_error("produit '#{produit}' non valide", index)
-      self.add_error(putoprod.errors, index)
+      self.add_error(produit_assoc.errors, index)
     end
     return import_ok
   end
-    
-  def inspect_errors(id)
-    # puts "\t\t#{id.to_s} @errors size:#{@errors[id].size.to_s}"
-    @errors[id].each do |err, err_id|
-      # puts "\t\terror :#{err_id.to_s}: #{err.to_s}"
-    end
-  end
+       
   def add_error(error, id)  
     if error.class.eql?(String)
       @errors[id] << "#{error}"
@@ -422,12 +448,13 @@ private
       end
     end
   end
+  
   def get_cultures(cultures_raw, id)
     if cultures_raw.class.eql?(String)
       cultures = cultures_raw.split(/,\s*/)
       unless cultures.size.eql?(0)
         cultures.each do |culture_code|
-          culture = @saison.typecultures.find { |t| t.code == culture_code }
+          culture = Typeculture.find_by_code(culture_code)
           unless culture.nil?
             add_culture(culture, id)
           else
@@ -463,30 +490,14 @@ private
       add_invalid(invalid, id)
     end
   end
-
-  # doit etre appeler juste avant import d'un element
+  
+  # To call just before importing a element
   # remplace @parcelles[elt_id] par le merge de @cultures[elt_id] et @parcelles[elt_id]   
   def merge_parcelles_and_cultures(pulve, id)
-    parcelles = []
-    parcelles = @parcelles[id].uniq
     @cultures[id].each do |culture|
-      culture.parcelles.each do |parcelle|
-        parcelles << parcelle
-      end
+      @parcelles[id] << Parcelle.get_parcelles_from_culture(culture)
     end
-    @parcelles[id] = parcelles.uniq
-    # puts "\tParcelles"
-    # @parcelles[id].each do |msg|
-    #   puts "\t\t#{msg.name.to_s}"
-    # end
-    # 
-    # puts "\tCultures"
-    # @cultures[id].uniq.each do |culture|
-    #   puts "\t\t#{culture.name.to_s}"
-    #   culture.parcelles.each do |parcelle|
-    #     puts "\t\t\t#{parcelle.name.to_s}"
-    #   end
-    # end    
+    @parcelles[id].flatten!.uniq!
   end
 
 # Check elements
@@ -605,7 +616,6 @@ private
     raise 'book not found' if sheet.nil?
     return sheet
   end
-
   def self.load_book(book_name)
     book = Spreadsheet.open Rails.root.join('doc', 'xls_import', book_name)
     raise 'book not found' if book.nil?
@@ -626,16 +636,16 @@ private
   end
   def self.print_elt_name(elt)
     return "?" if elt.nil?
-    if elt.class.eql?(Putoproduit)
+    if (elt.kind_of?(Putoproduit) || elt.kind_of?(Protofacture))
       return "?" if elt.produit.nil?      
       return elt.try(:produit).try(:code)
     end
-    return elt.name if elt.class.eql?(Pulve)
+    return elt.name if elt.name
   end  
   def self.print_elt_type(elt)
     return "?" if elt.nil?
-    return "pulve" if elt.class.eql?(Pulve)
-    return "&nbsp;&nbsp;produit" if elt.class.eql?(Putoproduit)
+    return "&nbsp;&nbsp;&nbsp;produit" if (elt.kind_of?(Putoproduit) || elt.kind_of?(Protofacture))
+    return elt.class.to_s.downcase
   end  
   def self.import_td_validity_class(error_array)
     return 'bg-red' if error_array.size>0

@@ -82,7 +82,7 @@ class ImportController < ApplicationController
     @import.read_elements(sheet)
 
     if ((@import.has_invalids.eql?(false) && @import.has_warnings.eql?(false)) ||
-    (@import.has_warnings.eql?(true) && @force.eql?(true) && @import.has_invalids.eql?(false))) && nil
+    (@import.has_warnings.eql?(true) && @force.eql?(true) && @import.has_invalids.eql?(false)))
       puts "\n\nImport_factures"
       @state = :import
       #importer tout

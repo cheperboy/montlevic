@@ -60,6 +60,12 @@ class Parcelle < ActiveRecord::Base
     end
     return parcelles
   end
+
+  # retourne les parcelles de la saison courante du type de culture donne
+  def self.get_parcelles_from_culture(culture)
+    parcelles = culture.parcelles.select {|p| p.saison_id.eql?(Setting.get_saison_id) }
+  end
+
   
 # ----- Methodes -----
 
