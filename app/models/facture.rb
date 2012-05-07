@@ -15,12 +15,14 @@ class Facture < Charge
   
   has_many :facdivs
 
-  has_many :protofactures
   has_many :produits, :through => :protofactures
+  has_many :protofactures, :dependent => :destroy 
 
-  has_many :putofactures
+  # TODO : supprimer cette assoc putofacture
   has_many :pulves, :through => :putofactures
+  has_many :putofactures
 
+  # TODO : supprimer cette assoc labtofacture
   has_many :labtofactures
   has_many :labours, :through => :labtofactures
 
@@ -61,8 +63,8 @@ class Facture < Charge
 
 
   #test 14 avril 2011
-#TODO finir cette methode!
-# classement par cout?
+  #TODO finir cette methode!
+  # classement par cout?
   def self.find_with_order()
     saison = Setting.get_saison
     all_factures = saison.factures.find(:all, :order => :cout)

@@ -5,17 +5,19 @@ Spreadsheet.client_encoding = 'LATIN1//TRANSLIT//IGNORE'
 
 
 class Import < ActiveRecord::Base
-  attr_accessor :row_id,      # nombre d'elements lu lors de l'analyse du fichier
-                :import_size, # nombre d'elements importes avec succes
-                :read_size,   # nombre d'elements a importer (pulves, factures, mais pas putoproduits, putoparcelles, ...)
-                :type,        # 'pulves', 'factures'
-                :elts,        # tableau de Pulves, Factures...
-                :assoc_produits,   # tableau de produits d'un pulve
-                :parcelles,   # tableau de parcelles d'un elt
-                :cultures,    # tableau de cultures d'un elt
-                :remarks,     # tableau d'info sur le fichier, non specifique a une row
-                :warnings,      :invalids,      :errors,    #tableaux d'erreurs
-                :has_warnings,  :has_invalids,  :has_errors #presence d'erreur
+  attr_accessor :row_id,        # nombre d'elements lu lors de l'analyse du fichier
+                :import_size,   # nombre d'elements importes avec succes
+                :read_size,     # nombre d'elements a importer (pulves, factures, mais pas putoproduits, putoparcelles, ...)
+                :type,          # 'pulves', 'factures'
+                :elts,          # tableau de Pulves, Factures...
+                :assoc_produits,# tableau de produits d'un element
+                :parcelles,     # tableau de parcelles d'un elt
+                :cultures,      # tableau de cultures d'un elt
+                :remarks,       # tableau d'info/erreurs sur le fichier, non specifique a une row
+                :warnings,      # warnings array, filled when reading elements
+                :invalids,      # invalids (like errors) array, filled when reading elements
+                :errors,        # errors array, filled when importing elements
+                :has_warnings,  :has_invalids,  :has_errors #presence of error/warnings/invalids
 
   # ----- Constantes -----
   # Erreurs
@@ -69,27 +71,37 @@ class Import < ActiveRecord::Base
   XLS_PROTOFACTURE_PRIX_UNIT = 16
   XLS_PROTOFACTURE_QUANTITE  = 17
 
+  # Produits
+  XLS_PRODUIT_UNIT        = 2
+  XLS_PRODUIT_NAME        = 3
+  XLS_PRODUIT_CODE        = 4
+  XLS_PRODUIT_CATEGORY    = 5
+  XLS_PRODUIT_DESCRIPTION = 6
+  XLS_PRODUIT_INFO        = 7
+  XLS_PRODUIT_STAR        = 8
+  XLS_PRODUIT_ADU         = 9
+
   def initialize(elt_type)
-    # if nil
-      Facture.find(:all).each do |f|
-        if f.id > 154
-          puts "delete #{f.id}"
-          f.destroy
-        end
-      end
-      # Pulve.find(:all).each do |pu|
-      #   if pu.id > 77
-      #     puts "delete #{pu.id}"
-      #     pu.destroy
-      #   end
-      # end
-      # Putoproduit.find(:all).each do |pu|
-      #   if pu.pulve_id.nil?
-      #     puts "delete #{pu.id}"
-      #     pu.destroy
-      #   end
-      # end
+    if nil
+    # Protofacture.find(:all).each do |f|
+    #   if 73 <= f.id && f.id <= 88
+    #     puts "delete #{f.id}"
+    #     f.destroy
+    #   end
     # end
+    # Facture.find(:all).each do |f|
+    #   if f.id > 154
+    #     puts "delete #{f.id}"
+    #     f.destroy
+    #   end
+    # end
+    #   Pulve.find(:all).each do |pu|
+    #     if pu.id > 77
+    #       puts "delete #{pu.id}"
+    #       pu.destroy
+    #     end
+    #   end
+    end
 
     @sym = elt_type
     @saison = Setting.get_saison
@@ -220,7 +232,6 @@ class Import < ActiveRecord::Base
     @assoc_produits[@last_fac_read] = []
     check_parcelles_and_cultures_size(@row_id)
     check_facture_already_imported(fac, @row_id)
-    # puts "\tread fac #{fac.to_yaml}"
     return(fac)
   end
   def read_protofacture(row)
@@ -235,6 +246,26 @@ class Import < ActiveRecord::Base
     return(elt)
   end
   
+  def read_produit(row)
+    produit             = Produit.new()
+    produit.category_id = get_category(row[XLS_PRODUIT_CATEGORY], @row_id, :facture)
+    fac.name        = get_text(row[XLS_PRODUIT_NAME], @row_id)
+    fac.code        = get_text(row[XLS_PRODUIT_CODE], @row_id)
+    fac.desc        = get_text(row[XLS_PRODUIT_DESC], @row_id)
+    fac.info        = get_text(row[XLS_PRODUIT_INFO], @row_id)
+    fac.star        = get_boolean_field(row[XLS_PRODUIT_STAR],   @row_id, 'star',   {:invalid => :warning})
+    fac.adu         = get_boolean_field(row[XLS_PRODUIT_ADU],   @row_id, 'adu',   {:invalid => :warning})
+    fac.factype_id  = Factype::DIFF
+    get_parcelles(row[XLS_FACTURE_PARCELLES], @row_id)
+    get_cultures(row[XLS_FACTURE_TYPECULTURS], @row_id)
+    # fac.saison_id   = 0 # Modifier la structure de la table pour autoriser l'in
+
+    @last_fac_read = @row_id
+    @assoc_produits[@last_fac_read] = []
+    check_parcelles_and_cultures_size(@row_id)
+    check_facture_already_imported(fac, @row_id)
+    return(fac)
+  end
 
 # Import Elements
   def import_elements
@@ -245,7 +276,7 @@ class Import < ActiveRecord::Base
   end  
   def import_element(elt, index)
     if elt.class.eql?(Pulve)
-      import_pulve(elt, index)
+      import_charge(elt, index)
     elsif elt.kind_of?(Facture)
       import_charge(elt, index)
     elsif (elt.kind_of?(Putoproduit) || elt.kind_of?(Protofacture))
@@ -255,32 +286,6 @@ class Import < ActiveRecord::Base
     end
   end
   
-  def import_pulve(elt, index)
-    import_ok = true
-    import_failed = true
-    merge_parcelles_and_cultures(elt, index)
-    elt.saison_id = @saison.id
-    if elt.save
-      @parcelles[index].each do |parcelle|
-        res = import_putoparcelle(elt, parcelle, index)
-        import_ok = false if res==false
-      end
-      @assoc_produits[index].each do |assoc_produit|
-        res = import_putoproduit(elt, assoc_produit, index)
-        import_ok = false if res==false
-      end
-      elt.reload # get the record from db
-      elt.save!  # force the call to after_save to update putoproduits
-      # elt.putoparcelles.each {|p| puts "\t\t\t\t#{p.parcelle.name}" }
-      if import_ok.eql?(false)
-        elt.destroy
-      else
-        @import_size += 1
-      end
-    else #elt not saved
-      self.add_error(elt.errors, index)
-    end
-  end
   def import_charge(elt, index)
     import_ok = true
     import_failed = true
@@ -342,6 +347,9 @@ class Import < ActiveRecord::Base
     produit_assoc.facture_id = elt.id if elt.kind_of?(Facture)
     produit_assoc.pulve_id = elt.id if elt.kind_of?(Pulve)
     if produit_assoc.save
+      # update stock produit according to putoproduit quantity 
+      # amount of stock increase when produit is baught
+      produit_assoc.produit.update_protofacture_stock
       import_ok = true
     else
       import_ok = false
@@ -426,6 +434,18 @@ private
       add_invalid(invalid, id)
     end
   end  
+
+# 
+
+
+
+
+
+
+
+
+
+# condition >>>
   def get_text(text, id)
     return text
   end
@@ -491,13 +511,13 @@ private
     end
   end
   
-  # To call just before importing a element
-  # remplace @parcelles[elt_id] par le merge de @cultures[elt_id] et @parcelles[elt_id]   
+  # call this just before importing a element
+  # this updates @parcelles[elt_id] by merging @cultures[elt_id] et @parcelles[elt_id]   
   def merge_parcelles_and_cultures(pulve, id)
     @cultures[id].each do |culture|
       @parcelles[id] << Parcelle.get_parcelles_from_culture(culture)
     end
-    @parcelles[id].flatten!.uniq!
+    @parcelles[id] = @parcelles[id].flatten.uniq
   end
 
 # Check elements
@@ -658,7 +678,6 @@ private
   end
 
 # File preparation
-
   def self.prepare_pulve_sheet(sheet, users, type)
   end
 

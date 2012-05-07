@@ -4,9 +4,9 @@ class Protofacture < ActiveRecord::Base
   belongs_to :produit
   belongs_to :saison
   
-  validates_presence_of :quantite, :message => "valeur non definie"
-  validates_numericality_of :quantite, :message => "n'est pas un nombre"
-  validates_presence_of :prix_unit, :message => "valeur non definie"
+  validates_presence_of :quantite, :message      => "valeur non definie"
+  validates_numericality_of :quantite, :message  => "n'est pas un nombre"
+  validates_presence_of :prix_unit, :message     => "valeur non definie"
   validates_numericality_of :prix_unit, :message => "n'est pas un nombre"
 
   def validate
@@ -25,5 +25,5 @@ class Protofacture < ActiveRecord::Base
     end
     return (quantite - stock)
   end
-  
+
 end

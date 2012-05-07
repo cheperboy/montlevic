@@ -39,9 +39,9 @@ class ImportController < ApplicationController
     sheet = Import.load_sheet('pulves.xls', 'pulves')
     @import = Import.new(:pulves)
     @import.read_elements(sheet)
-
-    if ((@import.has_invalids.eql?(false) && @import.has_warnings.eql?(false)) ||
-    (@import.has_warnings.eql?(true) && @force.eql?(true) && @import.has_invalids.eql?(false)))
+    
+    # launch import if force is true AND no invalids
+    if (@force.eql?(true) && @import.has_invalids.eql?(false))
       puts "\n\nImport_pulves"
       @state = :import
       # @import.elts.each_index {|x| puts "\t\t#{x.to_s}" }
@@ -81,8 +81,8 @@ class ImportController < ApplicationController
     @import = Import.new(:factures)
     @import.read_elements(sheet)
 
-    if ((@import.has_invalids.eql?(false) && @import.has_warnings.eql?(false)) ||
-    (@import.has_warnings.eql?(true) && @force.eql?(true) && @import.has_invalids.eql?(false)))
+    # launch import if force is true AND no invalids
+    if (@force.eql?(true) && @import.has_invalids.eql?(false))
       puts "\n\nImport_factures"
       @state = :import
       #importer tout

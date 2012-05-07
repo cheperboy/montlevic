@@ -14,11 +14,9 @@
 
 <% if @state.eql?(:read) %>
 <h2>Lecture du fichier</h2>
-	<% if (@import.has_invalids? || @import.has_warnings?) %>
-		<%= render(:partial => "warnings") %>
-		<% if (@import.has_warnings? && @force.eql?(false)) %>
-			<span class=link><%= lien2 %></span>
-		<% end %>
+	<%= render(:partial => "warnings") %>
+	<% if (@import.has_warnings? && @force.eql?(false)) %>
+		<span class=link><%= lien2 %></span>
 	<% end %>
 
 <% elsif @state.eql?(:import) %>
