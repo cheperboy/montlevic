@@ -445,7 +445,7 @@ private
 
 
 
-# condition >>>
+# condition to modify
   def get_text(text, id)
     return text
   end
