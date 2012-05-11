@@ -1,0 +1,34 @@
+- prepare      = button_to("Preparer le fichier", 			:action => :prepare)
+- read         = button_to("Lire le fichier", 				:action => action)
+- import_force = button_to("Importer malgrer les warnings", :action => action, :import => true)
+- import 	   = button_to("Importer", 						:action => action, :import => true)
+
+- produits = link_to 'Produits',:url => {:action => :import_produits}
+- factures   = link_to 'Factures',:url => {:action => :import_factures}
+- pulves   = link_to 'Pulves', 	:url => {:action => :import_pulves}
+
+#title_h1
+	%span.title= titre
+	%span.link= produits
+	%span.link= factures
+	%span.link= pulves
+	= prepare
+	= read
+
+%p
+- @import.remarks.each do |msg|
+	=msg.to_s
+
+- if @state.eql?(:read)
+	%h2 Lecture du fichier
+	= render(:partial => "warnings")
+	- if @import.has_warnings? && !@import.has_invalids?
+		%span.link= import_force
+	- elsif @import.has_invalids?
+	- else 
+		%span.link= import
+	
+
+- elsif @state.eql?(:import)
+	%h2 Import des donnees
+	= render(:partial => "errors")

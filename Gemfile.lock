@@ -13,6 +13,7 @@ GEM
     activesupport (2.3.5)
     ancestry (1.2.5)
       activerecord (>= 2.2.2)
+    haml (3.1.5)
     pg (0.13.2)
     rack (1.0.1)
     rails (2.3.5)
@@ -32,6 +33,7 @@ PLATFORMS
 
 DEPENDENCIES
   ancestry
+  haml
   pg
   rails (= 2.3.5)
   spreadsheet

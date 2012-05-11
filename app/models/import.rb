@@ -2,7 +2,8 @@ Spreadsheet.client_encoding = 'LATIN1//TRANSLIT//IGNORE'
 # TODO: Class Pulve: ajouter une validation pour cout_ha_passage>0
 # TODO: gerer les conversions texte->integer. faire des tests avec excel
 # TODO: Verifier aue pulve.after_save est coherent meme si appele plusieur foir pour un meme pulve
-
+# TODO: probleme d'enregistrement du texte copier/coller du web: erreur utf8
+# TODO: pour tout les type qui doivent avoir un code unique, vertifier l'unicite avant import de tt les elts
 
 class Import < ActiveRecord::Base
   attr_accessor :row_id,        # nombre d'elements lu lors de l'analyse du fichier
@@ -53,33 +54,33 @@ class Import < ActiveRecord::Base
   XLS_PULVES_DATAS_COLUMN_CULTURES  = 3 #col pour ecrir la liste des typecultures codes
 
   # Factures
-  XLS_FACTURE_COUT           = 2
-  XLS_FACTURE_DATE           = 3
-  XLS_FACTURE_CATEGORY       = 4
-  XLS_FACTURE_NAME           = 5
-  XLS_FACTURE_USER           = 6
-  XLS_FACTURE_REF_PERSO      = 7
-  XLS_FACTURE_REF_CLIENT     = 8
-  XLS_FACTURE_TYPECULTURS    = 9
-  XLS_FACTURE_PARCELLES      = 10
-  XLS_FACTURE_DESC           = 11
-  XLS_FACTURE_INFO           = 12
-  XLS_FACTURE_STAR           = 13
-  XLS_FACTURE_ADU            = 14
+  XLS_FACTURE_COUT        = 2
+  XLS_FACTURE_DATE        = 3
+  XLS_FACTURE_CATEGORY    = 4
+  XLS_FACTURE_NAME        = 5
+  XLS_FACTURE_USER        = 6
+  XLS_FACTURE_REF_PERSO   = 7
+  XLS_FACTURE_REF_CLIENT  = 8
+  XLS_FACTURE_TYPECULTURS = 9
+  XLS_FACTURE_PARCELLES   = 10
+  XLS_FACTURE_DESC        = 11
+  XLS_FACTURE_INFO        = 12
+  XLS_FACTURE_STAR        = 13
+  XLS_FACTURE_ADU         = 14
   
-  XLS_PROTOFACTURE_PRODUIT_CODE      = 15
-  XLS_PROTOFACTURE_PRIX_UNIT = 16
-  XLS_PROTOFACTURE_QUANTITE  = 17
+  XLS_PROTOFACTURE_PRODUIT_CODE = 15
+  XLS_PROTOFACTURE_PRIX_UNIT    = 16
+  XLS_PROTOFACTURE_QUANTITE     = 17
 
   # Produits
-  XLS_PRODUIT_UNIT        = 2
-  XLS_PRODUIT_NAME        = 3
-  XLS_PRODUIT_CODE        = 4
-  XLS_PRODUIT_CATEGORY    = 5
-  XLS_PRODUIT_DESCRIPTION = 6
-  XLS_PRODUIT_INFO        = 7
-  XLS_PRODUIT_STAR        = 8
-  XLS_PRODUIT_ADU         = 9
+  XLS_PRODUIT_UNIT     = 2
+  XLS_PRODUIT_CATEGORY = 3
+  XLS_PRODUIT_NAME     = 4
+  XLS_PRODUIT_CODE     = 5
+  XLS_PRODUIT_DESC     = 6
+  XLS_PRODUIT_INFO     = 7
+  XLS_PRODUIT_STAR     = 8
+  XLS_PRODUIT_ADU      = 9
 
   def initialize(elt_type)
     if nil
@@ -160,6 +161,13 @@ class Import < ActiveRecord::Base
       else
         read_type_error = true
       end
+    when :produits
+      if row[XLS_TYPE].eql?('produit')
+        @read_size += 1
+        return read_produit(row)
+      else
+        read_type_error = true
+      end
     # ajout d'une remark car type non defini
     else
       add_remark("#{IMPORT_TYPE_UNDEFINED} - #{row}")
@@ -177,8 +185,8 @@ class Import < ActiveRecord::Base
     name        = get_name(row[XLS_PULVE_NAME], @row_id)
     parcelles   = get_parcelles(row[XLS_PULVE_PARCELLES], @row_id)
     cultures    = get_cultures(row[XLS_PULVE_TYPECULTURS], @row_id)
-    desc        = get_text(row[XLS_PULVE_DESC], @row_id)
-    info        = get_text(row[XLS_PULVE_INFO], @row_id)
+    desc        = get_text(row[XLS_PULVE_DESC], @row_id, 'description')
+    info        = get_text(row[XLS_PULVE_INFO], @row_id, 'info')
     star        = get_boolean_field(row[XLS_PULVE_STAR],  @row_id, 'star',  {:invalid => :warning})
     adu         = get_boolean_field(row[XLS_PULVE_ADU],   @row_id, 'adu',   {:invalid => :warning})
     pulve.update_attributes(
@@ -194,8 +202,8 @@ class Import < ActiveRecord::Base
     ) 
     @last_pulve_read = @row_id
     @assoc_produits[@last_pulve_read] = []
-    check_parcelles_and_cultures_size(@row_id)
-    check_pulve_already_imported(pulve, @row_id)
+    # check_parcelles_and_cultures_size(@row_id)
+    check_if_pulve_exist(pulve, @row_id)
     return(pulve)
   end
   def read_putoproduit(row)
@@ -219,8 +227,8 @@ class Import < ActiveRecord::Base
     fac.user_id     = get_user_id(row[XLS_FACTURE_USER], @row_id)
     fac.date        = get_date(row[XLS_FACTURE_DATE], @row_id)
     fac.name        = get_name(row[XLS_FACTURE_NAME], @row_id)
-    fac.desc        = get_text(row[XLS_FACTURE_DESC], @row_id)
-    fac.info        = get_text(row[XLS_FACTURE_INFO], @row_id)
+    fac.desc        = get_text(row[XLS_FACTURE_DESC], @row_id, 'description')
+    fac.info        = get_text(row[XLS_FACTURE_INFO], @row_id, 'info')
     fac.star        = get_boolean_field(row[XLS_FACTURE_STAR],   @row_id, 'star',   {:invalid => :warning})
     fac.adu         = get_boolean_field(row[XLS_FACTURE_ADU],   @row_id, 'adu',   {:invalid => :warning})
     fac.factype_id  = Factype::DIFF
@@ -230,8 +238,8 @@ class Import < ActiveRecord::Base
 
     @last_fac_read = @row_id
     @assoc_produits[@last_fac_read] = []
-    check_parcelles_and_cultures_size(@row_id)
-    check_facture_already_imported(fac, @row_id)
+    # check_parcelles_and_cultures_size(@row_id)
+    check_if_facture_exist(fac, @row_id)
     return(fac)
   end
   def read_protofacture(row)
@@ -248,23 +256,17 @@ class Import < ActiveRecord::Base
   
   def read_produit(row)
     produit             = Produit.new()
-    produit.category_id = get_category(row[XLS_PRODUIT_CATEGORY], @row_id, :facture)
-    fac.name        = get_text(row[XLS_PRODUIT_NAME], @row_id)
-    fac.code        = get_text(row[XLS_PRODUIT_CODE], @row_id)
-    fac.desc        = get_text(row[XLS_PRODUIT_DESC], @row_id)
-    fac.info        = get_text(row[XLS_PRODUIT_INFO], @row_id)
-    fac.star        = get_boolean_field(row[XLS_PRODUIT_STAR],   @row_id, 'star',   {:invalid => :warning})
-    fac.adu         = get_boolean_field(row[XLS_PRODUIT_ADU],   @row_id, 'adu',   {:invalid => :warning})
-    fac.factype_id  = Factype::DIFF
-    get_parcelles(row[XLS_FACTURE_PARCELLES], @row_id)
-    get_cultures(row[XLS_FACTURE_TYPECULTURS], @row_id)
-    # fac.saison_id   = 0 # Modifier la structure de la table pour autoriser l'in
+    produit.category_id = get_category(row[XLS_PRODUIT_CATEGORY], @row_id, :produit)
+    produit.unit        = get_text(row[XLS_PRODUIT_UNIT],         @row_id, 'unite',           {:if_null => :error})
+    produit.name        = get_text(row[XLS_PRODUIT_NAME],         @row_id, 'nom',             {:if_null => :error})
+    produit.code        = get_text(row[XLS_PRODUIT_CODE],         @row_id, 'code',            {:if_null => :error})
+    produit.desc        = get_text(row[XLS_PRODUIT_DESC],         @row_id, 'description')
+    produit.info        = get_text(row[XLS_PRODUIT_INFO],         @row_id, 'info')
+    produit.star        = get_boolean_field(row[XLS_PRODUIT_STAR],@row_id, 'star', {:invalid => :warning})
+    produit.adu         = get_boolean_field(row[XLS_PRODUIT_ADU], @row_id, 'adu',   {:invalid => :warning})
 
-    @last_fac_read = @row_id
-    @assoc_produits[@last_fac_read] = []
-    check_parcelles_and_cultures_size(@row_id)
-    check_facture_already_imported(fac, @row_id)
-    return(fac)
+    check_if_produit_exist(produit, @row_id)
+    return(produit)
   end
 
 # Import Elements
@@ -278,6 +280,8 @@ class Import < ActiveRecord::Base
     if elt.class.eql?(Pulve)
       import_charge(elt, index)
     elsif elt.kind_of?(Facture)
+      import_charge(elt, index)
+    elsif elt.kind_of?(Produit)
       import_charge(elt, index)
     elsif (elt.kind_of?(Putoproduit) || elt.kind_of?(Protofacture))
       # do nothing
@@ -298,9 +302,11 @@ class Import < ActiveRecord::Base
         import_ok = false if res==false
       end
       #import associated products
-      @assoc_produits[index].each do |produit_assoc|
-        res = import_produit_assoc(elt, produit_assoc, index)
-        import_ok = false if res==false
+      unless @assoc_produits[index].nil?
+        @assoc_produits[index].each do |produit_assoc|
+          res = import_produit_assoc(elt, produit_assoc, index)
+          import_ok = false if res==false
+        end
       end
       elt.reload # get the record from db
       elt.save!  # force the call to after_save to update putoproduits
@@ -369,7 +375,7 @@ class Import < ActiveRecord::Base
       end
     end
     @has_errors = true
-    inspect_errors(id)     
+    # inspect_errors(id)     
   end
 
   # True/False
@@ -414,7 +420,7 @@ private
     if user = User.find_by_code(user_code)
       return user.id
     else
-      invalid = 'user not found'
+      invalid = 'utilisateur non valide'
       add_invalid(invalid, id)
     end
   end
@@ -435,20 +441,6 @@ private
     end
   end  
 
-# 
-
-
-
-
-
-
-
-
-
-# condition to modify
-  def get_text(text, id)
-    return text
-  end
   def get_parcelles(parcelles_raw, id)
     if parcelles_raw.class.eql?(String)
       parcelles = parcelles_raw.split(/,\s*/)
@@ -502,7 +494,11 @@ private
   def get_category(category_code, id, root_cat)
     root = Category.root_pulve    if root_cat.eql?(:pulve)
     root = Category.root_facture  if root_cat.eql?(:facture)
+    root = Category.root_produit  if root_cat.eql?(:produit)
+    puts "category_code #{category_code.to_s}"
+    puts "root name #{root.name.to_s}"
     category = Category.find_by_code(category_code)
+    puts "cat #{category.to_s}"
     if (root && category && category.root.eql?(root))
       return category.id
     else
@@ -521,7 +517,7 @@ private
   end
 
 # Check elements
-  def check_pulve_already_imported(element, id)
+  def check_if_pulve_exist(element, id)
     Pulve.find_by_saison(:all).each do |pulve|
       if (pulve.name.eql?(element.name))
         invalid = "semble etre deja importe"
@@ -529,7 +525,7 @@ private
       end
     end
   end  
-  def check_facture_already_imported(element, id)
+  def check_if_facture_exist(element, id)
     Facture.find_by_saison(:all).each do |elt|
       if (elt.name.eql?(element.name))
         invalid = "semble etre deja importe"
@@ -537,6 +533,20 @@ private
       end
     end
   end  
+  def check_if_produit_exist(element, id)
+    Produit.find_by_saison(:all).each do |elt|
+      if (elt.code.eql?(element.code))
+        msg = "existe deja"
+        add_invalid(msg, id) unless invalid_already_exist(msg, id)
+        return
+      end
+      if (elt.name.eql?(element.name))
+        msg = "ce nom est deja utilise"
+        add_warning(msg, id) unless warning_already_exist(msg, id)
+      end
+    end
+  end  
+  # obsolete : on autorise le fait d'indiquer aucune parcelle
   def check_parcelles_and_cultures_size(id)
     if @parcelles[id].size.eql?(0) && @cultures[id].size.eql?(0)
       warning = "aucune parcelle identifiee"
@@ -568,6 +578,24 @@ private
   def booleanize(value)
     return 1 if (is_boolean?(value) && value.eql?('oui'))
     return nil
+  end
+
+  # :if_null => :error.   add_error   if value is null
+  #          :warning  add_warning if value is null
+  def get_text(value, id, field, *args)
+    opt = args.extract_options!
+    value = value.to_s
+    if value.eql?("")
+      msg = "#{field} doit ne doit pas etre nul"
+      if (opt[:if_null].eql?(:error)) # generate an error if value == ''
+        add_invalid(msg, id)
+        nil
+      elsif (opt[:if_null].eql?(:error)) # generate an invalid if value == ''
+        add_invalid(msg, id)
+        nil
+      end
+    end
+    value
   end
 
   # :invalid => :error.   add_error   if value is not valide

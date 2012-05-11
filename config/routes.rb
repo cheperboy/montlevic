@@ -85,9 +85,10 @@ ActionController::Routing::Routes.draw do |map|
   end
     
   map.resources :import, :collection => { 
-    :import_pulves   => :any,
-    :import_factures => :any,
-    :prepare         => :any
+    :import_pulves   => :get,
+    :import_factures => :get,
+    :import_produits => :get,
+    :prepare         => :get,
   }
 
   map.resources :diverses,    :as => :factures, :controller => :factures
