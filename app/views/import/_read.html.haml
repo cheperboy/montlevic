@@ -3,9 +3,9 @@
 - import_force = button_to("Importer malgrer les warnings", :action => action, :import => true)
 - import 	   = button_to("Importer", 						:action => action, :import => true)
 
-- produits = link_to 'Produits',:url => {:action => :import_produits}
-- factures   = link_to 'Factures',:url => {:action => :import_factures}
-- pulves   = link_to 'Pulves', 	:url => {:action => :import_pulves}
+- produits = link_to 'Produits', 	:action => :import_produits
+- factures   = link_to 'Factures', 	:action => :import_factures
+- pulves   = link_to 'Pulves', 		:action => :import_pulves
 
 #title_h1
 	%span.title= titre

@@ -5,7 +5,11 @@ Spreadsheet.client_encoding = 'LATIN1//TRANSLIT//IGNORE'
 # TODO: probleme d'enregistrement du texte copier/coller du web: erreur utf8
 # TODO: pour tout les type qui doivent avoir un code unique, vertifier l'unicite avant import de tt les elts
 
+
 class Import < ActiveRecord::Base
+
+  has_attached_file :xls_file
+
   attr_accessor :row_id,        # nombre d'elements lu lors de l'analyse du fichier
                 :import_size,   # nombre d'elements importes avec succes
                 :read_size,     # nombre d'elements a importer (pulves, factures, mais pas putoproduits, putoparcelles, ...)
@@ -21,6 +25,7 @@ class Import < ActiveRecord::Base
                 :has_warnings,  :has_invalids,  :has_errors #presence of error/warnings/invalids
 
   # ----- Constantes -----
+if true
   # Erreurs
   IMPORT_TYPE_INVALID = "le fichier comporte un type invalid"
   IMPORT_TYPE_UNDEFINED = "type non defini"
@@ -81,7 +86,7 @@ class Import < ActiveRecord::Base
   XLS_PRODUIT_INFO     = 7
   XLS_PRODUIT_STAR     = 8
   XLS_PRODUIT_ADU      = 9
-
+end
   def initialize(elt_type)
     if nil
     # Protofacture.find(:all).each do |f|
@@ -178,7 +183,7 @@ class Import < ActiveRecord::Base
   
   def read_pulve(row)
     pulve = Pulve.new()
-    cout_ha_passage = get_cout_ha_passage(row[XLS_PULVE_COUT_HA_PASSAGE], @row_id)
+    cout_ha_passage = get_numeric_field(row[XLS_PULVE_COUT_HA_PASSAGE], @row_id, 'cout ha passage', {:invalid => :error, :if_null => :error})
     category_id = get_category(row[XLS_PULVE_CATEGORY], @row_id, :pulve)
     user_id     = get_user_id(row[XLS_PULVE_USER], @row_id)
     date        = get_date(row[XLS_PULVE_DATE], @row_id)

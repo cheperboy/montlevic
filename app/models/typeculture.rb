@@ -3,6 +3,7 @@ class Typeculture < ActiveRecord::Base
   has_many :parcelles
   
   validates_presence_of :name
+  validates_uniqueness_of :code, :message => "ce code est deja pris"
   
   def name_for_select
     @name_for_select = "Typeculture :: " + name + " - " + " - " + surface.to_s + " Ha" 

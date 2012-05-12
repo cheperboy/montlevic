@@ -10,7 +10,7 @@ class Category < ActiveRecord::Base
   has_many :pulves
   has_many :labours
 
-  validates_uniqueness_of :code
+  validates_uniqueness_of :code, :message => "ce code est deja pris"
   
   validates_format_of :code,
                       :with	=> /^\w+$/,

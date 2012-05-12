@@ -20,10 +20,11 @@ class Parcelle < ActiveRecord::Base
 
   accepts_nested_attributes_for :zonetopas, :allow_destroy => true
 
-  validates_presence_of :name
-  validates_presence_of :surface
+  validates_uniqueness_of   :code, :scope => :saison_id, :message => "ce code est deja pris"
+  validates_presence_of     :name
+  validates_presence_of     :surface
   validates_numericality_of :surface, :message => "n'est pas un nombre"
-  validates_associated :zonetopas
+  validates_associated      :zonetopas
 
 # ----- Finders -----
 

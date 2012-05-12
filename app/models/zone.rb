@@ -5,6 +5,7 @@ class Zone < ActiveRecord::Base
 
   validates_presence_of :name
   validates_presence_of :surface
+  validates_uniqueness_of :code, :message => "ce code est deja pris"
 
   def name_and_surface
     @name_and_surface = name + " - " + surface.to_s(2) + " Ha" 
