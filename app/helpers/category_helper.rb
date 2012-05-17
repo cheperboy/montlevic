@@ -48,6 +48,8 @@ module CategoryHelper
       out << "<th>Factures</th>"
       out << "<th>Ancestry</th>"
     end
+    out << "<th></th>"
+    out << "<th></th>"
     out << "</tr>"
     Category.roots.each do |root|
       out << print_tree_with_links_tr(root)
@@ -73,10 +75,12 @@ module CategoryHelper
     # out << print_td_info(cat)
     out << "<td>" <<  link_to_show(cat.class, cat.id) << "</td>"
     out << "<td>" <<  link_to_edit(cat.class, cat.id) << "</td>"
-    out << "<td>" <<  link_to_delete(cat.class, cat.id) << "</td>"
-    out << "<td>#{cat.depth}</td>"
-    out << "<td>#{cat.is_childless?}</td>"
-    out << "<td>#{cat.factures.count}</td>"
+    if admin?
+      out << "<td>" <<  link_to_delete(cat.class, cat.id) << "</td>"
+      out << "<td>#{cat.depth}</td>"
+      out << "<td>#{cat.is_childless?}</td>"
+      out << "<td>#{cat.factures.count}</td>"
+    end
     out << "<td>#{print_way(cat)}</td>"
     out << "<td>"
     if cat.valid_is_not_leaf_has_elements?

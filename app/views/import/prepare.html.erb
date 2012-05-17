@@ -2,10 +2,25 @@
 <% titre = "Pulves" %>
 <% lien1 = button_to("Lire le fichier", :action => :import_pulves) %>
 
+<%= render(:partial => "links", :locals => { :var => nil}) %>
+
 <div id="title_h1">
 	<span class=title><%= titre %></span>
 	<span class=link><%= lien1 %></span>
 </div>
+
+<% form_for :store, Store.new, :url => { :action => :prepare }, :html => { :multipart => true } do |f| %>
+	<%= f.file_field :file %>
+  	<%= f.submit %>
+<% end %>
+
+<% if @file %>
+	<%= @file.file_file_name %>
+<% else %>
+	pas de fichier!
+<% end %>
+
+
 <table>
 	<tr>
 	<% [@users, @produits, @parcelles, @typecultures].each do |elt| %>

@@ -6,6 +6,12 @@ Spreadsheet.client_encoding = 'LATIN1//TRANSLIT//IGNORE'
 # TODO: pour tout les type qui doivent avoir un code unique, vertifier l'unicite avant import de tt les elts
 
 
+class Store < ActiveRecord::Base
+
+  has_attached_file :file
+
+end
+
 class Import < ActiveRecord::Base
 
   # has_attached_file :file
@@ -183,17 +189,17 @@ end
   
   def read_pulve(row)
     pulve = Pulve.new()
-    cout_ha_passage = get_numeric_field(row[XLS_PULVE_COUT_HA_PASSAGE], @row_id, 'cout ha passage', {:invalid => :error, :if_neg => :error})
-    category_id     = get_category(row[XLS_PULVE_CATEGORY], @row_id, :pulve)
-    user_id         = get_user_id(row[XLS_PULVE_USER], @row_id)
-    date            = get_date(row[XLS_PULVE_DATE], @row_id)
-    name            = get_name(row[XLS_PULVE_NAME], @row_id)
-    parcelles       = get_parcelles(row[XLS_PULVE_PARCELLES], @row_id)
-    cultures        = get_cultures(row[XLS_PULVE_TYPECULTURS], @row_id)
-    desc            = get_text(row[XLS_PULVE_DESC], @row_id, 'description')
-    info            = get_text(row[XLS_PULVE_INFO], @row_id, 'info')
-    star            = get_boolean_field(row[XLS_PULVE_STAR],  @row_id, 'star',  {:invalid => :warning})
-    adu             = get_boolean_field(row[XLS_PULVE_ADU],   @row_id, 'adu',   {:invalid => :warning})
+    cout_ha_passage = get_numeric_field(row[XLS_PULVE_COUT_HA_PASSAGE], @row_id, 'cout ha passage', {:invalid => :error, :if_null => :error})
+    category_id = get_category(row[XLS_PULVE_CATEGORY], @row_id, :pulve)
+    user_id     = get_user_id(row[XLS_PULVE_USER], @row_id)
+    date        = get_date(row[XLS_PULVE_DATE], @row_id)
+    name        = get_name(row[XLS_PULVE_NAME], @row_id)
+    parcelles   = get_parcelles(row[XLS_PULVE_PARCELLES], @row_id)
+    cultures    = get_cultures(row[XLS_PULVE_TYPECULTURS], @row_id)
+    desc        = get_text(row[XLS_PULVE_DESC], @row_id, 'description')
+    info        = get_text(row[XLS_PULVE_INFO], @row_id, 'info')
+    star        = get_boolean_field(row[XLS_PULVE_STAR],  @row_id, 'star',  {:invalid => :warning})
+    adu         = get_boolean_field(row[XLS_PULVE_ADU],   @row_id, 'adu',   {:invalid => :warning})
     pulve.update_attributes(
       :cout_ha_passage => cout_ha_passage,
       :name            => name,
@@ -281,8 +287,6 @@ end
       import_element(elt, index)
     end
   end  
-
-  # dispatch to import_charge() with correct model name
   def import_element(elt, index)
     if elt.class.eql?(Pulve)
       import_charge(elt, index)
@@ -297,7 +301,6 @@ end
     end
   end
   
-  # import pulve, facture or produit and call import_model_assoc() if needed
   def import_charge(elt, index)
     import_ok = true
     import_failed = true
@@ -373,7 +376,7 @@ end
     end
     return import_ok
   end
-
+       
   def add_error(error, id)  
     if error.class.eql?(String)
       @errors[id] << "#{error}"
@@ -490,6 +493,14 @@ private
   end
 
 # Read Pulve fields
+  def get_cout_ha_passage(cout_ha_passage, id)
+      return cout_ha_passage
+    # else
+    #   invalid = "cout_ha_passage n'est pas un nombre"
+    #   add_invalid(invalid, id)
+    # end
+  end
+
   # root = :pulve, :facture, ...
   def get_category(category_code, id, root_cat)
     root = Category.root_pulve    if root_cat.eql?(:pulve)
@@ -536,7 +547,7 @@ private
   def check_if_produit_exist(element, id)
     Produit.find_by_saison(:all).each do |elt|
       if (elt.code.eql?(element.code))
-        msg = "ce code existe deja"
+        msg = "existe deja"
         add_invalid(msg, id) unless invalid_already_exist(msg, id)
         return
       end
@@ -657,20 +668,13 @@ private
   end
 
 # Read File
-  # def self.load_sheet_from_db_without_rescue(file, sheet_name)
-  #   book = Spreadsheet.open file
-  #   puts "CATCH ERROR"
-  #   raise 'book not found' if book.nil?
-  #   sheet = book.worksheet sheet_name
-  #   raise 'book not found' if sheet.nil?
-  #   return sheet
-  # end
-  
-  def self.load_sheet_from_db(file, sheet_name)
-    book = Spreadsheet.open file
+  def self.load_sheet(file_name, sheet_name)
+    book = Spreadsheet.open Rails.root.join('doc', 'xls_import', file_name)
+    raise 'book not found' if book.nil?
     sheet = book.worksheet sheet_name
+    raise 'book not found' if sheet.nil?
+    return sheet
   end
-
   def self.load_book(book_name)
     book = Spreadsheet.open Rails.root.join('doc', 'xls_import', book_name)
     raise 'book not found' if book.nil?

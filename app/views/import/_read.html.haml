@@ -3,17 +3,17 @@
 - import_force = button_to("Importer malgrer les warnings", :action => action, :import => true)
 - import 	   = button_to("Importer", 						:action => action, :import => true)
 
-- produits = link_to 'Produits', 	:action => :import_produits
-- factures   = link_to 'Factures', 	:action => :import_factures
-- pulves   = link_to 'Pulves', 		:action => :import_pulves
+= render(:partial => "links", :locals => { :var => nil})
 
+%br 
+%br
 #title_h1
 	%span.title= titre
-	%span.link= produits
-	%span.link= factures
-	%span.link= pulves
-	= prepare
-	= read
+	/ %span.link= produits
+	/ %span.link= factures
+	/ %span.link= pulves
+	/= prepare
+	/= read
 
 %p
 - @import.remarks.each do |msg|

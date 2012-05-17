@@ -6,6 +6,8 @@
 <% lien_import_with_force = button_to("Importer malgré les warnings", 	:action => :import_factures, :force => true) %>
 <% force_print = true %>
 
+<%= render(:partial => "links", :locals => { :var => nil}) %>
+
 <div id="title_h1">
 	<span class=title><%= titre %></span>
 	<span class=link><%= prepare_file %></span>

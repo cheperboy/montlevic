@@ -264,6 +264,14 @@ ActiveRecord::Schema.define(:version => 20120209075723) do
     t.integer "charges_include_stock_produit", :limit => 2
   end
 
+  create_table "stores", :force => true do |t|
+    t.string   "tag"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.string   "file_content_type"
+    t.string   "file_file_name"
+  end
+
   create_table "typecultures", :force => true do |t|
     t.string "name", :null => false
     t.string "code", :null => false
