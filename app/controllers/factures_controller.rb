@@ -4,7 +4,7 @@ class FacturesController < ApplicationController
 
 
   def index
-    @factures = Facture.find_by_saison(:all) 
+    @factures = Facture.find_by_saison(:all)
     # if params[:tri]
     #   @factures = Facture.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
     #   @tri = params[:tri]
@@ -68,7 +68,7 @@ class FacturesController < ApplicationController
 
   def new
     @facture ||= Facture.new
-    @categories = Category.for_factures
+    # @categories = Category.for_factures
     respond_to do |format|
       format.html
     end
@@ -276,6 +276,41 @@ class FacturesController < ApplicationController
     end
   end
 
+  def export2
+    # send_file user.avatar.path, :type => user.avatar_content_type
+    @factures = Facture.find_by_saison(:all)
+    name = "factures_#{current_saison_id}"
+    headers['Content-Type'] = "application/vnd.ms-excel"
+    headers['Content-Disposition'] = "attachment; filename='#{name}.xls'"
+    headers['Cache-Control'] = ''
+    render(:layout=>false)
+  end
+  
+  def export
+    # book = Spreadsheet::Workbook.new
+    # sheet1 = book.create_worksheet
+    # sheet1.name = 'Factures'
+    # sheet1.row(0).height = 18
+    # 
+    # @factures = Facture.find_by_saison(:all)
+    # i=1
+    # @factures.each do |f|
+    #   sheet1.row(i).push [f.id, f.name, f.category.name]
+    # end
+    # 
+    # # name = "factures_#{current_saison_id}"
+    # # headers['Content-Type'] = "application/vnd.ms-excel"
+    # # headers['Content-Disposition'] = "attachment; filename='#{name}.xls'"
+    # # headers['Cache-Control'] = ''
+    # book.write '/file_factures.xls'
+    # send_data spreadsheet.string, :filename => "yourfile.xls", :type =>  "application/vnd.ms-excel"
+    # send_file file#, :type => "application/vnd.ms-excel"
+    file = Facture.export_by_saison()
+    send_data file.string, :filename => "Factures.xls", :type =>  "application/vnd.ms-excel"    
+
+    # render(:layout=>false)
+  end
+  
   def destroy
     @facture = Facture.find(params[:id])
 

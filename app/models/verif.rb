@@ -8,15 +8,15 @@ class Verif < ActiveRecord::Base
 
   Serie = Struct.new(:name, :tests)
   Test = Struct.new(:name, :result, :num, :level, :errors)
-  Error = Struct.new(:name, :id, :controller, :url)
+  Error = Struct.new(:name, :id, :controller, :url, :datas)
 
   def init_test(name, level) 
     test = Test.new(name, 0, 0, level, [])
     return test
   end
   
-  def init_error(name, id, controller) 
-    error = Error.new(name, id, controller, nil)
+  def init_error(name, id, controller, datas)
+    error = Error.new(name, id, controller, nil, datas)
     return error
   end
   
@@ -54,6 +54,7 @@ class Verif < ActiveRecord::Base
     factures.tests << reportable_sans_report
     factures.tests << facdiv_sans_diverse
     factures.tests << diverse_sans_facdiv
+    factures.tests << reportable_not_null_or_report_null
     # factures.tests << facture_produit_incomplete
 
     factypes.tests << report_factype_null
@@ -79,14 +80,30 @@ class Verif < ActiveRecord::Base
     
   end
 
+  def reportable_not_null_or_report_null
+    test = init_test('Reportable non null ou report null', HIGH)
+    test.num =0
+    Facture.find_by_saison(:all, :order => :id).each do |facture|       
+      if facture.reportable_not_null_or_report_null.eql?(true)
+        test.num += 1
+        print = "#{facture.class.to_s} #{facture.name}"
+        error = init_error(print, facture.id, 'factures', '')
+        test.errors << error
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
+  end
+
   def assos_sup_cout
-    test = init_test('Somme associations superieur a cout facture', LOW)
+    test = init_test('Somme associations superieur a cout facture', HIGH)
     test.num =0
     # Facture.find(:all).each do |facture|
     Facture.find_by_saison(:all, :order => :id).each do |facture|       
       if facture.assos_sup_cout.eql?(true)
         test.num += 1
-        error = init_error(facture.name, facture.id, 'factures')
+        print = "#{facture.name}: #{facture.sum_charges} > #{facture.cout}"
+        error = init_error(print, facture.id, 'factures', '')
         test.errors << error
       end
     end
@@ -100,7 +117,7 @@ class Verif < ActiveRecord::Base
     Reportable.find(:all).each do |reportable|    
       if reportable.reports.empty?
         test.num += 1
-        error = init_error(reportable.name, reportable.id, 'factures')
+        error = init_error(reportable.name, reportable.id, 'factures', '')
         test.errors << error
       end
     end
@@ -137,7 +154,7 @@ class Verif < ActiveRecord::Base
     Debit.find(:all).each do |facture|    
       if facture.factype_id.equal?(Factype.find_by_name('null').id) && facture.pulves.empty? && facture.labours.empty?
         test.num += 1
-        error = init_error(facture.name, facture.id, 'factures')
+        error = init_error(facture.name, facture.id, 'factures', '')
         test.errors << error
       end
     end
@@ -175,7 +192,8 @@ class Verif < ActiveRecord::Base
       unless (facture.sum_putoproduits_associated.almost_eql?(facture.cout, 1))
         test.num += 1
         text = facture.to_s(:default)
-        error = init_error(facture.name, facture.id, 'factures')
+        print = "#{facture.name}: #{facture.cout} > #{facture.sum_putoproduits_associated}"
+        error = init_error(print, facture.id, 'factures', '')
         test.errors << error
       end
     end
@@ -188,7 +206,7 @@ class Verif < ActiveRecord::Base
     Facdiv.find(:all).each do |facdiv|    
       if facdiv.facture.nil?
         test.num += 1
-        error = init_error(facdiv.name, facdiv.id, nil)
+        error = init_error(facdiv.name, facdiv.id, nil, '')
         test.errors << error
       end
     end
@@ -206,7 +224,7 @@ class Verif < ActiveRecord::Base
         parcelle = ''
         parcelle = 'parcelle ' + obj.parcelle_id.to_s + " n'existe pas" if obj.parcelle.nil? 
         text = 'Ventoparcelle ' + vente + ' | ' + parcelle
-        error = init_error(text, obj.id, nil)
+        error = init_error(text, obj.id, nil, '')
         test.errors << error
       end
     end
@@ -224,7 +242,7 @@ class Verif < ActiveRecord::Base
         parcelle = ''
         parcelle = 'parcelle ' + obj.parcelle_id.to_s + " n'existe pas" if obj.parcelle.nil? 
         text = 'Factoparcelle ' + facture + ' | ' + parcelle
-        error = init_error(text, obj.id, nil)
+        error = init_error(text, obj.id, nil, '')
         test.errors << error
       end
     end
@@ -242,7 +260,7 @@ class Verif < ActiveRecord::Base
         labour = ''
         labour = 'labour ' + obj.labour_id.to_s + " n'existe pas" if obj.labour.nil? 
         text = 'Labtofacture ' + facture + ' | ' + facture
-        error = init_error(text, obj.id, nil)
+        error = init_error(text, obj.id, nil, '')
         test.errors << error
       end
     end
@@ -260,7 +278,7 @@ class Verif < ActiveRecord::Base
         labour = ''
         labour = 'labour ' + obj.labour_id.to_s + " n'existe pas" if obj.labour.nil? 
         text = 'Labtoparcelle ' + parcelle + ' | ' + parcelle
-        error = init_error(text, obj.id, nil)
+        error = init_error(text, obj.id, nil, '')
         test.errors << error
       end
     end
@@ -278,7 +296,7 @@ class Verif < ActiveRecord::Base
         pulve = ''
         pulve = 'pulve ' + obj.pulve_id.to_s + " n'existe pas" if obj.pulve.nil? 
         text = 'Labtoparcelle ' + parcelle + ' | ' + parcelle
-        error = init_error(text, obj.id, nil)
+        error = init_error(text, obj.id, nil, '')
         test.errors << error
       end
     end
@@ -296,7 +314,7 @@ class Verif < ActiveRecord::Base
         pulve = ''
         pulve = 'pulve ' + obj.pulve_id.to_s + " n'existe pas" if obj.pulve.nil? 
         text = 'Labtofacture ' + facture + ' | ' + facture
-        error = init_error(text, obj.id, nil)
+        error = init_error(text, obj.id, nil, '')
         test.errors << error
       end
     end
@@ -313,7 +331,7 @@ class Verif < ActiveRecord::Base
             test.num += 1
             text = 'labour ' + obj.labour.name.to_s + ' (' + obj.labour.get_cout_total.to_s + ' euros) ' 
             text += 'contribution a la facture ' + obj.facture.name.to_s + ' (' + obj.value.to_s + ' euros)' 
-            error = init_error(text, obj.labour.id, 'labours')
+            error = init_error(text, obj.labour.id, 'labours', '')
             test.errors << error
           end
         end
@@ -330,7 +348,7 @@ class Verif < ActiveRecord::Base
         test.num += 1
         text = 'pulve ' + obj.pulve.name.to_s + ' (' + obj.pulve.get_cout_total.to_s + ' euros) ' 
         text += 'contribution a la facture ' + obj.facture.name.to_s + ' (' + obj.value.to_s + ' euros)' 
-        error = init_error(text, obj.pulve.id, 'pulves')
+        error = init_error(text, obj.pulve.id, 'pulves', '')
         test.errors << error
       end
     end
@@ -345,7 +363,7 @@ class Verif < ActiveRecord::Base
         test.num += 1
         text = 'vente ' + obj.vente.name.to_s + ' (' + obj.vente.value.to_s + ' euros) ' 
         text += 'contribution a la parcelle ' + obj.parcelle.name.to_s + ' (' + obj.value.to_s + ' euros)' 
-        error = init_error(text, obj.vente.id, 'ventes')
+        error = init_error(text, obj.vente.id, 'ventes', '')
         test.errors << error
       end
     end
@@ -363,7 +381,7 @@ class Verif < ActiveRecord::Base
         if pulve.putofactures.empty?
           test.num += 1
           text = pulve.to_s(:default)
-          error = init_error(text, pulve.id, 'pulves')
+          error = init_error(text, pulve.id, 'pulves', '')
           test.errors << error
         end
       end
@@ -392,7 +410,7 @@ class Verif < ActiveRecord::Base
         if var == true
           test.num += 1
           text = pulve.to_s(:default)
-          error = init_error(text, pulve.id, 'pulves')
+          error = init_error(text, pulve.id, 'pulves', '')
           test.errors << error
         end
       end
@@ -410,7 +428,7 @@ class Verif < ActiveRecord::Base
         if pulve.get_cout_total_produits == 0
           test.num += 1
           text = pulve.to_s(:default)
-          error = init_error(text, pulve.id, 'pulves')
+          error = init_error(text, pulve.id, 'pulves', '')
           test.errors << error
         end
       end
@@ -442,7 +460,7 @@ class Verif < ActiveRecord::Base
         if var == true
           test.num += 1
           text = pulve.to_s(:default)
-          error = init_error(text, pulve.id, 'pulves')
+          error = init_error(text, pulve.id, 'pulves', '')
           test.errors << error
         end
       end
@@ -464,7 +482,7 @@ class Verif < ActiveRecord::Base
         if var == true
           test.num += 1
           text = produit.to_s(:default)
-          error = init_error(text, produit.id, 'produits')
+          error = init_error(text, produit.id, 'produits', '')
           test.errors << error
         end
       end

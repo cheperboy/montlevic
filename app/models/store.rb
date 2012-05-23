@@ -3,7 +3,16 @@ IMPORT = 'import'
 PATH   = "#{RAILS_ROOT}/public/system/files"
 FOLDER = "original"
 CONTENT_TYPE_XLS = "application/vnd.ms-excel"
-  has_attached_file :file
+
+if RAILS_ENV!="production"
+  APP_NAME = "montlevic"
+end
+
+  has_attached_file :file,
+                    :storage        => :s3,
+                    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+                    :path           => "storage/:id/:filename",
+                    :bucket         => "#{APP_NAME}"
 
   def self.clean
     Store.all.each do |record|

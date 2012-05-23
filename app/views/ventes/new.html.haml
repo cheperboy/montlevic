@@ -1,0 +1,7 @@
+- title "Nouvelle Vente", false
+- titre = "Nouvelle Vente"
+- liens = link_to "Annuler", ventes_path
+- title = "<span class=title>#{titre}</span><span class=link>#{liens}</span>"
+#title_h1
+  = title
+= render :partial => 'form'

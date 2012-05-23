@@ -1,19 +1,20 @@
 ActionController::Routing::Routes.draw do |map|
 
   map.resources :verifs, :collection => { :list_labtofactures => :get,
-                                          :delete_labtofacture => :any,
-                                          :list_putofactures => :get,
-                                          :delete_putofacture => :any,
-                                          :list_protofactures => :get,
-                                          :delete_protofacture => :any,
-                                          :list_putoproduits => :get,
-                                          :delete_putoproduit => :any,
-                                          :list_putoparcelles => :get,
-                                          :delete_putoparcelle => :any,
-                                          :list_labtoparcelles => :get,
+                                          :delete_labtofacture  => :any,
+                                          :list_putofactures    => :get,
+                                          :delete_putofacture   => :any,
+                                          :list_protofactures   => :get,
+                                          :delete_protofacture  => :any,
+                                          :list_putoproduits    => :get,
+                                          :delete_putoproduit   => :any,
+                                          :list_putoparcelles   => :get,
+                                          :delete_putoparcelle  => :any,
+                                          :list_labtoparcelles  => :get,
                                           :delete_labtoparcelle => :any,
-                                          :list_factoparcelles => :get,
-                                          :delete_factoparcelle => :any
+                                          :list_factoparcelles  => :get,
+                                          :delete_factoparcelle => :any,
+                                          :factures             => :get
   }
 
   map.resource :session
@@ -72,7 +73,9 @@ ActionController::Routing::Routes.draw do |map|
     :diverses       => :get,
     :modif          => :any,
     :update_adu     => :put,
-    :update_star    => :put}
+    :update_star    => :put,
+    :export         => :get
+    }
 
   map.resources :categories, :collection => { :test => :any}
   map.resources :upcategories do |upcat|

@@ -88,7 +88,7 @@ if true
   XLS_PRODUIT_ADU      = 9
 end
   def initialize(elt_type)
-    if nil
+    if false
     # Protofacture.find(:all).each do |f|
     #   if 73 <= f.id && f.id <= 88
     #     puts "delete #{f.id}"
@@ -101,12 +101,12 @@ end
     #     f.destroy
     #   end
     # end
-    #   Pulve.find(:all).each do |pu|
-    #     if pu.id > 77
-    #       puts "delete #{pu.id}"
-    #       pu.destroy
-    #     end
-    #   end
+      Pulve.find(:all).each do |pu|
+        if pu.id > 77
+          puts "delete #{pu.id}"
+          pu.destroy
+        end
+      end
     end
 
     @sym = elt_type

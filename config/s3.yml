@@ -1,0 +1,12 @@
+development:
+bucket: bucket-dev
+access_key_id: AKIAIH4KNHLR45D7G3DQ
+secret_access_key: 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
+test:
+bucket: bucket-test
+access_key_id: AKIAIH4KNHLR45D7G3DQ
+secret_access_key: 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
+production:
+bucket: bucket-production
+access_key_id: AKIAIH4KNHLR45D7G3DQ
+secret_access_key: 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

@@ -6,25 +6,17 @@
 	<table>
 	  <tr>  	
 	    <td>Id | </td>
-	    <td>Facture | </td>
-	    <td>Parcelle | </td>
+	    <td>Nom | </td>
 	    <td>Value | </td>
 	    <td colspan='3'></td>
 	  </tr>
 
 	<% @factures.each do |obj| %>
-	  <% fac_invalid = (obj.facture.nil?) %>
-	  <% parcelle_invalid = (obj.parcelle.nil?) %>
 	  <tr class='list-row'>
 	    <td>
-	    	<% if fac_invalid || parcelle_invalid %>
-				<%= image_tag('img-nok.png') %> 
-			<% else %>
-				<%= image_tag('img-ok.png') %>
-			<% end %>
+			<%= image_tag('img-nok.png') %> 
 			<%= obj.id %> | 
 		</td>
-
 	    <td>
 	    	<% if fac_invalid %>
 				<%= obj.facour_id %> | 

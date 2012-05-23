@@ -38,7 +38,6 @@ class Category < ActiveRecord::Base
   end
 
   #nouveau pour Tree
-
   def self.root_facture
     Category.find(:first, :conditions => { :name => "Facture"})
   end
@@ -66,6 +65,25 @@ class Category < ActiveRecord::Base
   def self.root_putoproduit
     Category.find(:first, :conditions => { :name => "Produit" })
   end
+  def self.labours_cats
+    self.root_labour.children
+  end
+  def self.produits_cats
+    self.root_produit.children
+  end
+  def self.pulves_cats
+    self.root_pulve.children
+  end    
+  def self.putoproduits_cats
+    self.root_produit.children
+  end
+  def self.factures_cats
+    self.root_facture.children
+  end
+  def self.ventes_cats
+    self.root_vente.children
+  end
+    
 
   def move_elements_to_new_leaf
     out = ""
@@ -136,8 +154,6 @@ class Category < ActiveRecord::Base
     Category.root_agri.children.exists?(:id => self.id)
   end
 
-
-
   def get_factcat_from_category
     return "root" if self.is_root?
     factcat = self.parent
@@ -150,8 +166,6 @@ class Category < ActiveRecord::Base
   end
   
   #End of nouveau pour Tree (end)
-
-
 
   def name_for_select_for_facture
     @name_for_select = self.factcat.name + " - " + self.name
@@ -188,36 +202,9 @@ class Category < ActiveRecord::Base
     return categories
   end
 
-  def self.labours_cats
-    find_by_upcategory('labour')
-  end
-    
-  def self.produits_cats
-    find_by_upcategory('produit')
-  end
-
-  def self.pulves_cats
-    find_by_upcategory('pulve')
-  end
-    
-  def self.putoproduits_cats
-    find_by_upcategory('produit')
-  end
-    
-  def self.factures_cats
-    find_by_upcategory('facture')
-  end
-
-  def self.ventes_cats
-    find_by_upcategory('vente')
-  end    
-  def self.for_factures
-    find_by_upcategory('facture')
-  end
-    
   def self.grouped_for_factures
     myoptions = []
-    root = Category.find(:first, :conditions => { :name => 'facture' })
+    root = Category.find(:first, :conditions => { :code => 'facture' })
     root.children.each do |upcat|
       myupcat = CategoryUptype.new(upcat.name)
       categories = upcat.children
@@ -226,46 +213,6 @@ class Category < ActiveRecord::Base
       end
       myoptions << myupcat
     end
-    return myoptions
-  end
-
-
-  def self.grouped_for_factures_old
-    cats = find_by_upcategory('facture')
-    upcategory_id = Upcategory.find(:first, :conditions => { :name => 'facture' }).id
-    
-    myoptions = []
-    Factcat.find(:all).each do |upcat|
-      myupcat = CategoryUptype.new(upcat.name)
-      categories = Category.find(:all, :conditions => ["factcat_id = ? AND upcategory_id = ?", upcat.id, upcategory_id])
-      categories.each do |cat|
-        myupcat << CategoryOption.new(cat.id, cat.name)
-      end
-      myoptions << myupcat
-    end
-
-    # agri = CategoryUptype.new("Agricole")
-    # factcat_id = Factcat.find_by_code("agri").id
-    # categories = Category.find(:all, :conditions => ["factcat_id = ? AND upcategory_id = ?", factcat_id, upcategory_id])
-    # categories.each do |cat|
-    #   agri << CategoryOption.new(cat.id, cat.name)
-    # end
-    # 
-    # invest = CategoryUptype.new("Investissement")
-    # factcat_id = Factcat.find_by_code("invest").id
-    # categories = Category.find(:all, :conditions => ["factcat_id = ? AND upcategory_id = ?", factcat_id, upcategory_id])
-    # categories.each do |cat|
-    #   invest << CategoryOption.new(cat.id, cat.name)
-    # end
-    # 
-    # maison = CategoryUptype.new("Maison")
-    # factcat_id = Factcat.find_by_code("maison").id
-    # categories = Category.find(:all, :conditions => ["factcat_id = ? AND upcategory_id = ?", factcat_id, upcategory_id])
-    # categories.each do |cat|
-    #   maison << CategoryOption.new(cat.id, cat.name)
-    # end
-    # 
-    # options = [agri, invest, maison]
     return myoptions
   end
     

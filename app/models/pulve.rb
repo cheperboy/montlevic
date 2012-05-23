@@ -1,11 +1,5 @@
 class Pulve < Charge
 
-  # ----- Constantes -----
-  XLS_ROW_NUM = 0
-  XLS_NAME = 1
-  XLS_USER = 2
-  XLS_COUT_HA_PASSAGE = 3
-
   def after_save 
     puts "pulve id #{self.id} : after_save called"
     self.putoproduits.each { |putoproduit| putoproduit.update_dosage_after_save }

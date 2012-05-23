@@ -188,5 +188,13 @@ class VerifsController < ApplicationController
       format.html { redirect_to :action => "list_putoparcelles" }
     end
   end
+
+  def factures
+    @factures = Facture.all(:scope_by_saison)
+    respond_to do |format|
+      format.html
+    end
+  end
+  
   
 end

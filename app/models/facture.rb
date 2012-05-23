@@ -244,13 +244,6 @@ class Facture < Charge
     return (self.sum_pulves + self.sum_putoproduits_used + sum_labours)
   end
   
-  # def sum_reports
-  #   if self.report?
-  #     return (0)
-  #   end
-  #   return (0)
-  # end
-  
   def get_cout_ha
     return (self.get_cout_total / self.sum_surfaces)
   end
@@ -270,8 +263,8 @@ class Facture < Charge
     return (self.cout)
   end
   
+  # 12/03/13 modification car Factcat obsolete
   def update_factcat
-    # 12/03/13 modification car Factcat obsolete
     cat = Category.find(self.category_id)
     self.factcat_id = cat.get_factcat_from_category.id
     self.save!
@@ -282,12 +275,101 @@ class Facture < Charge
 # Somme des associations superieur a facture.cout
   def assos_sup_cout
     if charges?
-      if (sum_charges > cout)
+      if ((sum_charges > cout) && (!cout.almost_eql?(sum_charges, 1)))
         return true      
       end
     end
     return false
   end
 
-  
+  # Reportable not NULL ou Report NULL
+  def reportable_not_null_or_report_null
+    if (self.class.eql?(Reportable) && !comptable_null?) || (self.class.eql?(Report) && comptable_null?)
+      return true      
+    end
+    return false
+  end
+
+# ----- Export ------
+
+  def self.export_by_saison   
+    # s = 0
+    # Debit.find_by_saison(:all).each do |f| 
+    #   s+= f.cout
+    # end
+    # 
+    # puts "Debit = #{s}"
+    # 
+    # Reportable.find_by_saison(:all).each do |f| 
+    #   # puts "\t#{f.name} #{f.cout}"
+    # 
+    #   s+= f.cout
+    #   sr=0
+    #   f.reports.each do |r| 
+    #     sr+=r.cout
+    #     # puts "\t\t#{r.name} #{r.cout}"
+    #   end
+    #   if f.cout !=  sr
+    #     puts "#{f.cout} - #{sr} = #{f.cout - sr}"
+    #     sr=0
+    #   end
+    # end
+    # puts "Debit+reportable = #{s}"
+
+    tete = Spreadsheet::Format.new  :color => :blue,
+                                      :weight => :bold,
+                                      :size => 14
+    gras = Spreadsheet::Format.new :weight => :bold
+
+    saison = Setting.get_saison.name
+    book = Spreadsheet::Workbook.new
+
+    # sheet 1
+    name = "toutes les factures #{saison}"
+    sheet = book.create_worksheet
+    sheet.name = name
+    
+    # datas
+    tab_tete = ["id", "type", "date", "categorie", "cout", "prestataire", "nom", "ref client", "ref perso", "cout total", "cout - total"]
+        
+    sheet.row(0).replace tab_tete
+    sheet.row(0).default_format = tete
+    i = 1
+    factures = []
+    Debit.find_by_saison(:all).each {|d| factures << d}
+    Reportable.find_by_saison(:all).each {|d| factures << d}
+    factures.each do |f|
+      date = f.date.strftime("%Y/%m/%d")
+      tab = [f.id, f.type.to_s, date, f.category.name, f.cout, f.user.name, f.name, f.ref_client, f.ref, f.get_cout_total, f.cout - f.get_cout_total]
+      sheet.row(i).replace tab
+      i = i + 1
+    end
+
+    # sheet 2
+    name = "reportables et reports"
+    sheet2 = book.create_worksheet
+    sheet2.name = name    
+    # datas
+    sheet2.row(0).replace tab_tete
+    sheet2.row(0).default_format = tete
+    i = 1
+    Reportable.find_by_saison(:all).each do |f|
+      date = f.date.strftime("%Y/%m/%d")
+      tab = [f.id, f.type.to_s, date, f.category.name, f.cout, f.user.name, f.name, f.ref_client, f.ref, f.get_cout_total, f.cout - f.get_cout_total]
+      sheet2.row(i).replace tab
+      sheet2.row(i).default_format = gras
+      i = i + 1
+      f.reports.each do |r|
+        date = f.date.strftime("%Y/%m/%d")
+        tab = [r.id, r.type.to_s, date, r.category.name, r.cout, r.user.name, r.name, r.ref_client, r.get_cout_total, f.cout - f.get_cout_total]
+        sheet2.row(i).replace tab
+        i = i + 1
+      end
+    end
+    
+    file = StringIO.new 
+    book.write file
+    return file
+  end
+
 end

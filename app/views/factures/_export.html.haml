@@ -1,0 +1,19 @@
+/<table "border=1px" cellpadding="2" style="margin: 20px 40px">
+
+%table.table_data
+	%tr
+		%th id
+		%th date
+		%th categorie
+		%th cout
+		%th prestataire
+		%th nom
+	- i = 0
+	- @factures.each do |facture|
+		%tr
+			%td= h facture.id
+			%td= h facture.date.strftime("%b %d, %Y")
+			%td= h facture.category.name
+			%td= h facture.cout
+			%td= h facture.user.name
+			%td= h facture.name

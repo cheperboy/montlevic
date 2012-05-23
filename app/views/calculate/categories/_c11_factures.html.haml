@@ -1,0 +1,39 @@
+- @factcats.each do |factcat|
+  - @factcat = factcat
+  %tr.level-1
+    %td.col1
+      %b
+        - name = factcat.code
+        = link_to factcat.name, "javascript: toggleCat('#{name}');" ,{:name => name}
+    %td.col2
+    %td.col3
+    - if factcat.id.eql?(Category.root_agri.id)
+      %td.saison
+        %b= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :ha).display(:z => true)
+      %td.saison
+        %b= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :total).display(:z => true)
+    - else
+      %td.saison
+        %b= @test.res.get_saison_line(@test.sid, :factures, :factcat, factcat.id, :ha).display(:z => true)
+      %td.saison
+        %b= @test.res.get_saison_line(@test.sid, :factures, :factcat, factcat.id, :total).display(:z => true)
+    - rang = 0
+    - @colonnes.each do |colonne|
+      /
+        get_other_line(..., ::resultats, :total_charges, ...)	equivaut a
+        get_line(..., :factures, :factcat, factcat.id, ...) + les produits utilises
+      - rang += 1
+      - if factcat.id.eql?(Category.root_agri.id)
+        - cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_charges, :ha).display
+        - cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_charges, :total).display
+      - else
+        - cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :factcat, factcat.id, :ha).display
+        - cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :factcat, factcat.id, :total).display
+      %td{:class => "color_culture_#{colonne.code}"}
+        %b= h cout_ha
+      %td{:class => "color_culture_#{colonne.code}"}
+        %b= h cout_total
+  - categories = factcat.children
+  - categories.each do |cat|
+    = render(:partial => "calculate/categories/c12_factures_cat", :locals => { :cat => cat, :factcat => factcat })
+  %tr

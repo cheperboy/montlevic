@@ -2,9 +2,9 @@ class PulvesController < ApplicationController
   before_filter :edit_access,
                 :only => [:update, :destroy]
 
-  REF = 0
-  DESC = 1
-  PRIX = 2
+  # REF = 0
+  # DESC = 1
+  # PRIX = 2
 
   # GET /pulves
   # GET /pulves.xml

@@ -5,12 +5,6 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.xml
   
-  def test
-    # respond_to do |format|
-    #   format.haml
-    # end
-  end
-  
   def index
     @categories = Category.find(:all, :order => :upcategory_id)
 

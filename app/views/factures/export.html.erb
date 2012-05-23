@@ -1,0 +1,19 @@
+<table "border=1px" cellpadding="2" style="margin: 20px 40px">
+  <tr>
+   <th>id</th>
+   <th>date</th>
+   <th>cout</th>
+    <th>Categorie</th>
+    <th>Nom</th>
+  </tr>
+<% i = 0 %>
+<% @factures.each do |facture| %>
+  <tr>
+  	<td><%=h facture.id %></td>
+  	<td><%=h facture.date %></td>
+  	<td><%=h facture.cout %></td>
+  	<td><%=h facture.category.name %></td>
+  	<td><%=h facture.name %></td>
+  </tr>
+<% end %>
+</table>
