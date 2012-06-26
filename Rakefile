@@ -90,5 +90,27 @@ namespace :db do
     # sh %{ echo '#{command}' > #{filename} }
   end
   
+  desc "rename cats code if invalid"
+  task :rename_cats => :environment do 
+    Category.all.each do |c|
+      unless c.valid?
+        if c.errors[:code]
+          puts "#{c.code}"
+          c.errors.each {|e| puts "\t#{e.inspect}"}
+          c.old_code = c.code
+          new_code = "#{c.parent.code}.#{c.code}"
+          c.code = new_code
+          if c.valid?
+            c.save!
+          else
+            puts "APRES: #{c.code}"
+            c.errors.each {|e| puts "\t#{e.inspect}"}
+          end
+        end
+      end
+      c.save
+    end
+  end
+
 end
 

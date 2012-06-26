@@ -11,10 +11,11 @@ class Category < ActiveRecord::Base
   has_many :labours
 
   validates_uniqueness_of :code, :message => "ce code est deja pris"
-  
-  validates_format_of :code,
-                      :with	=> /^\w+$/,
-                      :message => "ne doit pas contenir d'espaces"  
+
+  # pas bon: leve des erreurs meme si pas d'espace  
+  # validates_format_of :code,
+  #                     :with => /^\w+$/,
+  #                     :message => "ne doit pas contenir d'espaces"  
 
   CategoryOption = Struct.new(:id, :name)
 

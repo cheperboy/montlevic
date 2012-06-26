@@ -25,7 +25,6 @@ class AddNowriteToCategories < ActiveRecord::Migration
       end
       c.save
     end
-    
 
     # NOWRITE
     add_column :categories, :nowrite, :integer

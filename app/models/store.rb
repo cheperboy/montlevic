@@ -6,6 +6,8 @@ CONTENT_TYPE_XLS = "application/vnd.ms-excel"
 
 if RAILS_ENV!="production"
   APP_NAME = "localhost"
+else
+  APP_NAME = "montlevic"
 end
 
   has_attached_file :file,
