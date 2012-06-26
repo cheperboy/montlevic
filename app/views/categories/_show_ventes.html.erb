@@ -22,9 +22,9 @@
 	</thead>
 	<%- ventes.each do |vente| -%>
 		<% consistency = false if ((vente.unit != unit) && (unit != '')) %>
-		<% sum_quantite += vente.quantite %>
+		<% sum_quantite += vente.quantite if vente.quantite %>
 		<% sum_prix += vente.prix %>
-		<% moy_prix_unitaire += vente.prix_unitaire %>
+		<% moy_prix_unitaire += vente.prix_unitaire if vente.prix_unitaire %>
 		<% num_vente += 1 %>
 		<% unit = vente.unit %>
 		<% prix_unitaire_unit = vente.get_prix_unitaire_unit %>
