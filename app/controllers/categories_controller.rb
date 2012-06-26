@@ -102,4 +102,11 @@ class CategoriesController < ApplicationController
       end
     end
   end
+
+  def export
+    file = Category.export()
+    send_data file.string, :filename => "Categories.xls", :type =>  "application/vnd.ms-excel"    
+  end
+  
+  
 end

@@ -230,7 +230,40 @@ class Category < ActiveRecord::Base
   	  return true
   	end
   end
-  
+
+  def self.export
+    tete = Spreadsheet::Format.new  :color => :blue,
+                                      :weight => :bold,
+                                      :size => 14
+    gras = Spreadsheet::Format.new :weight => :bold
+
+    saison = Setting.get_saison.name
+    book = Spreadsheet::Workbook.new
+
+    # sheet 1
+    name = "categories"
+    sheet = book.create_worksheet
+    sheet.name = name
+    
+    # datas
+    tab_tete = ["id", "root", "parent", "nom", "code"]
+        
+    sheet.row(0).replace tab_tete
+    sheet.row(0).default_format = tete
+    i = 1
+    elts = []
+    elts = Category.all
+    elts.each do |e|
+      tab = [e.id, e.root.name, e.try(:parent).try(:name), e.name, e.code]
+      sheet.row(i).replace tab
+      i = i + 1
+    end
+        
+    file = StringIO.new 
+    book.write file
+    return file
+  end
+
 end
 
 
