@@ -1,5 +1,3 @@
-# Maintenance: les category.codes ne sont pas unique 
-#   Verification de l'unicite et modification du code si besoin
 # Creation du champ nowrite
 #   nowrite indique si la categorie est protegee en ecriture car doit etre reconnue par le systeme
 
@@ -8,23 +6,7 @@ class AddNowriteToCategories < ActiveRecord::Migration
   def self.up
 
     # UNICITE
-    # add_column :categories, :old_code, :string
-    Category.all.each do |c|
-      unless c.valid?
-        if c.errors[:code]
-          c.old_code = c.code
-          new_code = "#{c.parent.code}.#{c.code}"
-          c.code = new_code
-          if c.valid?
-            c.save!
-          else
-            say "#{c.code}"
-            c.errors.each {|e| say "\t#{e.inspect}"}
-          end
-        end
-      end
-      c.save
-    end
+    add_column :categories, :old_code, :string
 
     # NOWRITE
     add_column :categories, :nowrite, :integer
@@ -41,8 +23,8 @@ class AddNowriteToCategories < ActiveRecord::Migration
   end
 
   def self.down
-    # remove_column :categories, :nowrite
-    # remove_column :categories, :old_code
+    remove_column :categories, :nowrite
+    remove_column :categories, :old_code
     say "\tremoved"
   end
 end
