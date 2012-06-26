@@ -37,7 +37,7 @@ class ImportController < ApplicationController
     @state = :import if params[:import].eql?('true')
 
     #get file from the database
-    file = Store.get_file_for_import
+    file = Store.get_file_for_import_from_s3
 
     #Read provided excel sheet from given file and load it
     unless file.nil?

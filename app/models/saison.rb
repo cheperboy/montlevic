@@ -25,7 +25,12 @@ class Saison < ActiveRecord::Base
   def selected?
     self.id.eql?(Setting.find(1).saison_id)
   end
-    
+  
+  def surface
+    surface = 0
+    self.parcelles.each { |p| surface += p.surface}
+    surface
+  end
   # retourne les id des pulves des parcelles de la saison (ou nil)
   def putoproduits
     putoproduits = []

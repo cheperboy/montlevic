@@ -1,0 +1,31 @@
+- name = "#{@factcat.code}.produits_used"
+%tr{:class => "level-2_#{name}"}
+  %td.col1
+  %td.col2
+    %b
+      = indent_cat_name(0, "")
+    = link_to 'Produits Utilisés', "javascript: toggleCat('#{name}');" ,{:name => name}
+  %td.col3
+  %td.saison
+    %span.green= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_putoproduits, :ha).display(:z => true)
+  %td.saison
+    %span.green= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_putoproduits, :total).display(:z => true)
+  - rang = 0
+  - @colonnes.each do |colonne|
+    - rang += 1
+    - cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_putoproduits, :ha).display(:z => true)
+    - cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_putoproduits, :total).display(:z => true)
+    %td{:class => "color_culture_#{colonne.code}"}
+      %span.green= h cout_ha
+    %td{:class => "color_culture_#{colonne.code}"}
+      %span.green= h cout_total
+- cat = Category.root_produit
+- if cat.has_children?
+  - cat.children.each do |cat|
+    = render(:partial => "calculate/categories/c22_produits_cat", :locals => { :cat => cat, :factcat => @factcat })
+- else
+  - cat.produits.find_by_saison(:all).each do |produit|
+    = render(:partial => "calculate/categories/c23_produits_elt", :locals => { 	:cat => cat, |
+      :factcat => @factcat,                                                                  |
+      :produit => produit,                                                                   |
+      :name => name })                                                                       |

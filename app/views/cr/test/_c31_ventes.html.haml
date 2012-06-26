@@ -1,0 +1,24 @@
+%tr.level-1
+  %td.col1
+    %b
+      - name = 'vente'
+      = link_to "Chiffre d'affaire", "javascript: toggleCat('#{name}');" ,{:name => name}
+  %td.col2
+  %td.col3
+  %td.saison
+    %b= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_ventes, :ha).display(:z => true)
+  %td.saison
+    %b= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_ventes, :total).display(:z => true)
+  - rang = 0
+  - @colonnes.each do |colonne|
+    - rang += 1
+    - cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_ventes, :ha).display(:z => true)
+    - cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_ventes, :total).display(:z => true)
+    %td{:class => "color_culture_#{colonne.code}_strong"}
+      %b= cout_ha
+    %td{:class => "color_culture_#{colonne.code}_strong"}
+      %b= cout_total
+- categories = Category.root_vente.children
+- categories.each do |cat|
+  = render(:partial => "calculate/categories/c32_ventes_cat", :locals => { :cat => cat })
+  %tr

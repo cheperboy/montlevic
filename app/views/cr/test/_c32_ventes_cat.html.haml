@@ -1,0 +1,29 @@
+- name = "vente.#{print_way(cat)}"
+%tr{:class => "level-#{cat.depth}_#{name}"}
+  %td.col1
+  %td.col2
+    %b
+      = indent_cat_name(cat.depth-1, "")
+      = link_to cat.name, "javascript: toggleCat('#{name}');" ,{:name => name}
+  %td.col3
+  %td.saison
+    %span.green= @test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :ha).display(:z => true)
+  %td.saison
+    %span.green= @test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :total).display(:z => true)
+  - rang = 0
+  - @colonnes.each do |colonne|
+    - rang += 1
+    - cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :ha).display(:z => true)
+    - cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :total).display(:z => true)
+    %td{:class => "color_culture_#{colonne.code}"}
+      %span.green= cout_ha
+    %td{:class => "color_culture_#{colonne.code}"}
+      %span.green= cout_total
+- if cat.has_children?
+  - cat.children.each do |cat|
+    = render(:partial => "calculate/categories/c32_ventes_cat", :locals => { :cat => cat })
+- else
+  - cat.ventes.find_by_saison(:all).each do |vente|
+    = render(:partial => "calculate/categories/c33_ventes_elt", :locals => { 	:cat => cat, |
+      :vente => vente,                                                                     |
+      :name => name})                                                                      |

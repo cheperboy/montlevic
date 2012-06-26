@@ -95,6 +95,10 @@ ActionController::Routing::Routes.draw do |map|
     :store_file      => :any
   }
 
+  map.resources :cr, :collection => { 
+    :test   => :get,
+  }
+
   map.resources :diverses,    :as => :factures, :controller => :factures
   map.resources :debits,      :as => :factures, :controller => :factures    
   map.resources :reports,     :as => :factures, :controller => :factures

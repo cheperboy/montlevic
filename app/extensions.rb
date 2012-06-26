@@ -111,6 +111,8 @@ class Float
       end 
     end
     return (sprintf("%.#{precision}f", self.to_f))
+    # number_with_precision = sprintf("%.#{precision}f", self.to_f)
+    # return number_with_delimiter(number_with_precision, " ")
   end
 
   def to_s(arg = nil)

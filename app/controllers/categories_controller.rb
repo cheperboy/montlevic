@@ -1,7 +1,6 @@
 class CategoriesController < ApplicationController
   before_filter :edit_access,
                 :only => [:update, :destroy]
-
   # GET /categories
   # GET /categories.xml
   
@@ -58,7 +57,7 @@ class CategoriesController < ApplicationController
           out = "les elements suivants sont deplaces de : #{parent.name} a #{@category.name}<br>" 
           out << @category.move_elements_to_new_leaf
         end
-        flash[:notice] = "Category crée. <br> #{out}"
+        flash[:notice] = "Category créée. <br> #{out}"
         format.html { redirect_to(categories_url) }
         format.xml  { render :xml => @category, :status => :created, :location => @category }
       else

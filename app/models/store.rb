@@ -5,7 +5,7 @@ FOLDER = "original"
 CONTENT_TYPE_XLS = "application/vnd.ms-excel"
 
 if RAILS_ENV!="production"
-  APP_NAME = "montlevic"
+  APP_NAME = "localhost"
 end
 
   has_attached_file :file,
@@ -54,7 +54,27 @@ end
     end
   end
   
-  def self.get_file_for_import_path
+  def self.get_file_for_import_from_s3
+    record = Store.find(:first, :conditions => { :tag => IMPORT})
+    if !record.nil? && record.file_file_size.to_i > 0 && record.file_content_type.eql?(CONTENT_TYPE_XLS)
+      # if true
+      #   
+      #   puts "#{Store.first.file.path}"
+      #   picture = S3Object.find 'headshot.jpg', 'photos'
+      # else
+      #   puts "fie not found"
+      # end
+      puts Store.first.file.url
+      # puts Store.first.file.path, :type => Store.first.file_content_type
+      file = File.open("#{Store.first.file.url}")
+      puts "file #{file.to_s}"
+      return file
+    else
+      puts "file.file_size < 0 OR file.nil"
+    end
+  end
+  
+  def self.get_file_path
     record = Store.find(:first, :conditions => { :tag => IMPORT})
     if !record.nil? && record.file_file_size.to_i > 0 && record.file_content_type.eql?(CONTENT_TYPE_XLS)
       file_path = "#{PATH}/#{record.id}/#{FOLDER}/#{record.file_file_name}"

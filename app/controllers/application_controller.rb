@@ -66,10 +66,6 @@ class ApplicationController < ActionController::Base
   end
 
   def hide_menu 
-    # <% form_remote_tag :url => {:action => 'hide_menu'} do %> 
-    #   <%= text_field 'todo', 'name' %> 
-    #   <%= submit_tag 'TEST!!!' %>
-    # <% end %>    
       render :update do |page| 
         # page.insert_html  :bottom,  'todo_list' , "<li>#{todo.name}</li>" 
         # page.replace_html 'bloc_left' ,  "bloc_left_hidden"

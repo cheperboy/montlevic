@@ -10,7 +10,7 @@
 			<%= tr_text('Cout', @facture.cout.display, euro) %>
 			<%#= tr_text('Valeur non imputée', @facture.get_cout_total.display, euro) %>
 			<% if @facture.category_produits? %>
-				<%= tr_text('Stock produits restant', @facture.sum_putoproduits_stock.display, euro) %>
+				<%= tr_text('Stock produits restant', @facture.sum_produits_stock.display, euro) %>
 			<% end %>
 			<%= tr_text('Ref client', @facture.ref_client) %>
 			<%= tr_text('Ref perso', @facture.ref) %>

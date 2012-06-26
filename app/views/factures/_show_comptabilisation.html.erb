@@ -14,11 +14,11 @@
 				<td class=right><%= @facture.sum_pulves.display() %> <%= euro %></td>
 			</tr>
 			<% end %>
-			<% if @facture.sum_putoproduits_associated > 0  %>
+			<% if @facture.sum_produits_assoc > 0  %>
 			<tr class=table_data>
-				<td>Produits</td>
+				<td>Produits en terre</td>
 				<td class=invisible>-</td>
-				<td class=right><%= @facture.sum_putoproduits_used.display() %> <%= euro %></td>
+				<td class=right><%= @facture.sum_produits_used.display() %> <%= euro %></td>
 			</tr>
 			<% end %>
 			<% if @facture.sum_labours > 0  %>

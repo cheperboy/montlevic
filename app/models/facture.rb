@@ -18,11 +18,11 @@ class Facture < Charge
   has_many :produits, :through => :protofactures
   has_many :protofactures, :dependent => :destroy 
 
-  # TODO : supprimer cette assoc putofacture
+  # INFO : assoc putofacture unused
   has_many :pulves, :through => :putofactures
   has_many :putofactures
 
-  # TODO : supprimer cette assoc labtofacture
+  # INFO : assoc labtofacture unused
   has_many :labtofactures
   has_many :labours, :through => :labtofactures
 
@@ -60,36 +60,6 @@ class Facture < Charge
 
   named_scope :scope_by_phyto, 
   :conditions => {:category_id => Category.find_by_upcategory_and_code('facture', 'produits_phyto')}
-
-
-  #test 14 avril 2011
-  #TODO finir cette methode!
-  # classement par cout?
-  def self.find_with_order()
-    saison = Setting.get_saison
-    all_factures = saison.factures.find(:all, :order => :cout)
-    order= []
-    reportable_todo = true
-    report_todo = true
-    while ((all_factures.size > 0) && (reportable_todo = true))
-      for facture in all_factures
-        if ((facture.class == Reportable))    
-          reportable = facture
-          order << reportable
-          all_factures.delete(reportable)
-          if reportable.reports.size > 0
-            for report in all_factures
-              if ((report.class == Report) && (report.reportable_id == reportable.id))
-                order << report
-                all_factures.delete(report)
-              end
-            end
-          end
-        end
-      end
-    end
-    return order
-  end
 
   def self.find_by_saison(*args)
     with_scope(:find => { :conditions => ["saison_id = ?", Setting.get_saison_id],
@@ -137,7 +107,7 @@ class Facture < Charge
   end
 
   def charges?
-    return((self.labours.count > 0) || (self.pulves.count > 0) || (self.produits.count > 0))
+    return(self.produits.count > 0)
   end
 
   def comptable_diff?
@@ -150,10 +120,11 @@ class Facture < Charge
     return (self.factype_id == Factype.find_by_name('total').id)  
   end
   
-  def category?(cat)
-    return (self.category.name == cat)  
+  def category?(category_code)
+    return (self.category.code.eql?(category_code))
   end
   
+  # TODO cat to constant
   def category_produits?()
     return (self.category.code.eql?('produits_phyto'))  
   end
@@ -211,20 +182,22 @@ class Facture < Charge
     return val
   end
   
-  def sum_putoproduits_stock
+  # Somme des produits assoc ET en stock
+  def sum_produits_stock
     sum = 0
     self.protofactures.each { |p| sum += p.prix_unit * p.stock }
     sum
   end
   
-  def sum_putoproduits_used
+  # Somme des produits assoc ET en terre
+  def sum_produits_used
     sum = 0
     self.protofactures.each { |p| sum += p.prix_unit * (p.quantite - p.stock) }
     sum
   end
-  
-  # Somme des produits associes. meme ceux qui n'ont pas ete utilises lors de traitements.
-  def sum_putoproduits_associated
+
+  # Somme des produits assoc (en stock OU en terre)
+  def sum_produits_assoc
     # TODO URGENT facture 46 la valeur renvoyee est fausse
     sum = 0
     # logger.error "facture : #{self.id}"
@@ -235,13 +208,13 @@ class Facture < Charge
       # logger.error "\tstock: #{p.quantite - p.get_used}"
       sum += p.prix_unit * p.quantite
     end
-    # logger.error "\tsum_putoproduits_associated : #{sum}"
+    # logger.error "\tsum_produits_assoc : #{sum}"
     sum
   end
   
-  # remplacer sum_putoproduits_used par sum_putoproduits_associated pour comptabiliser aussi les produits utilises
+  # remplacer sum_produits_used par sum_produits_assoc pour comptabiliser aussi les produits utilises
   def sum_charges
-    return (self.sum_pulves + self.sum_putoproduits_used + sum_labours)
+    return (self.sum_produits_used)
   end
   
   def get_cout_ha
@@ -272,22 +245,28 @@ class Facture < Charge
     
 # ----- Verifs ------
 
-# Somme des associations superieur a facture.cout
-  def assos_sup_cout
+  # Somme des produits used superieur a facture.cout
+  def cout_gt_produits_assoc
     if charges?
-      if ((sum_charges > cout) && (!cout.almost_eql?(sum_charges, 1)))
-        return true      
-      end
+      return ((sum_produits_assoc < cout) && !sum_produits_assoc.almost_eql?(cout, 1))
     end
-    return false
+  end
+
+  # Somme des produits used superieur a facture.cout
+  def cout_lt_produits_used
+    if charges?
+      return ((sum_produits_used > cout) && !(sum_produits_used.almost_eql?(cout, 1)))
+    end
+  end
+
+  # sommes des produits assoc superieur a cout
+  def cout_lt_produits_assoc
+    return ((sum_produits_assoc > cout) && !sum_produits_assoc.almost_eql?(cout, 1))
   end
 
   # Reportable not NULL ou Report NULL
   def reportable_not_null_or_report_null
-    if (self.class.eql?(Reportable) && !comptable_null?) || (self.class.eql?(Report) && comptable_null?)
-      return true      
-    end
-    return false
+    return (self.class.eql?(Reportable) && !comptable_null?) || (self.class.eql?(Report) && comptable_null?)
   end
 
 # ----- Export ------
@@ -330,7 +309,7 @@ class Facture < Charge
     sheet.name = name
     
     # datas
-    tab_tete = ["id", "type", "date", "categorie", "cout", "prestataire", "nom", "ref client", "ref perso", "cout total", "cout - total"]
+    tab_tete = ["id", "type", "date", "categorie", "cout", "prestataire", "nom", "ref client", "ref perso", "sum_produits_assoc", "sum_produits_used", "sum_produits_stock"]
         
     sheet.row(0).replace tab_tete
     sheet.row(0).default_format = tete
@@ -340,10 +319,12 @@ class Facture < Charge
     Reportable.find_by_saison(:all).each {|d| factures << d}
     factures.each do |f|
       date = f.date.strftime("%Y/%m/%d")
-      tab = [f.id, f.type.to_s, date, f.category.name, f.cout, f.user.name, f.name, f.ref_client, f.ref, f.get_cout_total, f.cout - f.get_cout_total]
+      tab = [f.id, f.type.to_s, date, f.category.name, f.cout, f.user.name, f.name, f.ref_client, f.ref, f.sum_produits_assoc, f.sum_produits_used, f.sum_produits_stock]
       sheet.row(i).replace tab
       i = i + 1
     end
+    sum = ['', '', '', '', "=SOMME(E2:E#{i-1})", '', '', '', '', "=SOMME(J2:J#{i-1})", "=SOMME(K2:K#{i-1})", "=SOMME(L2:L#{i-1})"]
+    sheet.row(i).replace sum
 
     # sheet 2
     name = "reportables et reports"

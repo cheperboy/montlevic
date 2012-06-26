@@ -67,6 +67,7 @@ class FacturesController < ApplicationController
   end
 
   def new
+    puts "TEST"
     @facture ||= Facture.new
     # @categories = Category.for_factures
     respond_to do |format|

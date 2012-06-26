@@ -49,13 +49,14 @@ class Verif < ActiveRecord::Base
   end
 
   def get_result
-    factures.tests << assos_sup_cout
+    factures.tests << cout_lt_produits_used
+    factures.tests << cout_lt_produits_assoc
     factures.tests << report_sans_reportable
     factures.tests << reportable_sans_report
     factures.tests << facdiv_sans_diverse
     factures.tests << diverse_sans_facdiv
     factures.tests << reportable_not_null_or_report_null
-    # factures.tests << facture_produit_incomplete
+    factures.tests << cout_gt_produits_assoc
 
     factypes.tests << report_factype_null
     factypes.tests << reportable_factype_notnull
@@ -74,10 +75,42 @@ class Verif < ActiveRecord::Base
     # saisie.tests << pulve_sans_facture
     saisie.tests << pulve_avec_facture_et_valeur_incoh
     saisie.tests << pulve_cout_produit_null
-    saisie.tests << facture_produit_incomplete
     # saisie.tests << pulve_sans_facture_service_avec_cout_presta_non_nul
     saisie.tests << produit_sans_facture_avec_pulve
     
+  end
+
+
+  def cout_lt_produits_assoc
+    test = init_test('cout facture inferieur a la somme des produits assoc', HIGH)
+    test.num =0
+    Facture.find_by_saison(:all, :order => :id).each do |facture|       
+      if facture.cout_lt_produits_assoc.eql?(true)
+        test.num += 1
+        print = "#{facture.name}: #{facture.cout} < #{facture.sum_charges}"
+        error = init_error(print, facture.id, 'factures', '')
+        test.errors << error
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
+  end
+
+  def cout_gt_produits_assoc
+    test = init_test('facture produits dont le cout est superieur a la somme des couts des produits assoc', LOW)
+    test.num = 0
+    factures = Facture.find_by_saison(:all, :conditions => ["category_id = ?", Category.find_by_code('produits_phyto').id]) 
+    factures.each do |facture|
+      unless (facture.sum_produits_assoc.almost_eql?(facture.cout, 1))
+        test.num += 1
+        text = facture.to_s(:default)
+        print = "#{facture.name}: #{facture.cout} > #{facture.sum_produits_assoc}"
+        error = init_error(print, facture.id, 'factures', '')
+        test.errors << error
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
   end
 
   def reportable_not_null_or_report_null
@@ -95,14 +128,14 @@ class Verif < ActiveRecord::Base
     return test
   end
 
-  def assos_sup_cout
-    test = init_test('Somme associations superieur a cout facture', HIGH)
+  def cout_lt_produits_used
+    test = init_test('cout facture inferieur a somme des produits en terre', HIGH)
     test.num =0
     # Facture.find(:all).each do |facture|
     Facture.find_by_saison(:all, :order => :id).each do |facture|       
-      if facture.assos_sup_cout.eql?(true)
+      if facture.cout_lt_produits_used.eql?(true)
         test.num += 1
-        print = "#{facture.name}: #{facture.sum_charges} > #{facture.cout}"
+        print = "#{facture.name}: #{facture.cout} < #{facture.sum_produits_used}"
         error = init_error(print, facture.id, 'factures', '')
         test.errors << error
       end
@@ -178,23 +211,6 @@ class Verif < ActiveRecord::Base
     Diverse.find(:all).each do |diverse|    
       if diverse.facdivs.empty?
         test.num += 1
-      end
-    end
-    test.result = (test.num == 0)    
-    return test
-  end
-
-  def facture_produit_incomplete
-    test = init_test('facture de produits dont le cout est superieur a la somme des couts des produits', HIGH)
-    test.num = 0
-    factures = Facture.find_by_saison(:all, :conditions => ["category_id = ?", Category.find_by_code('produits_phyto').id]) 
-    factures.each do |facture|
-      unless (facture.sum_putoproduits_associated.almost_eql?(facture.cout, 1))
-        test.num += 1
-        text = facture.to_s(:default)
-        print = "#{facture.name}: #{facture.cout} > #{facture.sum_putoproduits_associated}"
-        error = init_error(print, facture.id, 'factures', '')
-        test.errors << error
       end
     end
     test.result = (test.num == 0)    

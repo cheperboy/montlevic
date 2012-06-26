@@ -6,23 +6,280 @@
 #   @res.set_saison_line(@sid, :factures, :all, facture.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
 # end
 # facture_total = @res.get_other_line_for_saison(@sid, :resultats, :total_factures, :total)
-# @res.set_other_line_for_saison(@sid, :resultats, :total_factures, :ha, (facture_total/@surface_of_saison))     
+# @res.set_other_line_for_saison(@sid, :resultats, :total_factures, :ha, (facture_total/@surface_of_saison))    
+
+# tags vente
+# root(non modifiable, categories utilisées pour le calcul
+# 
+# 
+# 
+# 
+# elt           total           typec x         p x
+#       
+# fac.elts[fac.id].name fac.elts[fac.id].prix   fac.typec[typec1_id]  fac.p[px_id].ha
+#       
+# ven.elts[ven.id].name ven.elts[ven.id].prix   ven.typec[typecx_id]  ven.p[px_id].ha
+# CA      
+#             ca.sum            ca.typec[typecx_id].sum ca.p[px_id].sum
+#             ca.pac    
+#             ca.veg.sum    
+#             ca.veg.primaire   
+#             ca.veg.secondaire   
+# CH      
+#             ch.cats.agr.sum   
+#             ch.cats.produits.stock.sum #valeur du stock phy en fin de camp    
+#             ch.cats[cat.id].tot   
+#             #variante:
+#             #ch.cats.agr.cat1.tot   
+#             #ch.cats.agr.cat1.cat2.tot    
+# RES     
+#             res.mb.sum    
+#             res.mb.veg.sum    
+#             res.mb.veg.primaire   
+#             res.mb.veg.secondaire   
+#             res.mb.pac
+
+
+
+
+class CR < ActiveRecord::Base
+  TYPE_FACTURES = Category.get_factcats #agr, mais, inves
+
+# init from calculate    
+  # def initialize(col_model)
+  #   unless col_model.find_for_saison().nil?  
+  #     @c = col_model.to_s.downcase.pluralize.to_sym
+  #     @col_model = col_model
+  #     @cols = col_model.find_for_saison()
+  #     @saison = Setting.get_saison
+  #     @sid = @saison.id
+  #     @labours = @saison.labours
+  #     @pulves = @saison.pulves
+  #     @produits = @saison.produits
+  #     @putoproduits = @saison.putoproduits
+  #     @factures = @saison.factures
+  #     @ventes = @saison.ventes
+  #     @types_facture = Category.get_factcats
+  #   else
+  #     return nil
+  #   end
+  # end
+  
+  # def calculate
+  #   @res = Analytic.new()
+  #   init_cols
+  #   # run_labours
+  #   # run_produits
+  #   # run_pulves
+  #   run_factures
+  #   # run_ventes
+  #   run_totaux
+  #   # verif
+  # end
+  # 
+  # def init_cols
+  #   unless @cols.nil?
+  #     saison_datas = {}
+  #     saison_datas[:id] = @saison.id
+  #     saison_datas[:name] = @saison.name
+  #     saison_datas[:year] = @saison.year.to_s
+  #     saison_datas[:surface] = 0
+  #     for col in @cols
+  #       # init saison datas
+  #       saison_datas[:surface] += col.surface
+  #       # init col datas
+  #       col_datas = {}
+  #       col_datas[:name] = col.name
+  #       col_datas[:id] = col.id
+  #       case col_model.to_s.downcase
+  #       when "parcelle"
+  #         col_datas[:surface] = col.surface
+  #         col_datas[:typeculture] = col.typeculture.name
+  #       when 'zone', 'typeculture'
+  #         col_datas[:surface] = col.surface
+  #         col_datas[:nombre_parcelles] = "xxx"
+  #         col_datas[:parcelles] = "p1, p2, p3.."
+  #       end
+  #       @res.set_colonne_datas(@sid, @c, col.id, col_datas)
+  #     end
+  #     @res.set_saison_datas(@sid, saison_datas)
+  #     @surface_of_saison = saison_datas[:surface]
+  #   end
+  # end
+# EO init from calculate  
+  
+	def initialise(saison)
+		@saison         = saison
+		@parcelles.elts = saison.parcelles
+		@typec          = saison.typecultures
+		# init elements
+		init_facs
+	end
+  
+  def run(col_type)
+    process_factures_elts
+  end
+
+	def init_facs
+		@saison.factures.all.each do |e|
+			@factures.elts[e.id].id          = e.id
+			@factures.elts[e.id].name        = e.name
+			@factures.elts[e.id].category_id = e.category_id
+			@factures.elts[e.id].typec       = []
+  		#init to delete if Mash/Dash active
+  		for col in @typec # pour chaque colonne
+  			# init les valeurs ha et total de la facture pour chaque colonne (sauf col saison)
+  			@factures.elts[e.id].typec[col.id].tot = 0
+  			@factures.elts[e.id].typec[col.id].ha  = 0
+  		end
+		end
+	end
+
+	def process_factures_elts
+		for e in @factures.elts
+			# set les valeurs ha et total de la facture pour saison (total de la facture)
+			@factures.elts[e.id].tot = e.get_cout_total
+			@factures.elts[e.id].ha  = e.get_cout_ha_moyen(@saison.surface.sum)
+			for col in @typec.elts # pour chaque colonne
+				# set les valeurs ha et total de la facture pour chaque colonne (sauf col saison)
+				@factures.elts[e.id].typec[col.id].tot = e.get_cout_total_col(col)
+				@factures.elts[e.id].typec[col.id].ha  = e.get_cout_ha_col(col)
+			end
+		end
+
+		if (nil) # commentaires
+			#semble inutile (cf block suivant) donc commenté
+			#set le champ [:resultats, :total_factures] (par defaut: toutes les factures type Agricole)
+			#if facture.category.is_agri?
+			#  ch.cats.agr.sum.tot = facture.get_cout_total
+			#  ch.cats.agr.sum.ha = facture.get_cout_ha_moyen(@surface_of_saison)
+			#end
+			
+			# Totaux par types de factures:
+			# set le champ [:factcat, factcat_id] si la facture appartient a cette factcat (Argi, Maison ou Invest)
+			# ce block est remplacé par l'appel set_factcats_sum()
+			# for factcat in self.types_facture #agr, mais, inves
+			# 	if (facture.category.is_descendant_of?(factcat))
+			# 		ch.cats.agr.sum.tot = fac.elts[fac.id].tot #@res.add_saison_line(@sid, :factures, :factcat, factcat.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
+			# 		ch.cats.agr.sum.ha = fac.elts[fac.id].ha #@res.add_saison_line(@sid, :factures, :factcat, factcat.id, :total, facture.get_cout_total)
+			# 	end
+			# end
+		end
+		sum_factures_by_cat(facture)
+		set_factcats_sum(facture)
+		set_stocks(facture)
+	end
+
+	# for each factcat, save in ch.cats.'factcat'.tot the factcat's categories sum 
+	# fonction inutile car deja fait par sum_factures_by_cat avec while (cat.depth > 1)
+	def set_factcats_sum(facture)
+		TYPE_FACTURES.each do factcat  #agr, mais, inves
+			factcat.children.each do |cat|
+				@fac.cats.agr.sum.tot += ch.cats[cat.id].tot
+				@fac.cats.agr.sum.ha += 	ch.cats[cat.id].ha
+				for col in @typec.elts # pour chaque colonne
+					@fac.cats.agr.sum.tot += ch.cats[cat.id].tot # @res.add_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :total, total)
+					@fac.cats.agr.sum.ha += 	ch.cats[cat.id].ha # @res.add_line(@sid, @c, col.id, :factures, :factcat, factcat.id, :total, total)
+				end
+			end
+		end
+	end
+	def sum_factures_by_cat(facture)
+		cat = facture.category
+		factcat=cat.get_factcat
+		while (cat.depth > 1)
+			@fac.cats[cat.id].tot += fac.elts[fac.id].tot #@res.add_saison_line(@sid, :factures, :category, cat.id, :total, facture.get_cout_total)
+			@fac.cats[cat.id].ha  += fac.elts[fac.id].ha #@res.add_saison_line(@sid, :factures, :category, cat.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
+			# Set code names 
+			if (cat.depth > 2)
+				@fac["#{factcat.id}"]["#{cat.code}"].tot += fac.elts[fac.id].tot 
+        # @fac.#{factcat}.#{cat.code}.ha += fac.elts[fac.id].ha 
+			end
+			for col in @typec.elts # pour chaque colonne
+				@fac.cats[cat.id].typec[col.id].tot = facture.get_cout_total_col(col) # @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :total, total)
+				@fac.cats[cat.id].typec[col.id].ha  = facture.get_cout_ha_col(col) # @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :ha, total/col.surface)
+				# Set code names 
+				if (cat.depth > 2)
+          # @fac.#{factcat}.#{cat.code}.tot += fac.elts[fac.id].tot 
+          # @fac.#{factcat}.#{cat.code}.ha += fac.elts[fac.id].ha 
+				end
+			end
+			cat = cat.parent # on remonte à la cat superieur pour imputer la facture sur sa category parent
+		end
+	end
+	def set_factures_by_cat_gentle()
+		cat = facture.category
+		while (cat.depth > 1)
+			@fac.cats[cat.id].tot += fac.elts[fac.id].tot #@res.add_saison_line(@sid, :factures, :category, cat.id, :total, facture.get_cout_total)
+			@fac.cats[cat.id].ha  += fac.elts[fac.id].ha #@res.add_saison_line(@sid, :factures, :category, cat.id, :ha, facture.get_cout_ha_moyen(@surface_of_saison))
+			for col in @typec.elts # pour chaque colonne
+				@fac.cats[cat.id].typec[col.id].tot = facture.get_cout_total_col(col) # @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :total, total)
+				@fac.cats[cat.id].typec[col.id].ha  = facture.get_cout_ha_col(col) # @res.add_line(@sid, @c, col.id, :factures, :category, cat.id, :ha, total/col.surface)
+			end
+			cat = cat.parent # on remonte à la cat superieur pour imputer la facture sur sa category parent
+		end
+	end
+	def set_stocks(facture)
+		#synthese des quantites et stocks Produits
+		if (facture.category.is_produit?)
+      @fac.cats.produits.quantity.sum += 	facture.sum_produits_assoc #@res.add_saison_line(@sid, :factures, :produits, :quantite, :total, facture.sum_produits_assoc)
+      @fac.cats.produits.stock.sum += 		facture.sum_produits_stock #@res.add_saison_line(@sid, :factures, :produits, :stock, :total, facture.sum_produits_stock)
+      @fac.cats.produits.used += 			facture.sum_produits_used #@res.add_saison_line(@sid, :factures, :produits, :used, :total, facture.sum_produits_used)
+		end
+	end
+
+	def process_ventes_elts
+		for vente in @ventes
+			for col in @cols
+				#valeur ha et total pour chaque col affecté a la vente
+				@ven.typec[col.id].ha = vente.get_cout_ha_col(col) # @res.set_line(@sid, @c, col.id, :ventes, :all, vente.id, :ha, vente.get_cout_ha_col(col))
+				@ven.typec[col.id].tot = vente.get_cout_total_col(col) # @res.set_line(@sid, @c, col.id, :ventes, :all, vente.id, :total, vente.get_cout_total_col(col))
+			end
+	 
+			# set les valeurs ha et total de la vente pour la colonne saison (prix de la vente)
+			@ven.elts[ven.id].tot = ven.get_cout_total # @res.set_saison_line(@sid, :ventes, :all, vente.id, :total, vente.get_cout_total)
+			@ven.elts[ven.id].ha = 	ven.get_cout_ha_moyen(@saison.surface.sum) # @res.set_saison_line(@sid, :ventes, :all, vente.id, :ha, vente.get_cout_ha_moyen(@surface_of_saison))
+			
+			sum_ventes_by_cat(vente)
+			set_ventes_stock(vente)
+
+			# total des ventes
+			@res.add_other_line_for_saison(@sid, :resultats, :total_ventes, :ha, vente.get_cout_ha_moyen(@surface_of_saison))      
+			@res.add_other_line_for_saison(@sid, :resultats, :total_ventes, :total, vente.get_cout_total)
+
+			@ca.cats.agr.sum.tot += ch.cats[cat.id].tot 
+			@ca.sum.tot
+			@ca.pac.tot
+			@ca.veg.sum.tot
+			@ca.sum.tot
+						ca.sum						ca.typec[typecx_id].sum	ca.p[px_id].sum
+						ca.pac		
+						ca.veg.sum		
+						ca.veg.primaire		
+						ca.veg.secondaire		
+
+						#totaux par categorie de vente
+			# set le champ [:category, category_id] si la vente appartient a cette Categorie (Pac, Vente ble, ...)
+		end
+	end
+	
+	def sum_ventes_by_cat(vente)
+		cat = vente.category
+		while (cat.depth > 0)
+			@ca.cats[cat.id].tot += ven.elts[vente.id].tot # @res.add_saison_line(@sid, :ventes, :category, cat.id, :total, vente.get_cout_total)
+			@ca.cats[cat.id].ha += ven.elts[vente.id].ha # @res.add_saison_line(@sid, :ventes, :category, cat.id, :ha, vente.get_cout_ha_moyen(@surface_of_saison))
+			cat = cat.parent # on impute la vente sur sa category parent
+		end
+	end
+	def set_ventes_stock(vente)
+		#à faire => résultat avec ventes, estimation marge production non vendue
+	end
+	
+
+
+end # of class CR
 
 class Calculate < ActiveRecord::Base
-
-  PRESTA_LAB_PU = false
-
-  #Txxx variables temporaires
-  #Zxxx variables par Zone
-  #Pxxx variables par Parcelle
-  attr_accessor :res,
-                :csv, :csv_html, :display, :info_debug,
-                :saison, :labours, :pulves, :factures, :ventes, :types_facture, :col_model, :cols,
-                :c, # model de colonne en symbole pluriel :parcelles, :zones, :typecultures
-                :sid, #saison_id
-                :surface,
-                :surface_of_saison
-
   
   def initialize(col_model)
     unless col_model.find_for_saison().nil?  
@@ -572,4 +829,3 @@ class Calculate < ActiveRecord::Base
   end
     
 end
-

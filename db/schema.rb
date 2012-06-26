@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(:version => 20120209075723) do
     t.datetime "updated_at"
     t.string   "ancestry"
     t.integer  "ancestry_depth", :default => 0
+    t.string   "old_code"
+    t.integer  "nowrite"
   end
 
   add_index "categories", ["ancestry"], :name => "index_categories_on_ancestry"

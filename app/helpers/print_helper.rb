@@ -211,11 +211,11 @@ module PrintHelper
   		    <td><b>#{facture.sum_labours.display()}</b></td>
   		  </tr>"
   		end
-      if facture.sum_putoproduits_associated > 0  
+      if facture.sum_produits_assoc > 0  
          out += "<tr>
   		    <td>Produits Consommés : </td>
   		    <td><b>-</b></td>
-  		    <td><b>#{facture.sum_putoproduits_used.display()}</b></td>
+  		    <td><b>#{facture.sum_produits_used.display()}</b></td>
   		  </tr>"
   		end
       out += "<tr>

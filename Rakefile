@@ -9,7 +9,6 @@ require 'rake/rdoctask'
 
 require 'tasks/rails'
 
-
 namespace :server do
   task :start do
     sh %{ script/server }
