@@ -7,6 +7,10 @@ class ImportController < ApplicationController
   MSG_FILE_SHEET_INVALID = "onglet non trouve dans le fichier excel"
   MSG_FILE_EMPTY         = "Erreur fichier"
 
+  def index
+    redirect_to(:action => :prepare)
+  end
+  
   def prepare
     # @import = Import.new(:pulves)
     # @toto = Object.new

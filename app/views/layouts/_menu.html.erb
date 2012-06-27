@@ -42,6 +42,7 @@
     <li><%= link_to model.to_s.pluralize, eval("#{model.to_s.pluralize.downcase}_url")  %></li>
     <%- end -%>
 	<li><%= link_to "Clients", 	:controller => :users  %></li>
+	<li><%= link_to "Import", 	:controller => :import  %></li>
   </ul>
   <% if admin? %>
 	  <strong>Admin</strong>
