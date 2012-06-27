@@ -1,5 +1,8 @@
 class Produit < ActiveRecord::Base  
 
+  def before_save 
+  end
+
   def after_save 
     self.update_protofacture_stock
   end
@@ -17,10 +20,10 @@ class Produit < ActiveRecord::Base
   accepts_nested_attributes_for :protofactures, :allow_destroy => true
  
   # ----- Validations -----
-  validates_uniqueness_of :code, :message => "ce code est deja pris"
-  validates_presence_of :name, :message => "Nom ne doit pas etre vide"
-  validates_presence_of :category_id, :message => "Categorie ne doit pas etre vide"
-  validates_presence_of :unit, :message => "Unite ne doit pas etre vide"
+  validates_uniqueness_of :code, :message        => "ce code est deja pris. changer de nom"
+  validates_presence_of   :name, :message        => "Nom ne doit pas etre vide"
+  validates_presence_of   :category_id, :message => "Categorie ne doit pas etre vide"
+  validates_presence_of   :unit, :message        => "Unite ne doit pas etre vide"
 
   named_scope :by_saison, :conditions => ["saison_id = ?", Setting.find(1).saison_id]
   named_scope :starred, :conditions => ["star = ?", 1]

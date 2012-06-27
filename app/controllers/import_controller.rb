@@ -8,7 +8,6 @@ class ImportController < ApplicationController
   MSG_FILE_EMPTY         = "Erreur fichier"
 
   def prepare
-    
     # @import = Import.new(:pulves)
     # @toto = Object.new
     # puts "@import.inspect: #{@import.to_yaml}"

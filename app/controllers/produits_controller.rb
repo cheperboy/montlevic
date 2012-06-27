@@ -72,6 +72,9 @@ class ProduitsController < ApplicationController
     errors = []
     @produit = Produit.new(params[:produit])
     @produit.saison_id = current_saison_id
+    @produit.name.downcase!  
+    @produit.code = @produit.name.gsub(/\s/, "_")
+    
     respond_to do |format|
       if @produit.save
         @produit.protofactures.each do |protofacture|
@@ -89,6 +92,8 @@ class ProduitsController < ApplicationController
 
   def update
     @produit = Produit.find(params[:id])
+    @produit.name.downcase!  
+    @produit.code = @produit.name.gsub(/\s/, "_")
     respond_to do |format|
       if @produit.update_attributes(params[:produit])
         flash[:notice] = 'Modification du produit ok'
