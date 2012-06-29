@@ -329,6 +329,7 @@ end
     end
   end
     
+  # import a produit associated to a parcelle
   def import_parcelle_assoc(elt, parcelle, index)
     import_sucess = false
     if elt.kind_of?(Pulve)
@@ -356,6 +357,8 @@ end
     end
     return import_sucess
   end
+
+  # import a produit associated to a facture
   def import_produit_assoc(elt, produit_assoc, index)
     import_ok = true
     produit_assoc.facture_id = elt.id if elt.kind_of?(Facture)
@@ -645,9 +648,12 @@ private
     end
   end
 
-# Read Putoproduits fields
+  # Read Putoproduits fields
+    # 2012/06/29 modif find produit pour selectionne par saison et par code
+    # avant la saison n'etait pas prise en compte
   def get_putoproduit_produit_id(produit_code, id)
-    if produit = Produit.find_by_code(produit_code)
+    # if produit = Produit.find_by_code(produit_code)
+    if produit = Produit.find_by_saison(:all, :conditions => ["code = ?", produit_code])
       return produit.id
     else
       invalid = "le code produit n'existe pas"

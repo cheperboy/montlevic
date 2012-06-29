@@ -20,7 +20,7 @@ class Produit < ActiveRecord::Base
   accepts_nested_attributes_for :protofactures, :allow_destroy => true
  
   # ----- Validations -----
-  validates_uniqueness_of :code, :message        => "ce code est deja pris. changer de nom"
+  validates_uniqueness_of :code, :scope => :saison_id, :message => "ce code est deja pris. changer de nom"
   validates_presence_of   :name, :message        => "Nom ne doit pas etre vide"
   validates_presence_of   :category_id, :message => "Categorie ne doit pas etre vide"
   validates_presence_of   :unit, :message        => "Unite ne doit pas etre vide"

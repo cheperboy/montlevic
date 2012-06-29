@@ -69,10 +69,10 @@ class ImportController < ApplicationController
         end
       end
     else #state==:read
-      if @import.has_warnings?
-        flash.now[:notice] = MSG_FILE_HAS_WARNINGS
-      elsif @import.has_invalids?
+      if @import.has_invalids?
         flash.now[:error] = MSG_FILE_HAS_INVALIDS
+      elsif @import.has_warnings?
+        flash.now[:notice] = MSG_FILE_HAS_WARNINGS
       elsif @file_error
         #do nothing, flash.error already set
       else

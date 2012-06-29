@@ -73,7 +73,13 @@ class ProduitsController < ApplicationController
     @produit = Produit.new(params[:produit])
     @produit.saison_id = current_saison_id
     @produit.name.downcase!  
-    @produit.code = @produit.name.gsub(/\s/, "_")
+    
+    if @produit.code.blank?
+      @produit.code = @produit.name.gsub(/\s/, "_")
+    else
+      @produit.code.downcase! 
+      @produit.code.gsub!(/\s/, "_")
+    end
     
     respond_to do |format|
       if @produit.save
