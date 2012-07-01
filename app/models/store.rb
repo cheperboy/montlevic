@@ -5,20 +5,27 @@ class Store < ActiveRecord::Base
   CONTENT_TYPE_XLS = "application/vnd.ms-excel"
   BUCKET           = "montlevic"
 
-  if RAILS_ENV == "production"
-    READ_PATH = "url"
-    has_attached_file :file,
-                      :storage        => :s3,
-                      :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
-                      :path           => "storage/:id/:filename",
-                      :bucket         => "#{BUCKET}"
-              
-  else 
-    #environnnement: dev
-    READ_PATH = "path"
-    has_attached_file :file,
-                      :path => "storage/:id/:filename"
-  end
+  READ_PATH = "url"
+  has_attached_file :file,
+                    :storage        => :s3,
+                    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+                    :path           => "storage/:id/:filename",
+                    :bucket         => "#{BUCKET}"
+
+  # if RAILS_ENV == "production"
+  #   READ_PATH = "url"
+  #   has_attached_file :file,
+  #                     :storage        => :s3,
+  #                     :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+  #                     :path           => "storage/:id/:filename",
+  #                     :bucket         => "#{BUCKET}"
+  #             
+  # else 
+  #   #environnnement: dev
+  #   READ_PATH = "path"
+  #   has_attached_file :file,
+  #                     :path => "storage/:id/:filename"
+  # end
 
 
   def self.clean

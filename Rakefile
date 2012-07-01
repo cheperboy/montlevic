@@ -28,6 +28,16 @@ namespace :data do
     sh %{rake db:seed}
   end
 
+  # Jamais utilise mais peut etre utile apres import de pulves pour mettre a jour les stocks
+  desc "update les protofacture.stock de chaque saison"
+  task :update_protofacture_stock => :environment do 
+    Saison.all.each do |s|
+      s.produits.each do |produit|
+        produit.update_protofacture_stock
+      end
+    end
+  end
+
   desc "seed database from file saison_2011_2012.rb"
   task :saison_2012 => :environment do 
     file = File.join(Rails.root, 'db', 'datas', 'saison_2011_2012.rb')
@@ -90,6 +100,7 @@ namespace :db do
     # sh %{ echo '#{command}' > #{filename} }
   end
   
+  # a supprimer, effectuer une fois en prod pour rendre les category.code uniques
   desc "rename cats code if invalid"
   task :rename_cats => :environment do 
     Category.all.each do |c|
