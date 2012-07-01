@@ -15,6 +15,7 @@ module ApplicationHelper
   # a = [ [ 1, "one"], [2, "two"], [3, "three"], ["ii", "two"] ] 
   # a.rassoc("two") → [2, "two"]
   def constant_pp(array, value)
+    return "indefini" if value.nil?
     new_array = array.rassoc(value)
     return (new_array[0].to_s)
   end

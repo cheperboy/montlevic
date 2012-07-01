@@ -653,7 +653,7 @@ private
     # avant la saison n'etait pas prise en compte
   def get_putoproduit_produit_id(produit_code, id)
     # if produit = Produit.find_by_code(produit_code)
-    if produit = Produit.find_by_saison(:all, :conditions => ["code = ?", produit_code])
+    if produit = Produit.find_by_saison(:first, :conditions => ["code = ?", produit_code])
       return produit.id
     else
       invalid = "le code produit n'existe pas"
