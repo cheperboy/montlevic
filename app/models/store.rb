@@ -86,10 +86,10 @@ class Store < ActiveRecord::Base
       # puts Store.first.file.path, :type => Store.first.file_content_type
 
       # if READ_PATH.eql?("url")
-      # file = File.open("#{Store.first.file.url}")
-      puts "RAILS_ROOT #{RAILS_ROOT}"
-      name = "#{RAILS_ROOT}/doc/xls_import/import_juin_2012.xls"
-      file = File.open(name)
+      file = File.open("#{Store.first.file.url}")
+      # puts "RAILS_ROOT #{RAILS_ROOT}"
+      # name = "#{RAILS_ROOT}/doc/xls_import/import_juin_2012.xls"
+      # file = File.open(name)
         
       # elsif READ_PATH.eql?("path")
         # file = File.open("#{Store.first.file.path}")
