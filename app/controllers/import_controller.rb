@@ -14,6 +14,8 @@ class ImportController < ApplicationController
   def test
     puts "test"
     logger.error "logger"
+    stores = Store.find(:all)
+    store = Store.new
   end
 
   def prepare
