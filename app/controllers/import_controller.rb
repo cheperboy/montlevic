@@ -14,6 +14,7 @@ class ImportController < ApplicationController
   def test
     puts "test"
     logger.error "logger"
+    file = File.open("#{Store.first.file.url}")
     stores = Store.find(:all)
     store = Store.new
   end
