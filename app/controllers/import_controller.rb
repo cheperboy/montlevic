@@ -10,7 +10,12 @@ class ImportController < ApplicationController
   def index
     redirect_to(:action => :prepare)
   end
-  
+
+  def test
+    puts "test"
+    logger.error "logger"
+  end
+
   def prepare
     # @import = Import.new(:pulves)
     # @toto = Object.new

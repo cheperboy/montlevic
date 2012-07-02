@@ -54,7 +54,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :produits, :collection => { :update_adu => :put,
                                             :update_star => :put,
-                                            :export => :any}
+                                            :export => :get}
   
 
   map.resources :factypes
@@ -92,6 +92,7 @@ ActionController::Routing::Routes.draw do |map|
     :import_factures => :get,
     :import_produits => :get,
     :prepare         => :any,
+    :test            => :any,
     :store_file      => :any
   }
 

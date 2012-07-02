@@ -250,4 +250,37 @@ class Produit < ActiveRecord::Base
     return ((self.protofactures.count.eql?(0)) && !(self.putoproduits.count.eql?(0)))
   end
   
+  def self.export_by_saison
+    tete = Spreadsheet::Format.new    :color => :blue,
+                                      :weight => :bold,
+                                      :size => 14
+    gras = Spreadsheet::Format.new :weight => :bold
+
+    saison = Setting.get_saison.name
+    book = Spreadsheet::Workbook.new
+
+    # sheet 1
+    name = self.class.to_s.pluralize
+    sheet = book.create_worksheet
+    sheet.name = name
+    
+    # datas
+    tab_tete = ["id", "nom", "code", "categorie", "unit", "desc", "info"]
+
+    sheet.row(0).replace tab_tete
+    sheet.row(0).default_format = tete
+    i = 1
+    elts = []
+    elts = Produit.find_by_saison(:all)
+    elts.each do |e|
+      tab = [e.id, e.name, e.code, e.category.name, e.unit, e.desc, e.info]
+      sheet.row(i).replace tab
+      i = i + 1
+    end
+        
+    file = StringIO.new 
+    book.write file
+    return file
+  end
+
 end

@@ -22,18 +22,8 @@ class ProduitsController < ApplicationController
     end
   end
      
-  def export
-    @produits_used = Produit.all
-    
-    # Don't forget to reigster the xls/pdf mime types in config/initializers/mime_types.rb
-    respond_to do |format|
-      format.html
-      format.xls { doc_raptor_send }
-      format.pdf { doc_raptor_send }
-    end
-  end
-  
   def index
+    @produits_all =         Produit.find_by_saison(:all, :order => :category_id) #uniquement pour xml, pas html
     @produits_used =        Produit.find_used(:all, :order => :category_id)
     @produits_non_achetes = Produit.find_not_buy(:all, :order => :category_id)
     @produits_not_used =    Produit.find_not_used(:all, :order => :category_id)
@@ -43,6 +33,8 @@ class ProduitsController < ApplicationController
     end
     respond_to do |format|
       format.html
+      format.xls { redirect_to(:action => :export) }
+      format.xml {}
     end
   end
  
@@ -167,6 +159,11 @@ class ProduitsController < ApplicationController
         format.js	{ head :unprocessable_entity }
       end 
     end
+  end
+
+  def export
+    file = Produit.export_by_saison()
+    send_data file.string, :filename => "Produits.xls", :type =>  "application/vnd.ms-excel"    
   end
   
 end
