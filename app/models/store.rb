@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class Store < ActiveRecord::Base
   IMPORT           = 'import'
   # PATH           = "#{RAILS_ROOT}/public/system/files"
@@ -84,7 +86,7 @@ class Store < ActiveRecord::Base
       puts "path  : #{Store.first.file.path}"
       puts "url   : #{Store.first.file.url}"
       
-      # file = File.open("#{Store.first.file.url}")
+      file = File.open("#{Store.first.file.url}")
       
       name = "#{RAILS_ROOT}/doc/xls_import/import_juin_2012.xls"
       file = File.open(name)
