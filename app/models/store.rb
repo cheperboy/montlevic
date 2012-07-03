@@ -7,28 +7,14 @@ class Store < ActiveRecord::Base
   CONTENT_TYPE_XLS = "application/vnd.ms-excel"
   BUCKET           = "montlevic"
 
-  READ_PATH = "url"
   has_attached_file :file,
-                    :storage        => :s3,
-                    :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
-                    :path           => "storage/:id/:filename",
-                    :bucket         => "#{BUCKET}"
+                    :path => "tmp/:id/:filename"
 
-  # if RAILS_ENV == "production"
-  #   READ_PATH = "url"
-  #   has_attached_file :file,
-  #                     :storage        => :s3,
-  #                     :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
-  #                     :path           => "storage/:id/:filename",
-  #                     :bucket         => "#{BUCKET}"
-  #             
-  # else 
-  #   #environnnement: dev
-  #   READ_PATH = "path"
-  #   has_attached_file :file,
-  #                     :path => "storage/:id/:filename"
-  # end
-
+  # has_attached_file :file,
+  #                   :storage        => :s3,
+  #                   :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
+  #                   :path           => "storage/:id/:filename",
+  #                   :bucket         => "#{BUCKET}"
 
   def self.clean
     Store.all.each do |record|
@@ -75,21 +61,15 @@ class Store < ActiveRecord::Base
   def self.get_file_for_import_from_s3
     record = Store.find(:first, :conditions => { :tag => IMPORT})
     if !record.nil? && record.file_file_size.to_i > 0 && record.file_content_type.eql?(CONTENT_TYPE_XLS)
-      # if true
-      #   
-      #   puts "#{Store.first.file.path}"
-      #   picture = S3Object.find 'headshot.jpg', 'photos'
-      # else
-      #   puts "fie not found"
-      # end
-      # puts "getting file from url : #{Store.first.file.READ_PATH}"
+
       puts "path  : #{Store.first.file.path}"
       puts "url   : #{Store.first.file.url}"
       
-      file = File.open("#{Store.first.file.url}")
+      # file = File.open("#{Store.first.file.url}")
+      file = File.open("#{Store.first.file.path}")
       
-      name = "#{RAILS_ROOT}/doc/xls_import/import_juin_2012.xls"
-      file = File.open(name)
+      # name = "#{RAILS_ROOT}/doc/xls_import/import_juin_2012.xls"
+      # file = File.open(name)
         
       puts "file #{file.to_s}"
       return file
