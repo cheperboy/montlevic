@@ -66,6 +66,13 @@ class FacturesController < ApplicationController
     @facture = Facture.find(params[:id])
   end
 
+  def index_multiple
+    @factures = Facture.find_by_saison(:all)
+    respond_to do |format|
+      format.html
+    end
+  end
+
   def new
     puts "TEST"
     @facture ||= Facture.new
@@ -251,14 +258,15 @@ class FacturesController < ApplicationController
   end
 
   def update
+    puts "params : #{params.inspect}"
     @facture = Facture.find(params[:id])  
     param_type = @facture.class.to_s.downcase.to_sym
     respond_to do |format|
       if @facture.update_attributes(params[param_type])
         
         # 12/03/13 suppression car Factcat obsolete
-        # extract factcat from category and save it
-        # @facture.update_factcat
+          # extract factcat from category and save it
+          # @facture.update_factcat
         
         # transforme les checkbox Typeculture en Factoparcelles
         @facture.update_typecultures(params[:typecultures])

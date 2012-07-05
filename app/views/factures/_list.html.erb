@@ -1,6 +1,4 @@
 <% unless @elements.count == 0 %>
-<%#= facture_table(Application::FACTURE_HEAD, @elements, 'factures', 'index', params) %>
-<%= draw_table_with_find_js(Application::FACTURE_HEAD, @elements, 'factures', :search => true, :sort => 3) %>
-
+	<%= draw_table_with_find_js(Application::FACTURE_HEAD, @elements, 'factures', :search => true, :sort => 3) %>
 <% end %>
 

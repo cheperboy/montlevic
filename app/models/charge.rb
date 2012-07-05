@@ -118,11 +118,8 @@ class Charge < ActiveRecord::Base
 #methode deplacee de Model/Labour.rd vers Charges.rb
 #pour etre accessible par Pulve
   def factures_assoc?
-    if self.factures.count.equal?(0)
-      return false
-    else 
-      return true
-    end
+    return false if self.factures.count.equal?(0)
+    return true
   end
 
   def all_parcelles?

@@ -94,4 +94,37 @@ class Parcelle < ActiveRecord::Base
     return percent
   end
 
+  def self.export_by_saison
+    tete = Spreadsheet::Format.new    :color => :blue,
+                                      :weight => :bold,
+                                      :size => 14
+    gras = Spreadsheet::Format.new :weight => :bold
+
+    saison = Setting.get_saison.name
+    book = Spreadsheet::Workbook.new
+
+    # sheet 1
+    name = "#{self.to_s.pluralize}_#{saison}" 
+    sheet = book.create_worksheet
+    sheet.name = name
+    
+    # datas
+    tab_tete = ["code", "nom", "culture", "surface", "surface pac", "id", "zones", "desc", "info"]
+    sheet.row(0).replace tab_tete
+    sheet.row(0).default_format = tete
+    i = 1
+    elts = []
+    elts = self.find_by_saison(:all)
+    elts.each do |e|
+      zones = ""
+      e.zones.each { |z| zones += "#{zones} #{z.name}"}
+      tab = [e.code, e.name, e.typeculture.name, e.surface, e.surface_pac, e.id, zones, e.desc, e.info]
+      sheet.row(i).replace tab
+      i = i + 1
+    end
+    file = StringIO.new 
+    book.write file
+    return file
+  end
+
 end

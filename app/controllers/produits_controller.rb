@@ -163,7 +163,8 @@ class ProduitsController < ApplicationController
 
   def export
     file = Produit.export_by_saison()
-    send_data file.string, :filename => "Produits.xls", :type =>  "application/vnd.ms-excel"    
+    date = Date.today.strftime("%Y/%m/%d")
+    send_data file.string, :filename => "Produits_#{date}.xls", :type =>  "application/vnd.ms-excel"    
   end
   
 end

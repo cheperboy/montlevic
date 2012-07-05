@@ -241,7 +241,7 @@ class Category < ActiveRecord::Base
     book = Spreadsheet::Workbook.new
 
     # sheet 1
-    name = "categories"
+    name = "#{self.to_s.pluralize}_#{saison}" 
     sheet = book.create_worksheet
     sheet.name = name
     

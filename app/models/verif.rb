@@ -49,6 +49,7 @@ class Verif < ActiveRecord::Base
   end
 
   def get_result
+    factures.tests << parcelle_assoc_saison_incoh
     factures.tests << cout_lt_produits_used
     factures.tests << cout_lt_produits_assoc
     factures.tests << report_sans_reportable
@@ -80,6 +81,21 @@ class Verif < ActiveRecord::Base
     
   end
 
+
+  def parcelle_assoc_saison_incoh
+    test = init_test('parcelles assoc.saison_id differrente de facture.saison_id', HIGH)
+    test.num =0
+    Facture.find_by_saison(:all, :order => :id).each do |facture|       
+      if facture.parcelle_assoc_saison_incoh.eql?(true)
+        test.num += 1
+        print = "#{facture.id}: #{facture.name}"
+        error = init_error(print, facture.id, 'factures', '')
+        test.errors << error
+      end
+    end
+    test.result = (test.num == 0)    
+    return test
+  end
 
   def cout_lt_produits_assoc
     test = init_test('cout facture inferieur a la somme des produits assoc', HIGH)

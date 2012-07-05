@@ -108,6 +108,25 @@ class Application < ActiveRecord::Base
    	['get_info_popup',      '?',          '',     false,        'ignorecase',   true,   '"info"',         false,    'black']
   ]
 
+  FACTURE_MULTIPLE_HEAD = 
+  [
+    # KEY                   VALUE         UNIT    FILTER        TYPE            TRI     TRI_KEY           GREEN_RED COLOR
+   	['select',              'select',     '',     false,        'numeric',      true,   '',               false,    'grey'],
+   	['id',                  'id',         '',     true,         'numeric',      true,   'id',             false,    'grey'],
+  	['category_name',       'Categorie',  '',     true,         'ignorecase',   true,   'category_id',    false,    'grey'],
+  	['print_factype',       'compta',     '',     true,         'ignorecase',   true,   'factype_id',     false,    'grey'],
+  	['type',                'type',       '',     true,         'ignorecase',   true,   'type',           false,    'grey'],
+  	['user_name',           'Prestataire','',     true,         'ignorecase',   true,   'user_id',        false,    'black'],
+  	['name',                'nom',        '',     true,         'ignorecase',   true,   'name',           false,    'black'],
+  	['cout',                'Cout',       '€',    true,         'numeric',      true,   'cout',           false,    'black'],
+    ['ref_client',          'Ref Client', '',     true,         'ignorecase',   true,   'ref_client',     false,    'black'],
+    ['ref',                 'Ref',        '',     true,         'ignorecase',   true,   'ref',            false,    'grey'],
+  	['print_date',          'date',       '',     true,         'ignorecase',   true,   'date',           false,    'grey'],
+    ['star',                'star',       '',     false,        'ignorecase',   true,   'star',           false,    'black'], 
+    ['adu',                 'adu',        '',     false,        'ignorecase',   true,   'adu',            false,    'black'], 
+   	['get_info_popup',      '?',          '',     false,        'ignorecase',   true,   '"info"',         false,    'black']
+  ]
+
   FACTURE_HEAD_PAYEES = 
   [
     # KEY                   VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY           GREEN_RED COLOR

@@ -305,6 +305,122 @@ module ApplicationHelper
   	"
   end  
   
+  # le 2012-07-04
+  # copie de draw_table_with_find_js puis modif pour 
+  # selections multiple de factures et edition de la categorie 
+  def draw_table_with_find_js_facture_multiple(headers, elements, controller, *args)
+    options = args.extract_options!
+    sort = "" 
+    out = ""
+    sort = ":#{options[:sort]}" unless options[:sort].nil?
+    head_size = headers.count
+    link_size = 3
+    out += 
+"<table class='table_list table-stripeclass:even table-autosort#{sort}'>
+<thead>
+"
+    #Head - 1
+    out += "
+    <tr class=bold>
+    "        
+    headers.each do |header|
+      num_type = header[HEADER_VALUE].to_s
+      if header[HEADER_TRI].eql?(true)
+        out += "<th class='list-elt-left table-sortable:#{header[HEADER_TYPE].to_s} table-sortable'>#{header[HEADER_VALUE].to_s}</th>"
+      else
+        out += "<th class='list-elt-left'>#{header[HEADER_VALUE].to_s}</th>"        
+      end
+    end
+    out += "<th colspan='#{link_size.to_s}'></th>"
+    out += "</tr>
+  	"        
+
+    if options[:search].eql?(true)
+      #Head - 2
+      out += "
+      <tr class=bold>"
+              
+      headers.each do |header|
+        if header[HEADER_FILTER].eql?(true)
+          out += "<th><input name='filter' size='1' onkeyup='Table.filter(this,this)'></th>"
+        else
+          out += "<th></th>"
+        end
+      end
+      out += "<th colspan='#{link_size.to_s}'></th>"
+      out += "</tr>
+    	"        
+      out += "
+      </thead>
+    	"
+    end
+
+    #Elements
+    out += "
+  	<tbody>
+  	"
+    alt = 0
+    elements.each do |element|
+      alt += 1
+      # Premier tr de l'element  
+      out += "<tr class='list-row'>"        
+      out += "<td>"
+      out += check_box_tag 'element[select]', "1", nil
+      out += "</td>"
+      
+      headers.each do |header|
+        value = element.send(header[HEADER_KEY])        
+        #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)
+        if header[HEADER_KEY].eql?("star")
+          out += "<td>"
+          out += check_box_tag 'element[star]', "1", element.star?, :onclick => toggle_star(element, controller)
+          out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
+          out += "</td>"
+        elsif header[HEADER_KEY].eql?("select")
+          out += "<td>"
+          out += check_box_tag 'element[select]', "1", nil
+          out += "</td>"
+        elsif header[HEADER_KEY].eql?("adu")
+          out += "<td>"
+          out += check_box_tag 'element[adu]', "1", element.adu?, :onclick => toggle_adu(element, controller)
+          out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
+          out += "</td>"
+        elsif header[HEADER_KEY].eql?("dosage")
+          out += "<td class='list-elt-right'>"
+          out += element.dosage.to_s + ' ' + element.unit
+          out += "</td>"
+        else  
+          #class css du td : align_right ou align_left
+          td_class = "list-elt-right"
+          if    value.class == String then td_class = "list-elt-left"
+          elsif value.class.eql?(Float) then td_class = "list-elt-right"
+          elsif value.class.eql?(Fixnum) then td_class = "list-elt-right"
+          end
+
+          #si value est un float, on le tronque pour l'affichage
+          if value.class.eql?(Float) then value = value.display end
+
+          out += "<td class='#{td_class}'>"
+          out += "#{value} #{header[HEADER_UNIT]}"
+          out += "</td>
+          "
+        end
+      end
+
+      #Liens
+      out += '<td>'+ link_to_show(controller.singularize, element.id) +'</td>'
+      out += '<td>'+ link_to_edit(controller.singularize, element.id) +'</td>'
+      out += '<td>'+ link_to_delete(controller.singularize, element.id) +'</td>'
+      out += '</tr>'    
+    end
+
+    out += "
+      <tbody>
+  	</table>
+  	"
+  end  
+
+
   def draw_table(headers, elements, print_stars=false)
 
     out = ''

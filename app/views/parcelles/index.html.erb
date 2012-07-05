@@ -2,12 +2,14 @@
 
 <% titre = "Parcelles" %>
 <% lien1 = nil %>
+<% export = link_to 'Export', :action => :export %>
 <% if admin? %>
 	<% lien1 = link_to 'Modifier les parcelles', {:controller => :parcelles, :action=> :index_edit} %>
 <% end %>
 
 <div id="title_h1">
 	<span class=title><%= titre %></span>
+	<span class=link><%= export %></span>
 	<span class=link><%= lien1 %></span>
 </div>
 

@@ -498,10 +498,7 @@ private
     root = Category.root_pulve    if root_cat.eql?(:pulve)
     root = Category.root_facture  if root_cat.eql?(:facture)
     root = Category.root_produit  if root_cat.eql?(:produit)
-    puts "category_code #{category_code.to_s}"
-    puts "root name #{root.name.to_s}"
     category = Category.find_by_code(category_code)
-    puts "cat #{category.to_s}"
     if (root && category && category.root.eql?(root))
       return category.id
     else

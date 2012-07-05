@@ -260,7 +260,7 @@ class Produit < ActiveRecord::Base
     book = Spreadsheet::Workbook.new
 
     # sheet 1
-    name = self.class.to_s.pluralize
+    name = "#{self.to_s.pluralize}_#{saison}" 
     sheet = book.create_worksheet
     sheet.name = name
     
@@ -271,7 +271,7 @@ class Produit < ActiveRecord::Base
     sheet.row(0).default_format = tete
     i = 1
     elts = []
-    elts = Produit.find_by_saison(:all)
+    elts = self.find_by_saison(:all)
     elts.each do |e|
       tab = [e.id, e.name, e.code, e.category.name, e.unit, e.desc, e.info]
       sheet.row(i).replace tab

@@ -102,4 +102,11 @@ class ParcellesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def export
+    file = Parcelle.export_by_saison()
+    date = Date.today.strftime("%Y/%m/%d")
+    send_data file.string, :filename => "Parcelles-#{date}.xls", :type =>  "application/vnd.ms-excel"    
+  end
+    
 end

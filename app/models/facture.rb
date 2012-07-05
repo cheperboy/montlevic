@@ -1,3 +1,5 @@
+# TODO http://localhost:3000/factures/151 comporte deux parcelle identiques (version b015)
+
 class Facture < Charge  
   
   COLS_NAME =         {1 => 'adu',  2 => 'star', 3=>'category_id', 4=>'date', 5=>'cout', 6=>'name', 7=>'ref_client', 8=>'ref', 9=>'factype_id', 10=>'desc', 11=>'type'}
@@ -244,6 +246,8 @@ class Facture < Charge
   end
     
 # ----- Verifs ------
+  # ces methodes retournent true si erreur
+  # =>                      false si pas d'erreur  
 
   # Somme des produits used superieur a facture.cout
   def cout_gt_produits_assoc
@@ -267,6 +271,14 @@ class Facture < Charge
   # Reportable not NULL ou Report NULL
   def reportable_not_null_or_report_null
     return (self.class.eql?(Reportable) && !comptable_null?) || (self.class.eql?(Report) && comptable_null?)
+  end
+
+  # parcelles_assoc.saison_id != de la saison de la facture
+  def parcelle_assoc_saison_incoh
+    err = false
+    self.parcelles.each       { |p| err = true unless p.saison_id.eql?(self.saison_id) }
+    self.factoparcelles.each  { |a| err = true unless a.saison_id.eql?(self.saison_id) }
+    return (err)
   end
 
 # ----- Export ------

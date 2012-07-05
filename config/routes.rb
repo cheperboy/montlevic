@@ -1,26 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
 
-  map.resources :verifs, :collection => { :list_labtofactures => :get,
-                                          :delete_labtofacture  => :any,
-                                          :list_putofactures    => :get,
-                                          :delete_putofacture   => :any,
-                                          :list_protofactures   => :get,
-                                          :delete_protofacture  => :any,
-                                          :list_putoproduits    => :get,
-                                          :delete_putoproduit   => :any,
-                                          :list_putoparcelles   => :get,
-                                          :delete_putoparcelle  => :any,
-                                          :list_labtoparcelles  => :get,
-                                          :delete_labtoparcelle => :any,
-                                          :list_factoparcelles  => :get,
-                                          :delete_factoparcelle => :any,
-                                          :factures             => :get
-  }
-
   map.resource :session
   
-  map.resources :ventes, :collection => { :update_adu => :put,
-                                            :update_star => :put}
+  map.resources :ventes, :collection => { 
+    :update_adu  => :put,
+    :update_star => :put}
   
 
   map.resources :myusers
@@ -45,16 +29,20 @@ ActionController::Routing::Routes.draw do |map|
     :update_star => :put
   }
 
-  map.resources :parcelles, :collection => { :index_edit => :get}
+  map.resources :parcelles, :collection => { 
+    :index_edit => :get,
+    :export     => :get}
 
   map.resources :labtoparcelles
 
-  map.resources :labours, :collection => {:update_adu => :put,
-                                          :update_star => :put}
+  map.resources :labours, :collection => {
+    :update_adu  => :put,
+    :update_star => :put}
 
-  map.resources :produits, :collection => { :update_adu => :put,
-                                            :update_star => :put,
-                                            :export => :get}
+  map.resources :produits, :collection => { 
+    :update_adu  => :put,
+    :update_star => :put,
+    :export      => :get}
   
 
   map.resources :factypes
@@ -62,6 +50,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :factures, :collection => { 
     :new_debit_to_reportable    => :any,
     :create_debit_to_reportable => :any,
+    :index_multiple => :any,
     :reports        => :get,
     :new_report     => :get,
     :create_report  => :post,
@@ -104,6 +93,24 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :debits,      :as => :factures, :controller => :factures    
   map.resources :reports,     :as => :factures, :controller => :factures
   map.resources :reportables, :as => :factures, :controller => :factures
+
+  map.resources :verifs, :collection => { 
+    :list_labtofactures   => :get,
+    :delete_labtofacture  => :any,
+    :list_putofactures    => :get,
+    :delete_putofacture   => :any,
+    :list_protofactures   => :get,
+    :delete_protofacture  => :any,
+    :list_putoproduits    => :get,
+    :delete_putoproduit   => :any,
+    :list_putoparcelles   => :get,
+    :delete_putoparcelle  => :any,
+    :list_labtoparcelles  => :get,
+    :delete_labtoparcelle => :any,
+    :list_factoparcelles  => :get,
+    :delete_factoparcelle => :any,
+    :factures             => :get
+  }
 
   map.root :factures
 

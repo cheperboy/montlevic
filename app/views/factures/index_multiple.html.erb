@@ -1,0 +1,15 @@
+<% title "Factures", false %>
+
+<% titre = "Factures edition multiple" %>
+
+<% lien1 = link_to 'Reports', {:controller => :factures, :action=> :index} %>
+<div id="title_h1">
+	<span class=title><%= titre %></span>
+	<span class=link><%= lien1 %></span>
+</div>
+
+<% @elements = @factures %>
+<div id='list_facture'>	
+	<%= render :partial => 'list_multiple' %>
+</div>
+

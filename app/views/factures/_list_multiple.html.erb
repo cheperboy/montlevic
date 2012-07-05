@@ -1,0 +1,4 @@
+<% unless @elements.count == 0 %>
+	<%= draw_table_with_find_js_facture_multiple(Application::FACTURE_MULTIPLE_HEAD, @elements, 'factures', :search => true, :sort => 3) %>
+<% end %>
+
