@@ -18,6 +18,7 @@
 %p
 - @import.remarks.each do |msg|
 	=msg.to_s
+	%br
 
 - if @state.eql?(:read)
 	%h2 Lecture du fichier

@@ -1,37 +1,37 @@
 class Application < ActiveRecord::Base
   
   # Veleurs utilisees dans les listes deroulante
-  DEFAULT = 0
-  ERROR   = -1
+  DEFAULT  = 0
+  ERROR    = -1
 
   # Types de reglement
-  CHEQUE = 1
-  ESPECE = 2
+  CHEQUE   = 1
+  ESPECE   = 2
   
   # Taux TVA
-  TVA_5_5 = 5.5
+  TVA_5_5  = 5.5
   TVA_19_6 = 19.6
   
   # Valeurs de listes deroulantes
-  PULVE_DOSAGE_UNITS = [['L/Ha', 'L/Ha'], ['kg/Ha', 'kg/Ha']]
+  PULVE_DOSAGE_UNITS     = [['L/Ha', 'L/Ha'], ['kg/Ha', 'kg/Ha']]
   PRODUIT_QUANTITE_UNITS = [['L', 'L'], ['kg', 'kg']]
-  TAUX_TVA = [['-', DEFAULT], ['5,5%', TVA_5_5], ['19,6%', TVA_19_6]]
-  TYPE_REGLEMENT = [['-', DEFAULT], ['Cheque', CHEQUE], ['Liquide', ESPECE]]
-  VENTE_UNITS = [['bottes', 'b'], ['tonnes', 't'], ['quintaux', 'qt'], ['kg', 'kg']]
+  TAUX_TVA               = [['-', DEFAULT], ['5,5%', TVA_5_5], ['19,6%', TVA_19_6]]
+  TYPE_REGLEMENT         = [['-', DEFAULT], ['Cheque', CHEQUE], ['Liquide', ESPECE]]
+  VENTE_UNITS            = [['bottes', 'b'], ['tonnes', 't'], ['quintaux', 'qt'], ['kg', 'kg']]
 
   SAISON_ID = Setting.find(1).saison_id
-  SAISON = Setting.find(1).saison
+  SAISON    = Setting.find(1).saison
   
 
-  # HEADER_KEY = 0
-  # HEADER_VALUE = 1
-  # HEADER_UNIT = 2
-  # HEADER_FILTER = 3
-  # HEADER_TYPE = 4
-  # HEADER_TRI = 5
-  # HEADER_TRI_KEY = 6
+  # HEADER_KEY       = 0
+  # HEADER_VALUE     = 1
+  # HEADER_UNIT      = 2
+  # HEADER_FILTER    = 3
+  # HEADER_TYPE      = 4
+  # HEADER_TRI       = 5
+  # HEADER_TRI_KEY   = 6
   # HEADER_RED_GREEN = 7
-  # HEADER_COLOR = 8
+  # HEADER_COLOR     = 8
   
   LABOUR_HEAD = 
   [
@@ -111,16 +111,12 @@ class Application < ActiveRecord::Base
   FACTURE_MULTIPLE_HEAD = 
   [
     # KEY                   VALUE         UNIT    FILTER        TYPE            TRI     TRI_KEY           GREEN_RED COLOR
-   	['select',              'select',     '',     false,        'numeric',      true,   '',               false,    'grey'],
    	['id',                  'id',         '',     true,         'numeric',      true,   'id',             false,    'grey'],
   	['category_name',       'Categorie',  '',     true,         'ignorecase',   true,   'category_id',    false,    'grey'],
-  	['print_factype',       'compta',     '',     true,         'ignorecase',   true,   'factype_id',     false,    'grey'],
   	['type',                'type',       '',     true,         'ignorecase',   true,   'type',           false,    'grey'],
   	['user_name',           'Prestataire','',     true,         'ignorecase',   true,   'user_id',        false,    'black'],
   	['name',                'nom',        '',     true,         'ignorecase',   true,   'name',           false,    'black'],
   	['cout',                'Cout',       '€',    true,         'numeric',      true,   'cout',           false,    'black'],
-    ['ref_client',          'Ref Client', '',     true,         'ignorecase',   true,   'ref_client',     false,    'black'],
-    ['ref',                 'Ref',        '',     true,         'ignorecase',   true,   'ref',            false,    'grey'],
   	['print_date',          'date',       '',     true,         'ignorecase',   true,   'date',           false,    'grey'],
     ['star',                'star',       '',     false,        'ignorecase',   true,   'star',           false,    'black'], 
     ['adu',                 'adu',        '',     false,        'ignorecase',   true,   'adu',            false,    'black'], 

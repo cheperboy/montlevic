@@ -97,6 +97,11 @@ class ImportController < ApplicationController
     import(sheet)
   end
 
+  def import_labours
+    sheet = 'labours'
+    import(sheet)
+  end
+
   def import_produits
     sheet = 'produits'
     import(sheet)

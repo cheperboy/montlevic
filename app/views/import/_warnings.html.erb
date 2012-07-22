@@ -16,7 +16,8 @@
 		<tr>
 			<td class="<%= td_class %>"><%= (index+1).to_s %></td>
 		    <td><%= Import.print_elt_type(@import.elts[index]) %></td>
-		    <td><%= Import.print_elt_name(@import.elts[index]) %></td>
+		    <td><%#= Import.print_elt_name(@import.elts[index]) %></td>
+		    <!-- <td><%#= @import.elts[index] %></td> -->
 		    <td><% @import.invalids[index].each do |msg| %>- <%= msg.to_s %><br><% end %></td>
 		    <td><% @import.warnings[index].each do |msg| %>- <%= msg.to_s %><br><% end %></td>
 		    <td><% @import.cultures[index].uniq.each do |msg| %><%= msg.name.to_s %>,&nbsp;<% end %></td>

@@ -63,6 +63,7 @@ ActionController::Routing::Routes.draw do |map|
     :modif          => :any,
     :update_adu     => :put,
     :update_star    => :put,
+    :update_multiple    => :any,
     :export         => :get
     }
 
@@ -78,6 +79,7 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :import, :collection => { 
     :import_pulves   => :get,
+    :import_labours  => :get,
     :import_factures => :get,
     :import_produits => :get,
     :prepare         => :any,

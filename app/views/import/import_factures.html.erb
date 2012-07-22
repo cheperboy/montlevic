@@ -1,6 +1,6 @@
 <% title "Import", false %>
 <% titre = "Factures" %>
-<% prepare_file                  = button_to("Preparer le fichier", 			:action => :prepare) %>
+<% prepare_file           = button_to("Preparer le fichier", 			:action => :prepare) %>
 <% read_file              = button_to("Tester le fichier", 				:action => :import_factures, :force => false) %>
 <% do_import              = button_to("Importer le fichier", 			:action => :import_factures, :force => true) %>
 <% lien_import_with_force = button_to("Importer malgré les warnings", 	:action => :import_factures, :force => true) %>

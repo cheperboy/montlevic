@@ -34,6 +34,19 @@ if true
   XLS_ROW_NUM                  = 0
   XLS_TYPE                     = 1
 
+  # Labours
+  XLS_LABOUR_COUT_HA_PASSAGE    = 2
+  XLS_LABOUR_DATE               = 3
+  XLS_LABOUR_CATEGORY           = 4
+  XLS_LABOUR_NAME               = 5
+  XLS_LABOUR_USER               = 6
+  XLS_LABOUR_TYPECULTURS        = 7
+  XLS_LABOUR_PARCELLES          = 8
+  XLS_LABOUR_DESC               = 9
+  XLS_LABOUR_INFO               = 10
+  XLS_LABOUR_STAR               = 11
+  XLS_LABOUR_ADU                = 12
+
   # Pulves
   XLS_PULVE_COUT_HA_PASSAGE    = 2
   XLS_PULVE_DATE               = 3
@@ -88,7 +101,7 @@ if true
   XLS_PRODUIT_ADU      = 9
 end
   def initialize(elt_type)
-    if false
+    # if false
     # Protofacture.find(:all).each do |f|
     #   if 73 <= f.id && f.id <= 88
     #     puts "delete #{f.id}"
@@ -101,13 +114,13 @@ end
     #     f.destroy
     #   end
     # end
-      Pulve.find(:all).each do |pu|
-        if pu.id > 77
-          puts "delete #{pu.id}"
-          pu.destroy
-        end
-      end
-    end
+      # Pulve.find(:all).each do |pu|
+      #   if pu.id > 77
+      #     puts "delete #{pu.id}"
+      #     pu.destroy
+      #   end
+      # end
+    # end
 
     @sym = elt_type
     @saison = Setting.get_saison
@@ -154,6 +167,13 @@ end
         return read_pulve(row)
       elsif row[XLS_TYPE].eql?('produit')
         return read_putoproduit(row)
+      else
+        read_type_error = true
+      end
+    when :labours
+      if row[XLS_TYPE].eql?('labour')
+        @read_size += 1
+        return read_labour(row)
       else
         read_type_error = true
       end
@@ -225,6 +245,25 @@ end
     return(elt)
   end
   
+  def read_labour(row)
+    labour = Labour.new()
+    labour.cout_ha_passage = get_numeric_field(row[XLS_LABOUR_COUT_HA_PASSAGE], @row_id, 'cout ha passage', {:invalid => :error, :if_neg => :error})
+    labour.category_id     = get_category(row[XLS_LABOUR_CATEGORY], @row_id, :labour)
+    labour.user_id         = get_user_id(row[XLS_LABOUR_USER], @row_id)
+    labour.date            = get_date(row[XLS_LABOUR_DATE], @row_id)
+    labour.name            = get_name(row[XLS_LABOUR_NAME], @row_id)
+    labour.desc            = get_text(row[XLS_LABOUR_DESC], @row_id, 'description')
+    labour.info            = get_text(row[XLS_LABOUR_INFO], @row_id, 'info')
+    labour.star            = get_boolean_field(row[XLS_LABOUR_STAR],  @row_id, 'star',  {:invalid => :warning})
+    labour.adu             = get_boolean_field(row[XLS_LABOUR_ADU],   @row_id, 'adu',   {:invalid => :warning})
+    parcelles              = get_parcelles(row[XLS_LABOUR_PARCELLES], @row_id)
+    cultures               = get_cultures(row[XLS_LABOUR_TYPECULTURS], @row_id)
+    #TODO supprimer la ligne suivante inutile
+    @last_labour_read = @row_id
+    check_if_labour_exist(labour, @row_id)
+    return(labour)
+  end
+
   def read_facture(row)
     fac             = Debit.new()
     fac.cout        = get_numeric_field(row[XLS_FACTURE_COUT], @row_id, 'cout', {:if_neg => :error, :invalid => :error})
@@ -269,7 +308,6 @@ end
     produit.info        = get_text(row[XLS_PRODUIT_INFO],         @row_id, 'info')
     produit.star        = get_boolean_field(row[XLS_PRODUIT_STAR],@row_id, 'star', {:invalid => :warning})
     produit.adu         = get_boolean_field(row[XLS_PRODUIT_ADU], @row_id, 'adu',   {:invalid => :warning})
-
     check_if_produit_exist(produit, @row_id)
     return(produit)
   end
@@ -289,6 +327,8 @@ end
     elsif elt.kind_of?(Facture)
       import_charge(elt, index)
     elsif elt.kind_of?(Produit)
+      import_charge(elt, index)
+    elsif elt.kind_of?(Labour)
       import_charge(elt, index)
     elsif (elt.kind_of?(Putoproduit) || elt.kind_of?(Protofacture))
       # do nothing
@@ -335,6 +375,11 @@ end
     if elt.kind_of?(Pulve)
       parcelle_assoc = Putoparcelle.new(
         :pulve_id    => elt.id,
+        :parcelle_id => parcelle.id,
+        :value       => 1)
+    elsif elt.kind_of?(Labour)
+      parcelle_assoc = Labtoparcelle.new(
+        :labour_id    => elt.id,
         :parcelle_id => parcelle.id,
         :value       => 1)
     elsif elt.kind_of?(Facture)
@@ -453,14 +498,18 @@ private
   end  
 
   def get_parcelles(parcelles_raw, id)
+    puts "parcelles_raw #{parcelles_raw}"
     if parcelles_raw.class.eql?(String)
       parcelles = parcelles_raw.split(/,\s*/)
       unless parcelles.size.eql?(0)
         parcelles.each do |parcelle_code|
+          puts "\tparcelle_code #{parcelle_code}"
           parcelle = @saison.parcelles.find_by_code(parcelle_code)
           unless parcelle.nil?
+            puts "\t\tparcelle found"
             add_parcelle(parcelle, id)
           else
+            puts "\t\tparcelle NOT found"
             invalid = "parcelle '#{parcelle_code}' non trouvee"
             add_invalid(invalid, id)
           end
@@ -496,6 +545,7 @@ private
   # root = :pulve, :facture, ...
   def get_category(category_code, id, root_cat)
     root = Category.root_pulve    if root_cat.eql?(:pulve)
+    root = Category.root_labour   if root_cat.eql?(:labour)
     root = Category.root_facture  if root_cat.eql?(:facture)
     root = Category.root_produit  if root_cat.eql?(:produit)
     category = Category.find_by_code(category_code)
@@ -525,6 +575,14 @@ private
       end
     end
   end  
+  def check_if_labour_exist(element, id)
+    Labour.find_by_saison(:all).each do |labour|
+      if (labour.name.eql?(element.name))
+        invalid = "semble etre deja importe"
+        add_warning(invalid, id) unless warning_already_exist(invalid, id)
+      end
+    end
+  end  
   def check_if_facture_exist(element, id)
     Facture.find_by_saison(:all).each do |elt|
       if (elt.name.eql?(element.name))
@@ -546,6 +604,7 @@ private
       end
     end
   end  
+
   # obsolete : on autorise le fait d'indiquer aucune parcelle
   def check_parcelles_and_cultures_size(id)
     if @parcelles[id].size.eql?(0) && @cultures[id].size.eql?(0)

@@ -67,6 +67,7 @@ class FacturesController < ApplicationController
   end
 
   def index_multiple
+    puts Time.now
     @factures = Facture.find_by_saison(:all)
     respond_to do |format|
       format.html
@@ -283,6 +284,42 @@ class FacturesController < ApplicationController
         format.xml  { render :xml => @facture.errors, :status => :unprocessable_entity }
       end
     end
+  end
+
+  def update_multiple
+    puts "controller :: update_multiple"
+    puts "params : #{params.inspect}"
+    @facture = Facture.find(params[:id])
+    klass = @facture.class.to_s.downcase
+    puts "klass #{klass}"
+    if @facture.update_attribute(:category_id, params["#{klass}"][:category_id])
+      @facture.save!
+      puts "\tfacture saved!"
+    end
+
+    # param_type = @facture.class.to_s.downcase.to_sym
+    # respond_to do |format|
+    #   if @facture.update_attributes(params[param_type])
+    #     
+    #     # 12/03/13 suppression car Factcat obsolete
+    #       # extract factcat from category and save it
+    #       # @facture.update_factcat
+    #     
+    #     # transforme les checkbox Typeculture en Factoparcelles
+    #     @facture.update_typecultures(params[:typecultures])
+    #     @facture.uniq_parcelles
+    #     if @facture.class.equal?(Report)
+    #       flash[:notice] = 'Modification du Report "' + @facture.name + '" OK.'
+    #       format.html { redirect_to(facture_url(@facture.reportable)) }
+    #     else
+    #       flash[:notice] = 'Modification de la facture (' + @facture.class.to_s + ') "' + @facture.name + '" OK.'
+    #       format.html { redirect_to(facture_url(@facture)) }
+    #     end
+    #   else
+    #     format.html { render :action => "edit" }
+    #     format.xml  { render :xml => @facture.errors, :status => :unprocessable_entity }
+    #   end
+    # end
   end
 
   def export2

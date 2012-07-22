@@ -106,6 +106,7 @@ module CategoryHelper
     out
   end
 
+  # select categories dans un <tr> et avec formulaire passe en parametre
   def form_tr_select_cat_from_tree(form, obj, root, name, col, id, display_name, selected_obj, *args)
     options = args.extract_options!
     out = ''
@@ -117,9 +118,28 @@ module CategoryHelper
     out += '</td></tr>'
     return out
   end
-  def select_cat_from_tree(obj, col, root, selected_obj, options = nil)
+  
+  # select categories sans <tr> sans form
+  def tag_select_cat_from_tree(obj,     root,                   col,          id, display_name, selected_obj, *args)
+    options = args.extract_options!
+    out = ''
+    out += select_cat_from_tree_for_tag(obj, col, root, selected_obj, options)
+    return out
+  end
+  def select_cat_from_tree_for_tag(obj, col, root, selected_obj, *args)
+    options = args.extract_options!
+    select_name = obj.class.to_s.downcase + '[' + col.to_s + ']'
+    call = '"' + update_category(obj, 'facture') + '"'
+    out = "<select name='#{select_name}' id='element_cat' onchange=#{call}>"
+    out << select_cat_from_tree_recurs(root, selected_obj)
+    out << "</select>"
+  end
+  
+  #TODO cette fonction doit etre remise a sa forme initiale: supprimer l'appel 'update_category'
+  def select_cat_from_tree(obj, col, root, selected_obj, *args)
+    options = args.extract_options!
     select_name = obj + '[' + col.to_s + ']'
-    out = "<select name='#{select_name}'>"
+    out = "<select name='#{select_name}' onchange => update_category('#{obj}', facture)>"
     out << select_cat_from_tree_recurs(root, selected_obj)
     out << "</select>"
   end

@@ -29,6 +29,15 @@ module ApplicationHelper
                     )
   end
 
+  def update_category(object, controller)
+    remote_function(:url => { :controller => 'factures', :action => "update_multiple", :id => object.id },
+                    :method => :put,
+                    :before => "Element.show('spinner-#{object.id}')" ,
+                    :complete => "Element.hide('spinner-#{object.id}')",
+                    :with => "this.name + '=' + this.value"
+                    )
+  end
+
   def toggle_adu(object, controller)
     remote_function(:url => { :controller => controller, :action => "update_adu", :id => object.id },
                     :method => :put,
@@ -323,6 +332,7 @@ module ApplicationHelper
     out += "
     <tr class=bold>
     "        
+    out += "<th class='list-elt-left'>select</th>"        
     headers.each do |header|
       num_type = header[HEADER_VALUE].to_s
       if header[HEADER_TRI].eql?(true)
@@ -341,11 +351,7 @@ module ApplicationHelper
       <tr class=bold>"
               
       headers.each do |header|
-        if header[HEADER_FILTER].eql?(true)
-          out += "<th><input name='filter' size='1' onkeyup='Table.filter(this,this)'></th>"
-        else
-          out += "<th></th>"
-        end
+        out += "<th></th>"
       end
       out += "<th colspan='#{link_size.to_s}'></th>"
       out += "</tr>
@@ -363,29 +369,25 @@ module ApplicationHelper
     elements.each do |element|
       alt += 1
       # Premier tr de l'element  
-      out += "<tr class='list-row'>"        
-      out += "<td>"
-      out += check_box_tag 'element[select]', "1", nil
-      out += "</td>"
+      out += "<tr class='list-row'>"
+#  select box
+
+        out += "<td>"
+        out += tag_select_cat_from_tree(element, Category.root_facture, :category_id, :id, :name, element)
+        # out += hidden_field_tag :element_id, :value => element.id
+        out += check_box_tag 'element[cat]', "1", false, :onclick => update_category(element, controller)
+        out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
+        out += "</td>"
+
+        out += "<td>"
+        out += check_box_tag 'element[star]', "1", element.star?, :onclick => toggle_star(element, controller)
+        out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
+        out += "</td>"
       
       headers.each do |header|
         value = element.send(header[HEADER_KEY])        
         #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)
-        if header[HEADER_KEY].eql?("star")
-          out += "<td>"
-          out += check_box_tag 'element[star]', "1", element.star?, :onclick => toggle_star(element, controller)
-          out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
-          out += "</td>"
-        elsif header[HEADER_KEY].eql?("select")
-          out += "<td>"
-          out += check_box_tag 'element[select]', "1", nil
-          out += "</td>"
-        elsif header[HEADER_KEY].eql?("adu")
-          out += "<td>"
-          out += check_box_tag 'element[adu]', "1", element.adu?, :onclick => toggle_adu(element, controller)
-          out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
-          out += "</td>"
-        elsif header[HEADER_KEY].eql?("dosage")
+        if header[HEADER_KEY].eql?("dosage")
           out += "<td class='list-elt-right'>"
           out += element.dosage.to_s + ' ' + element.unit
           out += "</td>"
