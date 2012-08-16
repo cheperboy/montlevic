@@ -82,6 +82,7 @@ class Integer
         return "-"
       end
     end
+    # return (ActionView::Helpers::NumberHelper::number_to_currency(self.to_f, :delimiter => " ", :separator => ",", :unit => ""))
     return (sprintf("%.#{precision}f", self.to_f))
   end
 end
@@ -110,8 +111,9 @@ class Float
         return "-"
       end 
     end
-    return (sprintf("%.#{precision}f", self.to_f))
-    # number_with_precision = sprintf("%.#{precision}f", self.to_f)
+    # return (sprintf("%.#{precision}f", self.to_f))
+    # modif 14/08/2012 pour utiliser number_to_currency()
+    number_with_precision = sprintf("%.#{precision}f", self.to_f)
     # return number_with_delimiter(number_with_precision, " ")
   end
 

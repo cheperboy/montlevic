@@ -10,6 +10,10 @@ module ApplicationHelper
   HEADER_RED_GREEN = 7
   HEADER_COLOR = 8
   
+  def delim(number)
+    number_to_currency(number, :delimiter => ".", :separator => ",", :unit => "")
+  end
+  
   # Retourne la valeur a afficher d'une 
   # liste de choix construite avec un tableau de constantes
   # a = [ [ 1, "one"], [2, "two"], [3, "three"], ["ii", "two"] ] 
@@ -316,7 +320,7 @@ module ApplicationHelper
   
   # le 2012-07-04
   # copie de draw_table_with_find_js puis modif pour 
-  # selections multiple de factures et edition de la categorie 
+  # selections multiple de factures et edition de la categorie en ajax 
   def draw_table_with_find_js_facture_multiple(headers, elements, controller, *args)
     options = args.extract_options!
     sort = "" 
@@ -374,16 +378,9 @@ module ApplicationHelper
 
         out += "<td>"
         out += tag_select_cat_from_tree(element, Category.root_facture, :category_id, :id, :name, element)
-        # out += hidden_field_tag :element_id, :value => element.id
-        out += check_box_tag 'element[cat]', "1", false, :onclick => update_category(element, controller)
         out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
         out += "</td>"
 
-        out += "<td>"
-        out += check_box_tag 'element[star]', "1", element.star?, :onclick => toggle_star(element, controller)
-        out += image_tag 'img-info.png', :id => "spinner-#{element.id}", :style => 'display: none'
-        out += "</td>"
-      
       headers.each do |header|
         value = element.send(header[HEADER_KEY])        
         #gestion des cas particuliers star et adu : appel de methode link_to_star(model, id, adu)
@@ -421,7 +418,6 @@ module ApplicationHelper
   	</table>
   	"
   end  
-
 
   def draw_table(headers, elements, print_stars=false)
 

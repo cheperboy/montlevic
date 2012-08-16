@@ -9,14 +9,14 @@
     %td.col3
     - if factcat.id.eql?(Category.root_agri.id)
       %td.saison
-        %b= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :ha).display(:z => true)
+        %b= delim(@test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :ha))
       %td.saison
-        %b= @test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :total).display(:z => true)
+        %b= delim(@test.res.get_other_line_for_saison(@test.sid, :resultats, :total_charges, :total))
     - else
       %td.saison
-        %b= @test.res.get_saison_line(@test.sid, :factures, :factcat, factcat.id, :ha).display(:z => true)
+        %b= delim(@test.res.get_saison_line(@test.sid, :factures, :factcat, factcat.id, :ha))
       %td.saison
-        %b= @test.res.get_saison_line(@test.sid, :factures, :factcat, factcat.id, :total).display(:z => true)
+        %b= delim(@test.res.get_saison_line(@test.sid, :factures, :factcat, factcat.id, :total))
     - rang = 0
     - @colonnes.each do |colonne|
       /
@@ -24,11 +24,11 @@
         get_line(..., :factures, :factcat, factcat.id, ...) + les produits utilises
       - rang += 1
       - if factcat.id.eql?(Category.root_agri.id)
-        - cout_ha = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_charges, :ha).display
-        - cout_total = @test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_charges, :total).display
+        - cout_ha = delim(@test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_charges, :ha))
+        - cout_total = delim(@test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_charges, :total))
       - else
-        - cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :factcat, factcat.id, :ha).display
-        - cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :factcat, factcat.id, :total).display
+        - cout_ha = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :factcat, factcat.id, :ha))
+        - cout_total = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :factcat, factcat.id, :total))
       %td{:class => "color_culture_#{colonne.code}"}
         %b= h cout_ha
       %td{:class => "color_culture_#{colonne.code}"}

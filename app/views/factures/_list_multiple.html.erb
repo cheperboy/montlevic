@@ -1,13 +1,8 @@
 <% unless @elements.count == 0 %>
 
 	<% form_tag :action => 'update_multiple' do %> 
-		<%= submit_tag :'Mettre a jour' %>
 		<%= draw_table_with_find_js_facture_multiple(Application::FACTURE_MULTIPLE_HEAD, @elements, 'factures', :search => true, :sort => 3) %>
-	<%#= select_tag(:column, options_for_select(%w{ Typeculture Parcelle Zone }, params[:column])) %>	<br>
-	
-	<%#= check_box_tag :reload_cache %>
-	
 	<% end %>
 	
 <% end %>
-
+x`	

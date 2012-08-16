@@ -2,7 +2,7 @@
 <tr>
 <td><!-- Saison_id --><%#=h  @test.res.get_saison_datas(@test.sid, :id) %></td>
 <td></td>
-<td></td>
+<td><%=number_to_currency(123456.22, :delimiter => " ", :separator => ",", :unit => "")%></td>
 <td colspan=2 class="saison-head-name">Total saison</td>
 
 <% rang = 0 %>

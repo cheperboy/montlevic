@@ -3,17 +3,20 @@
 <% titre = "Factures" %>
 
 <% lien1 = link_to 'Nouvelle facture', new_facture_path %>
-<% lien2 = link_to 'Reports', {:controller => :factures, :action=> :reports} %>
-<% lien3 = link_to 'Nouveau Report', {:controller => :factures, :action=> :new_report} %>
-<% lien4 = link_to 'Nouveau Divers', {:controller => :factures, :action=> :new_diverse} %>
-<% lien5 = link_to 'Export', {:controller => :factures, :action=> :export} %>
+<% lien2 = link_to 'Reports', 			{:controller => :factures, :action=> :reports} %>
+<% lien3 = link_to 'Nouveau Report', 	{:controller => :factures, :action=> :new_report} %>
+<% lien4 = link_to 'Nouveau Divers', 	{:controller => :factures, :action=> :new_diverse} %>
+<% lien5 = link_to 'Export', 			{:controller => :factures, :action=> :export} %>
+<% lien6 = link_to 'Edition multiple',	{:controller => :factures, :action=> :index_multiple} %>
 <div id="title_h1">
 	<span class=title><%= titre %></span>
 	<span class=link><%= lien1 %></span>
 	<span class=link><%= lien2 %></span>
 	<span class=link><%= lien3 %></span>
 	<span class=link><%= lien4 %></span>
-	<span class=link><%= lien5 %></span>
+	<% if admin? %>
+	<span class=link><%= lien6 %></span>
+	<% end %>
 </div>
 
 <% @elements = @factures %>

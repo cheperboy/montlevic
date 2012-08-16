@@ -1,9 +1,10 @@
 class FacturesController < ApplicationController
   before_filter :edit_access,
-                :only => [:update, :destroy, :create_debit_to_reportable]
+                :only => [:update, :update_multiple, :destroy, :create_debit_to_reportable]
 
 
   def index
+    # @factures = Facture.find_by_saison(:all, :limit => 10 )
     @factures = Facture.find_by_saison(:all)
     # if params[:tri]
     #   @factures = Facture.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
@@ -67,7 +68,6 @@ class FacturesController < ApplicationController
   end
 
   def index_multiple
-    puts Time.now
     @factures = Facture.find_by_saison(:all)
     respond_to do |format|
       format.html
@@ -221,6 +221,10 @@ class FacturesController < ApplicationController
   end
 
   def update_star
+    t = Time.now
+    time = "#{t.hour}:#{t.min}:#{t.sec}"
+    puts "Update star : #{time}"
+    puts params.inspect
     star = 0
     if params[:facture][:star].eql?("true")
       star = 1
@@ -287,14 +291,12 @@ class FacturesController < ApplicationController
   end
 
   def update_multiple
-    puts "controller :: update_multiple"
-    puts "params : #{params.inspect}"
     @facture = Facture.find(params[:id])
     klass = @facture.class.to_s.downcase
     puts "klass #{klass}"
     if @facture.update_attribute(:category_id, params["#{klass}"][:category_id])
       @facture.save!
-      puts "\tfacture saved!"
+      flash.now[:error] = 'TEST'
     end
 
     # param_type = @facture.class.to_s.downcase.to_sym

@@ -1,0 +1,11 @@
+<select name='debit[category_id]' 
+		onchange="Element.show('spinner-2191856500'); new Ajax.Request('/factures/update_multiple?category_id=10&id=129', {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){Element.hide('spinner-2191856500')}, parameters:this.name + '=' + this.value + '&authenticity_token=' + encodeURIComponent('60DHMfEYcYv8ruxZgBFG6B+RgTp0kTc4LQPaIVGdhgY=')})">
+</select>
+
+
+<input 	id="element_cat" 
+		name="element[cat]" 
+		onclick="Element.show('spinner-103'); new Ajax.Request('/factures/update_multiple?category_id=10&amp;id=129', {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){Element.hide('spinner-103')}, parameters:this.name + '=' + this.value + '&amp;authenticity_token=' + encodeURIComponent('60DHMfEYcYv8ruxZgBFG6B+RgTp0kTc4LQPaIVGdhgY=')})" 
+		type="checkbox" 
+		value="1" 
+/>

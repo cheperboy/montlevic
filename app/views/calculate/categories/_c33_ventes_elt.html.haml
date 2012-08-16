@@ -3,12 +3,12 @@
   %td.col1
   %td.col2
   %td.col3= link_popup_vente(datas[:id])
-  %td.saison= @test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :ha).display(:z => true)
-  %td.saison= @test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :total).display(:z => true)
+  %td.saison= delim(@test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :ha))
+  %td.saison= delim(@test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :total))
   - rang = 0
   - @colonnes.each do |colonne|
     - rang += 1
-    - cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :ha).display(:z => true)
-    - cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :total).display(:z => true)
+    - cout_ha = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :ha))
+    - cout_total = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :total))
     %td{:class => "color_culture_#{colonne.code}"}= cout_ha
     %td{:class => "color_culture_#{colonne.code}"}= cout_total
