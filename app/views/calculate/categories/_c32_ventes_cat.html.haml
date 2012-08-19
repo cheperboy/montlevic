@@ -7,14 +7,14 @@
       = link_to cat.name, "javascript: toggleCat('#{name}');" ,{:name => name}
   %td.col3
   %td.saison
-    %span.green= @test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :ha).display(:z => true)
+    %span.green= delim(@test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :ha))
   %td.saison
-    %span.green= @test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :total).display(:z => true)
+    %span.green= delim(@test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :total))
   - rang = 0
   - @colonnes.each do |colonne|
     - rang += 1
-    - cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :ha).display(:z => true)
-    - cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :total).display(:z => true)
+    - cout_ha = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :ha))
+    - cout_total = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :category, cat.id, :total))
     %td{:class => "color_culture_#{colonne.code}"}
       %span.green= cout_ha
     %td{:class => "color_culture_#{colonne.code}"}
