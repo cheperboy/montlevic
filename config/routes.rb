@@ -15,7 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :zones
 
-  map.resources :users, :collection => { :test => :any}
+  map.resources :users, :collection => { :test => :any, :analytic => :any}
 
   map.resources :typecultures
 
@@ -117,5 +117,7 @@ ActionController::Routing::Routes.draw do |map|
   map.root :factures
 
   map.connect ':controller/:action/'
+  
+  map.connect 'users/analytic/:id', :controller	=>	"users", :action => "analytic"
 
 end

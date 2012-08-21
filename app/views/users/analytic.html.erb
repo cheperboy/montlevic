@@ -1,0 +1,128 @@
+<% title "prestations" %>
+
+<br>
+<table class=form_layout>
+	<tr class=form_layout_title>
+		<td class=form_layout_title>Prestations</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content>
+			<tr class=form_layout_content>
+				<td class=form_layout_title colspan=2>
+					<% categories_produit = Category.find_by_code("produit") %>
+						<% sum_total = 0 %>
+						<table class=table_data>
+							<tr class=bold>
+								<th class=left>Categorie</th>
+								<th class=left>Date</th>
+								<th class=left>Nom</th>
+								<th class=right>Prix unitaire</th>
+								<th class=right>Surface</th>
+								<th class=right>Prix</th>
+							</tr>
+							<%- categories_produit.children.each do |category| -%>
+								<% sum = 0 %>
+								<tr class=bold><td colspan=2></td></tr>				    
+								<tr>
+									<td class=left><b><%=h category.name %></b></td>
+									<td class=left></td>
+									<td class=left></td>
+									<td class=left></td>
+									<td class=left></td>
+									<td class=left></td>
+								</tr>
+								<%- @pulves = Pulve.find(
+									:all, 
+									:conditions => ["saison_id = ? AND user_id = ?", Setting.find(:first).saison_id, @user.id]) -%>								
+								<% sum_debug = 0 %>
+								<%- @pulves.each do |pulve| -%>
+									<%- if pulve.putoproduits[0].produit.category.parent.eql?(category) -%>
+										<% sum += pulve.get_cout_total_passage%>
+										<% sum_total += pulve.get_cout_total_passage%>
+										<tr>
+											<td class=left></td>
+											<td class=left><%=h pulve.date %></td>
+											<td class=left><%= link_to pulve.name, pulve_path(pulve) %></td>
+											<td class=right><%=h delim(pulve.get_cout_ha_passage) %> <%= euro_ha %></td>
+											<td class=right><%=h pulve.sum_surfaces %> <%=ha %></td>
+											<td class=right><%=h delim(pulve.get_cout_total_passage) %> <%= euro %></td>
+										</tr>
+				 					<%- end -%>
+			 					<%- end -%>
+								<tr>
+									<td class=left><b>Somme <%=h category.name %></td>
+									<td class=left></td>
+									<td class=left></td>
+									<td class=left></td>
+									<td class=left></td>
+									<td class=right><b><%=h delim(sum) %> <%= euro %></b></td>
+								</tr>
+								<tr class=bold><td colspan=2></td></tr>				    
+							<%- end -%>
+							<tr class=bold><td colspan=2></td></tr>				    
+							<tr>
+								<td class=left><b>Somme des prestations</td>
+								<td class=left></td>
+								<td class=left></td>
+								<td class=left></td>
+								<td class=left></td>
+								<td class=right><b><%=h delim(sum_total) %> <%= euro %></b></td>
+							</tr>
+						</table>
+		</td>
+	</tr>
+	<tr class=form_layout_title>
+		<td class=form_layout_title colspan=2>Factures</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_title colspan=2>
+			<% categories_service_agricole = Category.find_by_code("service_agricole") %>
+				<% sum_total = 0 %>
+				<table class=table_data>
+					<tr class=bold>
+						<th class=left>Categorie</th>
+						<th class=left>Date</th>
+						<th class=left>Nom</th>
+						<th class=right>Prix</th>
+					</tr>
+					<%- categories_service_agricole.children.each do |category| -%>
+						<% sum = 0 %>
+						<tr class=bold><td colspan=2></td></tr>				    
+						<tr>
+							<td class=left><b><%=h category.name %></b></td>
+							<td class=left></td>
+							<td class=left></td>
+							<td class=left></td>
+						</tr>
+						<%- @factures = Facture.find(
+							:all, 
+							:conditions => ["saison_id = ? AND category_id = ? AND user_id = ?", Setting.find(:first).saison_id, category.id, @user.id]) -%>
+						<%- @factures.each do |facture| -%>
+							<% sum += facture.get_cout_total %>
+							<% sum_total += facture.get_cout_total %>
+							<tr>
+								<td class=left></td>
+								<td class=left><%=h facture.date %></td>
+								<td class=left><%= link_to facture.name, facture_path(facture) %></td>
+								<td class=right><%=h delim(facture.get_cout_total) %> <%= euro %></td>
+							</tr>
+	 					<%- end -%>
+						<tr>
+							<td class=left></td>
+							<td class=left></td>
+							<td class=left><b>Somme <%=h category.name %></td>
+							<td class=right><b><%=h delim(sum) %> <%= euro %></b></td>
+						</tr>
+						<tr class=bold><td colspan=2></td></tr>				    
+					<%- end -%>
+					<tr class=bold><td colspan=2></td></tr>				    
+					<tr>
+						<td class=left></td>
+						<td class=left></td>
+						<td class=left><b>Somme des factures</td>
+						<td class=right><b><%=h delim(sum_total) %> <%= euro %></b></td>
+					</tr>
+				</table>
+		</td>
+	</tr>
+</table>

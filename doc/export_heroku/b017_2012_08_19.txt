@@ -1,0 +1,4 @@
+19 aout 2012, montlevic
+sauvegarde apres quelques modifs en productions (apres import excel)
+- ajout facture trochet No 40.
+- modif de certains produits

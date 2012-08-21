@@ -114,6 +114,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def analytic
+    @user = User.find(params[:id])
+  end
+
   # PUT /users/1
   # PUT /users/1.xml
   # def update
