@@ -1,0 +1,18 @@
+- produit.putoproduits.each do |putoproduit|
+  - if putoproduit.produit.category_id.eql?(cat.id)
+    - datas = @test.res.get_saison_line_datas(@test.sid, :putoproduits, putoproduit.id)
+    - @line +=1
+    %tr{:class => "level-3_#{name}.produits_used#{putoproduit.id}"}
+      %td.col0 c23
+      %td.col1
+      %td.col2
+      %td.col3= produit.name
+      %td.saison= delim(@test.res.get_saison_line(@test.sid, :putoproduits, :all, putoproduit.id, :ha))
+      %td.saison= delim(@test.res.get_saison_line(@test.sid, :putoproduits, :all, putoproduit.id, :total))
+      - rang = 0
+      - @colonnes.each do |colonne|
+        - rang += 1
+        - cout_ha = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :all, putoproduit.id, :ha))
+        - cout_total = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :all, putoproduit.id, :total))
+        %td{:class => "color_culture_#{colonne.code}"}= h cout_ha
+        %td{:class => "color_culture_#{colonne.code}"}= h cout_total

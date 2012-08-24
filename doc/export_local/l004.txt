@@ -1,0 +1,11 @@
+23 aout 2012
+1- restauration db
+2- correction des bug decouvert 
+	- modification des parcelles assoc lors de l'edition d'une facture de saison differente de la saison courante
+	- modification de la saison d'une facture lors de l'edition d'une facture de saison differente de la saison courante via le positionnement de la liste deroulante de choix de saison (factures reportables seulement)
+3- ventilation de certaines factures
+
+	
+
+22 aout 2012
+sauvegarde apres creation des categories et avant ventilation des factures 2011 et 2012 dans ces categories.

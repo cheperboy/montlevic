@@ -6,7 +6,7 @@
 <% if Setting::DETAIL_PARCELLE == 1 %>    
     <%= f.label :value, "Valeur: " %>
     <%= f.text_field :value, :size => 3 %>
-<% else %>    
+<% else %>
     <%= f.hidden_field :value, :value => 1 %>
 <% end %>    
     <%= remove_link_unless_new_record(f) -%>

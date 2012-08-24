@@ -40,6 +40,12 @@ class LaboursController < ApplicationController
   # GET /labours/1/edit
   def edit
     @labour = Labour.find(params[:id])
+    unless @labour.saison_id.eql?(current_saison_id)
+      respond_to do |format| 
+        format.html { redirect_to(@labour) }
+        flash[:error] = 'la campagne de travail est differente de la campagne de cet element!'    
+      end
+    end
   end
 
   # POST /labours

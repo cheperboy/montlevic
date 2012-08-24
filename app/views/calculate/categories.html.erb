@@ -1,6 +1,7 @@
 <% title "Analytic-2" %>
 
-<%= link_to_function "Affichage", update_page { |page| page[:search].toggle } %>
+<%= link_to_function "Affichage", update_page { |page| page[:search].toggle } %> | 
+<%= link_to "Export Excel", :action => 'export' %>
 
 </p> <div id="search" style="display: none;">
 <%= render :partial => 'calculate/categories/search' %>
@@ -8,6 +9,7 @@
 
 <table class=table_print>
 <%= render(:partial => "calculate/categories/p1_head") %>
+
 <tr>
 	<td class=col1><%= link_to 'Type', "javascript: toggleAllLevel2();" %></td>
 	<td class=col2><%= link_to 'Categorie', "javascript: toggleAllLevel3();", :name => 'hide' %></td>
@@ -20,6 +22,7 @@
 		<td class="color_culture_<%= colonne.code %>"><b></b></td>
 	<% end %>
 </tr>
+
 <tr>
 	<td class=col1></td>
 	<td class=col2></td>

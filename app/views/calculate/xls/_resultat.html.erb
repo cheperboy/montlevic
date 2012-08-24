@@ -1,0 +1,23 @@
+<% @line +=1 %>
+	<tr>
+		<td class=col0></td>
+		<td class=col1>Resultat</td>
+		<td class=col2></td>
+		<td class=col3></td>
+		<td class="saison"><b><%= delim(@test.res.get_other_line_for_saison(@test.sid, :resultats, :benef, :ha)) %></b></td>
+		<td class="saison"><b><%= delim(@test.res.get_other_line_for_saison(@test.sid, :resultats, :benef, :total)) %></b></td>	
+		<% rang = 0 %>
+		<% @colonnes.each do |colonne| %>
+			<% rang += 1 %>
+			<% cout_ha = delim(@test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :benef, :ha)) %>
+			<% cout_total = delim(@test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :benef, :total)) %>
+			<td class="color_culture_<%= colonne.code %>_strong"><b><%= cout_ha %></b></td>
+			<td class="color_culture_<%= colonne.code %>_strong"><b><%= cout_total %></b></td>
+		<% end %>
+	</tr>
+
+
+
+
+
+

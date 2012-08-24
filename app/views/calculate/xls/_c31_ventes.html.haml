@@ -1,0 +1,25 @@
+- @line +=1
+%tr.level-1
+  %td.col0= xls_sum_cat_vente(@line)
+  %td.col1
+    %b
+      - name = 'vente'
+      = "Chiffre d'affaire"
+  %td.col2
+  %td.col3
+  %td.saison
+    %b= delim(@test.res.get_other_line_for_saison(@test.sid, :resultats, :total_ventes, :ha))
+  %td.saison
+    %b= delim(@test.res.get_other_line_for_saison(@test.sid, :resultats, :total_ventes, :total))
+  - rang = 0
+  - @colonnes.each do |colonne|
+    - rang += 1
+    - cout_ha = delim(@test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_ventes, :ha))
+    - cout_total = delim(@test.res.get_other_line(@test.sid, @test.c, colonne.id, :resultats, :total_ventes, :total))
+    %td{:class => "color_culture_#{colonne.code}_strong"}
+      %b= cout_ha
+    %td{:class => "color_culture_#{colonne.code}_strong"}
+      %b= cout_total
+- categories = Category.root_vente.children
+- categories.each do |cat|
+  = render(:partial => "calculate/xls/c32_ventes_cat", :locals => { :cat => cat })

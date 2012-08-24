@@ -1,19 +1,16 @@
-<table class="table_print">
-
 <!-- 1 ere ligne -->
+<% @line +=1 %>
 <tr>
-<td><!-- Saison_id --><%#=h  @test.res.get_saison_datas(@test.sid, :id) %></td>
-<td></td>
-<% if @show[:date_surface] %> 
 	<td></td>
 	<td></td>
-<% end %> 
-<td colspan=2 class="saison-head-name">Total saison</td>
+	<td></td>
+	<td></td>
+	<td colspan=2 class="saison-head-name">Total saison</td>
 
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
 	<% rang += 1 %>
-	<td class="<%= odd(rang) %>-head-name" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> >
+	<td class="color_culture_<%= colonne.code %>_strong" colspan=2>
 		<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :name) %> <br>
 		<!-- [<%=h colonne.id %>] -->
 	</td>
@@ -21,25 +18,23 @@
 </tr>	
 
 <!-- 2eme ligne -->
+<% @line +=1 %>
 <tr>
 	<td>Saison : <%=h  @test.res.get_saison_datas(@test.sid, :name) %></td>
 	<td></td>
-	<% if @show[:date_surface] %> 
-		<td></td>
-		<td></td>
-	<% end %> 
+	<td></td>
+	<td></td>
 	<td class="saison-head-surface" colspan=2><%=h  @test.res.get_saison_datas(@test.sid, :surface).display(1) %> Ha</td>
 		
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
 	<% rang += 1 %>
-	<td class="<%= odd(rang) %>-head-surface" <%= print_colspan(@show[:cout_ha], @show[:cout_total]) %> ><b>
+
+	<td class="color_culture_<%= colonne.code %>_strong" colspan=2><b>
 	<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :surface).display(1) %> Ha <br>
 	
 	<% if @test.c.to_s == "parcelles" %>
 		<%=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :typeculture) %> - <br>
-	<%# elsif ((@test.c.to_s == "typecultures") || (@test.c == "zones"))  %>
-		<%#=h  @test.res.get_colonne_datas(@test.sid, @test.c, colonne.id, :parcelles) %> - <br>
 	<% end %>	
 	
 
@@ -48,23 +43,18 @@
 </tr>	
 
 <!-- 3eme ligne -->
+<% @line +=1 %>
 <tr>
 	<td class="left"><b></b></td>
-	<td class="left"><b>nom</b></td>
-	<% if @show[:date_surface] %> 
-		<td class=date><b>date</b></td>
-		<td class="left"><b>surface</b></td>
-	<% end %> 
+	<td class="left"><b></b></td>
+	<td></td>
+	<td class=date><b></b></td>
 	<td class="saison" class="left"><b>cout/ha</b></td>
 	<td class="saison" class="left"><b>total</b></td>
 <% rang = 0 %>
 <% @colonnes.each do |colonne| %>
 	<% rang += 1 %>
-	<% if @show[:cout_ha] %>
-		<td class="<%= odd(rang) %>">c/ha</td>
-	<% end %>
-	<% if @show[:cout_total] %>
-		<td class="<%= odd(rang) %>">Total</td>
-	<% end %>
+	<td class="color_culture_<%= colonne.code %>">c/ha</td>
+	<td class="color_culture_<%= colonne.code %>">Total</td>
 <% end %>
-	</tr>	
+</tr>	

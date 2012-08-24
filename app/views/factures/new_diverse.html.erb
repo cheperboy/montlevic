@@ -11,6 +11,7 @@
 
 <table>
 <tr>
+	<td>ATTENTION : la saison de cet element par <br>defaut est la saison courante, pas la saison de la facture "reportable"</td>
 	<td><%= f.label :saison_id, "Campagne : " %></td>
 	<td><%= f.collection_select (:saison_id, Saison.find(:all, :order => :name), :id, :name, :selected => current_saison_id ) %></td>
 </tr>

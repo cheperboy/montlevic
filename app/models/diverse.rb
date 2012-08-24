@@ -1,3 +1,4 @@
+# fonctionne en association avec les Facdiv
 class Diverse < Facture
   
   set_table_name "factures"

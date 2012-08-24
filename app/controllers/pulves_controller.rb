@@ -53,6 +53,12 @@ class PulvesController < ApplicationController
   # GET /pulves/1/edit
   def edit
     @pulve = Pulve.find(params[:id])
+    unless @pulve.saison_id.eql?(current_saison_id)
+      respond_to do |format| 
+        format.html { redirect_to(@pulve) }
+        flash[:error] = 'la campagne de traval est differente de la campagne de ce pulve!'    
+      end
+    end
   end
 
   # POST /pulves

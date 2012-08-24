@@ -50,6 +50,12 @@ class ParcellesController < ApplicationController
     @saison = Setting.find(:first).saison
     @parcelles = Parcelle.find_by_saison(:all)
     @parcelle = Parcelle.find(params[:id])
+    unless @parcelle.saison_id.eql?(current_saison_id)
+      respond_to do |format| 
+        format.html { redirect_to(parcelles_url) }
+        flash[:error] = 'la campagne de travail est differente de la campagne de cet element!'    
+      end
+    end
   end
 
   def create

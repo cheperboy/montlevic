@@ -65,6 +65,12 @@ class FacturesController < ApplicationController
 
   def edit
     @facture = Facture.find(params[:id])
+    unless @facture.saison_id.eql?(current_saison_id)
+      respond_to do |format| 
+        format.html { redirect_to(@facture) }
+        flash[:error] = 'la campagne de traval est differente de la campagne de cette facture!'    
+      end
+    end
   end
 
   def index_multiple

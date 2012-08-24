@@ -1,3 +1,4 @@
+# fonctionne en association avec les Divers
 class Facdiv < ActiveRecord::Base
   belongs_to :facture
   belongs_to :user

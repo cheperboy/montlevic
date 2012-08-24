@@ -2,8 +2,8 @@
 	<tr>
 		<th>star</th>
 		<th>adu</th>
-		<th>Type</th>
 		<th>Date</th>
+		<th>Categorie</th>
 		<th>Nom</th>
 		<th>Cout</th>
 		<th>Factype</th>
@@ -14,8 +14,8 @@
 		<tr>
 		    <td><%= link_to_star(Facture, report.id, true) %></td>
 		    <td><%= link_to_star(Facture, report.id, false) %></td>
-		    <td><%= report.type.to_s %></td>
 		    <td><%= report.date %></td>
+		    <td><%= report.category.name %></td>
 		    <td class='list-elt-left'><%= report.name %></td>
 		    <td class=right><%= report.cout %> €</td>
 		    <td><%= report.factype.name %></td>

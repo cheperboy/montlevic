@@ -1,6 +1,47 @@
 class CalculateController < ApplicationController
+  def export
+    coltype = Typeculture
+    reload_cache = false
+    if request.post?
+      coltype = params[:column].camelize.constantize unless params[:column].nil?
+      reload_cache = true if params[:reload_cache]
+    end
+    @factcats =     Category.get_factcats      
+    @saison =       Saison.find(session[:current_saison_id])
+    @colonnes =     coltype.find_for_saison()
+    @labours =      @saison.labours
+    @pulves =       @saison.pulves
+    @produits =     @saison.produits
+    @putoproduits = @saison.putoproduits
+    @factures =     @saison.factures.find(:all, :order => :id)
+    @ventes =       @saison.ventes.find(:all, :order => "category_id")
+    @facture_categories = Category.root_facture.children
+    @pulve_categories =   Category.root_pulve.children
+    @labour_categories =  Category.root_labour.children
+    @vente_categories =   Category.root_vente.children
+    
+    #calcul des donnees
+    @test = Calculate.new(coltype)
+    @test.calculate
+    # 
+    #creation du fichier xls
+    # export = Analytic_xls.new()
+    # export.write
+    # 
+    # #telechargement du fichier
+    # buffer = StringIO.new
+    # export.book.write(buffer)
+    # buffer.rewind
+    # send_data buffer.read   
+    @line = 1
+    name = "export analytic #{@saison.name}"
+    headers['Content-Type'] = "application/vnd.ms-excel"
+    headers['Content-Disposition'] = "attachment; filename='#{name}.xls'"
+    headers['Cache-Control'] = ''
+    render(:layout=>false)   
+  end
+
   def categories
-    logger.error "cat"
     coltype = Typeculture
     reload_cache = false
     if request.post?
@@ -8,7 +49,6 @@ class CalculateController < ApplicationController
       reload_cache = true if params[:reload_cache]
     end
     @factcats =     Category.get_factcats
-    @factcats.each { |f| logger.error "#{f.id} - #{f.name}"}
       
     @saison =       Saison.find(session[:current_saison_id])
     @colonnes =     coltype.find_for_saison()

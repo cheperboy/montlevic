@@ -1,0 +1,19 @@
+- @facture = facture
+- @factcat = factcat
+- @cat = cat
+- datas = @test.res.get_saison_line_datas(@test.sid, :factures, facture.id)
+- @line +=1
+%tr{:class => "level-3_#{name}.#{facture.id}"}
+  %td.col0
+  %td.col1
+  %td.col2
+  %td.col3= facture.name
+  %td.saison= delim(@test.res.get_saison_line(@test.sid, :factures, :all, facture.id, :ha))
+  %td.saison= delim(@test.res.get_saison_line(@test.sid, :factures, :all, facture.id, :total))
+  - rang = 0
+  - @colonnes.each do |colonne|
+    - rang += 1
+    - cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :all, facture.id, :ha)
+    - cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :all, facture.id, :total)
+    %td{:class => "color_culture_#{colonne.code}"}= delim(cout_total)
+    %td{:class => "color_culture_#{colonne.code}"}= delim(cout_total)

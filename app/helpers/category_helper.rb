@@ -43,6 +43,7 @@ module CategoryHelper
     out << "<th></th>"
     out << "<th></th>"
     if admin?
+      out << "<th></th>"
       out << "<th>Depth</th>"
       out << "<th>Leaf?</th>"
       out << "<th>Factures</th>"

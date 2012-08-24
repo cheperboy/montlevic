@@ -1,4 +1,7 @@
 class CategoriesController < ApplicationController
+  before_filter :admin_access,
+                :only => [:update, :destroy]
+
   before_filter :edit_access,
                 :only => [:update, :destroy]
   # GET /categories
@@ -87,19 +90,12 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.xml
   def destroy
-    if admin?
-      @category = Category.find(params[:id])
-      @category.destroy
-  
-      respond_to do |format|
-        format.html { redirect_to(categories_url) }
-        format.xml  { head :ok }
-      end
-    else
-      respond_to do |format|
-        flash[:error] = 'Admin Only'      
-        format.html { redirect_to(categories_url) }
-      end
+    @category = Category.find(params[:id])
+    @category.destroy
+
+    respond_to do |format|
+      format.html { redirect_to(categories_url) }
+      format.xml  { head :ok }
     end
   end
 
