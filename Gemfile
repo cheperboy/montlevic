@@ -8,4 +8,3 @@ gem "paperclip", "~> 2.0"
 gem 'aws-sdk', '~> 1.3.4'
 gem "wirble"
 gem "rake"
-
