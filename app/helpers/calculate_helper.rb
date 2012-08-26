@@ -1,135 +1,89 @@
 module CalculateHelper
 
+  # genere les colonne necesaires pour decaler chaque categorie en fonction de sa depth
+  def generate_columns_for_export(cat, ofset, indent)
+    out = ""
+    # (cat.depth - 2).times do 
+    1.times do 
+      out << "#{indent}%td.col2"
+    end
+    return out
+  end
+# ----------- fonctions calcul nombres d'elements pour export --------------
+# calculs faits en recurs: peuvent etre simplifies en utilisant cat.descendants.each {|d| d.count_elements }
+
+  def count_elements_recurs(cat, klass)
+    sum = 0
+    cat.children.each do |sub_cat|
+      sum += klass.find_by_saison(:all, :conditions => { :category_id => sub_cat.id}).count
+      sum += count_elements_recurs(sub_cat, klass) if sub_cat.has_children?
+    end
+    return sum
+  end
+  
   # factures de la categorie cat
   def count_elements_sub_cat_facture(cat)
-    saison_id = Setting.find(:first).saison_id
-    nfac = 0
+    sum = 0
     # factures
-    nfac += Facture.find_by_saison(:all, :conditions => { :category_id => cat.id}).count
-    cat.children.each do |d1|
-      puts "\t#{d1.code} : #{Facture.find_by_saison(:all, :conditions => { :category_id => d1.id}).count}"
-      nfac += Facture.find_by_saison(:all, :conditions => { :category_id => d1.id}).count
-      d1.children.each do |d2|
-        puts "\t\t#{d2.code} : #{Facture.find_by_saison(:all, :conditions => { :category_id => d2.id}).count}"
-        nfac += Facture.find_by_saison(:all, :conditions => { :category_id => d2.id}).count
-        d2.children.each do |d3|
-          puts "\t\t\t#{d3.code} : #{Facture.find_by_saison(:all, :conditions => { :category_id => d3.id}).count}"
-          nfac += Facture.find_by_saison(:all, :conditions => { :category_id => d3.id}).count
-          d3.children.each do |d4|
-            puts "\t\t\t\t#{d4.code} : #{Facture.find_by_saison(:all, :conditions => { :category_id => d4.id}).count}"
-            nfac += Facture.find_by_saison(:all, :conditions => { :category_id => d4.id}).count
-          end
-        end
-      end
+    sum += Facture.find_by_saison(:all, :conditions => { :category_id => cat.id}).count
+    if cat.has_children?
+       sum += count_elements_recurs(cat, Facture)
     end
-    return (nfac)
+    return (sum)
   end
-  
+
   def count_elements_sub_cat_vente(cat)
     saison_id = Setting.find(:first).saison_id
-    nven = 0
+    sum = 0
     # factures
-    nven += Vente.find_by_saison(:all, :conditions => { :category_id => cat.id}).count
-    cat.children.each do |d1|
-      puts "\t#{d1.code} : #{Vente.find_by_saison(:all, :conditions => { :category_id => d1.id}).count}"
-      nven += Vente.find_by_saison(:all, :conditions => { :category_id => d1.id}).count
-      d1.children.each do |d2|
-        puts "\t\t#{d2.code} : #{Vente.find_by_saison(:all, :conditions => { :category_id => d2.id}).count}"
-        nven += Vente.find_by_saison(:all, :conditions => { :category_id => d2.id}).count
-        d2.children.each do |d3|
-          puts "\t\t\t#{d3.code} : #{Vente.find_by_saison(:all, :conditions => { :category_id => d3.id}).count}"
-          nven += Vente.find_by_saison(:all, :conditions => { :category_id => d3.id}).count
-          d3.children.each do |d4|
-            puts "\t\t\t\t#{d4.code} : #{Vente.find_by_saison(:all, :conditions => { :category_id => d4.id}).count}"
-            nven += Vente.find_by_saison(:all, :conditions => { :category_id => d4.id}).count
-          end
+    sum += Vente.find_by_saison(:all, :conditions => { :category_id => cat.id}).count
+    if cat.has_children?
+       sum += count_elements_recurs(cat, Vente)
+    end
+    return (sum)
+  end
+
+  def count_putoproduit_sub_cat_recurs(cat)
+    sum = 0
+    if cat.has_children?
+      cat.children.each do |sub_cat|
+        Produit.find_by_saison(:all, :conditions => { :category_id => sub_cat.id}).each do |p| 
+          sum += p.putoproduits.count
         end
+        sum += count_putoproduit_sub_cat_recurs(sub_cat)
       end
     end
-    return (nven)
+    return (sum)
   end
-  
+
   # putoproduits d'une categorie de produit
   def count_elements_cat_produit(cat)
-    npu = 0
-    saison_id = Setting.find(:first).saison_id
-    
+    sum = 0
     # putoproduits de la categorie cat
     Produit.find_by_saison(:all, :conditions => { :category_id => cat.id}).each do |p| 
-      npu += p.putoproduits.count
+      sum += p.putoproduits.count
     end
-    
+        
     # putoproduits des sous-categorie de cat
-    unless cat.is_childless?
-      cat.children.each do |d1|
-        Produit.find_by_saison(:all, :conditions => { :category_id => d1.id}).each do |p| 
-          npu += p.putoproduits.count
-        end
-        d1.children.each do |d2|
-          Produit.find_by_saison(:all, :conditions => { :category_id => d2.id}).each do |p|
-            npu += p.putoproduits.count
-          end
-          d2.children.each do |d3|
-            Produit.find_by_saison(:all, :conditions => { :category_id => d3.id}).each do |p| 
-              npu += p.putoproduits.count
-            end
-            d3.children.each do |d4|
-              Produit.find_by_saison(:all, :conditions => { :category_id => d4.id}).each do |p| 
-                npu += p.putoproduits.count
-              end
-            end
-          end
-        end
-      end
+    if cat.has_children?
+       sum += count_putoproduit_sub_cat_recurs(cat)
     end
-    return (npu)
+    return (sum)
   end
   
-  # nombre d'elements (factures, pulves, ...) de la categorie Agricole
+  # nombre d'elements (factures, pulves, ...) de la categorie Agricole, Maison ou Invest
   # specifique pour l'affichage actuel
   def count_elements_of_a_cat(cat)
     saison_id = Setting.find(:first).saison_id
     nfac = npu = 0
     # factures
-    cat.children.each do |d1|
-      nfac += Facture.find_by_saison(:all, :conditions => { :category_id => d1.id}).count
-      d1.children.each do |d2|
-        # puts "\t#{d2.code} : #{Facture.find_by_saison(:all, :conditions => { :category_id => d2.id}).count}"
-        nfac += Facture.find_by_saison(:all, :conditions => { :category_id => d2.id}).count
-        d2.children.each do |d3|
-          # puts "\t\t#{d3.code} : #{Facture.find_by_saison(:all, :conditions => { :category_id => d3.id}).count}"
-          nfac += Facture.find_by_saison(:all, :conditions => { :category_id => d3.id}).count
-          d3.children.each do |d4|
-            # puts "\t\t\t#{d4.code} : #{Facture.find_by_saison(:all, :conditions => { :category_id => d4.id}).count}"
-            nfac += Facture.find_by_saison(:all, :conditions => { :category_id => d4.id}).count
-          end
-        end
-      end
+    if cat.has_children?
+       nfac += count_elements_recurs(cat, Facture)
     end
-    # produits used seulement si category Agricole (pas pour Maison et Invest)
     if cat.eql?(Category.root_agri)
       pro_cat = Category.root_produit
-      # npu += pro_cat.descendants.count
-      pro_cat.children.each do |d1|
-        Produit.find_by_saison(:all, :conditions => { :category_id => d1.id}).each do |p| 
-          npu += p.putoproduits.count
-        end
-        d1.children.each do |d2|
-          Produit.find_by_saison(:all, :conditions => { :category_id => d2.id}).each do |p|
-            npu += p.putoproduits.count
-          end
-          d2.children.each do |d3|
-            Produit.find_by_saison(:all, :conditions => { :category_id => d3.id}).each do |p| 
-              npu += p.putoproduits.count
-            end
-            d3.children.each do |d4|
-              Produit.find_by_saison(:all, :conditions => { :category_id => d4.id}).each do |p| 
-                npu += p.putoproduits.count
-              end
-            end
-          end
-        end
-      end
+      npu += pro_cat.descendants.count
+      npu += count_putoproduit_sub_cat_recurs(Category.root_produit)
     end
     return (nfac+npu)
   end
@@ -141,9 +95,12 @@ module CalculateHelper
   end
   
   # somme pour category niveau 1 (Agricole, Maison, Invest)
-  def xls_sum_cat_facture(line, cat)
+  def xls_sum_cat_level1_facture(line, cat)
     ncat = cat.descendants.count
     ncat += Category.find_by_code("produit").descendants.count if cat.eql?(Category.root_agri)
+    # correction car plage trop longue d'une ligne pour Invest et Maison
+    # le -1 est soustrait pour la cat Agri sans doute via l'appel a count_elements_of_a_cat (?)
+    ncat -= 1 unless cat.eql?(Category.root_agri)
     nfac = count_elements_of_a_cat(cat)
     lenght = line + ncat + nfac
     plage = [line, lenght]
@@ -177,8 +134,7 @@ module CalculateHelper
   # appele une seul fois pour la categorie "produits utilises"
   # qui comporte tout les putoproduits de la saison
   def xls_sum_cat_produit(line)
-    cat = Category.root_produit
-    return(xls_sum_sub_cat_produit(line, cat))
+    return(xls_sum_sub_cat_produit(line, Category.root_produit))
   end
 
   # somme pour category de produits utilises (presente dans le tableau comme faisant partie des factures..)
@@ -187,10 +143,22 @@ module CalculateHelper
     npu = count_elements_cat_produit(cat)
     lenght = line + ncat + npu - 1
     plage = [line, lenght]
-    puts "#{cat.code} descendants : #{cat.descendants.count}"
-    puts "#{cat.code} npu : #{npu}"
-    puts "#{cat.code} ncat : #{ncat}"
-    puts "#{cat.code} lenght : #{lenght}"
+    # puts "#{cat.code} descendants : #{cat.descendants.count}"
+    # puts "#{cat.code} npu : #{npu}"
+    # puts "#{cat.code} ncat : #{ncat}"
+    # puts "#{cat.code} lenght : #{lenght}"
+    return sum(plage) unless (ncat + npu).eql?(0)
+  end
+
+  def xls_sum_sub_cat_produit_old(line, cat)
+    ncat = cat.descendants.count
+    npu = count_elements_cat_produit(cat)
+    lenght = line + ncat + npu - 1
+    plage = [line, lenght]
+    # puts "#{cat.code} descendants : #{cat.descendants.count}"
+    # puts "#{cat.code} npu : #{npu}"
+    # puts "#{cat.code} ncat : #{ncat}"
+    # puts "#{cat.code} lenght : #{lenght}"
     return sum(plage) unless (ncat + npu).eql?(0)
   end
 

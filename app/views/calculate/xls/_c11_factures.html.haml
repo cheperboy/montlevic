@@ -2,7 +2,7 @@
   - @factcat = factcat
   - @line +=1
   %tr.level-1
-    %td.col0= xls_sum_cat_facture(@line, factcat)
+    %td.col0= xls_sum_cat_level1_facture(@line, factcat)
     %td.col1 
       %b
         = factcat.name
@@ -37,5 +37,3 @@
   - categories = factcat.children
   - categories.each do |cat|
     = render(:partial => "calculate/xls/c12_factures_cat", :locals => { :cat => cat, :factcat => factcat })
-  - @line +=1
-  %tr

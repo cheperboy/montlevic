@@ -62,6 +62,12 @@ class VentesController < ApplicationController
   def edit
     @vente = Vente.find(params[:id])
     @action = 'edit'
+    unless @vente.saison_id.eql?(current_saison_id)
+      respond_to do |format| 
+        format.html { redirect_to(@vente) }
+        flash[:error] = 'la campagne de travail est differente de la campagne de cette vente!'
+      end
+    end    
   end
 
   # POST /ventes
