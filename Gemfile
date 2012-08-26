@@ -1,6 +1,6 @@
 source :gemcutter
 gem "rails", "2.3.5"
-gem "pg"#, "~> 0.13.2"
+gem "pg", "~> 0.13.2"
 gem "ancestry"
 gem "spreadsheet"
 gem "haml"
