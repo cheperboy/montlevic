@@ -1,10 +1,13 @@
+<% @max_depth = 3 %>
 <table class=table_print>
 <%= render(:partial => "calculate/xls/p1_head") %>
 <% @line +=1 %>
 <tr>
 	<td class=col0></td>
-	<td class=col1></td>
+	<td class=col1>Saison : <%=h  @test.res.get_saison_datas(@test.sid, :name) %></td>
 	<td class=col2></td>
+	<td class=col2.1></td>
+	<td class=col2.2></td>
 	<td class=col3></td>
 	<td class=col4.1></td>
 	<td class=col4.2></td>

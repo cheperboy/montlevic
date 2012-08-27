@@ -2,12 +2,14 @@
 - @line +=1
 %tr{:class => "level-#{cat.depth}_#{name}"}
   %td.col0= xls_sum_sub_cat_vente(@line, cat)
-  %td.col1
+  - decal = cat.depth
+  - (decal).times do
+    %td.col1
   %td.col2
     %b
-      = indent_cat_name(cat.depth-1, "")
       = cat.name
-  %td.col3
+  - (@max_depth - decal).times do
+    %td.col3
   %td.saison
     %span.green= delim(@test.res.get_saison_line(@test.sid, :ventes, :category, cat.id, :ha))
   %td.saison

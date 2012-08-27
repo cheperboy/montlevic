@@ -42,6 +42,7 @@ class CalculateController < ApplicationController
   end
 
   def categories
+    t0 = Time.now
     coltype = Typeculture
     reload_cache = false
     if request.post?
@@ -49,7 +50,6 @@ class CalculateController < ApplicationController
       reload_cache = true if params[:reload_cache]
     end
     @factcats =     Category.get_factcats
-      
     @saison =       Saison.find(session[:current_saison_id])
     @colonnes =     coltype.find_for_saison()
     @labours =      @saison.labours
@@ -76,6 +76,7 @@ class CalculateController < ApplicationController
 
       unless @test.nil?
         format.html
+        logger.error "Time : #{Time.now - t0}"
       else
         @display = 0
         flash[:error] = "l'affichage par type de cultures n'est pas possible pour cette saison"

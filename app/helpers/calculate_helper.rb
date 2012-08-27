@@ -82,7 +82,6 @@ module CalculateHelper
     end
     if cat.eql?(Category.root_agri)
       pro_cat = Category.root_produit
-      npu += pro_cat.descendants.count
       npu += count_putoproduit_sub_cat_recurs(Category.root_produit)
     end
     return (nfac+npu)
@@ -161,6 +160,4 @@ module CalculateHelper
     # puts "#{cat.code} lenght : #{lenght}"
     return sum(plage) unless (ncat + npu).eql?(0)
   end
-
-
 end
