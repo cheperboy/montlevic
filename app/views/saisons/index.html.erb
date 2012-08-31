@@ -22,6 +22,9 @@
 	    <% if admin? %>
 			<td><%= link_to_delete(Saison, saison.id) %></td>
 		<% end %>
+	    <!-- <td><%#= button_to "Calculer", :controller => :calculate, :action => :set_cache_from_button, 
+										:saison_id => saison.id,
+										:col => Typeculture %></td> -->
   </tr>
 <% end %>
 </table>
@@ -29,3 +32,12 @@
 <br />
 
 <%= link_to 'Creer une nouvelle saison', new_saison_path %>
+
+<%#= button_to "set", 	:controller => :calculate, :action => :test_set_cache %>
+<%#= button_to "reset", 	:controller => :calculate, :action => :test_reset_cache %>
+<%#= button_to "get", 	:controller => :calculate, :action => :test_get_cache %>
+<!-- content : <%#= test_print_cache_content %> : eof<br>
+content : <%# var = test_print_cache_content %><br>
+var toto : <%#= var[:toto] %><br>
+var [:myhash][:hash2][:key1] : <%#= var[:myhash][:hash2][:key1] %><br> -->
+

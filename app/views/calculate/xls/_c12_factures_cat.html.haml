@@ -13,14 +13,14 @@
   - (@max_depth - decal).times do 
     %td.col3
   %td.saison
-    %span.green= delim(@test.res.get_saison_line(@test.sid, :factures, :category, cat.id, :ha))
+    %span.green= delim_xls(@test.res.get_saison_line(@test.sid, :factures, :category, cat.id, :ha))
   %td.saison
-    %span.green= delim(@test.res.get_saison_line(@test.sid, :factures, :category, cat.id, :total))
+    %span.green= delim_xls(@test.res.get_saison_line(@test.sid, :factures, :category, cat.id, :total))
   - rang = 0
   - @colonnes.each do |colonne|
     - rang += 1
-    - cout_ha = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :category, cat.id, :ha))
-    - cout_total = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :category, cat.id, :total))
+    - cout_ha = delim_xls(@test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :category, cat.id, :ha))
+    - cout_total = delim_xls(@test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :category, cat.id, :total))
     %td{:class => "color_culture_#{colonne.code}"}
       %span.green= cout_ha
     %td{:class => "color_culture_#{colonne.code}"}

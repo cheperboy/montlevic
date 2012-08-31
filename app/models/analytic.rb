@@ -12,6 +12,21 @@ class Analytic < ActiveRecord::Base
                 :other_lines_type_sections,
                 :costs_type
 
+  def to_json(options = {})
+    super
+  end
+
+  def as_json(options = nil) #:nodoc:
+    hash = Serializer.new(self, options).serializable_record
+    hash = { self.class.model_name.element => hash } if include_root_in_json
+    hash
+  end
+
+  def from_json(json)
+    self.attributes = ActiveSupport::JSON.decode(json)
+    self
+  end
+
   def initialize
     #for test only
     current_saison_id = Setting.get_saison_id

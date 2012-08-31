@@ -22,7 +22,7 @@ class Calculate < ActiveRecord::Base
                 :sid, #saison_id
                 :surface,
                 :surface_of_saison
-
+                # :all_data
   
   def initialize(col_model)
     unless col_model.find_for_saison().nil?  

@@ -10,13 +10,13 @@
 			= cat.name
 	- (@max_depth - decal).times do
 		%td.col3
-	%td.saison= delim(@test.res.get_saison_line(@test.sid, :putoproduits, :category, cat.id, :ha))
-	%td.saison= delim(@test.res.get_saison_line(@test.sid, :putoproduits, :category, cat.id, :total))
+	%td.saison= delim_xls(@test.res.get_saison_line(@test.sid, :putoproduits, :category, cat.id, :ha))
+	%td.saison= delim_xls(@test.res.get_saison_line(@test.sid, :putoproduits, :category, cat.id, :total))
 	- rang = 0
 	- @colonnes.each do |colonne|
 		- rang += 1
-		- cout_ha = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :category, cat.id, :ha))
-		- cout_total = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :category, cat.id, :total))
+		- cout_ha = delim_xls(@test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :category, cat.id, :ha))
+		- cout_total = delim_xls(@test.res.get_line(@test.sid, @test.c, colonne.id, :putoproduits, :category, cat.id, :total))
 		%td{:class => "color_culture_#{colonne.code}"}= h cout_ha
 		%td{:class => "color_culture_#{colonne.code}"}= h cout_total
 - if cat.has_children?

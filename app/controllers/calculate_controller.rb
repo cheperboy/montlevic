@@ -1,3 +1,4 @@
+require "yaml"
 class CalculateController < ApplicationController
   def export
     coltype = Typeculture
@@ -70,13 +71,13 @@ class CalculateController < ApplicationController
 
       # set_cache(@saison.id, coltype, reload_cache)
       # @test = get_cache(@saison.id, coltype)
-
+            
       @test = Calculate.new(coltype)
       @test.calculate
-
+      @t1 = Time.now
       unless @test.nil?
         format.html
-        logger.error "Time : #{Time.now - t0}"
+        logger.error "Time Calculate: #{Time.now - t0}"
       else
         @display = 0
         flash[:error] = "l'affichage par type de cultures n'est pas possible pour cette saison"
@@ -85,23 +86,85 @@ class CalculateController < ApplicationController
     end    
   end  
   
+  def test_set_cache
+    # c = Calculate.new(Typeculture)
+    # c.calculate
+    c = {}
+    c[:toto] = "titi"
+    c[:myhash] = {}
+    c[:myhash][:hash1] = []
+    c[:myhash][:hash1] = [1, 2, 3]
+    c[:myhash][:hash2] = {}
+    c[:myhash][:hash2][:key1] = 12
+    Rails.cache.write(1, YAML::dump(c))
+    respond_to do |format|
+      format.html { redirect_to(saisons_url) }
+    end
+  end
+  
+  def test_reset_cache
+    Rails.cache.write(1, "empty")
+    respond_to do |format|
+      format.html { redirect_to(saisons_url) }
+    end
+  end
+  
+  def test_get_cache
+    return YAML::load(Rails.cache.read(1))
+    respond_to do |format|
+      format.html { redirect_to(saisons_url) }
+    end
+  end
+  
   def get_cache(saison_id, col)
     logger.error "getting cache #{saison_id}/#{col}"
     cache_id = get_cache_id(saison_id, col)
-    return Rails.cache.read(cache_id)
+    # return Analytic.from_json(Rails.cache.read(cache_id))
+    return YAML::load(Rails.cache.read(cache_id))
   end
   
   def set_cache(saison_id, col, reload)
     logger.error "set_cache. saison: #{saison_id}/col: #{col} reload: #{reload.to_s}"
     cache_id = get_cache_id(saison_id, col)
     if (Rails.cache.read(cache_id).nil? || reload.eql?(true))
-      @resultat = Calculate.new(col)
-      @resultat.calculate
-      Rails.cache.write(cache_id, @resultat)
+      @test = Calculate.new(col)
+      @test.calculate
+      Rails.cache.write(cache_id, @test)
       logger.error "\t#{cache_id} just cached \n"
     else
       logger.error "\t#{cache_id} already cached \n"
     end
+  end
+   
+  def set_cache_from_button
+    # get variables from params
+    saison_id = params[:saison_id]
+    col       = params[:col].camelize.constantize unless params[:col].nil?
+    
+    reload    = true    
+    logger.error "set_cache. saison: #{saison_id}/col: #{col} reload: #{reload.to_s}"
+    cache_id = get_cache_id(saison_id, col)
+    respond_to do |format|
+      unless col.nil? 
+        if (Rails.cache.read(cache_id).nil? || reload.eql?(true))
+          t0 = Time.now
+          @test = Calculate.new(col)
+          @test.calculate
+          t1 = Time.now
+          logger.error "Time to Calculate : #{t1 - t0}"
+          logger.error "read @test #{@test.res.get_saison_datas(@test.sid, :name)}"
+          logger.error "read @test.res.saisons #{@test.res.saisons[@test.sid].to_s}"
+          
+          Rails.cache.write(cache_id, YAML::dump(@test.res.saisons))
+          # Rails.cache.write(cache_id, @test.res.to_json)
+          logger.error "\t#{cache_id} just cached \n"
+        end
+      else
+        logger.error "\t#{cache_id} already cached \n"
+      end
+      format.html { redirect_to(saisons_url) }
+    end
+    
   end
    
   def get_cache_id(saison_id, col)

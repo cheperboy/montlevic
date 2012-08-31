@@ -6,12 +6,12 @@
   %td.col2
   %td.col2.1
   %td.col3= vente.name
-  %td.saison= delim(@test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :ha))
-  %td.saison= delim(@test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :total))
+  %td.saison= delim_xls(@test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :ha))
+  %td.saison= delim_xls(@test.res.get_saison_line(@test.sid, :ventes, :all, vente.id, :total))
   - rang = 0
   - @colonnes.each do |colonne|
     - rang += 1
-    - cout_ha = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :ha))
-    - cout_total = delim(@test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :total))
+    - cout_ha = delim_xls(@test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :ha))
+    - cout_total = delim_xls(@test.res.get_line(@test.sid, @test.c, colonne.id, :ventes, :all, vente.id, :total))
     %td{:class => "color_culture_#{colonne.code}"}= cout_ha
     %td{:class => "color_culture_#{colonne.code}"}= cout_total

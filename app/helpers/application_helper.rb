@@ -10,8 +10,17 @@ module ApplicationHelper
   HEADER_RED_GREEN = 7
   HEADER_COLOR = 8
   
+  def test_print_cache_content
+    return YAML::load(Rails.cache.read(1))
+    # return(Rails.cache.read(1))
+  end
+  
   def delim(number)
     number_to_currency(number, :delimiter => ".", :separator => ",", :unit => "")
+  end
+  
+  def delim_xls(number)
+    number_to_currency(number, :delimiter => "", :separator => ",", :unit => "")
   end
   
   # Retourne la valeur a afficher d'une 

@@ -13,5 +13,5 @@
     - rang += 1
     - cout_ha = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :all, facture.id, :ha)
     - cout_total = @test.res.get_line(@test.sid, @test.c, colonne.id, :factures, :all, facture.id, :total)
-    %td{:class => "color_culture_#{colonne.code}"}= delim(cout_total)
+    %td{:class => "color_culture_#{colonne.code}"}= delim(cout_ha)
     %td{:class => "color_culture_#{colonne.code}"}= delim(cout_total)
