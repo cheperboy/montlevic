@@ -1,0 +1,77 @@
+<table class=form_layout>
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Facture</td>
+		<td class=form_layout_title_right>Classement</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<table class=form_layout_content_table>
+			<%= tr_text('Nom', @facture.name) %>
+			<%= tr_text('Cout', @facture.cout.display, euro) %>
+			<%= tr_text('Ref client', @facture.ref_client) %>
+			<%= tr_text('Ref perso', @facture.ref) %>
+			<%= tr_text('Date', @facture.print_date) %>
+			<%= tr_text('Prestataire', @facture.user.name) %>
+			</table>
+		</td>
+		<td class=form_layout_content_right>
+			<table class=form_layout_content_table>
+			<%= tr_text('Classement', @facture.category.get_factcat_from_category.name) %>
+			<%= tr_text('Categorie', @facture.category.name) %>
+			<%= tr_text('Star', @facture.star) %>
+			<%= tr_text('ADU', @facture.adu) %>						
+			</table>
+		</td>
+	</tr>
+<!-- PARCELLES et COUTS -->
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Parcelles</td>
+		<td class=form_layout_title_right>Synthese des couts</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<% if @facture.factoparcelles.count.eql?(0) %>
+				<p>cette facture est imputee sur toutes les parcelles</p>
+			<% else %>
+				<table class=form_layout_content_table>
+					<% @facture.factoparcelles.each do |factoparcelle| %>
+						<%#= tr_text(factoparcelle.parcelle.typeculture.name, factoparcelle.parcelle.name) %>
+						<tr class=color_culture_<%= factoparcelle.parcelle.typeculture.code %>>
+							<td class="label"><%= factoparcelle.parcelle.typeculture.name %></td>
+							<td class="field"><%= factoparcelle.parcelle.name %></td>
+						</tr>
+					<% end %>
+				</table>
+			<% end %>
+		</td>
+		<%= render :partial => 'show_comptabilisation' %>
+	</tr>
+	<!-- affichage des charges associees (PRODUITS, LABOURS, ...) -->
+	<%= render :partial => 'show_associations' %>
+
+<!-- Description -->
+	<tr class=form_layout_title>
+		<td colspan=2 class=form_layout_title>Description</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td colspan=2class=form_layout_content>
+			<p class=grey><%= @facture.desc %></p>
+		</td>
+	</tr>
+
+<!-- Infos Importantes -->
+	<% unless @facture.info.nil? || @facture.info.eql?("") %>
+		<tr class=form_layout_title>
+			<td colspan=2 class=form_layout_title>informations Importantes</td>
+		</tr>
+		<tr class=form_layout_content>
+			<td colspan=2class=form_layout_content>
+				<p class=grey><%= @facture.info %></p>
+			</td>
+		</tr>
+	<% end %>
+</table>
+
+<!-- Warnings -->
+<%= render :partial => 'show_detail_warning' %>
+

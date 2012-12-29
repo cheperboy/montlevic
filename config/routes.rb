@@ -64,7 +64,8 @@ ActionController::Routing::Routes.draw do |map|
     :update_adu     => :put,
     :update_star    => :put,
     :update_multiple    => :any,
-    :export         => :get
+    :export         => :get,
+    :export_invest  => :get
     }
 
   map.resources :categories, :collection => { :export => :any}
@@ -95,6 +96,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :debits,      :as => :factures, :controller => :factures    
   map.resources :reports,     :as => :factures, :controller => :factures
   map.resources :reportables, :as => :factures, :controller => :factures
+  map.resources :invests,     :as => :factures, :controller => :factures
 
   map.resources :verifs, :collection => { 
     :list_labtofactures   => :get,

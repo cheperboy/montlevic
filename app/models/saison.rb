@@ -1,6 +1,6 @@
 class Saison < ActiveRecord::Base
 
-  validates_presence_of :name, :message => 'aie'
+  validates_presence_of :name, :message => 'aie!!!'
 
   has_many :parcelles
   has_many :labours
@@ -73,4 +73,19 @@ class Saison < ActiveRecord::Base
     zones
   end
 
+  # doit etre deplacé dans saison.rb
+  def nb_years_between(s1, s2)
+    return s2.year - s1.year
+  end
+  
+  def self.before?(s)
+    return (self.year < s.year) if s.class.eql?(Saison)
+    return (self.year < s)
+  end
+  
+  def self.after?(s)
+    return (self.year > s.year) if s.class.eql?(Saison)
+    return (self.year > s)
+  end
+  
 end

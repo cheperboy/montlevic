@@ -5,7 +5,14 @@ class FacturesController < ApplicationController
 
   def index
     # @factures = Facture.find_by_saison(:all, :limit => 10 )
-    @factures = Facture.find_by_saison(:all)
+    # @factures = Facture.find_by_saison(:all, :order => "id DESC")
+    # @factures = Facture.find_by_saison(:all)
+    @factures = Facture.all(:all, 
+                            :conditions => ["saison_id = ?", Setting.get_saison_id],
+                            :order => "id DESC",
+                            :limit => 10
+                            )
+    
     # if params[:tri]
     #   @factures = Facture.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
     #   @tri = params[:tri]
@@ -81,7 +88,6 @@ class FacturesController < ApplicationController
   end
 
   def new
-    puts "TEST"
     @facture ||= Facture.new
     # @categories = Category.for_factures
     respond_to do |format|
@@ -91,9 +97,15 @@ class FacturesController < ApplicationController
 
   def create
     errors = []
+    # ce cas est-il utilise? semble obsolete.
     if params[:reportable] == '1'
       @facture = Reportable.new(params[:facture])
       @facture[:factype_id] = Factype.find_by_name('null').id
+    # si la categorie choisie est un Investissement
+    elsif Category.find(params[:facture][:category_id]).is_invest?
+      @facture = Invest.new(params[:facture])
+      # param factype inutil pour Invest, par defaut a 'total'
+      @facture[:factype_id] = Factype.find_by_name('total').id
     else
       @facture = Debit.new(params[:facture])
     end
@@ -102,8 +114,10 @@ class FacturesController < ApplicationController
     # @facture.factcat_id = Category.find(params[:facture][:category_id]).factcat_id
     
     # transforme les checkbox Typeculture en Factoparcelles
-    @facture.update_typecultures(params[:typecultures])
-    @facture.uniq_parcelles
+    @facture.update_typecultures(params[:typecultures]) unless @facture.category.is_invest?
+    #2012/12/16 ajout de reload pour que l'appel a uniq_parcelles fonctionne !
+    @facture.reload
+    @facture.uniq_parcelles unless @facture.category.is_invest?
     respond_to do |format|
       if @facture.save
         flash[:notice] = 'Enregistrement facture OK.'
@@ -363,6 +377,11 @@ class FacturesController < ApplicationController
     send_data file.string, :filename => "Factures.xls", :type =>  "application/vnd.ms-excel"    
 
     # render(:layout=>false)
+  end
+  
+  def export_invest
+    file = Invest.export()
+    send_data file.string, :filename => "Investissements.xls", :type =>  "application/vnd.ms-excel"    
   end
   
   def destroy

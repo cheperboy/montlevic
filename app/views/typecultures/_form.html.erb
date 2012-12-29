@@ -2,10 +2,14 @@
 <% form_for(@typeculture) do |f| %>
   <%= f.error_messages %>
 <table>
-<tr>
-	<td><%= f.label :name, "Nom : " %></td>
-	<td><%= f.text_field :name %></td>
-</tr>  
+	<tr>
+		<td><%= f.label :name, "Nom : " %></td>
+		<td><%= f.text_field :name %></td>
+	</tr>  
+	<tr>
+		<td><%= f.label :code, "Code : " %></td>
+		<td><%= f.text_field :code %></td>
+	</tr>  
 </table>
 </p>
 <%= f.submit "Enregistrer" %>

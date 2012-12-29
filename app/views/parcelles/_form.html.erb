@@ -9,19 +9,27 @@
 <% end -%>
 
 <fieldset>
-<p>
-<%= parcelle_form.label :name, "Parcelle:" %>
-<%= parcelle_form.text_field :name %>
-</p>
-<p>
-<%= parcelle_form.label :surface, "Surface" %>
-<%= parcelle_form.text_field :surface %>
-</p>
+	<p>
+	<%= parcelle_form.label :name, "Parcelle:" %>
+	<%= parcelle_form.text_field :name %>
+	</p>
+	<p>
+	<%= parcelle_form.label :code, "Code:" %>
+	<%= parcelle_form.text_field :code %>
+	</p>
+	<p>
+	<%= parcelle_form.label :surface, "Surface" %>
+	<%= parcelle_form.text_field :surface %>
+	</p>
+	<p>
+	<%= parcelle_form.label :surface_pac, "Surface PAC" %>
+	<%= parcelle_form.text_field :surface_pac %>
+	</p>
 
-<p>
-<%= parcelle_form.label :name, "Type de culture:" %>
-<%= parcelle_form.collection_select (:typeculture_id, Typeculture.find(:all), :id, :name ) %>
-</p>
+	<p>
+	<%= parcelle_form.label :name, "Type de culture:" %>
+	<%= parcelle_form.collection_select (:typeculture_id, Typeculture.find(:all), :id, :name ) %>
+	</p>
 
 <div id="zonetopas">
 	<% parcelle_form.fields_for :zonetopas do |zonetopa_form| %>

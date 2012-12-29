@@ -14,13 +14,17 @@ class Application < ActiveRecord::Base
   # Valeurs de listes deroulantes
   PULVE_DOSAGE_UNITS     = [['L/Ha', 'L/Ha'], ['kg/Ha', 'kg/Ha']]
   PRODUIT_QUANTITE_UNITS = [['L', 'L'], ['kg', 'kg']]
-  TAUX_TVA               = [['-', DEFAULT], ['5,5%', TVA_5_5], ['19,6%', TVA_19_6]]
+  TAUX_TVA               = [['-', DEFAULT], ['5,5%', TVA_5_5],  ['19,6%', TVA_19_6]]
   TYPE_REGLEMENT         = [['-', DEFAULT], ['Cheque', CHEQUE], ['Liquide', ESPECE]]
-  VENTE_UNITS            = [['bottes', 'b'], ['tonnes', 't'], ['quintaux', 'qt'], ['kg', 'kg']]
+  TAUX_INVEST            = [['-', DEFAULT], ['3 ans', 36],      ['10 ans', 120],      ['15 ans', 180]]
+  VENTE_UNITS            = [['bottes', 'b'], ['tonnes', 't'],   ['quintaux', 'qt'],   ['kg', 'kg']]
 
   SAISON_ID = Setting.find(1).saison_id
   SAISON    = Setting.find(1).saison
   
+  #for navigation in headers
+  HEADER_KEY   = 0
+  HEADER_VALUE = 1
 
   # HEADER_KEY       = 0
   # HEADER_VALUE     = 1
@@ -159,6 +163,14 @@ class Application < ActiveRecord::Base
     ['adu',                     'adu',        '',     false,        'default',    true,   'adu'         ]
   ]
       
+  # XLS format excel
+  XLS_FORMAT_TETE = Spreadsheet::Format.new  :color => :black,
+                                  :weight => :bold,
+                                  :size => 12
+  XLS_FORMAT_GRAS = Spreadsheet::Format.new :weight => :bold
+
+
+
   # Used in Print.rb
   def get_value_or_blank(var, value)
     val = var[value.to_sym]

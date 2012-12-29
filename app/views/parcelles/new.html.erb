@@ -1,7 +1,8 @@
 <% title "Parcelles" %>
 
-<%= render :partial => 'list' %>
-
+<% unless Parcelle.find_by_saison(:all).length.eql?(0) %>
+	<%= render :partial => 'list' %>
+<% end %>
 <br />
 
 <h2>Nouvelle parcelle</h2>

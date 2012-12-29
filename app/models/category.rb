@@ -1,3 +1,8 @@
+# TODO aucun find ne doit utiliser des string en dur
+# toutes les categories sensibles (Facture, Maison, produit_phyto, ...) doivent etre identifiees par CONSTANTES
+# ajouter ensuite un before_update pour empecher les modif/delete si la cat fait partit d'une des constantes 
+# modifier ensuite Facture.rb pour que les find utilise les Category::CONSTANTES
+
 class Category < ActiveRecord::Base
   has_ancestry :cache_depth => true
 

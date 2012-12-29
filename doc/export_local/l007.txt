@@ -1,0 +1,20 @@
+jeudi 6 septembre 2012 - l007
+sauvegarde avant modif db pour ajout model Invest
+l007 devrait etre uploader en prod.
+
+vendredi 24 aout
+sauvegarde avant ventilation des ventes puis une nouvelle passe pour reventiler certaines factures
+(fait en meme temps que le commit "export excel analytic ok avec plan automatique")
+
+
+23 aout 2012
+1- restauration db
+2- correction des bug decouvert 
+	- modification des parcelles assoc lors de l'edition d'une facture de saison differente de la saison courante
+	- modification de la saison d'une facture lors de l'edition d'une facture de saison differente de la saison courante via le positionnement de la liste deroulante de choix de saison (factures reportables seulement)
+3- ventilation de certaines factures
+
+	
+
+22 aout 2012
+sauvegarde apres creation des c
