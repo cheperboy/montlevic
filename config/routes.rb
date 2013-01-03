@@ -30,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   }
 
   map.resources :parcelles, :collection => { 
+    :index_raw => :any,
     :index_edit => :get,
     :export     => :get}
 

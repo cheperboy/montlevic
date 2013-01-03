@@ -1,4 +1,5 @@
 class TypeculturesController < ApplicationController
+  skip_before_filter :login_required, :only => :index # for raw data acces
   before_filter :edit_access,
                 :only => [:update, :destroy]
                 
@@ -10,6 +11,7 @@ class TypeculturesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @typecultures }
+      format.json  { render :json => @typecultures }
     end
   end
 

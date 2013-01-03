@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  # GET /users
-  # GET /users.xml
 
+  skip_before_filter :login_required, :only => :index # for raw data acces
+  
   def index
     logger.error "INDEX"
     @users = User.all(:order => :name)
@@ -44,6 +44,7 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.html # index.html.erb
         format.xml  { render :xml => @users }
+        format.json  { render :json => @users }
       end
     end
   end

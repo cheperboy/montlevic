@@ -4,6 +4,9 @@ class CategoriesController < ApplicationController
 
   before_filter :edit_access,
                 :only => [:update, :destroy]
+                
+  skip_before_filter :login_required, :only => :index # for raw data acces
+                
   # GET /categories
   # GET /categories.xml
   
@@ -13,6 +16,8 @@ class CategoriesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @categories }
+      format.json  { render :json => @categories }
+      
     end
   end
 

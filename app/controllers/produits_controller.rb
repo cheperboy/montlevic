@@ -1,6 +1,8 @@
 class ProduitsController < ApplicationController
   before_filter :edit_access,
                 :only => [:update, :destroy]
+
+  skip_before_filter :login_required, :only => :index # for raw data acces
                 
   def modif
     @produits = Produit.find_all
@@ -34,7 +36,8 @@ class ProduitsController < ApplicationController
     respond_to do |format|
       format.html
       format.xls { redirect_to(:action => :export) }
-      format.xml {}
+      format.xml  { render :xml => @produits_all }
+      format.json  { render :json => @produits_all }
     end
   end
  

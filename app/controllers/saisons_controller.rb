@@ -1,6 +1,8 @@
 class SaisonsController < ApplicationController
-before_filter :edit_access,
-              :only => [:update, :destroy]
+  before_filter :edit_access,
+                :only => [:update, :destroy]
+
+  skip_before_filter :login_required, :only => :index # for raw data acces
 
   # GET /saisons
   # GET /saisons.xml
@@ -10,6 +12,7 @@ before_filter :edit_access,
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @saisons }
+      format.json  { render :json => @saisons }
     end
   end
 

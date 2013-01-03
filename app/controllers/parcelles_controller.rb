@@ -2,14 +2,28 @@ class ParcellesController < ApplicationController
   before_filter :edit_access,
                 :only => [:update, :destroy]
 
+  skip_before_filter :login_required # for raw data acces
+
+  def index_raw
+    @saison = Saison.find(:last)
+    @parcelles = @saison.parcelles # used only for raw data acces (xml & json)
+    respond_to do |format|
+      # format.html # index.html.erb
+      format.xml  { render :xml => @parcelles }
+      format.json  { render :json => @parcelles }
+    end
+  end
+
   def index
     @typecultures = Typeculture.find_for_saison()
     @saison = Setting.find(:first).saison
-    # @parcelles = @saison.parcelles
+    @parcelles = @saison.parcelles # used only for raw data acces (xml & json)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @parcelles }
+      # use index_raw for the following requests  
+      # format.xml  { render :xml => @parcelles }
+      # format.json  { render :json => @parcelles }
     end
   end
 
