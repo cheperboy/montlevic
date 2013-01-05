@@ -1,0 +1,10 @@
+xml.instruct!
+xml.typecultures do
+	@typecultures.each do |typeculture|
+		xml.typeculture do
+  	@parcelles.each do |parcelle|
+		xml.parcelle do
+			xml.code parcelle.code
+		end
+	end
+end

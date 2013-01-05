@@ -15,7 +15,10 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :zones
 
-  map.resources :users, :collection => { :test => :any, :analytic => :any}
+  map.resources :users, :collection => { 
+    :index_raw => :any, 
+    :test => :any, 
+    :analytic => :any}
 
   map.resources :typecultures
 
@@ -41,6 +44,7 @@ ActionController::Routing::Routes.draw do |map|
     :update_star => :put}
 
   map.resources :produits, :collection => { 
+    :index_raw => :any,
     :update_adu  => :put,
     :update_star => :put,
     :export      => :get}
@@ -122,5 +126,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/'
   
   map.connect 'users/analytic/:id', :controller	=>	"users", :action => "analytic"
+
+  map.connect "/:controller/:action/:id.:format", :id => nil, :format => nil
 
 end

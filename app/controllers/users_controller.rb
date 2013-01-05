@@ -1,7 +1,15 @@
 class UsersController < ApplicationController
 
-  skip_before_filter :login_required, :only => :index # for raw data acces
-  
+  skip_before_filter :login_required, :only => :index_raw # for raw data acces
+
+  def index_raw
+    @users = User.all
+    respond_to do |format|
+      format.xml  { render :xml => @users }
+      format.json  { render :json => @users }
+    end
+  end
+   
   def index
     logger.error "INDEX"
     @users = User.all(:order => :name)

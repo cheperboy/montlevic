@@ -2,7 +2,7 @@ class ProduitsController < ApplicationController
   before_filter :edit_access,
                 :only => [:update, :destroy]
 
-  skip_before_filter :login_required, :only => :index # for raw data acces
+  skip_before_filter :login_required, :only => :index_raw # for raw data acces
                 
   def modif
     @produits = Produit.find_all
@@ -24,6 +24,16 @@ class ProduitsController < ApplicationController
     end
   end
      
+  def index_raw
+    saison = Saison.find(:last)
+    @produits = saison.produits
+    respond_to do |format|
+      format.xml  { render :xml   => @produits }
+      format.json  { render :json => @produits }
+      format.yaml { render :text  => @produits.to_yaml }
+    end
+  end
+ 
   def index
     @produits_all =         Produit.find_by_saison(:all, :order => :category_id) #uniquement pour xml, pas html
     @produits_used =        Produit.find_used(:all, :order => :category_id)
