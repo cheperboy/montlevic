@@ -88,4 +88,47 @@ xml.all_categories do
     end
   end
 
+  xml.vente_categories do
+    Category.root_vente.children.each do |root|
+      xml.vente_category do
+    	  xml.name        root.name
+    	  xml.code        root.code
+    	  xml.depth_1     root.name
+    	  xml.depth_2     
+    	  xml.depth_3     
+    	  xml.depth_4
+    	end
+      root.children.each do |cat|
+        xml.vente_category do
+      	  xml.name        cat.name
+      	  xml.code        cat.code
+      	  xml.depth_1     
+      	  xml.depth_2     cat.name
+      	  xml.depth_3     
+      	  xml.depth_4     
+        end
+        cat.children.each do |cat2|
+          xml.vente_category do
+        	  xml.name        cat2.name
+        	  xml.code        cat2.code
+        	  xml.depth_1     
+        	  xml.depth_2     
+        	  xml.depth_3     cat2.name
+        	  xml.depth_4     
+          end
+          cat.children.each do |cat3|
+            xml.vente_category do
+          	  xml.name        cat3.name
+          	  xml.code        cat3.code
+          	  xml.depth_1     
+          	  xml.depth_2     
+          	  xml.depth_3     
+          	  xml.depth_4     cat3.name
+            end
+          end
+        end
+      end
+    end
+  end
+
 end
