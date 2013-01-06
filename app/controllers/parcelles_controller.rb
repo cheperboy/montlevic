@@ -5,7 +5,6 @@ class ParcellesController < ApplicationController
   skip_before_filter :login_required, :only => :index_raw# for raw data acces
 
   def index_raw
-    @typecultures = Typeculture.find_for_saison()
     @saison = Saison.find(:last)
     @parcelles = @saison.parcelles # used only for raw data acces (xml & json)
     respond_to do |format|

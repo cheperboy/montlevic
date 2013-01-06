@@ -28,9 +28,9 @@ class ProduitsController < ApplicationController
     saison = Saison.find(:last)
     @produits = saison.produits
     respond_to do |format|
-      format.xml  { render :xml   => @produits }
-      format.json  { render :json => @produits }
-      format.yaml { render :text  => @produits.to_yaml }
+      format.xml
+      # format.json  { render :json => @produits }
+      # format.yaml { render :text  => @produits.to_yaml }
     end
   end
  

@@ -1,0 +1,17 @@
+# xml = Builder::XmlMarkup.new
+xml.instruct!
+xml.produits do
+	@produits.each do |produit|
+    xml.produit do
+  	  xml.code        produit.code
+  	  xml.name        produit.name
+  	  xml.unit        produit.unit
+  	  xml.category    produit.category_and_parent
+  	  xml.saison      produit.saison.year
+  	  xml.desc        produit.desc
+  	  xml.info        produit.info
+  	  xml.star        produit.star
+  	  xml.adu         produit.adu
+  	end
+	end
+end

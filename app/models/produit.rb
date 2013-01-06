@@ -210,7 +210,11 @@ class Produit < ActiveRecord::Base
   def category_name
     self.category.name
   end
-
+  
+  def category_and_parent
+    "#{self.category.parent.code} - #{self.category.code}"
+  end
+  
   def user_name
     self.user.name
   end
