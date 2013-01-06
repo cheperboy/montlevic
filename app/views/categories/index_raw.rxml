@@ -13,7 +13,7 @@ xml.all_categories do
     	  xml.depth_4
     	end
       root.children.each do |cat|
-        xml.category do
+        xml.produit_category do
       	  xml.name        cat.name
       	  xml.code        cat.code
       	  xml.depth_1     
@@ -22,7 +22,7 @@ xml.all_categories do
       	  xml.depth_4     
         end
         cat.children.each do |cat2|
-          xml.category do
+          xml.produit_category do
         	  xml.name        cat2.name
         	  xml.code        cat2.code
         	  xml.depth_1     
@@ -31,7 +31,7 @@ xml.all_categories do
         	  xml.depth_4     
           end
           cat.children.each do |cat3|
-            xml.category do
+            xml.produit_category do
           	  xml.name        cat3.name
           	  xml.code        cat3.code
           	  xml.depth_1     
@@ -56,7 +56,7 @@ xml.all_categories do
     	  xml.depth_4
     	end
       root.children.each do |cat|
-        xml.category do
+        xml.facture_category do
       	  xml.name        cat.name
       	  xml.code        cat.code
       	  xml.depth_1     
@@ -65,7 +65,7 @@ xml.all_categories do
       	  xml.depth_4     
         end
         cat.children.each do |cat2|
-          xml.category do
+          xml.facture_category do
         	  xml.name        cat2.name
         	  xml.code        cat2.code
         	  xml.depth_1     
@@ -74,7 +74,7 @@ xml.all_categories do
         	  xml.depth_4     
           end
           cat.children.each do |cat3|
-            xml.category do
+            xml.facture_category do
           	  xml.name        cat3.name
           	  xml.code        cat3.code
           	  xml.depth_1     
