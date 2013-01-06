@@ -5,11 +5,19 @@ class CategoriesController < ApplicationController
   before_filter :edit_access,
                 :only => [:update, :destroy]
                 
-  skip_before_filter :login_required, :only => :index # for raw data acces
+  skip_before_filter :login_required, :only => :index_raw # for raw data acces
                 
   # GET /categories
   # GET /categories.xml
   
+  def index_raw
+    @categories = Category.find(:all, :order => :upcategory_id)
+    respond_to do |format|
+      format.xml
+      format.json  { render :json => @categories }
+    end
+  end
+
   def index
     @categories = Category.find(:all, :order => :upcategory_id)
 

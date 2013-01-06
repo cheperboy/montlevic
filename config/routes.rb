@@ -73,7 +73,10 @@ ActionController::Routing::Routes.draw do |map|
     :export_invest  => :get
     }
 
-  map.resources :categories, :collection => { :export => :any}
+  map.resources :categories, :collection => { 
+    :export => :any, 
+    :index_raw => :any
+  }
   map.resources :upcategories do |upcat|
     upcat.resources :categories
   end
