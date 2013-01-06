@@ -1,10 +1,16 @@
+# xml = Builder::XmlMarkup.new
 xml.instruct!
-xml.typecultures do
-	@typecultures.each do |typeculture|
-		xml.typeculture do
-  	@parcelles.each do |parcelle|
-		xml.parcelle do
-			xml.code parcelle.code
-		end
+xml.parcelles do
+	@parcelles.each do |parcelle|
+    xml.parcelle do
+  	  xml.code        parcelle.code
+  	  xml.name        parcelle.name
+  	  xml.typeculture parcelle.typeculture.code
+  	  xml.surface     parcelle.surface
+  	  xml.surface_pac parcelle.surface_pac
+  	  xml.saison      parcelle.saison.year
+  	  xml.desc        parcelle.desc
+  	  xml.info        parcelle.info
+  	end
 	end
 end

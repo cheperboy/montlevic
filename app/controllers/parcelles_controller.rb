@@ -23,7 +23,7 @@ class ParcellesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       # use index_raw for the following requests  
-      # format.xml  { render :xml => @parcelles }
+      format.xml  { render :xml => @parcelles }
       # format.json  { render :json => @parcelles }
     end
   end
