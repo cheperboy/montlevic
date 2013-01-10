@@ -1,0 +1,34 @@
+# Factures
+xml.instruct!
+xml.factures do
+  xml.saison  @saison.year
+  @saison.factures.each do |facture|
+    xml.facture do
+      xml.id              facture.id
+      xml.name            facture.name
+      xml.cout            facture.cout
+      xml.date            facture.date
+      xml.factcat_id      facture.factcat_id
+      xml.factype_id      facture.factype_id
+      xml.reportable_id   facture.reportable_id
+      xml.saison_id       facture.saison_id
+      xml.saison_year     facture.saison.year
+      xml.category_id     facture.category_id
+      xml.category_code   facture.category.code
+      xml.type            facture.type
+      xml.user_id         facture.user_id
+      xml.user_code       facture.user.code
+      xml.ref_client      facture.ref_client
+      xml.ref             facture.ref
+      xml.tva             facture.tva
+      xml.paye            facture.paye
+      xml.reglement       facture.reglement
+      xml.updated_at      facture.updated_at
+      xml.updated_at      facture.updated_at
+      xml.desc            facture.desc
+      xml.info            facture.info
+      xml.star            facture.star
+      xml.adu             facture.adu
+  	end
+	end
+end

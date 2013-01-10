@@ -6,6 +6,7 @@ class ImportController < ApplicationController
   MSG_FILE_IS_VALID      = "Fichier OK pour l'importation"
   MSG_FILE_SHEET_INVALID = "onglet non trouve dans le fichier excel"
   MSG_FILE_EMPTY         = "Erreur fichier"
+  MSG_WRONG_SAISON       = "Saison en case B2 du fichier excel differente de la saison courante du logiciel"
 
   def index
     redirect_to(:action => :prepare)
@@ -49,14 +50,18 @@ class ImportController < ApplicationController
 
     #get file from the database
     file = Store.get_file_for_import_from_s3
-
+    
     #Read provided excel sheet from given file and load it
     unless file.nil?
       sheet = Import.load_sheet_from_db(file, sheet)
       unless sheet.nil?
-        @file_error = nil
-        @import.read_elements(sheet)
-        file.close
+        unless @import.wrong_saison(sheet)
+          @file_error = nil
+          @import.read_elements(sheet)
+          file.close
+        else
+          flash.now[:error] = "#{MSG_WRONG_SAISON}"
+        end
       else
         flash.now[:error] = "#{MSG_FILE_SHEET_INVALID}"
       end
@@ -109,6 +114,11 @@ class ImportController < ApplicationController
 
   def import_factures
     sheet = 'factures'
+    import(sheet)
+  end
+
+  def import_ventes
+    sheet = 'ventes'
     import(sheet)
   end
 

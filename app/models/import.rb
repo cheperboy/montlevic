@@ -90,6 +90,28 @@ if true
   XLS_PROTOFACTURE_PRIX_UNIT    = 16
   XLS_PROTOFACTURE_QUANTITE     = 17
 
+
+  # Ventes
+  XLS_VENTE_PRIX          = 2
+  XLS_VENTE_DATE          = 3
+  XLS_VENTE_CATEGORY      = 4
+  XLS_VENTE_NAME          = 5
+  XLS_VENTE_USER          = 6
+  XLS_VENTE_REF_PERSO     = 7
+  XLS_VENTE_REF_CLIENT    = 8
+  XLS_VENTE_TYPECULTURS   = 9
+  XLS_VENTE_PARCELLES     = 10
+  XLS_VENTE_DESC          = 11
+  XLS_VENTE_INFO          = 12
+  XLS_VENTE_STAR          = 13
+  XLS_VENTE_ADU           = 14
+  XLS_VENTE_QUANTITE      = 15
+  XLS_VENTE_PRIX_UNITAIRE = 16
+  XLS_VENTE_AJUST         = 17
+  XLS_VENTE_CALCUL_AUTO   = 18
+  XLS_VENTE_UNIT          = 19
+  XLS_VENTE_POIDS_BOTTE   = 20
+  
   # Produits
   XLS_PRODUIT_UNIT     = 2
   XLS_PRODUIT_CATEGORY = 3
@@ -142,6 +164,12 @@ end
     @remarks   = [] #general errors, not affected to a specific row 
   end
 
+  # verifie que la saison indiquee en case B2 du fichier excel est bien l'annee de la saison courante (saison.year)
+  def wrong_saison(sheet)
+    puts "saison lue dans fichier excel : #{sheet[1,1]}"
+    return !(sheet[1,1].eql?(@saison.year))
+  end
+  
   #lecture du fichier
   def read_elements(sheet)
     @row_id = 0
@@ -159,6 +187,7 @@ end
       end
     end
   end
+  
   def read_element(row)
     case @sym
     when :pulves
@@ -183,6 +212,13 @@ end
         return read_facture(row)
       elsif row[XLS_TYPE].eql?('produit')
         return read_protofacture(row)
+      else
+        read_type_error = true
+      end
+    when :ventes
+      if row[XLS_TYPE].eql?('vente')
+        @read_size += 1
+        return read_vente(row)
       else
         read_type_error = true
       end
@@ -264,6 +300,33 @@ end
     return(labour)
   end
 
+  def read_vente(row)
+    vente = Vente.new()
+    vente.prix          = get_numeric_field(row[XLS_VENTE_PRIX], @row_id, 'prix', {:invalid => :error, :if_neg => :error})
+    vente.date          = get_date(row[XLS_VENTE_DATE], @row_id)
+    vente.quantite      = get_numeric_field(row[XLS_VENTE_QUANTITE], @row_id, 'quantite', {:invalid => :error, :if_neg => :error})
+    vente.ajust         = get_numeric_field(row[XLS_VENTE_AJUST], @row_id, 'ajust')
+    vente.prix_unitaire = get_numeric_field(row[XLS_VENTE_PRIX_UNITAIRE], @row_id, 'prix_unitaire')
+    vente.calcul_auto   = get_boolean_field(row[XLS_VENTE_CALCUL_AUTO], @row_id, 'calcul_auto')
+    vente.poids_botte   = get_numeric_field(row[XLS_VENTE_POIDS_BOTTE], @row_id, 'poids_botte')
+    vente.unit          = get_text(row[XLS_VENTE_UNIT], @row_id, 'unit')
+    vente.category_id   = get_category(row[XLS_VENTE_CATEGORY], @row_id, :vente)
+    vente.user_id       = get_user_id(row[XLS_VENTE_USER], @row_id)
+    vente.name          = get_name(row[XLS_VENTE_NAME], @row_id)
+    vente.desc          = get_text(row[XLS_VENTE_DESC], @row_id, 'description')
+    vente.info          = get_text(row[XLS_VENTE_INFO], @row_id, 'info')
+    vente.star          = get_boolean_field(row[XLS_VENTE_STAR],  @row_id, 'star',  {:invalid => :warning})
+    vente.adu           = get_boolean_field(row[XLS_VENTE_ADU],   @row_id, 'adu',   {:invalid => :warning})
+    vente.ref           = get_text(row[XLS_VENTE_REF_PERSO],   @row_id, 'ref')
+    vente.ref_client    = get_text(row[XLS_VENTE_REF_CLIENT],   @row_id, 'ref_client')
+    parcelles           = get_parcelles(row[XLS_VENTE_PARCELLES], @row_id)
+    cultures            = get_cultures(row[XLS_VENTE_TYPECULTURS], @row_id)
+    #TODO supprimer la ligne suivante inutile
+    @last_vente_read = @row_id
+    check_if_vente_exist(vente, @row_id)
+    return(vente)
+  end
+
   def read_facture(row)
     fac             = Debit.new()
     fac.cout        = get_numeric_field(row[XLS_FACTURE_COUT], @row_id, 'cout', {:if_neg => :error, :invalid => :error})
@@ -329,6 +392,8 @@ end
       import_charge(elt, index)
     elsif elt.kind_of?(Facture)
       import_charge(elt, index)
+    elsif elt.kind_of?(Vente)
+      import_charge(elt, index)
     elsif elt.kind_of?(Produit)
       import_charge(elt, index)
     elsif elt.kind_of?(Labour)
@@ -385,6 +450,11 @@ end
         :labour_id    => elt.id,
         :parcelle_id => parcelle.id,
         :value       => 1)
+    elsif elt.kind_of?(Vente)
+      parcelle_assoc = Ventoparcelle.new(
+        :vente_id    => elt.id,
+        :parcelle_id => parcelle.id,
+        :value       => 1)
     elsif elt.kind_of?(Facture)
       parcelle_assoc = Factoparcelle.new(
         :facture_id    => elt.id,
@@ -398,9 +468,9 @@ end
         self.add_error("parcelle '#{parcelle.try(:name)}' non enregistree", index)
         self.add_error(parcelle_assoc.errors, index)
       end
-    else # putopar not valid
+    else # parcelle_assoc not valid
       self.add_error("parcelle '#{parcelle.try(:name)}' non valide", index)
-      self.add_error(parcelle_assoc.errors, index)
+      self.add_error(parcelle_assoc.errors, index) if parcelle_assoc
       return false
     end
     return import_sucess
@@ -551,6 +621,7 @@ private
     root = Category.root_labour   if root_cat.eql?(:labour)
     root = Category.root_facture  if root_cat.eql?(:facture)
     root = Category.root_produit  if root_cat.eql?(:produit)
+    root = Category.root_vente  if root_cat.eql?(:vente)
     category = Category.find_by_code(category_code)
     if (root && category && category.root.eql?(root))
       return category.id
@@ -563,10 +634,13 @@ private
   # call this just before importing a element
   # this updates @parcelles[elt_id] by merging @cultures[elt_id] et @parcelles[elt_id]   
   def merge_parcelles_and_cultures(pulve, id)
+    # puts "\tmerge_parcelles_and_cultures"
     @cultures[id].each do |culture|
+      # puts "\t#{culture.code}"      
       @parcelles[id] << Parcelle.get_parcelles_from_culture(culture)
     end
     @parcelles[id] = @parcelles[id].flatten.uniq
+    # @parcelles[id].each {|p| puts "\t\t#{p.code}"}      
   end
 
 # Check elements
@@ -588,6 +662,14 @@ private
   end  
   def check_if_facture_exist(element, id)
     Facture.find_by_saison(:all).each do |elt|
+      if (elt.name.eql?(element.name))
+        invalid = "semble etre deja importe"
+        add_warning(invalid, id) unless warning_already_exist(invalid, id)
+      end
+    end
+  end  
+  def check_if_vente_exist(element, id)
+    Vente.find_by_saison(:all).each do |elt|
       if (elt.name.eql?(element.name))
         invalid = "semble etre deja importe"
         add_warning(invalid, id) unless warning_already_exist(invalid, id)

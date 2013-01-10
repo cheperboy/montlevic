@@ -1,0 +1,44 @@
+# Pulves
+xml.instruct!
+xml.pulves do
+  xml.saison  @saison.year
+  @saison.pulves.each do |pulve|
+    xml.pulve do
+      xml.id              pulve.id
+      xml.name            pulve.name
+      xml.date            pulve.date
+      xml.cout_ha_passage pulve.cout_ha_passage
+      xml.saison_id       pulve.saison_id
+      xml.saison_year     pulve.saison.year
+      xml.category_id     pulve.category_id
+      xml.category_code   pulve.category.code
+      xml.user_id         pulve.user_id
+      xml.user_code       pulve.user.code
+      xml.updated_at      pulve.updated_at
+      xml.updated_at      pulve.updated_at
+      xml.desc            pulve.desc
+      xml.info            pulve.info
+      xml.star            pulve.star
+      xml.adu             pulve.adu
+      xml.parcelles do
+        pulve.parcelles.each do |parcelle|
+          xml.parcelle do
+            xml.parcelle_id               parcelle.id
+            xml.parcelle_code             parcelle.code
+            xml.parcelle_typeculture_id   parcelle.typeculture_id
+            xml.parcelle_typeculture_code parcelle.typeculture.code
+        	end
+      	end
+    	end
+      xml.putoproduits do
+        pulve.putoproduits.each do |putoproduit|
+          xml.putoproduit do
+            xml.putoproduit_produit_id    putoproduit.produit.id
+            xml.putoproduit_produit_code  putoproduit.produit.code
+            xml.putoproduit_dosage        putoproduit.dosage
+        	end
+      	end
+    	end
+  	end
+	end
+end

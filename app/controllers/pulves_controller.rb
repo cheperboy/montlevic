@@ -6,8 +6,13 @@ class PulvesController < ApplicationController
   # DESC = 1
   # PRIX = 2
 
-  # GET /pulves
-  # GET /pulves.xml
+  def by_saison
+    @saison = Saison.find_by_year(params[:id])
+    respond_to do |format|
+      format.xml
+    end
+  end
+  
   def index
     @pulves = Pulve.find_by_saison(:all, :order => :id) 
     if params[:tri]

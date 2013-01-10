@@ -2,6 +2,14 @@ class FacturesController < ApplicationController
   before_filter :edit_access,
                 :only => [:update, :update_multiple, :destroy, :create_debit_to_reportable]
 
+  skip_before_filter :login_required, :only => :by_saison # for raw data acces
+
+  def by_saison
+    @saison = Saison.find_by_year(params[:id])
+    respond_to do |format|
+      format.xml
+    end
+  end
 
   def index
     # @factures = Facture.find_by_saison(:all, :limit => 10 )
@@ -9,10 +17,10 @@ class FacturesController < ApplicationController
     # @factures = Facture.find_by_saison(:all)
     @factures = Facture.all(:all, 
                             :conditions => ["saison_id = ?", Setting.get_saison_id],
-                            :order => "id DESC",
-                            :limit => 10
+                            :order => "id DESC"
+                            # :limit => 10
                             )
-    
+  
     # if params[:tri]
     #   @factures = Facture.find_by_saison(:all, :order => "#{params[:tri].to_s} #{params[:sens]}") 
     #   @tri = params[:tri]
@@ -20,6 +28,7 @@ class FacturesController < ApplicationController
     # end
     respond_to do |format|
       format.html
+      format.xml  { render :xml => @factures }
     end
   end
 

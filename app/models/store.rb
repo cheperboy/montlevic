@@ -2,7 +2,7 @@ require 'open-uri'
 
 class Store < ActiveRecord::Base
   IMPORT           = 'import'
-  # PATH           = "#{RAILS_ROOT}/public/system/files"
+  # PATH           = "#{RAILS_ROOT}/tmp"
   FOLDER           = "original"
   CONTENT_TYPE_XLS = "application/vnd.ms-excel"
   BUCKET           = "montlevic"

@@ -1,0 +1,34 @@
+# Ventes
+xml.instruct!
+xml.ventes do
+  xml.saison  @saison.year
+  @saison.ventes.each do |elt|
+    xml.vente do
+      xml.id              elt.id
+      xml.name            elt.name
+      xml.prix            elt.prix
+      xml.quantite        elt.quantite
+      xml.prix_unitaire   elt.prix_unitaire
+      xml.ajust           elt.ajust
+      xml.quantite        elt.quantite
+      xml.date            elt.date
+      xml.calcul_auto     elt.calcul_auto
+      xml.unit            elt.unit
+      xml.poids_botte     elt.poids_botte
+      xml.saison_id       elt.saison_id
+      xml.saison_year     elt.saison.year
+      xml.category_id     elt.category_id
+      xml.category_code   elt.category.code
+      xml.user_id         elt.user_id
+      xml.user_code       elt.user.code
+      xml.ref_client      elt.ref_client
+      xml.ref             elt.ref
+      xml.updated_at      elt.updated_at
+      xml.updated_at      elt.updated_at
+      xml.desc            elt.desc
+      xml.info            elt.info
+      xml.star            elt.star
+      xml.adu             elt.adu
+  	end
+	end
+end

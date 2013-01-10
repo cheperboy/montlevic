@@ -91,6 +91,7 @@ ActionController::Routing::Routes.draw do |map|
     :import_labours  => :get,
     :import_factures => :get,
     :import_produits => :get,
+    :import_ventes   => :get,
     :prepare         => :any,
     :test            => :any,
     :store_file      => :any
