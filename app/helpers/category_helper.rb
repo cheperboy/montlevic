@@ -80,7 +80,13 @@ module CategoryHelper
       out << "<td>" <<  link_to_delete(cat.class, cat.id) << "</td>"
       out << "<td>#{cat.depth}</td>"
       out << "<td>#{cat.is_childless?}</td>"
-      out << "<td>#{cat.factures.count}</td>"
+      if cat.is_descendant_of?(Category.root_facture)
+        out << "<td>#{cat.factures.count}</td>"
+      elsif cat.is_descendant_of?(Category.root_vente)
+        out << "<td>#{cat.ventes.count}</td>"
+      else
+        out << "<td></td>"
+      end
     end
     out << "<td>#{print_way(cat)}</td>"
     out << "<td>"

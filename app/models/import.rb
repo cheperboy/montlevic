@@ -411,6 +411,7 @@ end
     import_failed = true
     merge_parcelles_and_cultures(elt, index)
     elt.saison_id = @saison.id
+    elt.set_prix if (elt.calcul_auto.eql?(1) && elt.type.eql?(Vente)) # specifique Vente : pour calcul auto
     if elt.save
       #import associated parcelles
       @parcelles[index].each do |assoc_parcelle|

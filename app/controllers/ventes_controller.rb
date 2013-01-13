@@ -11,6 +11,14 @@ class VentesController < ApplicationController
     end
   end
 
+  def analytic
+    @saison = Saison.find_by_year(params[:id])
+    @sum = Vente.synthese_by_cat(@saison)
+    respond_to do |format|
+      format.xml
+    end
+  end
+
   def toggle_star
     @vente = Vente.find(params[:id])
     if @vente.star != 1
@@ -72,16 +80,15 @@ class VentesController < ApplicationController
     @vente = Vente.find(params[:id])
     @action = 'edit'
     unless @vente.saison_id.eql?(current_saison_id)
-      respond_to do |format| 
+      respond_to do |format|
         format.html { redirect_to(@vente) }
         flash[:error] = 'la campagne de travail est differente de la campagne de cette vente!'
       end
     end    
   end
 
-  # POST /ventes
-  # POST /ventes.xml
   def create
+    puts "call action create!"
     @vente = Vente.new(params[:vente])
     @vente.saison_id = current_saison_id
     # si calcul_auto? alors on set le prix

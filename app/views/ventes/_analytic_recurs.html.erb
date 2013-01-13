@@ -1,0 +1,42 @@
+<%- up_category.children.each do |category| -%>
+	<% unit   = nil %>
+	<% ventes = @saison.ventes.select{|v| v.category_id.eql?(category.id)} %>
+	<% unit   = ventes[0].unit if (ventes[0] && @sum[:unit][category.code.to_sym].eql?(true)) %>
+						<tr class=bold><td colspan=2></td></tr>				    
+						<tr>
+							<td class=left></td>
+							<td class=left><b><%= indent_cat_name((category.depth - 2), category.name) %></b></td>
+							<td class=right><b><%=h delim(@sum[:prix][category.code.to_sym]) %> <%= euro %></b></td>
+							<td class=left></td>
+							<td class=left></td>
+	<% if unit %>
+							<td class=right><%=h delim(@sum[:prix_unitaire][category.code.to_sym]) %> <%= euro %>/<%= unit %></td>
+							<td class=right><%=h delim(@sum[:quantite][category.code.to_sym]) %> <%= unit %></td>
+	<% else %>
+							<td class=right></td>
+							<td class=right></td>
+	<%- end %>
+						</tr>
+	<% ventes = @saison.ventes.select{|v| v.category_id.eql?(category.id)}.each do |vente| %>
+						<tr>
+							<td class=left></td>
+							<td class=left></td>
+							<td class=right><%=h delim(vente.prix) %> <%= euro %></td>
+							<td class=left><%= link_to vente.name, vente_path(vente) %></td>
+							<td class=left><%=h vente.date %></td>
+							<td class=right><%=h delim(vente.prix_unitaire) %> <%= euro %>/<%= vente.unit %></td>
+							<td class=right><%=h delim(vente.quantite) %> <%= vente.unit %></td>
+						</tr>
+	<%- end -%>
+						<tr>
+							<td class=left></td>
+							<td class=left></td>
+							<td class=left></td>
+							<td class=left></td>
+							<td class=left></td>
+							<td class=left></td>
+							<td class=left></td>
+						</tr>
+						<tr class=bold><td colspan=2></td></tr>				    
+	<%= render(:partial => "analytic_recurs", :locals => { :up_category => category}) if category.has_children? %>
+<%- end -%>

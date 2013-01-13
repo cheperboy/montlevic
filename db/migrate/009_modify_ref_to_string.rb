@@ -1,4 +1,6 @@
-class ModifyRefpersoToString < ActiveRecord::Migration
+# modify ref_perso (called ref in db) to string. was integer.
+
+class ModifyRefToString < ActiveRecord::Migration
   def self.up
     change_column :ventes, :ref, :string
     change_column :factures, :ref, :string

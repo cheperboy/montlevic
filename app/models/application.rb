@@ -74,6 +74,7 @@ class Application < ActiveRecord::Base
   [
     # KEY                     VALUE           UNIT    FILTER        TYPE              TRI     TRI_KEY           GREEN_RED COLOR
     ['star',                  'star',         '',     false,        'ignorecase',     true,   'star',           false,    'black'],
+    ['stock',                 'stock',        '',     false,        'ignorecase',     true,   'stock',          false,    'black'],
   # ['pp_paye',               'paye',         '',     true,         'ignorecase',     true,   'paye',           false,    'black'], 
    	['id',                    'id',           '',     true,         'numeric',        true,   'id',             false,    'grey'],
   	['category_name',         'Categorie',    '',     true,         'ignorecase',     true,   'category_id',    false,    'grey'],

@@ -1,3 +1,7 @@
+# bug: une erreur vue a la lecture du fichier (exemple saison fichier differente de Setting.saison_id)
+    # -> pas d'affichage des elements mais le bouton "importer" est toujours present et actif.
+    #  par contre ce bouton semble etre sans consequences si on clique
+    
 class ImportController < ApplicationController
   MSG_FILE_HAS_WARNINGS  = "Verifier les Warnings avant d'importer"
   MSG_FILE_HAS_INVALIDS  = "Fichier non valid. <br>Corriger le fichier puis relancer l'importation"

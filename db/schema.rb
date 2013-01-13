@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20120209075723) do
     t.string   "name"
     t.float    "cout"
     t.string   "ref_client"
-    t.integer  "ref"
+    t.string   "ref"
     t.date     "date"
     t.string   "desc"
     t.datetime "created_at"
@@ -65,12 +65,12 @@ ActiveRecord::Schema.define(:version => 20120209075723) do
   end
 
   create_table "factures", :force => true do |t|
-    t.integer  "saison_id",                   :null => false
+    t.integer  "saison_id",                  :null => false
     t.integer  "category_id"
     t.integer  "factcat_id"
     t.integer  "factype_id"
     t.integer  "reportable_id"
-    t.string   "type",                        :null => false
+    t.string   "type",                       :null => false
     t.integer  "star"
     t.integer  "adu"
     t.date     "date"
@@ -78,15 +78,14 @@ ActiveRecord::Schema.define(:version => 20120209075723) do
     t.string   "name"
     t.float    "cout"
     t.string   "ref_client"
-    t.integer  "ref"
+    t.string   "ref"
     t.text     "desc"
     t.text     "info"
     t.float    "tva"
     t.integer  "paye"
-    t.integer  "reglement",      :limit => 2
+    t.integer  "reglement",     :limit => 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "nb_month_amort"
   end
 
   create_table "factypes", :force => true do |t|
@@ -312,7 +311,7 @@ ActiveRecord::Schema.define(:version => 20120209075723) do
     t.date     "date",          :null => false
     t.integer  "user_id",       :null => false
     t.string   "name",          :null => false
-    t.integer  "ref"
+    t.string   "ref"
     t.string   "ref_client"
     t.integer  "star"
     t.integer  "adu"
@@ -323,6 +322,7 @@ ActiveRecord::Schema.define(:version => 20120209075723) do
     t.integer  "calcul_auto"
     t.string   "unit"
     t.integer  "poids_botte"
+    t.integer  "stock"
   end
 
   create_table "ventoparcelles", :force => true do |t|
