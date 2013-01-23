@@ -31,8 +31,16 @@
 							<td class=left></td>
 							<td class=left></td>
 	<% if unit %>
-							<td class=right><%=h delim(@sum[:prix_unitaire][category.code.to_sym]) %> <%= euro %>/<%= unit %></td>
-							<td class=right><%=h delim(@sum[:quantite][category.code.to_sym]) %> <%= unit %></td>
+		<% if @sum[:prix_unitaire][:valid][category.code.to_sym] %>
+							<td class=right><%=h delim(@sum[:prix_unitaire][:value][category.code.to_sym]) %> <%= euro %>/<%= unit %></td>
+		<% else %>
+							<td class=right></td>
+		<%- end %>
+		<% if @sum[:quantite][:valid][category.code.to_sym] %>
+							<td class=right><%=h delim(@sum[:quantite][:value][category.code.to_sym]) %> <%= unit %></td>
+		<% else %>
+							<td class=right></td>
+		<%- end %>
 	<% else %>
 							<td class=right></td>
 							<td class=right></td>
@@ -50,26 +58,10 @@
 						</tr>
 	<%- end -%>
 						<tr>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
 						</tr>
-						<tr class=bold><td colspan=2></td></tr>				    
 	<%= render(:partial => "analytic_recurs", :locals => { :up_category => category}) if category.has_children? %>
 <%- end -%>
-						<tr class=bold><td colspan=2></td></tr>				    
 						<tr>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=right><b></b></td>
 						</tr>
 					</table>
 				</td>

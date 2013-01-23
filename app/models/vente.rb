@@ -87,8 +87,10 @@ class Vente < Charge
 # pour action Analytic vente (calcul recursif)
 # positionne recursivement les donnees prix, qtite et prix/unitaire des ventes d'une saison par categories
 # sum[:unit] vaut true si toutes les ventes de la categorie ont la meme unite sinon vaut nil
-# sum[:prix_unitaire] est la moyenne des prix unitaire de chaque vente de la categorie
-# sum[:prix] et sum[:quantite] respectivement les sommes des prix et quantite de chaque vente de la categorie
+# sum[:prix_unitaire][:value] est la moyenne des prix unitaire de chaque vente de la categorie
+# sum[:prix] et sum[:quantite][:value] respectivement les sommes des prix et quantite de chaque vente de la categorie
+# sum[:prix_unitaire][:valid] est a true si tout les PU de la cat sont renseignés et valides
+# sum[:quantite][:valid] est a true si toutes les quantites de la cat sont renseignés et valides
 
   def self.synthese_by_cat(saison)
     categories_vente = Category.root_vente
@@ -97,24 +99,35 @@ class Vente < Charge
     sum[:prix]          = Hash.new
     sum[:quantite]      = Hash.new
     sum[:prix_unitaire] = Hash.new
+    sum[:quantite][:value]      = Hash.new
+    sum[:quantite][:valid]      = Hash.new
+    sum[:prix_unitaire][:value] = Hash.new
+    sum[:prix_unitaire][:valid] = Hash.new
     sum = synthese_by_cat_recurs(saison, categories_vente, sum)
   end
   
   def self.synthese_by_cat_recurs(saison, up_category, sum)
     up_category.children.each do |category|
       # puts "cat #{category.code}"
-    	sum[:unit][category.code.to_sym]          = nil
+    	sum[:unit][category.code.to_sym]          = true
     	sum[:prix][category.code.to_sym]          = 0
-    	sum[:quantite][category.code.to_sym]      = 0
-    	sum[:prix_unitaire][category.code.to_sym] = 0
+      sum[:quantite][category.code.to_sym]      = 0
+      sum[:quantite][:value][category.code.to_sym]      = 0
+      sum[:quantite][:valid][category.code.to_sym]      = true
+      sum[:prix_unitaire][:value][category.code.to_sym] = 0
+      sum[:prix_unitaire][:valid][category.code.to_sym] = true
     	old_unit = nil #memoire de la valeur unit de la vente de l'iteration precedante
       ventes = saison.ventes.select{|v| v.category_id.eql?(category.id)}
       ventes.each do |vente|
-      	sum[:unit][category.code.to_sym]          = true unless ((vente.unit.eql?(old_unit)) && !old_unit.nil?)
-        # sum[:prix][category.code.to_sym]          += vente.prix
-      	sum[:quantite][category.code.to_sym]      += vente.quantite
-      	sum[:prix_unitaire][category.code.to_sym] += vente.prix_unitaire
-
+      	sum[:unit][category.code.to_sym] = nil unless ((vente.unit.eql?(old_unit)) && !old_unit.nil?)
+      	sum[:quantite][:value][category.code.to_sym] += vente.quantite unless vente.quantite.nil?
+      	sum[:quantite][:valid][category.code.to_sym] = nil if (vente.quantite.nil? || vente.quantite.blank?)
+      	sum[:prix_unitaire][:valid][category.code.to_sym] = nil if (vente.prix_unitaire.nil? || vente.prix_unitaire.blank?)
+      	sum[:prix_unitaire][:value][category.code.to_sym] += vente.prix_unitaire unless vente.prix_unitaire.nil?
+        unless vente.unit # si vente.unit != ["na", nil]
+          sum[:quantite][:valid][category.code.to_sym] = nil
+        	sum[:prix_unitaire][:valid][category.code.to_sym] = nil
+        end
       	# ajoute aussi la valeur (prix) a toutes les cat parentes de la vente
       	temp_cat = category
         while temp_cat.depth != Category.root_vente.depth
@@ -122,7 +135,7 @@ class Vente < Charge
     		  temp_cat = temp_cat.parent
     		end
     	end
-    	sum[:prix_unitaire][category.code.to_sym] /= ventes.count unless ventes.size.eql?(0) 
+    	sum[:prix_unitaire][:value][category.code.to_sym] /= ventes.count unless ventes.size.eql?(0) 
       sum = synthese_by_cat_recurs(saison, category, sum) if category.has_children?
     end
     sum

@@ -1,6 +1,54 @@
 !!! XML
 !!!
-%spreadsheet
-	%col1 categorie
-	%col2 souscategorie
-	%item{:name => "blah"}
+
+- @coul = Hash.new
+- @coul[:gris]           = '#efefef'
+- @coul[:ble_head]       = '#ffd966'
+- @coul[:ble]            = '#fff2cc'
+- @coul[:colza_head]     = '#93c47d'
+- @coul[:colza]          = '#d9ead3'
+
+
+
+
+- headers = []
+- headers << 'Categorie' << 'Sous-Categorie' << 'Prix' << 'Nom' << 'date' << 'Prix Unitaire' << 'Quantite'
+
+- categories = Category.root_vente
+- i = 0
+%rows{:saison => @saison.year}
+	%info
+		%saison{:content => "#{@saison.year}"}
+		%title{:content => "Ventes #{@saison.year}"}
+		%model{:content => "ventes"}
+
+	%row{:color => "white", :bgcolor => "black", :fontweight => "bold", :fontsize => "12"}
+		- headers.size.times do
+			%column{:content => "#{headers[i]}"}
+			- i = i + 1
+	
+	- categories.children.each do |category|
+		- unit   = nil
+		- ventes = @saison.ventes.select{|v| v.category_id.eql?(category.id)}
+		- unit   = ventes[0].unit if (ventes[0] && @sum[:unit][category.code.to_sym].eql?(true))
+
+		%row{:bgcolor => @coul[:gris], :fontweight => "bold", :fontsize => "14", :level => "0"}
+			%column{:content => "#{category.name}"}
+			%column{:content => ""}
+			%column{:content => "#{@sum[:prix][category.code.to_sym]}", :halign => "right"}
+			%column{:content => ""}
+			%column{:content => ""}
+			- if unit
+				- if @sum[:prix_unitaire][:valid][category.code.to_sym]
+					%column{:content => "#{delim(@sum[:prix_unitaire][:value][category.code.to_sym])} #{euro}/#{unit}"}
+				- else
+					%column{:content => ""}
+				- if @sum[:quantite][:valid][category.code.to_sym]
+					%column{:content => "#{delim(@sum[:quantite][:value][category.code.to_sym])} #{unit}"}
+				- else
+					%column{:content => ""}
+			- else
+				%column{:content => ""}
+				%column{:content => ""}
+				
+		= render(:partial => "analytic_recurs", :locals => { :up_category => category}) if category.has_children?

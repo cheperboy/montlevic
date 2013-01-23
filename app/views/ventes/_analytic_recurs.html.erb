@@ -29,14 +29,6 @@
 						</tr>
 	<%- end -%>
 						<tr>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
-							<td class=left></td>
 						</tr>
-						<tr class=bold><td colspan=2></td></tr>				    
 	<%= render(:partial => "analytic_recurs", :locals => { :up_category => category}) if category.has_children? %>
 <%- end -%>
