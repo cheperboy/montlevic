@@ -92,10 +92,6 @@ class VentesController < ApplicationController
     puts "call action create!"
     @vente = Vente.new(params[:vente])
     @vente.saison_id = current_saison_id
-    # si calcul_auto? alors on set le prix
-    # if params[:vente][:calcul_auto].to_i.eql?(1)
-    #   @vente.set_prix 
-    # end
     @vente.update_typecultures(params[:typecultures])
     @vente.uniq_parcelles
     respond_to do |format|

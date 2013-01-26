@@ -11,6 +11,7 @@ xml.all_categories do
     	  xml.depth_2     
     	  xml.depth_3     
     	  xml.depth_4
+    	  xml.depth_5
     	end
       root.children.each do |cat|
         xml.produit_category do
@@ -18,8 +19,9 @@ xml.all_categories do
       	  xml.code        cat.code
       	  xml.depth_1     
       	  xml.depth_2     cat.name
-      	  xml.depth_3     
-      	  xml.depth_4     
+      	  xml.depth_3
+      	  xml.depth_4
+      	  xml.depth_5
         end
         cat.children.each do |cat2|
           xml.produit_category do
@@ -29,8 +31,9 @@ xml.all_categories do
         	  xml.depth_2     
         	  xml.depth_3     cat2.name
         	  xml.depth_4     
+        	  xml.depth_5
           end
-          cat.children.each do |cat3|
+          cat2.children.each do |cat3|
             xml.produit_category do
           	  xml.name        cat3.name
           	  xml.code        cat3.code
@@ -38,6 +41,18 @@ xml.all_categories do
           	  xml.depth_2     
           	  xml.depth_3     
           	  xml.depth_4     cat3.name
+          	  xml.depth_5
+            end
+            cat3.children.each do |cat4|
+              xml.produit_category do
+            	  xml.name        cat4.name
+            	  xml.code        cat4.code
+            	  xml.depth_1     
+            	  xml.depth_2     
+            	  xml.depth_3     
+            	  xml.depth_4
+            	  xml.depth_5     cat4.name
+              end
             end
           end
         end
@@ -54,6 +69,7 @@ xml.all_categories do
     	  xml.depth_2     
     	  xml.depth_3     
     	  xml.depth_4
+    	  xml.depth_5
     	end
       root.children.each do |cat|
         xml.facture_category do
@@ -63,6 +79,7 @@ xml.all_categories do
       	  xml.depth_2     cat.name
       	  xml.depth_3     
       	  xml.depth_4     
+      	  xml.depth_5
         end
         cat.children.each do |cat2|
           xml.facture_category do
@@ -72,8 +89,9 @@ xml.all_categories do
         	  xml.depth_2     
         	  xml.depth_3     cat2.name
         	  xml.depth_4     
+        	  xml.depth_5
           end
-          cat.children.each do |cat3|
+          cat2.children.each do |cat3|
             xml.facture_category do
           	  xml.name        cat3.name
           	  xml.code        cat3.code
@@ -81,6 +99,18 @@ xml.all_categories do
           	  xml.depth_2     
           	  xml.depth_3     
           	  xml.depth_4     cat3.name
+          	  xml.depth_5
+            end
+            cat3.children.each do |cat4|
+              xml.produit_category do
+            	  xml.name        cat4.name
+            	  xml.code        cat4.code
+            	  xml.depth_1     
+            	  xml.depth_2     
+            	  xml.depth_3     
+            	  xml.depth_4
+            	  xml.depth_5     cat4.name
+              end
             end
           end
         end
@@ -97,6 +127,7 @@ xml.all_categories do
     	  xml.depth_2     
     	  xml.depth_3     
     	  xml.depth_4
+    	  xml.depth_5
     	end
       root.children.each do |cat|
         xml.vente_category do
@@ -106,6 +137,7 @@ xml.all_categories do
       	  xml.depth_2     cat.name
       	  xml.depth_3     
       	  xml.depth_4     
+      	  xml.depth_5
         end
         cat.children.each do |cat2|
           xml.vente_category do
@@ -115,8 +147,9 @@ xml.all_categories do
         	  xml.depth_2     
         	  xml.depth_3     cat2.name
         	  xml.depth_4     
+        	  xml.depth_5
           end
-          cat.children.each do |cat3|
+          cat2.children.each do |cat3|
             xml.vente_category do
           	  xml.name        cat3.name
           	  xml.code        cat3.code
@@ -124,6 +157,18 @@ xml.all_categories do
           	  xml.depth_2     
           	  xml.depth_3     
           	  xml.depth_4     cat3.name
+          	  xml.depth_5
+            end
+            cat3.children.each do |cat4|
+              xml.produit_category do
+            	  xml.name        cat4.name
+            	  xml.code        cat4.code
+            	  xml.depth_1     
+            	  xml.depth_2     
+            	  xml.depth_3     
+            	  xml.depth_4
+            	  xml.depth_5     cat4.name
+              end
             end
           end
         end

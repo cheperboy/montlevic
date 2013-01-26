@@ -11,7 +11,7 @@ class CrController < ApplicationController
     @factcats =     Category.get_factcats
     @factcats.each { |f| logger.error "#{f.id} - #{f.name}"}
       
-    @saison =       Saison.find(session[:current_saison_id])
+    @saison =       Saison.find(current_saison_id)
     @colonnes =     coltype.find_for_saison()
     @labours =      @saison.labours
     @pulves =       @saison.pulves

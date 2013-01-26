@@ -8,7 +8,7 @@ class CalculateController < ApplicationController
       reload_cache = true if params[:reload_cache]
     end
     @factcats =     Category.get_factcats      
-    @saison =       Saison.find(session[:current_saison_id])
+    @saison =       Saison.find(current_saison_id)
     @colonnes =     coltype.find_for_saison()
     @labours =      @saison.labours
     @pulves =       @saison.pulves
@@ -51,7 +51,7 @@ class CalculateController < ApplicationController
       reload_cache = true if params[:reload_cache]
     end
     @factcats =     Category.get_factcats
-    @saison =       Saison.find(session[:current_saison_id])
+    @saison =       Saison.find(current_saison_id)
     @colonnes =     coltype.find_for_saison()
     @labours =      @saison.labours
     @pulves =       @saison.pulves
