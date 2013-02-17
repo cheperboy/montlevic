@@ -39,26 +39,8 @@ namespace :data do
   end
 
   desc "seed database from file saison_2013.rb"
-  task :saison_2013 => :environment do 
+  task :create_saison_2013 => :environment do 
     file = File.join(Rails.root, 'db', 'datas', 'saison_2013.rb')
-    load(file) if File.exist?(file)
-  end
-
-  desc "seed database from file saison_2011_2012.rb"
-  task :saison_2012 => :environment do 
-    file = File.join(Rails.root, 'db', 'datas', 'saison_2011_2012.rb')
-    load(file) if File.exist?(file)
-  end
-
-  desc "seed database from file saison_2010_2011.rb"
-  task :saison_2011 => :environment do 
-    file = File.join(Rails.root, 'db', 'datas', 'saison_2010_2011.rb')
-    load(file) if File.exist?(file)
-  end
-
-  desc "seed database from file saison_2009_2010.rb"
-  task :saison_2010 => :environment do 
-    file = File.join(Rails.root, 'db', 'datas', 'saison_2009_2010.rb')
     load(file) if File.exist?(file)
   end
 
@@ -77,6 +59,44 @@ namespace :data do
     FILE = ENV["MY_FILE"]
     file = File.join(Rails.root, 'datas', FILE)
     load(file) if File.exist?(file)
+  end
+
+  # ATTENTION supprime une saison et ses parcelles !
+  desc "ATTENTION supprime une saison et ses parcelles !"
+  task :delete_saison_2013 => :environment do 
+
+    # _______________________________________
+    #  ATTENTION                            \
+    #  CE CODE SUPPRIME                     \
+    #   - UNE SAISON (model saison)         \
+    #   - LES PARCELLES DE LA SAISON        \
+    #                                       \
+    # DECOMMANTER LE CODE POUR UTILISER     \
+    # ______________________________________\
+
+    # Choix de la Saison
+    saison = Saison.find_by_year('2013')
+    name = saison.name
+
+    if (saison.factures.count>0 || saison.pulves.count>0 || saison.ventes.count>0)
+      puts "LA SAISON POSSEDE DES OBJETS vente ou facture ou pulve"
+      puts "PAS DE DESTRUCTION !"
+    else    
+      # DESTRUCTION DES PARCELLES
+      # detruit aussi les zonetopas car 
+      puts "delete : "
+
+      saison.parcelles.each do |parcelle|
+        puts "\t parcelle #{parcelle.name}, #{parcelle.surface}"
+        parcelle.destroy # call destroy because deletes also dependant (zonetopas). delete method does not.
+      end
+
+      # DESTRUCTION DE LA SAISON
+      saison.delete
+
+      puts "LA SAISON #{name} ET SES PARCELLES SONT SUPPRIMEES"
+
+    end
   end
 
 end
