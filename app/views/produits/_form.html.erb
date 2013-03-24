@@ -19,7 +19,8 @@
 				<%= form_tr_text(f, 'Nom', :name) %>
 				<%= form_tr_text(f, 'Code', :code) %>
 
-				<%= form_tr_select(f, 'Categorie', :category_id, Category.produits_cats, :id, :name) %>
+				<%#= form_tr_select(f, 'Categorie', :category_id, Category.produits_cats, :id, :name) %>
+				<%= form_tr_select_cat_from_tree(f, @produit.class.to_s.downcase, Category.root_produit, 'Catégorie', :category_id, :id, :name, @produit) %>
 				<%= form_tr_simple_select(f, 'Unite', :unit, Application::PRODUIT_QUANTITE_UNITS) %>
 			</table>
 		</td>
