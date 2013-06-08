@@ -7,7 +7,7 @@
 
 development:
   adapter: postgresql
-  encoding: utf8
+  encoding: unicode
   database: comptagri_dev
   pool: 5
   username: postgres

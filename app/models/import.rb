@@ -168,11 +168,13 @@ end
   def wrong_saison(sheet)
     puts "saison lue dans fichier excel : #{sheet[1,1].to_i}"
     puts "saison courante : #{@saison.year.to_i}"
+    
     return !(sheet[1,1].to_i.eql?(@saison.year.to_i))
   end
   
   #lecture du fichier
   def read_elements(sheet)
+
     @row_id = 0
     sheet.each do |row|
       unless ignore_this_row(row)
@@ -334,10 +336,9 @@ end
     fac.category_id = get_category(row[XLS_FACTURE_CATEGORY], @row_id, :facture)
     fac.user_id     = get_user_id(row[XLS_FACTURE_USER], @row_id)
     fac.date        = get_date(row[XLS_FACTURE_DATE], @row_id)
-    fac.name        = get_name(row[XLS_FACTURE_NAME], @row_id)
-    fac.ref         = get_name(row[XLS_FACTURE_REF_PERSO], @row_id)
-    fac.ref_client  = get_name(row[XLS_FACTURE_REF_CLIENT], @row_id)
-    fac.name        = get_name(row[XLS_FACTURE_NAME], @row_id)
+    fac.name        = get_text(row[XLS_FACTURE_NAME], @row_id, "nom", {:if_null => :error})
+    fac.ref         = get_text(row[XLS_FACTURE_REF_PERSO], @row_id, "ref", {:if_null => :warning})
+    fac.ref_client  = get_text(row[XLS_FACTURE_REF_CLIENT], @row_id, "ref_client", {:if_null => :warning})
     fac.desc        = get_text(row[XLS_FACTURE_DESC], @row_id, 'description')
     fac.info        = get_text(row[XLS_FACTURE_INFO], @row_id, 'info')
     fac.star        = get_boolean_field(row[XLS_FACTURE_STAR],   @row_id, 'star',   {:invalid => :warning})
@@ -412,7 +413,7 @@ end
     import_failed = true
     merge_parcelles_and_cultures(elt, index)
     elt.saison_id = @saison.id
-    elt.set_prix if (elt.calcul_auto.eql?(1) && elt.type.eql?(Vente)) # specifique Vente : pour calcul auto
+    elt.set_prix if (elt.type.eql?(Vente) && elt.calcul_auto.eql?(1)) # specifique Vente : pour calcul auto
     if elt.save
       #import associated parcelles
       @parcelles[index].each do |assoc_parcelle|
@@ -559,11 +560,25 @@ private
     if (!name.nil? && name.class.eql?(String))
       return name
     else
+      puts "DEBUG NAME #{name}"
       invalid = 'nom non valid'
       add_invalid(invalid, id)
     end
   end
-  def get_date(date, id)
+
+  def get_date(date_raw, id)
+  # puts "DEBUG 3 #{date_raw.class}"
+    if date_raw.class.eql?(String)
+      return date_raw
+    elsif date_raw.class.eql?(DateTime)
+      date = "#{date_raw.year}-#{date_raw.month}-#{date_raw.day}"
+    else
+      invalid = "la date n'est au bon format"
+      add_invalid(invalid, id)
+    end
+  end  
+
+  def get_date_old(date, id)
     if date.class.eql?(String)
       return date
     else
@@ -736,8 +751,8 @@ private
       if (opt[:if_null].eql?(:error)) # generate an error if value == ''
         add_invalid(msg, id)
         nil
-      elsif (opt[:if_null].eql?(:error)) # generate an invalid if value == ''
-        add_invalid(msg, id)
+      elsif (opt[:if_null].eql?(:warning)) # generate an invalid if value == ''
+        add_warning(msg, id)
         nil
       end
     end
