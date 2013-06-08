@@ -174,6 +174,7 @@ end
   
   #lecture du fichier
   def read_elements(sheet)
+    puts "\tread_elements"
 
     @row_id = 0
     sheet.each do |row|
@@ -192,6 +193,7 @@ end
   end
   
   def read_element(row)
+    puts "\t\tread_element"
     case @sym
     when :pulves
       if row[XLS_TYPE].eql?('pulve')
@@ -390,6 +392,7 @@ end
 
   # dispatch to import_charge() with correct model name
   def import_element(elt, index)
+    puts "\timport element"
     if elt.class.eql?(Pulve)
       import_charge(elt, index)
     elsif elt.kind_of?(Facture)
@@ -409,6 +412,7 @@ end
   
   # import pulve, facture or produit and call import_model_assoc() if needed
   def import_charge(elt, index)
+    puts "\timport charge"
     import_ok = true
     import_failed = true
     merge_parcelles_and_cultures(elt, index)
