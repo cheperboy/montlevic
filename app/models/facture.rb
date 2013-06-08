@@ -321,7 +321,7 @@ class Facture < Charge
     sheet.name = name
     
     # datas
-    tab_tete = ["id", "type", "date", "categorie", "cout", "prestataire", "nom", "ref client", "ref perso", "sum_produits_assoc", "sum_produits_used", "sum_produits_stock"]
+    tab_tete = ["saison", "id", "type", "date", "categorie", "cout", "prestataire", "nom", "ref client", "ref perso", "star", "adu", "remarque", "info", "sum_produits_assoc", "sum_produits_used", "sum_produits_stock"]
         
     sheet.row(0).replace tab_tete
     sheet.row(0).default_format = tete
@@ -331,7 +331,7 @@ class Facture < Charge
     Reportable.find_by_saison(:all).each {|d| factures << d}
     factures.each do |f|
       date = f.date.strftime("%Y/%m/%d")
-      tab = [f.id, f.type.to_s, date, f.category.name, f.cout, f.user.name, f.name, f.ref_client, f.ref, f.sum_produits_assoc, f.sum_produits_used, f.sum_produits_stock]
+      tab = [f.saison.year, f.id, f.type.to_s, date, f.category.name, f.cout, f.user.name, f.name, f.ref_client, f.ref, f.star, f.adu, f.desc, f.info, f.sum_produits_assoc, f.sum_produits_used, f.sum_produits_stock]
       sheet.row(i).replace tab
       i = i + 1
     end
@@ -348,13 +348,13 @@ class Facture < Charge
     i = 1
     Reportable.find_by_saison(:all).each do |f|
       date = f.date.strftime("%Y/%m/%d")
-      tab = [f.id, f.type.to_s, date, f.category.name, f.cout, f.user.name, f.name, f.ref_client, f.ref, f.get_cout_total, f.cout - f.get_cout_total]
+      tab = [f.saison.year, f.id, f.type.to_s, date, f.category.name, f.cout, f.user.name, f.name, f.ref_client, f.ref, f.star, f.adu, f.desc, f.info, f.get_cout_total, f.cout - f.get_cout_total]
       sheet2.row(i).replace tab
       sheet2.row(i).default_format = gras
       i = i + 1
       f.reports.each do |r|
         date = f.date.strftime("%Y/%m/%d")
-        tab = [r.id, r.type.to_s, date, r.category.name, r.cout, r.user.name, r.name, r.ref_client, r.get_cout_total, f.cout - f.get_cout_total]
+        tab = [r.saison.year, r.id, r.type.to_s, date, r.category.name, r.cout, r.user.name, r.name, r.ref_client, '', r.star, r.adu, r.desc, r.info, r.get_cout_total, f.cout - f.get_cout_total]
         sheet2.row(i).replace tab
         i = i + 1
       end

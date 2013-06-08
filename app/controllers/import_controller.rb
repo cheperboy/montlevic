@@ -54,6 +54,7 @@ class ImportController < ApplicationController
 
     #get file from the database
     file = Store.get_file_for_import_from_s3
+    # file = Store.get_file_for_import
     
     #Read provided excel sheet from given file and load it
     unless file.nil?

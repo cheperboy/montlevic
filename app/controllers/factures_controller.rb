@@ -382,8 +382,10 @@ class FacturesController < ApplicationController
     # book.write '/file_factures.xls'
     # send_data spreadsheet.string, :filename => "yourfile.xls", :type =>  "application/vnd.ms-excel"
     # send_file file#, :type => "application/vnd.ms-excel"
+    year = Saison.find(current_saison_id).year
+    filename = "factures_#{year}.xls"
     file = Facture.export_by_saison()
-    send_data file.string, :filename => "Factures.xls", :type =>  "application/vnd.ms-excel"    
+    send_data file.string, :filename => filename, :type =>  "application/vnd.ms-excel"    
 
     # render(:layout=>false)
   end
