@@ -166,8 +166,9 @@ end
 
   # verifie que la saison indiquee en case B2 du fichier excel est bien l'annee de la saison courante (saison.year)
   def wrong_saison(sheet)
-    puts "saison lue dans fichier excel : #{sheet[1,1]}"
-    return !(sheet[1,1].eql?(@saison.year))
+    puts "saison lue dans fichier excel : #{sheet[1,1].to_i}"
+    puts "saison courante : #{@saison.year.to_i}"
+    return !(sheet[1,1].to_i.eql?(@saison.year.to_i))
   end
   
   #lecture du fichier
@@ -572,7 +573,7 @@ private
   end  
 
   def get_parcelles(parcelles_raw, id)
-    puts "parcelles_raw #{parcelles_raw}"
+    # puts "parcelles_raw #{parcelles_raw}"
     if parcelles_raw.class.eql?(String)
       parcelles = parcelles_raw.split(/,\s*/)
       unless parcelles.size.eql?(0)
