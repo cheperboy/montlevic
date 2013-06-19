@@ -576,8 +576,10 @@ private
       return date_raw
     elsif date_raw.class.eql?(DateTime)
       date = "#{date_raw.year}-#{date_raw.month}-#{date_raw.day}"
+    elsif date_raw.class.eql?(Date)
+      date = "#{date_raw.year}-#{date_raw.month}-#{date_raw.day}"
     else
-      invalid = "la date n'est au bon format"
+      invalid = "la date n'est pas au bon format #{date_raw.class.to_s}"
       add_invalid(invalid, id)
     end
   end  
@@ -763,10 +765,11 @@ private
     value
   end
 
-  # :invalid => :error.   add_error   if value is not valide
-  #             :warning  add_warning if value is not valide
+  # :invalid => :error.   add_error   if value is not valid
+  #             :warning  add_warning if value is not valid
   # :if_neg => :error/:warning
   def get_numeric_field(value, id, field, *args)
+    puts "#{field} : #{value.class.to_s}"
     opt = args.extract_options!
     if is_numeric?(value)
       if (value < 0)
@@ -783,9 +786,26 @@ private
         end
       end
       value
+      # branche elsif ci-dessous ajoutee car OpenOffice ne semble pas renvoyer de classe Integer pour les nombres
+      elsif (value.class.eql?(String) || value.class.eql?(Fixnum))
+        value = value.to_f
+        if (value < 0)
+          if (opt[:if_neg].eql?(:error)) # generate an error if value < 0
+            invalid = "#{field} doit etre > 0"
+            add_invalid(invalid, id)
+            nil
+          elsif opt[:if_neg].eql?(:warning) # generate a warning if value < 0
+            warning = "#{field} n'est pas > 0"
+            add_warning(warning, id)
+            nil
+          else
+            #return value even if value<0
+          end
+        end
+        value
     else
       if (opt[:invalid].eql?(:error)) # required => generate an error
-        invalid = "#{field} doit etre un nombre valide"
+        invalid = "#{field} doit etre un nombre valide (class : #{field.class.to_s})"
         add_invalid(invalid, id)
       elsif opt[:invalid].eql?(:warning) # not required => generate a warning
         warning = "#{field} n'est pas un nombre valide"
