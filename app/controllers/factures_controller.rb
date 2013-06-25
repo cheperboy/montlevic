@@ -124,8 +124,9 @@ class FacturesController < ApplicationController
     
     # transforme les checkbox Typeculture en Factoparcelles
     @facture.update_typecultures(params[:typecultures]) unless @facture.category.is_invest?
+
     #2012/12/16 ajout de reload pour que l'appel a uniq_parcelles fonctionne !
-    @facture.reload
+    @facture.reload()
     @facture.uniq_parcelles unless @facture.category.is_invest?
     respond_to do |format|
       if @facture.save

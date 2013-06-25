@@ -69,6 +69,28 @@
 		</td>
 	</tr>
 	
+	<!-- PRODUITS -->
+	<tr class=form_layout_title>
+		<td class=form_layout_title_left>Produits</td>
+		<td class=form_layout_title_right></td>
+	</tr>
+	<tr class=form_layout_content>
+		<td class=form_layout_content_left>
+			<table class=table_data>
+				<tr class=bold>
+					<th>Nom</th>
+					<th>Remise</th>
+				</tr>
+				<%- @vente.ventoproduits.each do |ventoproduit| -%>
+				<tr>
+					<td><%= link_to ventoproduit.produit.name, produit_path(ventoproduit.produit) %></td>
+					<td><%=h ventoproduit.value %> <%= euro %></td>
+				</tr>
+				<%- end -%>
+			</table>
+		</td>
+	</tr>
+	
 	<!-- DESC -->
 	<tr class=form_layout_title>
 		<td colspan=2 class=form_layout_title>informations</td>

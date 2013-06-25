@@ -3,11 +3,16 @@ class Vente < Charge
   has_many :parcelles, :through => :ventoparcelles
   has_many :ventoparcelles, :dependent => :destroy
 
+  # pour gestion des avoirs
+  has_many :ventoproduits, :dependent => :destroy
+  has_many :produits, :through => :ventoproduits
+
   belongs_to :category
   belongs_to :user
   belongs_to :saison
   
   accepts_nested_attributes_for :ventoparcelles, :allow_destroy => true
+  accepts_nested_attributes_for :ventoproduits, :allow_destroy => true #pour gestion des avoir produits
 
   validates_presence_of :name, :message => "Nom doit etre indique"
   validates_presence_of :category, :message => "Categorie doit etre indique"
@@ -34,7 +39,8 @@ class Vente < Charge
                         :if => Proc.new { |u| (!u.prix_unitaire.blank?) }
 
   validates_associated :ventoparcelles
-
+  validates_associated :ventoproduits
+ 
   # validates_each :prix, :prix_unitaire, :quantite do |model, attr, value|
   #   if value =~ /groucho|harpo|chico/i 
   #     model.errors.add(attr,  "You  can't be  serious,  #{value}" )

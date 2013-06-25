@@ -333,6 +333,15 @@ ActiveRecord::Schema.define(:version => 20120209075723) do
     t.float   "value",       :null => false
   end
 
+  create_table "ventoproduits", :force => true do |t|
+    t.integer  "saison_id"
+    t.integer  "produit_id"
+    t.integer  "vente_id"
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "verifs", :force => true do |t|
     t.string "name"
   end

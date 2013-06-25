@@ -176,5 +176,45 @@
 		<%- end -%>
 		</td>
 	</tr>
+
+	<!-- AVOIRS -->
+	<tr class=form_layout_title>
+		<td colspan=2 class=form_layout_title>Avoirs</td>
+	</tr>
+	<tr class=form_layout_content>
+		<td colspan=2class=form_layout_content>
+		<%- if @produit.ventoproduits.length > 0 -%>
+			<% total_remise = 0 %>
+			<table class=table_data>
+				<tr>
+					<th>Date</th>
+					<th>Ref</th>
+					<th>Nom</th>
+					<th>Remise</th>
+					<th></th>
+				</tr>
+				<%- @produit.ventoproduits.find(:all).each do |ventoproduit| -%>
+					<% total_remise += ventoproduit.value %>
+				<tr>
+					<td><%=h ventoproduit.vente.date.to_s %></td>
+					<td><%=h ventoproduit.vente.ref %></td>
+					<td><%= link_to ventoproduit.vente.name, vente_path(ventoproduit.vente) %></td>
+					<td class=right><%=h ventoproduit.value.display() %> <%= euro %></td>
+					<td><%= popup_show(image_tag('img-voir.png'), pop_content(ventoproduit.vente), "popup-show-content") %></td>
+				</tr>
+			<%- end -%>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td class=right><b><%= total_remise.display %> <%= euro %></b></td>
+				<td></td>
+			</tr>
+			</table>
+		<%- else -%>
+			<p>Aucun avoir associe a ce produit</p>
+		<%- end -%>
+		</td>
+	</tr>
 </table>
 

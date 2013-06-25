@@ -1,0 +1,12 @@
+<div class="ventoproduit">
+  <p>
+    <%= f.label :produit_id, "produit : " %>
+	<% unless Produit.find(:first).nil? %>
+	    <%= f.collection_select (:produit_id, Produit.find_by_saison(:all), :id, :name ) %>
+    <% end %>	
+	<%= f.label :value, "Valeur (euro): " %>
+    <%= f.text_field :value, :size => 3 %>
+	
+    <%= remove_link_unless_new_record(f) -%>
+  </p>
+</div>

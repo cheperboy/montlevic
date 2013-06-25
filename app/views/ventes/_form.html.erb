@@ -4,6 +4,7 @@
 
 <% content_for :jstemplates do -%>
 	<%= "var ventoparcelle='#{generate_template(f, :ventoparcelles)}'" %>
+	<%= "var ventoproduit='#{generate_template(f, :ventoproduits)}'" %>
 <% end -%>
 
 <table class=form_layout>
@@ -133,6 +134,23 @@
 			</table>
 		</td class=form_layout_content>
 	</tr>
+
+	<!-- PRODUITS -->
+	<tr class=form_layout_title>
+		<td colspan=2 class=form_layout_title>Produits<span class=link><%= link_to 'Ajouter un produit', '#ventoproduit', :class => "add_nested_item", :rel => "ventoproduits" %></span></td>
+	</tr>
+	<tr class=form_layout_content>
+		<td colspan=2 class=form_layout_content>
+			<div id="ventoproduits">
+				<% f.fields_for :ventoproduits do |ventoproduit_form| %>
+					<% unless f.object.new_record? %>
+						<%= render :partial => 'ventoproduit', :locals => { :f => ventoproduit_form } %>
+					<% end %>
+				<% end %>
+			</div>
+		</td class=form_layout_content>
+	</tr>
+
 
 </table>
 

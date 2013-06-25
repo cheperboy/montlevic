@@ -13,6 +13,10 @@ class Produit < ActiveRecord::Base
   has_many :putoproduits, :dependent => :destroy
   has_many :pulves, :through => :putoproduits
 
+  # pour gestion des avoirs
+  has_many :ventoproduits, :dependent => :destroy
+  has_many :ventes, :through => :ventoproduits
+
   belongs_to :saison
   belongs_to :category
   

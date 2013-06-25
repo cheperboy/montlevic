@@ -1,5 +1,3 @@
-# TODO http://localhost:3000/factures/151 comporte deux parcelle identiques (version b015)
-
 class Facture < Charge  
   
   COLS_NAME =         {1 => 'adu',  2 => 'star', 3=>'category_id', 4=>'date', 5=>'cout', 6=>'name', 7=>'ref_client', 8=>'ref', 9=>'factype_id', 10=>'desc', 11=>'type'}
