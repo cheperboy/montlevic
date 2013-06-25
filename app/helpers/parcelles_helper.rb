@@ -18,4 +18,5 @@ module ParcellesHelper
     return out
   end
 
+
 end

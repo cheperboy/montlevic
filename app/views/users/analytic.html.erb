@@ -35,20 +35,20 @@
 									:all, 
 									:conditions => ["saison_id = ? AND user_id = ?", Setting.find(:first).saison_id, @user.id]) -%>								
 								<% sum_debug = 0 %>
-								<%- @pulves.each do |pulve| -%>
-									<%- if pulve.putoproduits[0].produit.category.parent.eql?(category) -%>
-										<% sum += pulve.get_cout_total_passage%>
-										<% sum_total += pulve.get_cout_total_passage%>
+								<%#- @pulves.each do |pulve| -%>
+									<%#- if pulve.putoproduits[0].produit.category.parent.eql?(category) -%>
+										<%# sum += pulve.get_cout_total_passage%>
+										<%# sum_total += pulve.get_cout_total_passage%>
 										<tr>
 											<td class=left></td>
-											<td class=left><%=h pulve.date %></td>
-											<td class=left><%= link_to pulve.name, pulve_path(pulve) %></td>
-											<td class=right><%=h delim(pulve.get_cout_ha_passage) %> <%= euro_ha %></td>
-											<td class=right><%=h pulve.sum_surfaces %> <%=ha %></td>
-											<td class=right><%=h delim(pulve.get_cout_total_passage) %> <%= euro %></td>
+											<td class=left><%#=h pulve.date %></td>
+											<td class=left><%#= link_to pulve.name, pulve_path(pulve) %></td>
+											<td class=right><%#=h delim(pulve.get_cout_ha_passage) %> <%= euro_ha %></td>
+											<td class=right><%#=h pulve.sum_surfaces %> <%=ha %></td>
+											<td class=right><%#=h delim(pulve.get_cout_total_passage) %> <%= euro %></td>
 										</tr>
-				 					<%- end -%>
-			 					<%- end -%>
+				 					<%#- end -%>
+			 					<%#- end -%>
 								<tr>
 									<td class=left><b>Somme <%=h category.name %></td>
 									<td class=left></td>

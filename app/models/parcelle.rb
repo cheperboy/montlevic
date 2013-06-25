@@ -94,6 +94,48 @@ class Parcelle < ActiveRecord::Base
     return percent
   end
 
+  # ----- calculs de synthese -----
+  # somme des cout de tout les produits pulverises sur la parcelle
+  def get_cout_ha_produits
+	  sum = 0
+	  self.putoparcelles.each do |putoparcelle|
+  		putoparcelle.pulve.putoproduits.each do |putoproduit|
+  			sum += putoproduit.get_cout_ha_parcelle(self)
+      end
+    end
+    sum
+  end
+
+  # somme des cout de tout les produits pulverises sur la parcelle
+  def get_cout_total_produits
+	  sum = 0
+	  self.putoparcelles.each do |putoparcelle|
+  		putoparcelle.pulve.putoproduits.each do |putoproduit|
+  			sum += putoproduit.get_cout_total_parcelle(self)
+      end
+    end
+    sum
+  end
+
+  # somme des cout de toutes les prestations pulve sur la parcelle
+  def get_cout_ha_passages
+	  sum = 0
+	  self.putoparcelles.each do |putoparcelle|
+  		sum += putoparcelle.pulve.get_cout_ha_passage_col(self)
+    end
+    sum
+  end
+
+  # somme des cout de toutes les prestations pulve sur la parcelle
+  def get_cout_total_passages
+	  sum = 0
+	  self.putoparcelles.each do |putoparcelle|
+  		sum += putoparcelle.pulve.get_cout_total_passage_col(self)
+    end
+    sum
+  end
+
+
   def self.export_by_saison
     tete = Spreadsheet::Format.new    :color => :blue,
                                       :weight => :bold,

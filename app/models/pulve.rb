@@ -165,8 +165,6 @@ class Pulve < Charge
   # ----- FIN couts prestation -----
 
 
-
-
   # # retourne le cout total du produit (dosage x prix du littre) 
   # # uniquement pour affichage
   # def get_cout_total_produit
