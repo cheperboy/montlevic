@@ -145,23 +145,24 @@ class Application < ActiveRecord::Base
   PRODUIT_HEAD = 
   [
     # KEY                       VALUE         UNIT    FILTER        TYPE          TRI     TRI_KEY
-    ['star',                    'star',       '',     false,        'default',    true,   'star'        ],
-    ['stock_vs_used_pp',        'S',          '',     false,         false,        true,   ''            ],
-   	['id',                      'id',         '',     true,         'numeric',    true,   'id'          ],
-   	['category_name',           'categorie',  '',     true,         'default',    true,   'category_id' ],
-   	['name',                    'nom',        '',     true,         'default',    true,   'name'        ],
-    ['get_cout_total',          'Achat',      '€',    true,         'numeric',    true,   ''            ], 
-   	['get_quantite',            'Quantite',   '',     true,         'numeric',    true,   ''            ],
-   	['unit',                    '',           '',     true,         false,        true,   'unit'        ],
+    ['star',                            'star',       '',     false,        'default',    true,   'star'        ],
+    ['stock_vs_used_pp',                'S',          '',     false,         false,        true,   ''            ],
+   	['id',                              'id',         '',     true,         'numeric',    true,   'id'          ],
+   	['category_name',                   'categorie',  '',     true,         'default',    true,   'category_id' ],
+   	['name',                            'nom',        '',     true,         'default',    true,   'name'        ],
+    ['get_cout_total',                  'Achat',      '€',    true,         'numeric',    true,   ''            ], 
+   	['get_quantite',                    'Quantite',   '',     true,         'numeric',    true,   ''            ],
+   	['unit',                            '',           '',     true,         false,        true,   'unit'        ],
 
-    ['get_stock',               'Stock',      '',     true,         'numeric',    true,   ''            ], 
-   	['unit',                    '',           '',     false,        false,        true,   'unit'        ],
-    ['stock_percent_pp',        'reste',      '%',    true,         'numeric',    true,   ''            ],
+    ['get_stock',                       'Stock',      '',     true,         'numeric',    true,   ''            ], 
+   	['unit',                            '',           '',     false,        false,        true,   'unit'        ],
+    ['stock_percent_pp',                'reste',      '%',    true,         'numeric',    true,   ''            ],
 
-    ['get_prix_unitaire',       'Prix',       '',     true,         'numeric',    true,   ''            ],
-    ['get_prix_unitaire_unit',  '',           '',     false,        false,        false,   ''            ], 
-    ['number_of_use',           'passages',   '',     false,        'numeric',    true,   ''            ],
-    ['adu',                     'adu',        '',     false,        'default',    true,   'adu'         ]
+    ['get_prix_unitaire_avant_remise',  'Prix',       '',     true,         'numeric',    true,   ''            ],
+    ['get_prix_unitaire',               'Remise',     '',     true,         'numeric',    true,   ''            ],
+    ['get_prix_unitaire_unit',          '',           '',     false,        false,        false,   ''            ], 
+    ['number_of_use',                   'passages',   '',     false,        'numeric',    true,   ''            ],
+    ['adu',                             'adu',        '',     false,        'default',    true,   'adu'         ]
   ]
       
   # XLS format excel

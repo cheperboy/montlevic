@@ -119,7 +119,28 @@ class Produit < ActiveRecord::Base
   end
   
   # ----- Calculs -----  
+  
+  # prix unitaire tenant compte des avoirs
   def get_prix_unitaire
+    sum_cout = 0
+    sum_quantite = 0
+    prix_unitaire = 0
+    unless self.ventoproduits.count == 0      
+      self.ventoproduits.each do |ventopro| 
+        sum_cout -= ventopro.value
+      end
+    end
+    unless self.protofactures.count == 0      
+      self.protofactures.each do |protofac| 
+        sum_cout += protofac.prix_unit * protofac.quantite
+        sum_quantite += protofac.quantite
+      end
+      prix_unitaire = sum_cout / sum_quantite      
+    end
+    return prix_unitaire
+  end
+
+  def get_prix_unitaire_avant_remise
     sum_cout = 0
     sum_quantite = 0
     prix_unitaire = 0
@@ -171,10 +192,12 @@ class Produit < ActiveRecord::Base
     return ("#{value.display}")
   end
     
+  # methode non utilisee
   def get_cout_total
     cout_total = 0
     unless self.protofactures.count.eql?(0)
       self.protofactures.each {|protofac| cout_total += protofac.prix_unit * protofac.quantite}
+      self.ventoproduits.each {|ventopro| cout_total -= ventopro.value}
       cout_total
     end
   end
@@ -244,6 +267,31 @@ class Produit < ActiveRecord::Base
     return count.to_s
   end  
   
+  # cout produit /ha pour un typeculture
+  # somme des cout des putoproduit /ha sur les parcelles de ce type de culture
+  def get_cout_ha_typeculture(typeculture)
+    cout_ha_typeculture = 0
+    typeculture.parcelles.find_by_saison(:all).each do |parcelle|
+      parcelle.pulves.each do |pulve|
+        pulve.putoproduits.each do |putoproduit|
+          if (putoproduit.produit.eql?(self))
+            # parcelle.surface/pulve.sum_surfaces : coeff pour prendre en copte le cout sur la parcelle 
+            # et non pas l'ensemble du cout total du putoproduit (car un putoproduit peux etre sur plusieurs parcelle) 
+            # /typeculture.surface : on veut le cout par ha (avec ha = surface du typeculture)
+            cout_ha_typeculture +=  (parcelle.surface/pulve.sum_surfaces) * putoproduit.get_cout_total / typeculture.surface
+          end
+        end
+      end
+    end
+    return cout_ha_typeculture
+  end
+
+  # cout produit total pour un typeculture
+  # somme des cout des putoproduit sur les parcelles de ce type de culture
+  def get_cout_total_typeculture(typeculture)
+    return(typeculture.surface * self.get_cout_ha_typeculture(typeculture))
+  end
+    
   # ----- Verif -----
   def stock_vs_used?
     return (get_quantite < get_used_quantite)

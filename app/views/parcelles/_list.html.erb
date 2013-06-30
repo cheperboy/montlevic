@@ -1,96 +1,101 @@
-<table class=table_data>
-  <tr class=bold>
-    <td>Culture</td>
-    <td>Nom</td>
-    <td class=right>surface Utile (Ha)</td>
-    <td class=right>surface pac (Ha)</td>
-    <td></td>
-	<% if admin? %>
-		<td></td>
-		<td></td>
-	<% end %>
-  </tr>
+<% if @typecultures.nil? %>
+	<p>pas de parcelles</p>
+<% else %>
 
-<% sum_surfaces = 0 %>
-<% surfaces = {} %>
-<% sum_surfaces_utile = 0 %>
-<% surfaces_utile = {} %>
-<% @typecultures.each do |typeculture| %>
-	<% surfaces[typeculture.name.to_sym] = 0 %>
-	<% surfaces_utile[typeculture.name.to_sym] = 0 %>
-<% end %>
-
-<% @typecultures.each do |typeculture| %>
-	<% typeculture.parcelles.find_by_saison(:all).each do |parcelle| %>
-		<% sum_surfaces += parcelle.surface %>
-		<% surfaces[parcelle.typeculture.name.to_sym] += parcelle.surface %>
-		<% sum_surfaces_utile += parcelle.surface_pac %>
-		<% surfaces_utile[parcelle.typeculture.name.to_sym] += parcelle.surface_pac %>
-	  <tr class=color_culture_<%= parcelle.typeculture.code %>>
-	    <td><%= parcelle.typeculture.name %></td>
-	    <td><%= parcelle.name %></td>
-	    <td class=right><%= parcelle.surface.display(2) %></td>
-	    <td class=right><%= parcelle.surface_pac.display(2) %></td>
-	    <td><%= link_to_show(parcelle.class, parcelle.id) %></td>
-	
+	<table class=table_data>
+	  <tr class=bold>
+	    <td>Culture</td>
+	    <td>Nom</td>
+	    <td class=right>surface Utile (Ha)</td>
+	    <td class=right>surface pac (Ha)</td>
+	    <td></td>
 		<% if admin? %>
-		    <td><%= link_to_edit(parcelle.class, parcelle.id) %></td>
-		    <td><%= link_to_delete(parcelle.class, parcelle.id) %></td>
+			<td></td>
+			<td></td>
 		<% end %>
-  
 	  </tr>
+
+	<% sum_surfaces = 0 %>
+	<% surfaces = {} %>
+	<% sum_surfaces_utile = 0 %>
+	<% surfaces_utile = {} %>
+	<% @typecultures.each do |typeculture| %>
+		<% surfaces[typeculture.name.to_sym] = 0 %>
+		<% surfaces_utile[typeculture.name.to_sym] = 0 %>
 	<% end %>
-	<tr class=color_culture_<%= typeculture.code %>_strong>
-	  <td><b>SAU <%= typeculture.name %></b></td>
-	  <td></td>
-	  <td class=right><b><%= surfaces[typeculture.name.to_sym].display(2) %></b></td>
-	  <td class=right><b><%= surfaces_utile[typeculture.name.to_sym].display(2) %></b></td>
-	  <td></td>
-	<% if admin? %>
-	    <td></td>
-	    <td></td>
-	<% end %>
-	</tr>
-	<!-- TR vide -->
-	<tr>
-		  <td></td>
-		  <td class=right></td>
-		  <td class=right></td>
-		  <td></td>
-		  <td></td>
+
+	<% @typecultures.each do |typeculture| %>
+		<% typeculture.parcelles.find_by_saison(:all).each do |parcelle| %>
+			<% sum_surfaces += parcelle.surface %>
+			<% surfaces[parcelle.typeculture.name.to_sym] += parcelle.surface %>
+			<% sum_surfaces_utile += parcelle.surface_pac %>
+			<% surfaces_utile[parcelle.typeculture.name.to_sym] += parcelle.surface_pac %>
+		  <tr class=color_culture_<%= parcelle.typeculture.code %>>
+		    <td><%= parcelle.typeculture.name %></td>
+		    <td><%= parcelle.name %></td>
+		    <td class=right><%= parcelle.surface.display(2) %></td>
+		    <td class=right><%= parcelle.surface_pac.display(2) %></td>
+		    <td><%= link_to_show(parcelle.class, parcelle.id) %></td>
+	
 			<% if admin? %>
-			    <td></td>
-			    <td></td>
+			    <td><%= link_to_edit(parcelle.class, parcelle.id) %></td>
+			    <td><%= link_to_delete(parcelle.class, parcelle.id) %></td>
 			<% end %>
-	</tr>
+  
+		  </tr>
+		<% end %>
+		<tr class=color_culture_<%= typeculture.code %>_strong>
+		  <td><b>SAU <%= typeculture.name %></b></td>
+		  <td></td>
+		  <td class=right><b><%= surfaces[typeculture.name.to_sym].display(2) %></b></td>
+		  <td class=right><b><%= surfaces_utile[typeculture.name.to_sym].display(2) %></b></td>
+		  <td></td>
+		<% if admin? %>
+		    <td></td>
+		    <td></td>
+		<% end %>
+		</tr>
+		<!-- TR vide -->
+		<tr>
+			  <td></td>
+			  <td class=right></td>
+			  <td class=right></td>
+			  <td></td>
+			  <td></td>
+				<% if admin? %>
+				    <td></td>
+				    <td></td>
+				<% end %>
+		</tr>
+	<% end %>
+
+
+
+		<!-- TR vide -->
+		<tr>
+			<td></td>
+			<td class=right></td>
+			<td class=right></td>
+			<td></td>
+			<td></td>
+			<% if admin? %>
+				<td></td>
+				<td></td>
+			<% end %>
+		</tr>
+
+		<!-- TR TOTAL SAU -->
+		<tr class=bold>
+			<td>Total SAU</td>
+			<td></td>
+			<td class=right><%= sum_surfaces %></td>
+			<td class=right><%= sum_surfaces_utile %></td>
+			<td></td>
+			<td></td>
+			<% if admin? %>
+				<td></td>
+				<td></td>
+			<% end %>
+		</tr>
+	</table>
 <% end %>
-
-
-
-	<!-- TR vide -->
-	<tr>
-		<td></td>
-		<td class=right></td>
-		<td class=right></td>
-		<td></td>
-		<td></td>
-		<% if admin? %>
-			<td></td>
-			<td></td>
-		<% end %>
-	</tr>
-
-	<!-- TR TOTAL SAU -->
-	<tr class=bold>
-		<td>Total SAU</td>
-		<td></td>
-		<td class=right><%= sum_surfaces %></td>
-		<td class=right><%= sum_surfaces_utile %></td>
-		<td></td>
-		<td></td>
-		<% if admin? %>
-			<td></td>
-			<td></td>
-		<% end %>
-	</tr>
-</table>

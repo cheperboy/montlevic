@@ -17,6 +17,35 @@ module ParcellesHelper
     out = '<td style="color: ' + color + ';">' + percent.display(2) + ' %</td>'
     return out
   end
-
+  
+  def parcelle_print_produit(cat, produit, parcelle)
+    out = ""
+    sum_produit = 0
+    print = false
+    # cat.produits.find_by_saison.each do |produit|
+    #   produit.putoproduits.each do |putoproduit|
+    #     if putoproduit.parcelle.eql?(parcelle)
+    
+    parcelle.putoparcelles.each do |putoparcelle|
+      putoparcelle.pulve.putoproduits.each do |putoproduit|
+        print = false
+        if putoproduit.produit.category.eql?(cat)
+          print = true
+          sum_produit += putoproduit.get_cout_ha
+        end
+      end
+    end
+    if print.eql?(true)
+      out << "<td>" << "#{produit.name}" << "</td>"
+      out << "<td>" << "#{sum_produit}" << "</td>"
+    end
+    return out
+  end
+    # parcelle.putoparcelles.each do |putoparcelle|
+    #   putoparcelle.pulve.putoproduits.each do |putoproduit|
+    #         if putoproduit.produit.category.eql?(cat)
+    #           sum_produit += putoproduit.get_cout_ha
+    #         end
+      
 
 end

@@ -24,6 +24,7 @@
 				<%= tr_text('Code', 			@produit.code) %>
 				<%= tr_text('Categorie', 		@produit.category.name) %>
 				<%= tr_text('Prix unitaire', 	@produit.get_prix_unitaire.display(2), @produit.get_prix_unitaire_unit) %>
+				<%= tr_text('Prix unitaire<br>Avant remise', 	@produit.get_prix_unitaire_avant_remise.display(2), @produit.get_prix_unitaire_unit) %>
 			</table>
 		</td>
 		<td class=form_layout_content_right>

@@ -1,0 +1,31 @@
+<% @parcelle.putoparcelles.each do |putoparcelle| %>
+	<% count = 0 %>
+	<% putoparcelle.pulve.putoproduits.each do |putoproduit| %>
+		<% if cat.eql?(putoproduit.produit.category) %>
+		  <tr>
+		    <td></td>
+		    <td></td>
+		    <td><%= putoproduit.produit.name %></td>
+		    <td class=value><%= delim(putoproduit.get_cout_ha_parcelle(@parcelle)) %></td>
+			<td class=unit><%= euro_ha %></td>
+		    <td class=value><%= delim(putoproduit.get_cout_total_parcelle(@parcelle)) %></td>
+			<td class=unit><%= euro %></td>
+		  </tr>
+		<% end %>
+	<% end %>
+<% end %>
+<% cat.children.each do |sub_cat| %>
+<tr>
+    <td></td>
+    <td colspan=6></td>
+</tr>
+	<tr>
+	    <td></td>
+	    <td><b><%= sub_cat.name %></b></td>
+	    <td></td>
+	    <td colspan=2></td>
+	    <td colspan=2></td>
+	</tr>
+	<%= render(:partial => "parcelles/produit_par_cat/produit_par_cat_recurs", :locals => {:parcelle => @parcelle, :cat => sub_cat }) %>
+<% end %>
+

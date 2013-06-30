@@ -1,0 +1,32 @@
+<% sum = calculate_produit_by_cat_for_parcelle %>
+<table class=table_data>
+  <tr class=bold>
+    <th colspan=2>Categorie</th>
+    <th>Produit</th>
+    <th colspan=2><%= euro_ha %></th>
+    <th colspan=2><%= euro %></th>
+  </tr>
+  <tr>
+    <td colspan=3><b>somme</b></td>
+    <td class=value><b><%= delim(sum[:ha][:total]) %></b></td>
+	<td class=unit><b><%= euro_ha %></b></td>
+    <td class=value><b><%= delim(sum[:total][:total]) %></b></td>
+	<td class=unit><b><%= euro %></b></td>
+</tr>
+
+	<% Category.produits_cats.each do |cat| %>
+	<tr>
+	    <td colspan=7></td>
+	</tr>
+	<tr>
+	    <td><b><%= cat.name %></b></td>
+	    <td></td>
+	    <td></td>
+	    <td class=value><b><%= delim(sum[:ha]["#{cat.code.to_sym}"]) %></b></td>
+		<td class=unit><b><%= euro_ha %></b></td>
+	    <td class=value><b><%= delim(sum[:total]["#{cat.code.to_sym}"]) %></b></td>
+		<td class=unit><b><%= euro %></b></td>
+	</tr>
+	<%= render(:partial => "parcelles/produit_par_cat/produit_par_cat_recurs", :locals => {:parcelle => @parcelle, :cat => cat, :sum => sum}) %>	
+<% end %>		
+</table>

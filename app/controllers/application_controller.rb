@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   def add_errors_to_model(model_errors)
     flash.now[:error] = 'Données Invalide :<br>'
     model_errors.each do |name, message|
-      flash.now[:error] += '- ' + message.to_s + '<br>'
+      flash.now[:error] += name + ' - ' + message.to_s + '<br>'
     end
   end
 

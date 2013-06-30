@@ -1,20 +1,24 @@
+<% title "Type de culture  “#{@typeculture.name}” - #{@typeculture.surface.display} Ha" %>
 
-<%= link_to 'Back', typecultures_path %>
-
-<table class=table_data>
-  <tr class=bold>
-    <td>id</td>
-    <td>Parcelle</td>
-    <td>surface vraie</td>
-    <td>surface pac</td>
-  </tr>
-<% @typeculture.parcelles.each do |parcelle| %>
-  <tr>
-    <td><%= parcelle.id %></td>
-    <td><%= parcelle.name %></td>
-    <td class='right'><%= parcelle.surface.display(2) %> ha</td>
-    <td class='right'><%= parcelle.surface_pac.display(2) %>ha</td>
-    <td><%= link_to_show (Parcelle, parcelle) %></td>
-  </tr>
-<% end %>
+<h3>Parcelles</h3>
+	<table class=table_data>
+	  <tr class=bold>
+	    <th>id</th>
+	    <th>Parcelle</th>
+	    <th>surface vraie</th>
+	    <th>surface pac</th>
+	  </tr>
+	<% @typeculture.parcelles.find_by_saison(:all).each do |parcelle| %>
+	  <tr>
+	    <td><%= parcelle.id %></td>
+	    <td><%= parcelle.name %></td>
+	    <td class='right'><%= parcelle.surface.display(2) %> ha</td>
+	    <td class='right'><%= parcelle.surface_pac.display(2) %>ha</td>
+	    <td><%= link_to_show (Parcelle, parcelle) %></td>
+	  </tr>
+	<% end %>
 </table>
+
+
+<h3>Couts des produits par categorie</h3>
+<%= render(:partial => "typecultures/produit_par_cat/produit_par_cat", :locals => {:typeculture => @typeculture }) %>

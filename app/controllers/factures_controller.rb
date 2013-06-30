@@ -126,10 +126,11 @@ class FacturesController < ApplicationController
     @facture.update_typecultures(params[:typecultures]) unless @facture.category.is_invest?
 
     #2012/12/16 ajout de reload pour que l'appel a uniq_parcelles fonctionne !
-    @facture.reload()
-    @facture.uniq_parcelles unless @facture.category.is_invest?
+    #2013/06 bug avec reload : deplace dans respond_to do |format|
     respond_to do |format|
       if @facture.save
+        @facture.reload()
+        @facture.uniq_parcelles unless @facture.category.is_invest?
         flash[:notice] = 'Enregistrement facture OK.'
         format.html { redirect_to(factures_url) }
       else

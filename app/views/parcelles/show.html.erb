@@ -52,7 +52,7 @@
 <% if @parcelle.putoparcelles.count == 0 %>
 	<p>Pas de traitements</p>
 <% else %>
-	<h3>Traitements</h3>
+	<h3>Traitements phyto et engrais</h3>
 	<table class=table_data>
 	  <tr class=bold>
 	    <td colspan=7></td>
@@ -167,123 +167,44 @@
 	</table>
 <% end %>
 
-<h3>Couts par type de produits</h3>
-	<table class=table_data>
-	  <tr class=bold>
-	    <th>Categorie</th>
-	    <th>Nom</th>
-	    <th class=value>Dosage</th>
-	    <th class=unit></th>
-	    <th class=value>Ha</th>
-	    <th class=unit></th>
-	    <th class=value>Total</th>
-	    <th class=unit></th>
-	  </tr>
-	
-		<% Category.putoproduits_cats.each do |produit_cat| %>
-			<% sum_ha = 0 %>
-			<% sum_total = 0 %>
-		  <tr>
-		    <td><%= produit_cat.name %></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		</tr>
-		<% produit_cat.descendants.each do |sub_produit_cat| %>
-			<% sub_sum_ha = 0 %>
-			<% sub_sum_total = 0 %>
-		  <tr>
-		    <td></td>
-		    <td><%= sub_produit_cat.name %></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		</tr>
+
+<% sum_ha = Hash.new %>
+<% sum_total = Hash.new %>
+<% Category.produits_cats.each do |produit_cat| %>
+	<% sum_ha["#{produit_cat.code.to_sym}"] = 0 %>
+	<% sum_total["#{produit_cat.code.to_sym}"] = 0 %>
+	<% produit_cat.descendants.each do |sub_produit_cat| %>
+		<% sum_ha["#{sub_produit_cat.code.to_sym}"] = 0 %>
+		<% sum_total["#{sub_produit_cat.code.to_sym}"] = 0 %>
 		<% @parcelle.putoparcelles.each do |putoparcelle| %>
-			<% count = 0 %>
 			<% putoparcelle.pulve.putoproduits.each do |putoproduit| %>
-				
 				<% if sub_produit_cat.eql?(putoproduit.produit.category) %>
-				
-					<% sum_ha += putoproduit.get_cout_ha_parcelle(@parcelle) %>
-					<% sum_total += putoproduit.get_cout_total_parcelle(@parcelle) %>
-				  <tr>
-				    <td></td>
-				    <td></td>
-				    <td><%= putoproduit.produit.name %></td>
-				    <td class=value><%= putoproduit.dosage.display %></td> 
-					<td class=unit><%= putoproduit.produit.get_dosage_unit %></td>
-				    <td class=value><%= delim(putoproduit.get_cout_ha_parcelle(@parcelle)) %></td>
-					<td class=unit><%= euro_ha %></td>
-				    <td class=value><%= delim(putoproduit.get_cout_total_parcelle(@parcelle)) %></td>
-					<td class=unit><%= euro %></td>
-				  </tr>
+					<% sum_ha["#{sub_produit_cat.code.to_sym}"] += putoproduit.get_cout_ha_parcelle(@parcelle) %>
+					<% sum_ha["#{sub_produit_cat.code.to_sym}"] += putoproduit.get_cout_total_parcelle(@parcelle) %>
 				<% end %>
 			<% end %>
 		<% end %>
-		
+
 		<% sub_produit_cat.descendants.each do |sub_sub_produit_cat| %>
 			<% sub_sub_sum_ha = 0 %>
 			<% sub_sub_sum_total = 0 %>
-		  <tr>
-		    <td></td>
-		    <td></td>
-		    <td><%= sub_sub_produit_cat.name %></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		</tr>
 			<% @parcelle.putoparcelles.each do |putoparcelle| %>
 				<% count = 0 %>
-				<% putoparcelle.pulve.putoproduits.each do |putoproduit| %>
-					
+				<% putoparcelle.pulve.putoproduits.each do |putoproduit| %>			
 					<% if sub_sub_produit_cat.eql?(putoproduit.produit.category) %>
-					
 						<% sum_ha += putoproduit.get_cout_ha_parcelle(@parcelle) %>
 						<% sum_total += putoproduit.get_cout_total_parcelle(@parcelle) %>
-					  <tr>
-					    <td><%= putoproduit.category.name %></td>
-					    <td><%= putoproduit.produit.name %></td>
-					    <td class=value><%= putoproduit.dosage.display %></td> 
-						<td class=unit><%= putoproduit.produit.get_dosage_unit %></td>
-					    <td class=value><%= delim(putoproduit.get_cout_ha_parcelle(@parcelle)) %></td>
-						<td class=unit><%= euro_ha %></td>
-					    <td class=value><%= delim(putoproduit.get_cout_total_parcelle(@parcelle)) %></td>
-						<td class=unit><%= euro %></td>
-					  </tr>
 					<% end %>
 				<% end %>
 			<% end %>
-			  <tr>
-			    <td></td>
-			    <td></td>
-			    <td class=value></td> 
-				<td class=unit></td>
-			    <td class=value><%= delim(sum_ha) %></td>
-				<td class=unit><%= euro_ha %></td>
-			    <td class=value><%= delim(sum_total) %></td>
-				<td class=unit><%= euro %></td>
-			  </tr>
-			<% end %>		
-			<% end %>		
-			<% end %>		
-	</table>
+		<% end %>		
+	<% end %>		
+<% end %>		
 
+
+
+<h3>Couts des produits par categorie</h3>
+<%= render(:partial => "parcelles/produit_par_cat/produit_par_cat", :locals => {:parcelle => @parcelle }) %>
 
 <!-- google map API KEY : ABQIAAAAcAtPXDKlfSPAkRaJoUZr1xRg9zdhxWAFKJfUUb-Z7xGwcbcwoBTHXxm4cI8tZoFgEcFaKKHII6hKvg -->
 

@@ -89,7 +89,6 @@ class Putoproduit < Charge
     return cout_ha_zone
   end
     
-
   def get_cout_total_parcelle(parcelle)
     return(parcelle.surface * self.get_cout_ha_parcelle(parcelle))
   end

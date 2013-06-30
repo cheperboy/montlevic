@@ -1,0 +1,43 @@
+<% sum = calculate_produit_by_cat_for_typeculture(Setting.find(1).saison) %>
+<!-- les_produits = liste de tout les produits utilises sur un type de culture -->
+<% les_produits = [] %>
+<% @typeculture.parcelles.find_by_saison(:all).each do |parcelle| %>
+	<% parcelle.pulves.each do |pulve| %>
+		<% pulve.putoproduits.each do |putoproduit| %>
+			<% les_produits << putoproduit.produit %>
+		<% end %>		
+	<% end %>		
+<% end %>		
+<% les_produits.uniq! %>
+
+<table class=table_data>
+  <tr class=bold>
+    <th colspan=2>Categorie</th>
+    <th>Produit</th>
+    <th colspan=2><%= euro_ha %></th>
+    <th colspan=2><%= euro %></th>
+  </tr>
+  <tr>
+    <td colspan=3><b>somme</b></td>
+    <td class=value><b><%= delim(sum[:ha][:total]) %></b></td>
+	<td class=unit><b><%= euro_ha %></b></td>
+    <td class=value><b><%= delim(sum[:total][:total]) %></b></td>
+	<td class=unit><b><%= euro %></b></td>
+</tr>
+
+<% Category.produits_cats.each do |cat| %>
+	<tr>
+	    <td colspan=7></td>
+	</tr>
+	<tr>
+	    <td><b><%= cat.name %></b></td>
+	    <td></td>
+	    <td></td>
+	    <td class=value><b><%= delim(sum[:ha]["#{cat.code.to_sym}"]) %></b></td>
+		<td class=unit><b><%= euro_ha %></b></td>
+	    <td class=value><b><%= delim(sum[:total]["#{cat.code.to_sym}"]) %></b></td>
+		<td class=unit><b><%= euro %></b></td>
+	</tr>
+	<%= render(:partial => "typecultures/produit_par_cat/produit_par_cat_recurs", :locals => {:typeculture => @typeculture, :cat => cat, :sum => sum, :les_produits => les_produits}) %>	
+<% end %>		
+</table>

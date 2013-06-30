@@ -16,9 +16,6 @@ class Ventoproduit < ActiveRecord::Base
   
   validates_presence_of :value, :message => "la valeure doit etre definie"
   validates_numericality_of :value, :message => "n'est pas un nombre"
-
-  validates_presence_of :quantite, :message => "indiquer le dosage ou la quantite ou cocher destocker",
-                        :if => Proc.new { |u| (u.dosage.blank? && u.destocker.eql?(0)) }
   
   # Callbacks
   def before_save 
