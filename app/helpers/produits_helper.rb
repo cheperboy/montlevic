@@ -78,16 +78,11 @@ module ProduitsHelper
     return sum
   end
   def calculate_produit_by_cat_for_typeculture_recurs(sum, cat, saison)
-    # @typeculture.parcelles.find_by_saison(:all).each do |parcelle|
-    #   parcelle.pulves.each do |pulve|
-    #     pulve.putoproduits.each do |putoproduit|
-        saison.produits.each do |produit|
-      		if ((produit.category.is_descendant_of?(cat)) || (produit.category.eql?cat))
-    				sum[:ha]["#{cat.code.to_sym}"] += produit.get_cout_ha_typeculture(@typeculture)
-    				sum[:total]["#{cat.code.to_sym}"] += produit.get_cout_total_typeculture(@typeculture)
-    		  end
-      #         end
-      # end
+  saison.produits.each do |produit|
+		if ((produit.category.is_descendant_of?(cat)) || (produit.category.eql?cat))
+			sum[:ha]["#{cat.code.to_sym}"] += produit.get_cout_ha_typeculture(@typeculture)
+			sum[:total]["#{cat.code.to_sym}"] += produit.get_cout_total_typeculture(@typeculture)
+	  end
 	  end
   	if cat.has_children?
   	  cat.children.each do |sub_cat|
@@ -100,18 +95,11 @@ module ProduitsHelper
     # init
     sum[:total][:total] = 0
     sum[:ha][:total] = 0
+    # calcul
     saison.produits.each do |produit|
 			sum[:ha][:total] += produit.get_cout_ha_typeculture(@typeculture)
 			sum[:total][:total] += produit.get_cout_total_typeculture(@typeculture)
 	  end
-    # @typeculture.parcelles.find_by_saison(:all).each do |parcelle|
-    #   parcelle.pulves.each do |pulve|
-    #         pulve.putoproduits.each do |putoproduit|
-    #           sum[:ha][:total] += putoproduit.get_cout_ha_typeculture(@typeculture)
-    #           sum[:total][:total] += putoproduit.get_cout_total_typeculture(@typeculture)
-    #         end
-    #       end
-    #     end
     return sum
   end
 

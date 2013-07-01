@@ -34,6 +34,10 @@
 .table_data td.bg-green 	{ background-color: green; color: #000}
 .table_data td.bg-orange 	{ background-color: orange; color: #000}
 
+.table_data tr.bg-cat 		{ background-color: #CCE6FF;}
+.table_data tr.bg-subcat 	{ background-color: #EBF5FF;}
+.table_data td.bg-white 	{ background-color: white;}
+
 .table_data th.value, td.value {
 	border-right-color :transparent;
 	text-align: right;
@@ -43,6 +47,8 @@
 text-align: left;
 padding-left: 0px;
 }
+
+
 
 /* End : Table Datas */
 

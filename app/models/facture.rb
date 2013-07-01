@@ -243,6 +243,8 @@ class Facture < Charge
     self.save!
   end
     
+    
+    
 # ----- Verifs ------
   # ces methodes retournent true si erreur
   # =>                      false si pas d'erreur  

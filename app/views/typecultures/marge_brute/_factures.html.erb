@@ -1,0 +1,31 @@
+<table class=table_data>
+  <tr class=bold>
+    <th colspan=2>Categorie</th>
+    <th>facture</th>
+    <th colspan=2><%= euro_ha %></th>
+    <th colspan=2><%= euro %></th>
+  </tr>
+  <tr>
+    <td colspan=3><b>somme</b></td>
+    <td class=value><b><%= delim(sum[:ha][:factures]) %></b></td>
+	<td class=unit><b><%= euro_ha %></b></td>
+    <td class=value><b><%= delim(sum[:total][:factures]) %></b></td>
+	<td class=unit><b><%= euro %></b></td>
+</tr>
+
+<% sum[:factures][:cats].each do |cat| %>
+	<tr>
+	    <td colspan=7></td>
+	</tr>
+	<tr class=bg-cat>
+	    <td><b><%= cat.name %></b></td>
+	    <td></td>
+	    <td></td>
+	    <td class=value><b><%= delim(sum[:factures][:ha]["#{cat.code.to_sym}"]) %></b></td>
+		<td class=unit><b><%= euro_ha %></b></td>
+	    <td class=value><b><%= delim(sum[:factures][:total]["#{cat.code.to_sym}"]) %></b></td>
+		<td class=unit><b><%= euro %></b></td>
+	</tr>
+<%= render(:partial => "typecultures/marge_brute/factures_recurs", :locals => {:typeculture => @typeculture, :cat => cat, :sum => sum }) %>	
+<% end %>		
+</table>

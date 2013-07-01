@@ -22,3 +22,13 @@
 
 <h3>Couts des produits par categorie</h3>
 <%= render(:partial => "typecultures/produit_par_cat/produit_par_cat", :locals => {:typeculture => @typeculture }) %>
+
+<h2>marge brute</h2>
+<% sum = calculate_marge_by_cat_for_typeculture(@typeculture) %>
+<%#= render(:partial => "typecultures/marge_brute/marge_brute", :locals => {:typeculture => @typeculture, :sum => sum  }) %>
+
+<h3>factures</h3>
+<%= render(:partial => "typecultures/marge_brute/factures", :locals => {:typeculture => @typeculture, :sum => sum }) %>
+
+<h3>ventes</h3>
+<%= render(:partial => "typecultures/marge_brute/ventes", :locals => {:typeculture => @typeculture, :sum => sum }) %>

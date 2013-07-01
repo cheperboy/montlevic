@@ -212,7 +212,7 @@ class Calculate < ActiveRecord::Base
       @res.add_other_line_for_saison(@sid, :resultats, :total_pulves, :ha, pulve.get_cout_ha_passage_for_saison(@surface_of_saison))      
       @res.add_other_line_for_saison(@sid, :resultats, :total_pulves, :total, pulve.get_cout_total_passage)
     
-      #totaux par categorie de pulves
+      #totaux par categorie de produit
       for cat in Category.produits_cats
         # if (pulve.produit.category_id == cat.id)
         #   @res.add_saison_line(@sid, :pulves, :category, cat.id, :ha, pulve.get_cout_ha_moyen(@surface_of_saison))

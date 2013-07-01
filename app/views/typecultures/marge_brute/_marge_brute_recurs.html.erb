@@ -1,0 +1,36 @@
+
+<% if cat.has_children? %>
+	<% cat.children.each do |sub_cat| %>
+	<tr>
+	    <td></td>
+	    <td colspan=6></td>
+	</tr>
+		<tr class=bg-subcat>
+		    <td class=bg-white></td>
+		    <td><b><%= sub_cat.name %></b></td>
+		    <td></td>
+		    <td class=value><b><%= delim(sum[:factures][:ha]["#{sub_cat.code.to_sym}"]) %></b></td>
+			<td class=unit><b><%= euro_ha %></b></td>
+		    <td class=value><b><%= delim(sum[:factures][:total]["#{sub_cat.code.to_sym}"]) %></b></td>
+			<td class=unit><b><%= euro %></b></td>
+		</tr>
+		<%= render(:partial => "typecultures/marge_brute/marge_brute_recurs", :locals => {:typeculture => @typeculture, :cat => sub_cat, :sum => sum }) %>	
+	<% end %>		
+
+<% else %>
+
+	<% sum[:factures][:elts]["#{cat.code.to_sym}"].each do |facture_id| %>
+		  <tr>
+		    <td></td>
+		    <td></td>
+		    <td><%= sum[:factures][:elts][:all][facture_id][:name] %></td>
+		    <td class=value><%= delim(sum[:factures][:elts][:all][facture_id][:ha]) %></td>
+			<td class=unit><%= euro_ha %></td>
+		    <td class=value><%= delim(sum[:factures][:elts][:all][facture_id][:total]) %></td>
+			<td class=unit><%= euro %></td>
+		  </tr>
+		<%# les_produits.delete(produit) %>
+	<% end %>
+	
+<% end %>
+

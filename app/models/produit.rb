@@ -268,7 +268,7 @@ class Produit < ActiveRecord::Base
   end  
   
   # cout produit /ha pour un typeculture
-  # somme des cout des putoproduit /ha sur les parcelles de ce type de culture
+  # somme des couts des putoproduits /ha sur les parcelles de ce type de culture
   def get_cout_ha_typeculture(typeculture)
     cout_ha_typeculture = 0
     typeculture.parcelles.find_by_saison(:all).each do |parcelle|
