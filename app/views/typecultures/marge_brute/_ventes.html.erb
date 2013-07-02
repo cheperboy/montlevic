@@ -13,7 +13,9 @@
 	<td class=unit><b><%= euro %></b></td>
 </tr>
 
-<% sum[:ventes][:cats].each do |cat| %>
+<% sum[:ventes][:cats].each do |cat_id| %>
+	<% cat = Category.find(cat_id) %>
+	
 	<tr>
 	    <td colspan=7></td>
 	</tr>

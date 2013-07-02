@@ -1,6 +1,18 @@
 class Saison < ActiveRecord::Base
+  serialize :sum_charges, Hash #calculate_marge_by_cat_for_typeculture
+  serialize :sum_produits, Hash #calculate_produit_by_cat_for_typeculture
 
-  validates_presence_of :name, :message => 'aie!!!'
+  # Variables Stockee - exemple de sum_charges
+  # les typecultures sont differencies en indexant la variable stockee par [:typecultures][id][:record]
+  # A la creation de la saison les variables stockees sont initialisees
+  # TODO bouton admin: reinit_all. permet de reinitialiser les variables stockees apres create/modif/delete d'un typeculture
+  # [:typecultures][id][:record] : la valeur stockee (retour de calculate_marge_by_cat_for_typeculture)
+  # [:typecultures][id][:valid] (true/false): la validite de la variable stockee. 
+  #   positionne a true apres le stockage
+  #   TODO positionne a false apres toute modif affectant le calcul
+  # 
+  
+  validates_presence_of :name, :message => 'pas de nom'
 
   has_many :parcelles
   has_many :labours
@@ -13,6 +25,39 @@ class Saison < ActiveRecord::Base
 
   has_one :setting
 
+
+  def self.init_serialized
+    result = true
+    typecultures = Typeculture.find(:all)
+    saisons = Saison.find(:all)
+    # sum_charges
+    sum_charges = Hash.new
+    sum_charges[:typeculture] = []
+    saisons.each do |saison|
+      typecultures.each do |typeculture|
+        sum_charges[:typeculture][typeculture.id] = Hash.new
+        sum_charges[:typeculture][typeculture.id][:record] = nil
+        sum_charges[:typeculture][typeculture.id][:valid] = false
+      end
+      saison.sum_charges = sum_charges      
+      result = false unless saison.save
+      puts "TEST #{saison.sum_charges[:typeculture][1][:valid].to_s}"
+    end
+    # sum_produits
+    sum_produits = Hash.new
+    sum_produits[:typeculture] = []
+    saisons.each do |saison|
+      typecultures.each do |typeculture|
+        sum_produits[:typeculture][typeculture.id] = Hash.new
+        sum_produits[:typeculture][typeculture.id][:record] = nil
+        sum_produits[:typeculture][typeculture.id][:valid] = false
+      end
+      saison.sum_produits = sum_produits
+      result = false unless saison.save
+    end
+    result
+  end
+    
   # positionne le champ Protofac.quantite_restante de chaque produit de la saison.
   # normalement cette methode n'a pas besoin d'etre appelee car les updates sont fait 
   # apres chaque modif de produit ou pulve

@@ -18,9 +18,10 @@ class TypeculturesController < ApplicationController
   # GET /typecultures/1
   # GET /typecultures/1.xml
   def show
+    @saison = Setting.find(:first).saison
     @typeculture = Typeculture.find(params[:id])
     @typecultures = Typeculture.all
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @typeculture }
@@ -95,6 +96,35 @@ class TypeculturesController < ApplicationController
         flash[:error] = 'Impossible de supprimer, "'+ name +'"est lie a des parcelles.'
         format.html { redirect_to(typecultures_url) }
         format.xml  { render :xml => @typeculture.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  def set_cache
+    @typeculture = Typeculture.find(params[:id])
+    @saison = Setting.find(:first).saison
+    
+    sum_charges_update = @saison.sum_charges
+    sum_charges_update[:typeculture][@typeculture.id][:record] = @template.calculate_marge_by_cat_for_typeculture(@typeculture)
+    sum_charges_update[:typeculture][@typeculture.id][:valid] = true
+    @saison.sum_charges = sum_charges_update
+    
+    sum_produits_update = @saison.sum_produits
+    sum_produits_update[:typeculture][@typeculture.id][:record] = @template.calculate_produit_by_cat_for_typeculture(@typeculture)
+    sum_produits_update[:typeculture][@typeculture.id][:valid] = true
+    @saison.sum_produits = sum_produits_update
+    
+    # @saison.sum_produits[:typeculture][@typeculture.id][:record] = @template.calculate_produit_by_cat_for_typeculture(@typeculture)
+    
+    respond_to do |format|
+      if (@saison.save)
+        flash[:notice] = 'mise en cache ok'
+        format.html { redirect_to(typecultures_url) }
+        format.xml  { head :ok }
+      else
+        flash[:error] = 'Erreur de mise en cache'
+        format.html { redirect_to(typecultures_url) }
+        format.xml  { render :xml => @saison.errors, :status => :unprocessable_entity }
       end
     end
   end

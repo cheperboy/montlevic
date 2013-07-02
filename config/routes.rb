@@ -11,7 +11,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :settings
 
-  map.resources :saisons
+  map.resources :saisons, :collection => { 
+    :init_serialized => :any}
   
   map.resources :zones
 
@@ -20,9 +21,8 @@ ActionController::Routing::Routes.draw do |map|
     :test => :any, 
     :analytic => :any}
 
-  map.resources :typecultures
-
-  map.resources :saisons
+  map.resources :typecultures, :collection => { 
+    :set_cache => :any}
 
   map.resources :pulves, :collection => { 
     :index => :any,

@@ -204,7 +204,8 @@
 
 
 <h3>Couts des produits par categorie</h3>
-<%= render(:partial => "parcelles/produit_par_cat/produit_par_cat", :locals => {:parcelle => @parcelle }) %>
+<% sum = calculate_produit_by_cat_for_parcelle(@parcelle) %>
+<%= render(:partial => "parcelles/produit_par_cat/produit_par_cat", :locals => {:parcelle => @parcelle, :sum => sum }) %>
 
 <!-- google map API KEY : ABQIAAAAcAtPXDKlfSPAkRaJoUZr1xRg9zdhxWAFKJfUUb-Z7xGwcbcwoBTHXxm4cI8tZoFgEcFaKKHII6hKvg -->
 

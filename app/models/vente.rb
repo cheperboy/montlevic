@@ -4,8 +4,8 @@ class Vente < Charge
   has_many :ventoparcelles, :dependent => :destroy
 
   # pour gestion des avoirs
-  has_many :ventoproduits, :dependent => :destroy
   has_many :produits, :through => :ventoproduits
+  has_many :ventoproduits, :dependent => :destroy
 
   belongs_to :category
   belongs_to :user

@@ -249,9 +249,11 @@ ActiveRecord::Schema.define(:version => 20120209075723) do
   end
 
   create_table "saisons", :force => true do |t|
-    t.string "name", :null => false
+    t.string "name",         :null => false
     t.string "year"
     t.text   "desc"
+    t.text   "sum_charges"
+    t.text   "sum_produits"
   end
 
   create_table "settings", :force => true do |t|

@@ -7,7 +7,7 @@ class SaisonsController < ApplicationController
   # GET /saisons
   # GET /saisons.xml
   def index
-    @saisons = Saison.all
+    @saisons = Saison.find(:all, :order => :id)
     
     respond_to do |format|
       format.html # index.html.erb
@@ -16,8 +16,19 @@ class SaisonsController < ApplicationController
     end
   end
 
+  def init_serialized    
+    respond_to do |format|
+      if Saison::init_serialized
+        flash[:notice] = 'init ok.'
+      else
+        flash[:error] = 'probleme init'
+      end
+      puts "#{Saison.find(:first).sum_charges.to_yaml}"
+      format.html { redirect_to(saisons_url) }
+    end
+  end
+
   def select_saison
-    logger.error "params:#{params}"
     @setting = Setting.find(:first)
     @saisons = Saison.all
     respond_to do |format|
