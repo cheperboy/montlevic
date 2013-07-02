@@ -21,36 +21,37 @@
 
 
 
-<% unless @saison.sum_produits[:typeculture][@typeculture.id][:valid].eql?(true) && @saison.sum_charges[:typeculture][@typeculture.id][:valid].eql?(true) %>
+<%# unless @saison.sum_produits[:typeculture][@typeculture.id][:valid].eql?(true) && @saison.sum_charges[:typeculture][@typeculture.id][:valid].eql?(true) %>
 	<p>mettre a jour les calculs : <%= link_to 'calculer', :controller => :typecultures, :action => :set_cache, :id => @typeculture.id %></p>
-<% else %>
+<%# else %>
 	<%# sum_produits = calculate_produit_by_cat_for_typeculture() %>
 	<%# sum_charges = calculate_marge_by_cat_for_typeculture(@typeculture) %>
 
-	<% sum_produits = @saison.sum_produits[:typeculture][@typeculture.id][:record] %>
-	<% sum_charges = @saison.sum_charges[:typeculture][@typeculture.id][:record] %>
+	<%# record = @saison.sum_produits %>
+	<% sum_charges = @saison.sum_charges[:typeculture][@typeculture.code.to_sym][:record] %>
+	<%# sum_produits = record[:typeculture][@typeculture.code.to_sym][:record] %>
 	<%# puts "#{sum_charges.to_yaml} "%>
 
-	<% unless sum_charges.nil? || sum_produits.nil? %>
+	<%# unless sum_charges.nil? || sum_produits.nil? %>
  
-	<h2>Synthese marge brute</h2>
-	<%= render(:partial => "typecultures/marge_brute/marge_brute", :locals => {:typeculture => @typeculture , :sum_produits => sum_produits, :sum_charges => sum_charges}) %>
+		<h2>Synthese marge brute</h2>
+		<%#= render(:partial => "typecultures/marge_brute/marge_brute", :locals => {:typeculture => @typeculture , :sum_produits => sum_produits, :sum_charges => sum_charges}) %>
 
-	<h2>Detail des charges</h2>
-	<h3>Couts des produits par categorie</h3>
-	<%= render(:partial => "typecultures/produit_par_cat/produit_par_cat", :locals => {:typeculture => @typeculture, :sum => sum_produits }) %>
+		<h2>Detail des charges</h2>
+		<h3>Couts des produits par categorie</h3>
+		<%#= render(:partial => "typecultures/produit_par_cat/produit_par_cat", :locals => {:typeculture => @typeculture, :sum => sum_produits }) %>
 
-	<h3>factures</h3>
-	<%= render(:partial => "typecultures/marge_brute/factures", :locals => {:sum => sum_charges }) %>
+		<h3>factures</h3>
+		<%= render(:partial => "typecultures/marge_brute/factures", :locals => {:sum => sum_charges }) %>
 
-	<h2>Detail du Chiffre d'affaire</h2>
+		<h2>Detail du Chiffre d'affaire</h2>
 
-	<h3>ventes</h3>
-	<%= render(:partial => "typecultures/marge_brute/ventes", :locals => {:sum => sum_charges }) %>
+		<h3>ventes</h3>
+		<%#= render(:partial => "typecultures/marge_brute/ventes", :locals => {:sum => sum_charges }) %>
 
-	<h3>production</h3>
-	<% ventes = Category.find(38).ventes.find_by_saison(:all) %>
-	<%= render(:partial => "categories/show_ventes", :locals => { :ventes => ventes }) %>
+		<h3>production</h3>
+		<%# ventes = Category.find(38).ventes.find_by_saison(:all) %>
+		<%#= render(:partial => "categories/show_ventes", :locals => { :ventes => ventes }) %>
 
-	<% end %>
-<% end %>
+	<%# end %>
+<%# end %>

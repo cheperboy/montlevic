@@ -104,10 +104,13 @@ class TypeculturesController < ApplicationController
     @typeculture = Typeculture.find(params[:id])
     @saison = Setting.find(:first).saison
     
-    sum_charges_update = @saison.sum_charges
-    sum_charges_update[:typeculture][@typeculture.id][:record] = @template.calculate_marge_by_cat_for_typeculture(@typeculture)
-    sum_charges_update[:typeculture][@typeculture.id][:valid] = true
-    @saison.sum_charges = sum_charges_update
+    record                                                  = Hash.new
+    record[:record] = @template.calculate_marge_by_cat_for_typeculture(@typeculture)
+    record[:valid]  = true
+    @saison.sum_charges[:typeculture][@typeculture.code.to_sym] = record
+    # sum_charges_update[:typeculture][@typeculture.id][:record] = @template.calculate_marge_by_cat_for_typeculture(@typeculture)
+    # sum_charges_update[:typeculture][@typeculture.id][:valid] = true
+    # @saison.sum_charges = sum_charges_update
     
     sum_produits_update = @saison.sum_produits
     sum_produits_update[:typeculture][@typeculture.id][:record] = @template.calculate_produit_by_cat_for_typeculture(@typeculture)

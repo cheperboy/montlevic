@@ -31,17 +31,21 @@ class Saison < ActiveRecord::Base
     typecultures = Typeculture.find(:all)
     saisons = Saison.find(:all)
     # sum_charges
-    sum_charges = Hash.new
-    sum_charges[:typeculture] = []
+    # sum_charges = Hash.new
+    # sum_charges[:typeculture] = []
+    rec = Hash.new
+    rec[:typeculture] = Hash.new
     saisons.each do |saison|
+      saison.sum_charges = nil
+      saison.save
       typecultures.each do |typeculture|
-        sum_charges[:typeculture][typeculture.id] = Hash.new
-        sum_charges[:typeculture][typeculture.id][:record] = nil
-        sum_charges[:typeculture][typeculture.id][:valid] = false
+        rec[:typeculture][typeculture.code.to_sym] = Hash.new
+        rec[:typeculture][typeculture.code.to_sym][:record] = nil
+        rec[:typeculture][typeculture.code.to_sym][:valid] = false
       end
-      saison.sum_charges = sum_charges      
+      saison.sum_charges = rec
       result = false unless saison.save
-      puts "TEST #{saison.sum_charges[:typeculture][1][:valid].to_s}"
+      # puts "TEST #{saison.sum_charges[:typeculture][:ble][:valid].to_s}"
     end
     # sum_produits
     sum_produits = Hash.new
