@@ -196,7 +196,6 @@ module ResultatHelper
 
     # calcul ventes
     ventes.each do |vente|
-      puts "#{vente.category.name} - #{vente.name}"
       ha = vente.get_cout_ha_col(typeculture)
       total = vente.get_cout_total_col(typeculture)
       # vente

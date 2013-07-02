@@ -5,9 +5,10 @@ class Saison < ActiveRecord::Base
   # Variables Stockee - exemple de sum_charges
   # les typecultures sont differencies en indexant la variable stockee par [:typecultures][id][:record]
   # A la creation de la saison les variables stockees sont initialisees
-  # TODO bouton admin: reinit_all. permet de reinitialiser les variables stockees apres create/modif/delete d'un typeculture
-  # [:typecultures][id][:record] : la valeur stockee (retour de calculate_marge_by_cat_for_typeculture)
-  # [:typecultures][id][:valid] (true/false): la validite de la variable stockee. 
+  # bouton init stockage dans vue saison: 
+  #   reinit_all. permet de reinitialiser les variables stockees apres create/modif/delete d'un typeculture
+  # [:typecultures][:code][:record] : la valeur stockee (retour de calculate_marge_by_cat_for_typeculture)
+  # [:typecultures][:code][:valid] (true/false): la validite de la variable stockee. 
   #   positionne a true apres le stockage
   #   TODO positionne a false apres toute modif affectant le calcul
   # 

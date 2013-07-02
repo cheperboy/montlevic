@@ -22,7 +22,9 @@ ActionController::Routing::Routes.draw do |map|
     :analytic => :any}
 
   map.resources :typecultures, :collection => { 
-    :set_cache => :any}
+    :set_cache => :any,
+    :set_cache_all => :any,
+    }
 
   map.resources :pulves, :collection => { 
     :index => :any,

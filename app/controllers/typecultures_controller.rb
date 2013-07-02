@@ -6,8 +6,9 @@ class TypeculturesController < ApplicationController
   # GET /typecultures
   # GET /typecultures.xml
   def index
+    session[:set_cache_all_typecultures] = nil
     @typecultures = Typeculture.all
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @typecultures }
@@ -103,18 +104,16 @@ class TypeculturesController < ApplicationController
   def set_cache
     @typeculture = Typeculture.find(params[:id])
     @saison = Setting.find(:first).saison
-    
+    # sum_charges
     record          = Hash.new
     record[:record] = @template.calculate_marge_by_cat_for_typeculture(@typeculture)
     record[:valid]  = true
     @saison.sum_charges[:typeculture][@typeculture.code.to_sym] = record
-    
+    # sum_produits
     record          = Hash.new
     record[:record] = @template.calculate_produit_by_cat_for_typeculture(@typeculture)
     record[:valid]  = true
     @saison.sum_produits[:typeculture][@typeculture.code.to_sym] = record
-    
-    # @saison.sum_produits[:typeculture][@typeculture.id][:record] = @template.calculate_produit_by_cat_for_typeculture(@typeculture)
     
     respond_to do |format|
       if (@saison.save)
@@ -124,6 +123,51 @@ class TypeculturesController < ApplicationController
       else
         flash[:error] = 'Erreur de mise en cache'
         format.html { redirect_to(typecultures_url) }
+        format.xml  { render :xml => @saison.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  def set_cache_all
+    @saison       = Setting.find(:first).saison
+    typecultures = []
+    @typecultures = Typeculture.find(:all).each {|c| typecultures << c }
+    size = typecultures.size
+    puts "session #{session[:set_cache_all_typecultures]}"
+    
+    # first element
+    if session[:set_cache_all_typecultures].nil?
+      session[:set_cache_all_typecultures] = 0
+    # last element
+    elsif session[:set_cache_all_typecultures].eql?(typecultures.size-1)
+      session[:set_cache_all_typecultures] = nil
+      done = true
+    # next element
+    else
+      session[:set_cache_all_typecultures] += 1
+      typeculture = typecultures.at(session[:set_cache_all_typecultures])
+    end
+    unless done
+      # sum_charges
+      record          = Hash.new
+      record[:record] = @template.calculate_marge_by_cat_for_typeculture(typeculture)
+      record[:valid]  = true
+      @saison.sum_charges[:typeculture][typeculture.code.to_sym] = record
+      # sum_produits
+      record          = Hash.new
+      record[:record] = @template.calculate_produit_by_cat_for_typeculture(typeculture)
+      record[:valid]  = true
+      @saison.sum_produits[:typeculture][typeculture.code.to_sym] = record
+    
+      @saison.save
+    end
+    respond_to do |format|
+      if (done)
+        flash[:notice] = 'mise en cache de tout : ok'
+        format.html { redirect_to(typecultures_url) }
+        format.xml  { head :ok }
+      else
+        puts "redirect"
+        format.html { redirect_to :controller => :typecultures, :action => :set_cache_all}
         format.xml  { render :xml => @saison.errors, :status => :unprocessable_entity }
       end
     end
