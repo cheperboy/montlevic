@@ -131,22 +131,24 @@ class TypeculturesController < ApplicationController
     @saison       = Setting.find(:first).saison
     typecultures = []
     @typecultures = Typeculture.find(:all).each {|c| typecultures << c }
-    size = typecultures.size
     puts "session #{session[:set_cache_all_typecultures]}"
     
     # first element
     if session[:set_cache_all_typecultures].nil?
+      puts "DEBUG : session[:set_cache_all_typecultures].nil?"
       session[:set_cache_all_typecultures] = 0
     # last element
     elsif session[:set_cache_all_typecultures].eql?(typecultures.size-1)
+      puts "DEBUG : session[:set_cache_all_typecultures].eql?(typecultures.size-1)"
       session[:set_cache_all_typecultures] = nil
       done = true
     # next element
     else
+      puts "DEBUG : session[:set_cache_all_typecultures]+=1"
       session[:set_cache_all_typecultures] += 1
-      typeculture = typecultures.at(session[:set_cache_all_typecultures])
     end
     unless done
+      typeculture = typecultures.at(session[:set_cache_all_typecultures])
       # sum_charges
       record          = Hash.new
       record[:record] = @template.calculate_marge_by_cat_for_typeculture(typeculture)
