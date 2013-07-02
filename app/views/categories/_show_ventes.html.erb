@@ -34,9 +34,9 @@
 			<td><%=h vente.date.to_s %></td>
 			<td><%=h vente.ref %></td>
 			<td><%= link_to vente.name, vente_path(vente) %></td>
-			<td class=right><%=h vente.quantite.display %> <%= vente.unit %></td>
-			<td class=right><%=h vente.prix_unitaire.display %> <%= vente.get_prix_unitaire_unit %></td>
-			<td class=right><%=h vente.prix.display %> <%= euro %></td>
+			<td class=right><%=h delim(vente.quantite) %> <%= vente.unit %></td>
+			<td class=right><%=h delim(vente.prix_unitaire) %> <%= vente.get_prix_unitaire_unit %></td>
+			<td class=right><%=h delim(vente.prix) %> <%= euro %></td>
 			<td><%= popup_show(image_tag('img-voir.png'), pop_content(vente), "popup-show-content") %></td>
 		</tr>
 	<%- end -%>
@@ -44,9 +44,9 @@
 	<tfoot>
 		<tr>
 			<th colspan=4>Somme</th>
-			<th class=right><%= sum_quantite.display %> <%= unit %></th>
-			<th class=right><%= moy_prix_unitaire.display %> <%= prix_unitaire_unit %></th>
-			<th><%= sum_prix.display %> <%= euro %></th>
+			<th class=right><%= delim(sum_quantite) %> <%= unit %></th>
+			<th class=right><%= delim(moy_prix_unitaire) %> <%= prix_unitaire_unit %></th>
+			<th><%= delim(sum_prix) %> <%= euro %></th>
 			<th></th>
 		</tr>
 	</tfoot>

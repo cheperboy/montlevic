@@ -1,34 +1,41 @@
-<% sum = calculate_marge_by_cat_for_typeculture(typeculture) %>
-
-
 <table class=table_data>
   <tr class=bold>
-    <th colspan=2>Categorie</th>
-    <th>facture</th>
+    <th>Depenses</th>
+    <th></th>
     <th colspan=2><%= euro_ha %></th>
     <th colspan=2><%= euro %></th>
   </tr>
   <tr>
-    <td colspan=3><b>somme</b></td>
-    <td class=value><b><%= delim(sum[:ha][:factures]) %></b></td>
-	<td class=unit><b><%= euro_ha %></b></td>
-    <td class=value><b><%= delim(sum[:total][:factures]) %></b></td>
-	<td class=unit><b><%= euro %></b></td>
-</tr>
-
-<% sum[:factures][:cats].each do |cat| %>
-	<tr>
-	    <td colspan=7></td>
-	</tr>
-	<tr class=bg-cat>
-	    <td><b><%= cat.name %></b></td>
-	    <td></td>
-	    <td></td>
-	    <td class=value><b><%= delim(sum[:factures][:ha]["#{cat.code.to_sym}"]) %></b></td>
-		<td class=unit><b><%= euro_ha %></b></td>
-	    <td class=value><b><%= delim(sum[:factures][:total]["#{cat.code.to_sym}"]) %></b></td>
-		<td class=unit><b><%= euro %></b></td>
-	</tr>
-<%= render(:partial => "typecultures/marge_brute/marge_brute_recurs", :locals => {:typeculture => @typeculture, :cat => cat, :sum => sum }) %>	
-<% end %>		
+    <td></td>
+    <td>Produits et engrais</td>
+    <td colspan=2><%= delim(sum_produits[:ha][:total]) %></td>
+    <td colspan=2><%= delim(sum_produits[:total][:total]) %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Cout du travail</td>
+    <td colspan=2><%= delim(sum_charges[:ha][:factures]) %></td>
+    <td colspan=2><%= delim(sum_charges[:total][:factures]) %></td>
+  </tr>
+  <tr class=bold>
+    <th>Chiffre d'affaire</th>
+    <th></th>
+    <th colspan=2></th>
+    <th colspan=2></th>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Production et primes</td>
+    <td colspan=2><%= delim(sum_charges[:ha][:ventes]) %></td>
+    <td colspan=2><%= delim(sum_charges[:total][:ventes]) %></td>
+  </tr>
+<!-- marge brute = ventes - factures -produits -->
+<% marge_brute_ha = sum_charges[:ha][:resultat] - sum_produits[:ha][:total] %>
+<% marge_brute = sum_charges[:total][:resultat] - sum_produits[:total][:total] %>
+  <tr class=bold>
+    <th>Marge Brute</th>
+    <th></th>
+    <th colspan=2><%= delim(marge_brute_ha) %></th>
+    <th colspan=2><%= delim(marge_brute) %></th>
+  </tr>
 </table>

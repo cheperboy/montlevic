@@ -1,4 +1,3 @@
-<% sum = calculate_produit_by_cat_for_typeculture(Setting.find(1).saison) %>
 <!-- les_produits = liste de tout les produits utilises sur un type de culture -->
 <% les_produits = [] %>
 <% @typeculture.parcelles.find_by_saison(:all).each do |parcelle| %>

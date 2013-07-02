@@ -1,4 +1,3 @@
-
 <% if cat.has_children? %>
 	<% cat.children.each do |sub_cat| %>
 	<tr>
@@ -14,7 +13,7 @@
 		    <td class=value><b><%= delim(sum[:ventes][:total]["#{sub_cat.code.to_sym}"]) %></b></td>
 			<td class=unit><b><%= euro %></b></td>
 		</tr>
-		<%= render(:partial => "typecultures/marge_brute/factures_recurs", :locals => {:typeculture => @typeculture, :cat => sub_cat, :sum => sum }) %>	
+		<%= render(:partial => "typecultures/marge_brute/ventes_recurs", :locals => {:typeculture => @typeculture, :cat => sub_cat, :sum => sum }) %>	
 	<% end %>		
 
 <% else %>
@@ -23,7 +22,7 @@
 		  <tr>
 		    <td></td>
 		    <td></td>
-		    <td><%= sum[:ventes][:elts][:all][facture_id][:name] %></td>
+		    <td><%= sum[:ventes][:elts][:all][vente_id][:name] %></td>
 		    <td class=value><%= delim(sum[:ventes][:elts][:all][vente_id][:ha]) %></td>
 			<td class=unit><%= euro_ha %></td>
 		    <td class=value><%= delim(sum[:ventes][:elts][:all][vente_id][:total]) %></td>
