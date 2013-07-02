@@ -36,8 +36,6 @@ class Saison < ActiveRecord::Base
     rec = Hash.new
     rec[:typeculture] = Hash.new
     saisons.each do |saison|
-      saison.sum_charges = nil
-      saison.save
       typecultures.each do |typeculture|
         rec[:typeculture][typeculture.code.to_sym] = Hash.new
         rec[:typeculture][typeculture.code.to_sym][:record] = nil
@@ -49,12 +47,12 @@ class Saison < ActiveRecord::Base
     end
     # sum_produits
     sum_produits = Hash.new
-    sum_produits[:typeculture] = []
+    sum_produits[:typeculture] = Hash.new
     saisons.each do |saison|
       typecultures.each do |typeculture|
-        sum_produits[:typeculture][typeculture.id] = Hash.new
-        sum_produits[:typeculture][typeculture.id][:record] = nil
-        sum_produits[:typeculture][typeculture.id][:valid] = false
+        sum_produits[:typeculture][typeculture.code.to_sym] = Hash.new
+        sum_produits[:typeculture][typeculture.code.to_sym][:record] = nil
+        sum_produits[:typeculture][typeculture.code.to_sym][:valid] = false
       end
       saison.sum_produits = sum_produits
       result = false unless saison.save
