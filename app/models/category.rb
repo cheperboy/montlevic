@@ -242,7 +242,7 @@ class Category < ActiveRecord::Base
                                       :size => 14
     gras = Spreadsheet::Format.new :weight => :bold
 
-    saison = session[:current_saison_id].name
+    saison = Saison.find(Thread.current[:current_saison_id]).name
     book = Spreadsheet::Workbook.new
 
     # sheet 1

@@ -69,30 +69,9 @@ class ApplicationController < ActionController::Base
   # by models and observers
   def set_session_info
     puts "set_session_info"
-    Application.current_saison_id = session[:current_saison_id]
-    Application.current_user_id = session[:user_id]
+    Thread.current[:current_saison_id] = session[:current_saison_id]
+    Thread.current[:user_id]= session[:user_id]
   end
   
-  # Your existing stuff
-   around_filter :you_dont_have_bloody_clue
-
-
-   def you_dont_have_bloody_clue
-     klasses = [ActiveRecord::Base, ActiveRecord::Base.class]
-     methods = ["session", "cookies", "params", "request"]
-     methods.each do |shenanigan|
-       oops = instance_variable_get(:"@_#{shenanigan}") 
-       klasses.each do |klass|
-         klass.send(:define_method, shenanigan, proc { oops })
-       end
-     end
-     yield
-     methods.each do |shenanigan|      
-       klasses.each do |klass|
-         klass.send :remove_method, shenanigan
-       end
-     end
-   end
-   
    
 end

@@ -20,8 +20,8 @@ class Application < ActiveRecord::Base
   TAUX_INVEST            = [['-', DEFAULT], ['3 ans', 36],      ['10 ans', 120],      ['15 ans', 180]]
   VENTE_UNITS            = [['na', nil], ['quintaux', 'qt'], ['tonnes', 't'], ['kg', 'kg'], ['bottes', 'b']]
 
-  # SAISON_ID = session[:current_saison_id]
-  # SAISON    = session[:current_saison_id]
+  # SAISON_ID = Thread.current[:current_saison_id]
+  # SAISON    = Saison.find(Thread.current[:current_saison_id])
   
   #for navigation in headers
   HEADER_KEY   = 0

@@ -73,8 +73,8 @@ class Saison < ActiveRecord::Base
   def selected?    
     puts "selected?"
     puts "self.id #{self.id}  #{self.id.class}"
-    puts "thread : #{session[:current_saison_id]} #{session[:current_saison_id].class}\n"
-    self.id.eql?(session[:current_saison_id])
+    puts "thread : #{ Thread.current[:current_saison_id]} \n"
+    self.id.eql?(Thread.current[:current_saison_id])
   end
   
   def surface

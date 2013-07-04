@@ -33,7 +33,6 @@ module CalculateHelper
   end
 
   def count_elements_sub_cat_vente(cat)
-    saison_id = session[:current_saison_id]
     sum = 0
     # factures
     sum += Vente.find_by_saison(:all, :conditions => { :category_id => cat.id}).count

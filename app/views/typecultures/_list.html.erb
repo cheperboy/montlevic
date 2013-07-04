@@ -12,8 +12,8 @@
 <% @typecultures.each do |typeculture| %>
   <tr>
     <td><%= typeculture.name %></td>
-    <td class=center><%= typeculture.parcelles.scope_by_saison.size %></td>
-    <td class=right><%= Parcelle::sum_surfaces(typeculture.parcelles.scope_by_saison).display(1) %> ha</td>
+    <td class=center><%= typeculture.parcelles_by_saison.size %></td>
+    <td class=right><%= Parcelle::sum_surfaces(typeculture.parcelles_by_saison).display(1) %> ha</td>
     <td><%= link_to_show (Typeculture, typeculture) %></td>
 	<td><%= link_to 'calculer', :action => :set_cache, :id => typeculture.id %></td>
 

@@ -9,7 +9,7 @@ class Factoparcelle < ActiveRecord::Base
 
 # Callbacks
   def before_save 
-    self.saison ||= session[:current_saison_id]
+    self.saison ||= Saison.find(Thread.current[:current_saison_id])
     self.value = 1
   end
   

@@ -190,7 +190,7 @@ class VerifsController < ApplicationController
   end
 
   def factures
-    @factures = Facture.all(:scope_by_saison)
+    @factures = Facture.find_by_saison(:all)
     respond_to do |format|
       format.html
     end

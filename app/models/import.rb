@@ -145,7 +145,7 @@ end
     # end
 
     @sym = elt_type
-    @saison = session[:current_saison_id]
+    @saison = Saison.find(Thread.current[:current_saison_id])
     @last_pulve_id = nil
     @import_size   = 0
     @read_size     = 0

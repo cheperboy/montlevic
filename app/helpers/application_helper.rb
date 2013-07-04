@@ -68,15 +68,6 @@ module ApplicationHelper
                     )
   end
 
-  # Remplace collection_select et ajoute les Types de culture en plus des parcelles
-  # Obsolete, non utilise
-  def collection_parcelle_and_culture(form, parcelle_id, parcelles, id, name)
-    options = []
-    session[:current_saison_id].typecultures.each {|c| options << c }
-    session[:current_saison_id].parcelles.each {|p| options << p }
-    return form.collection_select(:parcelle_id, options, :id, :name_for_select )
-  end
-  
   def toggle_div(div) 
     logger.error 'toggle_div id : ' + div.to_s + ' page[div] : ' + page[div]
     update_page do |page|
