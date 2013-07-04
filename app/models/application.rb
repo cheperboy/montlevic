@@ -1,4 +1,5 @@
 class Application < ActiveRecord::Base
+  
   # Veleurs utilisees dans les listes deroulante
   DEFAULT  = 0
   ERROR    = -1
