@@ -65,10 +65,10 @@ class Invest < Facture
   # ----- Finders -----
 
   named_scope :scope_by_saison, 
-  :conditions => {:saison_id => Thread.current[:current_saison_id]}
+  :conditions => {:saison_id => Saison.get_current_id}
 
   def self.find_by_saison(*args)
-    with_scope(:find => { :conditions => ["saison_id = ?", Thread.current[:current_saison_id]],
+    with_scope(:find => { :conditions => ["saison_id = ?", Saison.get_current_id],
                           :order => :adu}) do
         find(*args)
       end
@@ -112,7 +112,7 @@ class Invest < Facture
   def get_cout_for_saison(saison_id = nil)
     # recupere la saison pour laquelle on effectue le calcul
     if (saison_id.nil?)
-      saison = Saison.find(Thread.current[:current_saison_id])
+      saison = Saison.get_current
     else
       saison = Saison.find(saison_id)
     end

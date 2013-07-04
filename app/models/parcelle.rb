@@ -29,7 +29,7 @@ class Parcelle < ActiveRecord::Base
 # ----- Finders -----
 
   named_scope :scope_by_saison,
-    :conditions => {:saison_id => Thread.current[:current_saison_id]}
+    :conditions => {:saison_id => Saison.get_current_id}
 
   # ATTENTION utiliser comme suit : saison_20XX.parcelles.find_by_code("the_code")
   def self.find_by_code(code)
@@ -37,7 +37,7 @@ class Parcelle < ActiveRecord::Base
   end
 
   def self.find_for_saison()
-    saison = Saison.find(Thread.current[:current_saison_id])
+    saison = Saison.get_current
     if saison.parcelles.size == 0
       return nil
     end
@@ -46,7 +46,7 @@ class Parcelle < ActiveRecord::Base
 
   def self.find_by_saison(*args)
     with_scope(:find =>
-                {:conditions => ["saison_id = ?", Thread.current[:current_saison_id]], :order => :typeculture_id }) do
+                {:conditions => ["saison_id = ?", Saison.get_current_id], :order => :typeculture_id }) do
         find(*args)
       end
   end
@@ -55,7 +55,7 @@ class Parcelle < ActiveRecord::Base
     parcelles = []
     zonetopas = Zonetopa.find(:all, :conditions => ["zone_id = ?", zone_id])
     zonetopas.each do |zonetopa|
-      if zonetopa.parcelle.saison_id == Thread.current[:current_saison_id]
+      if zonetopa.parcelle.saison_id == Saison.get_current_id
         parcelles << zonetopa.parcelle
       end
     end
@@ -64,7 +64,7 @@ class Parcelle < ActiveRecord::Base
 
   # retourne les parcelles de la saison courante du type de culture donne
   def self.get_parcelles_from_culture(culture)
-    parcelles = culture.parcelles.select {|p| p.saison_id.eql?(Thread.current[:current_saison_id]) }
+    parcelles = culture.parcelles.select {|p| p.saison_id.eql?(Saison.get_current_id) }
   end
 
   
@@ -142,7 +142,7 @@ class Parcelle < ActiveRecord::Base
                                       :size => 14
     gras = Spreadsheet::Format.new :weight => :bold
 
-    saison = Saison.find(Thread.current[:current_saison_id]).name
+    saison = Saison.get_current.name
     book = Spreadsheet::Workbook.new
 
     # sheet 1

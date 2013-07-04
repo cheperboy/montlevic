@@ -56,13 +56,13 @@ class Facture < Charge
   # ----- Finders -----
 
   named_scope :scope_by_saison, 
-  :conditions => {:saison_id => Thread.current[:current_saison_id]}
+  :conditions => {:saison_id => Saison.get_current_id}
 
   named_scope :scope_by_phyto, 
   :conditions => {:category_id => Category.find_by_upcategory_and_code('facture', 'produits_phyto')}
 
   def self.find_by_saison(*args)
-    with_scope(:find => { :conditions => ["saison_id = ?", Thread.current[:current_saison_id]],
+    with_scope(:find => { :conditions => ["saison_id = ?", Saison.get_current_id],
                           :order => :id}) do
         find(*args)
       end
@@ -70,7 +70,7 @@ class Facture < Charge
   
   def self.find_total(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id = ?", 
-                                          Thread.current[:current_saison_id],
+                                          Saison.get_current_id,
                                           Factype.find_by_name('total').id],
                           :order => :category_id}) do
         find(*args)
@@ -79,7 +79,7 @@ class Facture < Charge
   
   def self.find_diff(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id = ?", 
-                                          Thread.current[:current_saison_id],
+                                          Saison.get_current_id,
                                           Factype.find_by_name('diff').id],
                           :order => :category_id}) do
         find(*args)
@@ -89,7 +89,7 @@ class Facture < Charge
   #old find_papier
   def self.find_null(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND factype_id = ?", 
-                                          Thread.current[:current_saison_id],
+                                          Saison.get_current_id,
                                           Factype.find_by_name('null').id],
                           :order => :category_id}) do
         find(*args)
@@ -99,7 +99,7 @@ class Facture < Charge
   #old find_not_papier
   def self.find_real_by_saison(*args)
     with_scope(:find => { :conditions => ["saison_id = ? AND type != ?", 
-                                          Thread.current[:current_saison_id],
+                                          Saison.get_current_id,
                                           'Report'],
                           :order => :category_id}) do
         find(*args)
@@ -312,7 +312,7 @@ class Facture < Charge
                                       :size => 14
     gras = Spreadsheet::Format.new :weight => :bold
 
-    saison = Saison.find(Thread.current[:current_saison_id]).name
+    saison = Saison.get_current.name
     book = Spreadsheet::Workbook.new
 
     # sheet 1

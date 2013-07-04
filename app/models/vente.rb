@@ -57,7 +57,7 @@ class Vente < Charge
   end
   
   def self.find_by_saison(*args)
-    with_scope(:find => { :conditions => ["saison_id = ?", Thread.current[:current_saison_id]],
+    with_scope(:find => { :conditions => ["saison_id = ?", Saison.get_current_id],
                           :order => :category_id}) do
         find(*args)
       end

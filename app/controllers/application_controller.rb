@@ -47,9 +47,10 @@ class ApplicationController < ActionController::Base
   #   @current_saison_id = Setting.find(:first).saison_id
   # end
   
-  def current_saison_id
-    @current_saison_id ||= session[:current_saison_id]
-  end
+  # non utilise
+  # def current_saison_id
+  #   @current_saison_id ||= session[:current_saison_id]
+  # end
 
   def hide_menu 
       render :update do |page| 
@@ -68,7 +69,6 @@ class ApplicationController < ActionController::Base
   # Sets the current saison into a named Thread location so that it can be accessed
   # by models and observers
   def set_session_info
-    puts "set_session_info"
     Thread.current[:current_saison_id] = session[:current_saison_id]
     Thread.current[:user_id]= session[:user_id]
   end

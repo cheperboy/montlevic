@@ -9,7 +9,7 @@ class Labtofacture < ActiveRecord::Base
 
 # Callbacks
   def before_save 
-    self.saison ||= Saison.find(Thread.current[:current_saison_id])
+    self.saison ||= Saison.get_current
   end
 
 
