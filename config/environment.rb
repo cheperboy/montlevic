@@ -5,6 +5,7 @@
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
+require File.join(RAILS_ROOT, "app", "get_session")
 
 Rails::Initializer.run do |config|
 
