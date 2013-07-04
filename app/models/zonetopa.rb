@@ -10,7 +10,7 @@ class Zonetopa < ActiveRecord::Base
   
 # Callbacks
   def before_save 
-    self.saison ||= Setting.find(1).saison
+    self.saison ||= GetSession.current_saison
   end
 
   # TODO : ajouter la saison dans les conditions

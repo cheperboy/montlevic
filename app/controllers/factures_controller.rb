@@ -16,7 +16,7 @@ class FacturesController < ApplicationController
     # @factures = Facture.find_by_saison(:all, :order => "id DESC")
     # @factures = Facture.find_by_saison(:all)
     @factures = Facture.all(:all, 
-                            :conditions => ["saison_id = ?", Setting.get_saison_id],
+                            :conditions => ["saison_id = ?", current_saison_id],
                             :order => "id DESC"
                             # :limit => 10
                             )

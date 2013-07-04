@@ -10,7 +10,7 @@ class Charge < ActiveRecord::Base
 
   def self.find_by_saison(*args)
     with_scope(:find => 
-                {:conditions => ["saison_id = ?", Setting.find(1).saison_id] }) do
+                {:conditions => ["saison_id = ?", GetSession.current_saison_id] }) do
         find(*args)
       end
   end
@@ -62,7 +62,7 @@ class Charge < ActiveRecord::Base
 
   # transforme les checkbox Typeculture en parcelles
   def update_typecultures(typecultures)
-    saison = Setting.get_saison_id
+    saison = GetSession.current_saison_id
     unless typecultures.nil?
       typecultures.each do |typeculture_array|
         culture = Typeculture.find(typeculture_array[0])

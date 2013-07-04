@@ -40,9 +40,9 @@ class ImportController < ApplicationController
     @produits     = ['Produits']
     @typecultures = ['Cultures']
     User.all.each {|u| @users << u.code }
-    Setting.get_saison.produits.all.each {|p| @produits << p.code }
-    Setting.get_saison.parcelles.all.each {|p| @parcelles << p.code }
-    Setting.get_saison.typecultures.each {|t| @typecultures << t.code }
+    current_saison.produits.all.each {|p| @produits << p.code }
+    current_saison.parcelles.all.each {|p| @parcelles << p.code }
+    current_saison.typecultures.each {|t| @typecultures << t.code }
   end
 
   def import(sheet)

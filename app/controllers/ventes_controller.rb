@@ -91,7 +91,8 @@ class VentesController < ApplicationController
   def create
     puts "call action create!"
     @vente = Vente.new(params[:vente])
-    @vente.saison_id = current_saison_id
+    # mj 2013/07 commente car saison choisie dans le formulaire
+    # @vente.saison_id = current_saison_id
     @vente.update_typecultures(params[:typecultures])
     @vente.uniq_parcelles
     respond_to do |format|

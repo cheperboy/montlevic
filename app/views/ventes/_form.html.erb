@@ -70,7 +70,7 @@
 		</td>
 		<td class=form_layout_content_right>
 			<table class=form_layout_content_table>
-				<%= form_tr_select(f, 'Saison', :saison_id, Saison.find(:all, :order => :name), :id, :name) %>
+				<%= form_tr_select(f, 'Saison', :saison_id, Saison.find(:all, :order => :name), :id, :name, :selected => GetSession.current_saison_id) %>
 <%= form_tr_select_cat_from_tree(f, @vente.class.to_s.downcase, Category.root_vente, 'Catégorie', :category_id, :id, :name, @vente) %>
 				<%#= form_tr_select(f, 'Categorie', :category_id, Category.ventes_cats, :id, :name) %>
 				<%= form_tr_date(f, 'Date', :date) %>

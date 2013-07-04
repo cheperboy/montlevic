@@ -70,8 +70,11 @@ class Saison < ActiveRecord::Base
     end
   end
     
-  def selected?
-    self.id.eql?(Setting.find(1).saison_id)
+  def selected?    
+    puts "selected?"
+    puts "self.id #{self.id}  #{self.id.class}"
+    puts "thread : #{GetSession.current_saison_id} #{GetSession.current_saison_id.class}\n"
+    self.id.eql?(GetSession.current_saison_id)
   end
   
   def surface

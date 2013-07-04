@@ -29,17 +29,15 @@ class SaisonsController < ApplicationController
   end
 
   def select_saison
+    # Update Session variable
+    session[:current_saison_id] = params[:id].to_i
+    Myuser.find(session[:user_id]).update_attribute(:pref_saison, params[:id].to_i)
     @setting = Setting.find(:first)
     @saisons = Saison.all
     respond_to do |format|
       if @setting.update_attribute(:saison_id, params[:id])
         @setting.reload
-        # Update Session variable
-        # current_saison_id = Setting.find(:first).saison.id
-        # session[:saison_name] = Setting.find(:first).saison.name
-        session[:current_saison_id] = Setting.get_saison_id
-        flash[:notice] = 'Saison selectionnee.'
-        
+        flash[:notice] = 'Saison selectionnee.'        
       else
         flash[:error] = 'Pas de mise a jour'
       end
@@ -95,7 +93,7 @@ class SaisonsController < ApplicationController
   def update
     @saison = Saison.find(params[:id])
     @saison.update_protofacture_stock
-logger.error "update saison"
+    logger.error "update saison"
     respond_to do |format|
       if @saison.update_attributes(params[:saison])
         flash[:notice] = 'Saison mis a jour!.'

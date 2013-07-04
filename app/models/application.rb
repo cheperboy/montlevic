@@ -19,8 +19,8 @@ class Application < ActiveRecord::Base
   TAUX_INVEST            = [['-', DEFAULT], ['3 ans', 36],      ['10 ans', 120],      ['15 ans', 180]]
   VENTE_UNITS            = [['na', nil], ['quintaux', 'qt'], ['tonnes', 't'], ['kg', 'kg'], ['bottes', 'b']]
 
-  SAISON_ID = Setting.find(1).saison_id
-  SAISON    = Setting.find(1).saison
+  SAISON_ID = GetSession.current_saison_id
+  SAISON    = GetSession.current_saison
   
   #for navigation in headers
   HEADER_KEY   = 0
@@ -95,7 +95,7 @@ class Application < ActiveRecord::Base
   [
     # KEY                   VALUE         UNIT    FILTER        TYPE            TRI     TRI_KEY           GREEN_RED COLOR
     ['star',                'star',       '',     false,        'ignorecase',   true,   'star',           false,    'black'], 
-    ['pp_paye',             'paye',       '',     false,        'ignorecase',   true,   'paye',           false,    'black'], 
+    # ['pp_paye',             'paye',       '',     false,        'ignorecase',   true,   'paye',           false,    'black'], 
    	['id',                  'id',         '',     true,         'numeric',      true,   'id',             false,    'grey'],
   	['category_name',       'Categorie',  '',     true,         'ignorecase',   true,   'category_id',    false,    'grey'],
     # ['factcat_name',      'class',      '',     true,         'ignorecase',   true,   'factcat_id',     false,    'grey'],

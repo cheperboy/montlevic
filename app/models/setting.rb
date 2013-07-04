@@ -28,16 +28,16 @@ class Setting < ActiveRecord::Base
   belongs_to :saison
     
   def self.load
-    @current_saison_id = Setting.find(:first).saison
+    # @current_saison_id = Setting.find(:first).saison
   end
-
-  def self.get_saison_id
-    Setting.find(:first).saison_id
-  end
-
-  def self.get_saison
-    Setting.find(:first).saison
-  end
+  
+  # def self.get_saison_id
+  #   Setting.find(:first).saison_id
+  # end
+  # 
+  # def self.get_saison
+  #   Setting.find(:first).saison
+  # end
 
   
 

@@ -1,19 +1,18 @@
 class SessionsController < ApplicationController
   skip_before_filter :login_required
-  
+
   def new
   end
 
   def create 
     user = Myuser.authenticate(params[:login], params[:password]) 
     if user
-      session[:user_id] = user.id
-      session[:edit_access] = false
-      session[:admin] = user.admin?
-      session[:user_login] = user.login
-      current_saison_id = Setting.find(:first).saison.id
-      session[:current_saison_id] = Setting.find(:first).saison.id
-      flash[:notice] = "Bonjour #{user.login}!"
+      session[:user_id]           = user.id
+      session[:admin]             = user.admin?
+      session[:user_login]        = user.login
+      session[:edit_access]       = false
+      session[:current_saison_id] = user.get_pref_saison
+      flash[:notice]              = "Bonjour #{user.login}!"
       redirect_to parcelles_path
     else
       flash[:error] = "login/mot de passe invalide !"

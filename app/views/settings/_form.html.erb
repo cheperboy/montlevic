@@ -8,11 +8,11 @@
 <br><br><br>
 
 <fieldset>
-	<legend>Choix Saison</legend>
+	<legend>Choix Saison (supprimé)</legend>
 	<table>
 		<tr>
-			<td><%= f.label :saison_id, "Saison : " %></td>
-			<td><%= f.collection_select (:saison_id, Saison.find(:all), :id, :name ) %></td>
+			<td><%#= f.label :saison_id, "Saison : " %></td>
+			<td><%#= f.collection_select (:saison_id, Saison.find(:all), :id, :name ) %></td>
 		</tr>  
 	</table>
 </fieldset>

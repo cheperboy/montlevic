@@ -6,10 +6,6 @@ before_filter :admin_access
 
     respond_to do |format|
       if @setting.update_attributes(params[:setting])
-
-        session[:current_saison_id] = Setting.get_saison_id
-        current_saison_id = Setting.get_saison_id
-
         flash[:notice] = 'Options mises a jour.'
         format.html { redirect_to :action => "edit", :id => Setting.find(:first).id }
         format.xml  { head :ok }

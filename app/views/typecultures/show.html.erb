@@ -29,7 +29,6 @@
 
 	<% sum_charges  = @saison.sum_charges[:typeculture][@typeculture.code.to_sym][:record] %>
 	<% sum_produits = @saison.sum_produits[:typeculture][@typeculture.code.to_sym][:record] %>
-	<%# puts "#{sum_charges.to_yaml} "%>
 
 	<% unless sum_charges.nil? || sum_produits.nil? %>
  
@@ -49,7 +48,12 @@
 		<%= render(:partial => "typecultures/marge_brute/ventes", :locals => {:sum => sum_charges }) %>
 
 		<h3>production</h3>
-		<% ventes = Category.find(38).ventes.find_by_saison(:all) %>
+		
+		<% production = true if (@typeculture.code.eql?('ble') ||
+								 @typeculture.code.eql?('colza') || 
+								 @typeculture.code.eql?('tournesol')) %>
+		<% cat_code = "vente_#{@typeculture.code}" %>		
+		<% ventes = Category.find_by_code(cat_code).ventes.find_by_saison(:all) %>
 		<%= render(:partial => "categories/show_ventes", :locals => { :ventes => ventes }) %>
 
 	<% end %>

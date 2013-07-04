@@ -19,7 +19,7 @@ class TypeculturesController < ApplicationController
   # GET /typecultures/1
   # GET /typecultures/1.xml
   def show
-    @saison = Setting.find(:first).saison
+    @saison = Saison.find(session[:current_saison_id])
     @typeculture = Typeculture.find(params[:id])
     @typecultures = Typeculture.all
     
@@ -103,7 +103,7 @@ class TypeculturesController < ApplicationController
 
   def set_cache
     @typeculture = Typeculture.find(params[:id])
-    @saison = Setting.find(:first).saison
+    @saison = Saison.find(session[:current_saison_id])
     # sum_charges
     record          = Hash.new
     record[:record] = @template.calculate_marge_by_cat_for_typeculture(@typeculture)
@@ -127,8 +127,10 @@ class TypeculturesController < ApplicationController
       end
     end
   end
+  
+  # ok en local mais timeout sur heroku
   def set_cache_all
-    @saison       = Setting.find(:first).saison
+    @saison       = Saison.find(session[:current_saison_id])
     typecultures = []
     @typecultures = Typeculture.find(:all).each {|c| typecultures << c }
     puts "session #{session[:set_cache_all_typecultures]}"

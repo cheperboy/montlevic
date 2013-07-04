@@ -13,7 +13,7 @@ class Putoparcelle < ActiveRecord::Base
 
 # Callbacks
   def before_save 
-    self.saison ||= Setting.get_saison
+    self.saison ||= GetSession.current_saison
     self.value = 1
   end
   

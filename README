@@ -41,14 +41,7 @@ Rake Notes :
 
 €
 == TODO
-1- creer model Produits
-vis-a-vis d'une facture il se comporte comme un Report
-la facture sera par exemple en mode Diff et tout ce qui n'est pas affecte a des Reports doit rester en cout comptable de la facture pour etre repartit sur l'ensemble.
-vis-a-vis d'un pulve il se comporte comme un Report qui diminue en fonction des Pulves associes
-
-dans le tableau de fin on fait apparaitre les Produits (dans un premier temps)
-
-2-Ajouter une class "MyLog" qui exploite logger.info("#{Time.now} Destroyed Weblog ID ##{@weblog.id}!")
+1-Ajouter une class "MyLog" qui exploite logger.info("#{Time.now} Destroyed Weblog ID ##{@weblog.id}!")
 - ajouter zonetopas dans verif
 
 =OPTIMIZE
@@ -94,7 +87,7 @@ donnees de test
 - La valeur d'une vente est repartie equitablement sur l'ensemble des parcelles auxquelles elle est associee (proportionnellement a la surface de chaque parcelle)
 
 
-WIKI
+=WIKI
 =Association Facture-Labour (idem pour facture-Pulve)
 Le but de ce type d'association est de reporter sur le poste Pulve (exemple : un passage de traitement round-up) le cout depense lors de l'achat des produits utilises pour ce traitement.
 exemple 
@@ -103,4 +96,8 @@ exemple
 - on associe le Pulve a cette Facture en indiquant comme valeur de contribution 100 euros.
 -> resultat le Pulve coute toujours 100 dans la compta mais la facture de produit n'est plus comptabilisee qu'a hauteur de 900.
 
+=CATEGORIES
+attention si modifications des categories car les cat.code sont utilises dans des algo
+exemple: categories de production.vente_ble, vente_colza et vente_tournesol utilises dans typeculture.show
+faire une recherche sur Category.find_by_code pour identifier tout les cas critiques
 

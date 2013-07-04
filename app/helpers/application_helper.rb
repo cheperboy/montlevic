@@ -72,8 +72,8 @@ module ApplicationHelper
   # Obsolete, non utilise
   def collection_parcelle_and_culture(form, parcelle_id, parcelles, id, name)
     options = []
-    Setting.find(1).saison.typecultures.each {|c| options << c }
-    Setting.find(1).saison.parcelles.each {|p| options << p }
+    GetSession.current_saison.typecultures.each {|c| options << c }
+    GetSession.current_saison.parcelles.each {|p| options << p }
     return form.collection_select(:parcelle_id, options, :id, :name_for_select )
   end
   
@@ -749,10 +749,6 @@ module ApplicationHelper
     return out
   end
 
-#  def my_saison
-#    session[:current_saison_id] || Setting.find(:first).saison_id
-#  end
-  
   def admin?
     session[:admin]
   end
@@ -768,11 +764,6 @@ module ApplicationHelper
   def logged_in?
     return session[:user_id]
   end
-
-  # def update_saison() 
-  #   remote_function(:url => { :controller => "settings", :action => "update_saison" },
-  #                   :method => :put)
-  # end
 
   def shortstring(text)
     truncate(text, :length => 11, :omission => '..')

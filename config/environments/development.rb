@@ -7,6 +7,8 @@ config.cache_classes = false
 
 config.action_controller.perform_caching = false
 
+# config.action_controller.session_store = :active_record_store
+
 # Log error messages when you accidentally call methods on nil.
 config.whiny_nils = true
 
