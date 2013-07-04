@@ -29,8 +29,8 @@ class Analytic < ActiveRecord::Base
 
   def initialize
     #for test only
-    current_saison_id = GetSession.current_saison_id
-    current_saison = GetSession.current_saison
+    current_saison_id = session[:current_saison_id]
+    current_saison = session[:current_saison_id]
 
     # init iterators
     self.colonnes_type = [:parcelles, :zones, :typecultures]

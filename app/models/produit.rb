@@ -29,7 +29,7 @@ class Produit < ActiveRecord::Base
   validates_presence_of   :category_id, :message => "Categorie ne doit pas etre vide"
   validates_presence_of   :unit, :message        => "Unite ne doit pas etre vide"
 
-  named_scope :by_saison, :conditions => ["saison_id = ?", GetSession.current_saison_id]
+  named_scope :by_saison, :conditions => ["saison_id = ?", session[:current_saison_id]]
   named_scope :starred, :conditions => ["star = ?", 1]
   named_scope :not_starred, :conditions => ["star = ?", 0]
 
@@ -61,7 +61,7 @@ class Produit < ActiveRecord::Base
   #TODO finir cette methode!
   # classement par cout?
   def self.find_with_order()
-    saison = Saison.find(GetSession.current_saison_id)
+    saison = Saison.find(session[:current_saison_id])
     produits = saison.produits.find(:all, :order => :category_id)
   end
 
@@ -112,7 +112,7 @@ class Produit < ActiveRecord::Base
   end
   
   def self.find_by_saison(*args)
-    with_scope(:find => { :conditions => ["saison_id = ?", GetSession.current_saison_id],
+    with_scope(:find => { :conditions => ["saison_id = ?", session[:current_saison_id]],
                           :order => :category_id}) do
         find(*args)
       end
@@ -312,7 +312,7 @@ class Produit < ActiveRecord::Base
                                       :size => 14
     gras = Spreadsheet::Format.new :weight => :bold
 
-    saison = GetSession.current_saison.name
+    saison = session[:current_saison_id].name
     book = Spreadsheet::Workbook.new
 
     # sheet 1

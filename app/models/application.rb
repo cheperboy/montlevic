@@ -20,8 +20,8 @@ class Application < ActiveRecord::Base
   TAUX_INVEST            = [['-', DEFAULT], ['3 ans', 36],      ['10 ans', 120],      ['15 ans', 180]]
   VENTE_UNITS            = [['na', nil], ['quintaux', 'qt'], ['tonnes', 't'], ['kg', 'kg'], ['bottes', 'b']]
 
-  # SAISON_ID = GetSession.current_saison_id
-  # SAISON    = GetSession.current_saison
+  # SAISON_ID = session[:current_saison_id]
+  # SAISON    = session[:current_saison_id]
   
   #for navigation in headers
   HEADER_KEY   = 0
@@ -189,6 +189,25 @@ class Application < ActiveRecord::Base
     return val.to_i if (val == val.to_i)
     return val if precision == 0
     return (val * 10 ** precision).round.to_f / 10 ** precision
+  end
+
+  def current_user_id
+    Saison.find(Thread.current[:current_saison_id])
+  end
+
+  def current_saison
+    Saison.find(Thread.current[:current_saison_id])
+  end
+  
+  def current_saison_id
+    Thread.current[:current_saison_id]
+  end
+
+  def self.current_saison_id=(saison_id)
+    Thread.current[:current_saison_id] = saison_id
+  end
+  def self.current_user_id=(user_id)
+    Thread.current[:current_user_id] = user_id
   end
 
  

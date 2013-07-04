@@ -51,7 +51,7 @@ class CR < ActiveRecord::Base
   #     @c = col_model.to_s.downcase.pluralize.to_sym
   #     @col_model = col_model
   #     @cols = col_model.find_for_saison()
-  #     @saison = GetSession.current_saison
+  #     @saison = session[:current_saison_id]
   #     @sid = @saison.id
   #     @labours = @saison.labours
   #     @pulves = @saison.pulves
@@ -286,7 +286,7 @@ class Calculate < ActiveRecord::Base
       @c = col_model.to_s.downcase.pluralize.to_sym
       @col_model = col_model
       @cols = col_model.find_for_saison()
-      @saison = GetSession.current_saison
+      @saison = session[:current_saison_id]
       @sid = @saison.id
       @labours = @saison.labours
       @pulves = @saison.pulves

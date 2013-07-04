@@ -9,7 +9,7 @@ class Putofacture < ActiveRecord::Base
 
 # Callbacks
   def before_save 
-    self.saison ||= GetSession.current_saison
+    self.saison ||= session[:current_saison_id]
   end
   
 end

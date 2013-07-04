@@ -33,7 +33,7 @@
 								</tr>
 								<%- @pulves = Pulve.find(
 									:all, 
-									:conditions => ["saison_id = ? AND user_id = ?", GetSession.current_saison_id, @user.id]) -%>								
+									:conditions => ["saison_id = ? AND user_id = ?", session[:current_saison_id], @user.id]) -%>								
 								<% sum_debug = 0 %>
 								<%#- @pulves.each do |pulve| -%>
 									<%#- if pulve.putoproduits[0].produit.category.parent.eql?(category) -%>
@@ -96,7 +96,7 @@
 						</tr>
 						<%- @factures = Facture.find(
 							:all, 
-							:conditions => ["saison_id = ? AND category_id = ? AND user_id = ?", GetSession.current_saison_id, category.id, @user.id]) -%>
+							:conditions => ["saison_id = ? AND category_id = ? AND user_id = ?", session[:current_saison_id], category.id, @user.id]) -%>
 						<%- @factures.each do |facture| -%>
 							<% sum += facture.get_cout_total %>
 							<% sum_total += facture.get_cout_total %>

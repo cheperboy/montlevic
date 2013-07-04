@@ -15,7 +15,7 @@ class Protofacture < ActiveRecord::Base
   end
 
   def before_save 
-    self.saison ||= GetSession.current_saison
+    self.saison ||= session[:current_saison_id]
   end
   
   def get_used

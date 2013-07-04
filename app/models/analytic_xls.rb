@@ -12,7 +12,7 @@ class Analytic_xls < ActiveRecord::Base
   def write
     self.book = Spreadsheet::Workbook.new
     sheet = self.book.create_worksheet
-    sheet.name = "Resultat #{GetSession.current_saison.name}"
+    sheet.name = "Resultat #{session[:current_saison_id].name}"
     sheet.row(0).concat %w{Name Country Acknowlegement}
     fill_sheet(sheet)
   end

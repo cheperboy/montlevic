@@ -145,7 +145,7 @@ end
     # end
 
     @sym = elt_type
-    @saison = GetSession.current_saison
+    @saison = session[:current_saison_id]
     @last_pulve_id = nil
     @import_size   = 0
     @read_size     = 0

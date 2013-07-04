@@ -9,7 +9,7 @@
 					| <%= link_to "Mode lecture seule", :controller => :sessions, :action => :edit_access %> | 
 				</span>
 			<% end %>
-		  	Campagne: <strong><span class=red><%= Saison.find(GetSession.current_saison_id).name %></strong></class> |
+		  	Campagne: <strong><span class=red><%= Saison.find(session[:current_saison_id]).name %></strong></class> |
 		  	<%= session[:user_login] %> | 
 			<% if admin? %>
 		  		<%= ENV['RAILS_ENV'].to_s %> | 
