@@ -21,6 +21,7 @@ Rails::Initializer.run do |config|
   
   #Ajouté par matthieu
   require 'extensions'
+  require 'get_session'
 
   # config.gem 'ancestry'
   # config.gem 'hashie'
