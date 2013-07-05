@@ -2,7 +2,7 @@
   <p>
     <%= f.label :facture_id, "facture : " %>
 	<% unless Facture.find(:first).nil? %>
-	    <%= f.collection_select (:facture_id, Facture.find(by_saison(:all)).scope_by_phyto, :id, :name_and_type ) %>
+	    <%= f.collection_select (:facture_id, Facture.scope_by_saison.scope_by_phyto, :id, :name_and_type) %>
     <% end %>	
 	<br>	
 	<%= f.label :prix_unit, "prix unitaire: " %>

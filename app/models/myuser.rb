@@ -18,4 +18,9 @@ class Myuser < ActiveRecord::Base
     end
   end
 
+  def set_pref_saison(saison_id)
+    self.pref_saison = saison_id
+    self.save
+  end
+
 end

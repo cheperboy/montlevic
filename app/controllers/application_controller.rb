@@ -47,10 +47,10 @@ class ApplicationController < ActionController::Base
   #   @current_saison_id = Setting.find(:first).saison_id
   # end
   
-  # non utilise
-  # def current_saison_id
-  #   @current_saison_id ||= session[:current_saison_id]
-  # end
+  # a utiliser dans controlleur, vue et helper, mais pas model
+  def current_saison_id
+    @current_saison_id ||= session[:current_saison_id]
+  end
 
   def hide_menu 
       render :update do |page| 

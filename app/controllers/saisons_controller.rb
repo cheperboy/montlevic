@@ -31,16 +31,9 @@ class SaisonsController < ApplicationController
   def select_saison
     # Update Session variable
     session[:current_saison_id] = params[:id].to_i
-    Myuser.find(session[:user_id]).update_attribute(:pref_saison, params[:id].to_i)
-    @setting = Setting.find(:first)
-    @saisons = Saison.all
-    respond_to do |format|
-      if @setting.update_attribute(:saison_id, params[:id])
-        @setting.reload
-        flash[:notice] = 'Saison selectionnee.'        
-      else
-        flash[:error] = 'Pas de mise a jour'
-      end
+    #update user preferences
+    Myuser.find(session[:user_id]).set_pref_saison(params[:id].to_i)
+    respond_to do |format|     
       format.html { redirect_to(saisons_url) }
     end
   end

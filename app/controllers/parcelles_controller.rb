@@ -16,7 +16,7 @@ class ParcellesController < ApplicationController
 
   def index
     @typecultures = Typeculture.find_for_saison()
-    @saison = Saison.find(session[:current_saison_id])
+    @saison = Saison.find(current_saison_id)
     @parcelles = @saison.parcelles # used only for raw data acces (xml & json)
 
     respond_to do |format|
@@ -28,7 +28,7 @@ class ParcellesController < ApplicationController
   end
 
   def index_edit
-    @saison = session[:current_saison_id]
+    @saison = current_saison_id
     @parcelles = @saison.parcelles
 
     respond_to do |format|
@@ -48,7 +48,7 @@ class ParcellesController < ApplicationController
   end
 
   def new
-    @saison = session[:current_saison_id]
+    @saison = current_saison_id
     @parcelles = Parcelle.find_by_saison(:all)
     @parcelle = Parcelle.new
     @parcelle.zonetopas.build
@@ -61,7 +61,7 @@ class ParcellesController < ApplicationController
 
   def edit
     @typecultures = Typeculture.find_for_saison()
-    @saison = session[:current_saison_id]
+    @saison = current_saison_id
     @parcelles = Parcelle.find_by_saison(:all)
     @parcelle = Parcelle.find(params[:id])
     unless @parcelle.saison_id.eql?(current_saison_id)

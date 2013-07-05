@@ -58,7 +58,7 @@ class Facture < Charge
   named_scope :scope_by_saison, 
   :conditions => {:saison_id => Saison.get_current_id}
 
-  named_scope :scope_by_phyto, 
+  named_scope :scope_by_phyto,
   :conditions => {:category_id => Category.find_by_upcategory_and_code('facture', 'produits_phyto')}
 
   def self.find_by_saison(*args)

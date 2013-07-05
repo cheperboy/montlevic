@@ -73,7 +73,7 @@ module CalculateHelper
   # nombre d'elements (factures, pulves, ...) de la categorie Agricole, Maison ou Invest
   # specifique pour l'affichage actuel
   def count_elements_of_a_cat(cat)
-    saison_id = session[:current_saison_id]
+    saison_id = current_saison_id
     nfac = npu = 0
     # factures
     if cat.has_children?
