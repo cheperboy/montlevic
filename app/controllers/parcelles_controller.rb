@@ -5,7 +5,7 @@ class ParcellesController < ApplicationController
   skip_before_filter :login_required, :only => :index_raw# for raw data acces
 
   def index_raw
-    @saison = Saison.find(:last)
+    @saison = Saison.find_by_year(params[:id])
     @parcelles = @saison.parcelles # used only for raw data acces (xml & json)
     respond_to do |format|
       # format.html # index.html.erb

@@ -1,7 +1,7 @@
 class Saison < ActiveRecord::Base
   serialize :sum_charges, Hash #calculate_marge_by_cat_for_typeculture
   serialize :sum_produits, Hash #calculate_produit_by_cat_for_typeculture
-
+ 
   # Variables Stockee - exemple de sum_charges
   # les typecultures sont differencies en indexant la variable stockee par [:typecultures][id][:record]
   # A la creation de la saison les variables stockees sont initialisees
