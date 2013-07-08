@@ -25,7 +25,8 @@ class ProduitsController < ApplicationController
   end
      
   def index_raw
-    saison = Saison.find(:last)
+    saison = Saison.find_by_year(params[:id])
+    # saison = Saison.find(:last)
     @produits = saison.produits
     respond_to do |format|
       format.xml
