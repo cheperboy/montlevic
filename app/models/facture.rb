@@ -71,6 +71,11 @@ class Facture < Charge
   end
   handle_asynchronously :ddel
 
+
+
+
+
+
   def self.find_by_saison(*args)
     with_scope(:find => { :conditions => ["saison_id = ?", Saison.get_current_id],
                           :order => :id}) do
