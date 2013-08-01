@@ -40,6 +40,7 @@ class ImportController < ApplicationController
     @produits     = ['Produits']
     @typecultures = ['Cultures']
     User.all.each {|u| @users << u.code }
+    current_saison = Saison.find(current_saison_id)
     current_saison.produits.all.each {|p| @produits << p.code }
     current_saison.parcelles.all.each {|p| @parcelles << p.code }
     current_saison.typecultures.each {|t| @typecultures << t.code }

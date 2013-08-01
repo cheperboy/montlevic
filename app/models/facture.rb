@@ -60,6 +60,16 @@ class Facture < Charge
 
   named_scope :scope_by_phyto,
   :conditions => {:category_id => Category.find_by_upcategory_and_code('facture', 'produits_phyto')}
+  
+  
+
+  def ddel
+    f = self
+    f.cout = 6
+    f.save!
+    puts "\n\nDONE\n\n"
+  end
+  handle_asynchronously :ddel
 
   def self.find_by_saison(*args)
     with_scope(:find => { :conditions => ["saison_id = ?", Saison.get_current_id],

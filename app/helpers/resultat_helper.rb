@@ -117,11 +117,11 @@ module ResultatHelper
 
     sum                         = Hash.new
     sum[:total]                 = Hash.new
-    sum[:total][:resultat]         = 0
+    sum[:total][:resultat]      = 0
     sum[:total][:factures]      = 0
     sum[:total][:ventes]        = 0
     sum[:ha]                    = Hash.new
-    sum[:ha][:resultat]            = 0
+    sum[:ha][:resultat]         = 0
     sum[:ha][:factures]         = 0
     sum[:ha][:ventes]           = 0
     sum[:factures]              = Hash.new

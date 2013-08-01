@@ -26,7 +26,7 @@ class Saison < ActiveRecord::Base
 
   has_one :setting
 
-
+    
   def self.init_serialized
     result = true
     typecultures = Typeculture.find(:all)
@@ -60,7 +60,29 @@ class Saison < ActiveRecord::Base
     end
     result
   end
-    
+  
+  def calculate_sum_charges_and_sum_produits
+    Saison.init_serialized()
+    Saison.all.each do |saison|
+      Typeculture.all.each do |typeculture|
+        # sum_charges
+        record          = Hash.new
+        record[:record] = Typeculture.calculate_marge_by_cat_for_typeculture(typeculture)
+        record[:valid]  = true
+        saison.sum_charges[:typeculture][typeculture.code.to_sym] = record
+        # sum_produits
+        record          = Hash.new
+        record[:record] = Typeculture.calculate_produit_by_cat_for_typeculture(typeculture)
+        record[:valid]  = true
+        saison.sum_produits[:typeculture][typeculture.code.to_sym] = record  
+      end
+      saison.save
+    end
+  end
+  # handle_asynchronously :calculate_sum_charges_and_sum_produits  
+  
+  
+  
   # positionne le champ Protofac.quantite_restante de chaque produit de la saison.
   # normalement cette methode n'a pas besoin d'etre appelee car les updates sont fait 
   # apres chaque modif de produit ou pulve

@@ -102,6 +102,8 @@ class TypeculturesController < ApplicationController
   end
 
   def set_cache
+    f = Facture.find(:last)
+    f.ddel
     @typeculture = Typeculture.find(params[:id])
     @saison = Saison.find(current_saison_id)
     # sum_charges
@@ -128,52 +130,13 @@ class TypeculturesController < ApplicationController
     end
   end
   
-  # ok en local mais timeout sur heroku
   def set_cache_all
-    @saison       = Saison.find(current_saison_id)
-    typecultures = []
-    @typecultures = Typeculture.find(:all).each {|c| typecultures << c }
-    puts "session #{session[:set_cache_all_typecultures]}"
+    Saison.first.calculate_sum_charges_and_sum_produits()
     
-    # first element
-    if session[:set_cache_all_typecultures].nil?
-      puts "DEBUG : session[:set_cache_all_typecultures].nil?"
-      session[:set_cache_all_typecultures] = 0
-    # last element
-    elsif session[:set_cache_all_typecultures].eql?(typecultures.size-1)
-      puts "DEBUG : session[:set_cache_all_typecultures].eql?(typecultures.size-1)"
-      session[:set_cache_all_typecultures] = nil
-      done = true
-    # next element
-    else
-      puts "DEBUG : session[:set_cache_all_typecultures]+=1"
-      session[:set_cache_all_typecultures] += 1
-    end
-    unless done
-      typeculture = typecultures.at(session[:set_cache_all_typecultures])
-      # sum_charges
-      record          = Hash.new
-      record[:record] = @template.calculate_marge_by_cat_for_typeculture(typeculture)
-      record[:valid]  = true
-      @saison.sum_charges[:typeculture][typeculture.code.to_sym] = record
-      # sum_produits
-      record          = Hash.new
-      record[:record] = @template.calculate_produit_by_cat_for_typeculture(typeculture)
-      record[:valid]  = true
-      @saison.sum_produits[:typeculture][typeculture.code.to_sym] = record
-    
-      @saison.save
-    end
     respond_to do |format|
-      if (done)
-        flash[:notice] = 'mise en cache de tout : ok'
-        format.html { redirect_to(typecultures_url) }
-        format.xml  { head :ok }
-      else
-        puts "redirect"
-        format.html { redirect_to :controller => :typecultures, :action => :set_cache_all}
-        format.xml  { render :xml => @saison.errors, :status => :unprocessable_entity }
-      end
+      flash[:notice] = 'mise en cache de tout : en cours'
+      format.html { redirect_to(typecultures_url) }
+      format.xml  { head :ok }
     end
   end
 

@@ -13,8 +13,8 @@ class Application < ActiveRecord::Base
   TVA_19_6 = 19.6
   
   # Valeurs de listes deroulantes
-  PULVE_DOSAGE_UNITS     = [['L/Ha', 'L/Ha'], ['kg/Ha', 'kg/Ha']]
-  PRODUIT_QUANTITE_UNITS = [['L', 'L'], ['kg', 'kg']]
+  PULVE_DOSAGE_UNITS     = [['L/Ha', 'L/Ha'], ['kg/Ha', 'kg/Ha'], ['unite/Ha', 'unite/Ha']]
+  PRODUIT_QUANTITE_UNITS = [['L', 'L'], ['kg', 'kg'], ['unite', 'u']]
   TAUX_TVA               = [['-', DEFAULT], ['5,5%', TVA_5_5],  ['19,6%', TVA_19_6]]
   TYPE_REGLEMENT         = [['-', DEFAULT], ['Cheque', CHEQUE], ['Liquide', ESPECE]]
   TAUX_INVEST            = [['-', DEFAULT], ['3 ans', 36],      ['10 ans', 120],      ['15 ans', 180]]
