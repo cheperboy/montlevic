@@ -340,7 +340,7 @@ end
     fac.date        = get_date(row[XLS_FACTURE_DATE], @row_id)
     fac.name        = get_text(row[XLS_FACTURE_NAME], @row_id, "nom", {:if_null => :error})
     fac.ref         = get_text(row[XLS_FACTURE_REF_PERSO], @row_id, "ref", {:if_null => :warning})
-    fac.ref_client  = get_text(row[XLS_FACTURE_REF_CLIENT], @row_id, "ref_client", {:if_null => :warning})
+    fac.ref_client  = get_text(row[XLS_FACTURE_REF_CLIENT], @row_id, "ref_client")
     fac.desc        = get_text(row[XLS_FACTURE_DESC], @row_id, 'description')
     fac.info        = get_text(row[XLS_FACTURE_INFO], @row_id, 'info')
     fac.star        = get_boolean_field(row[XLS_FACTURE_STAR],   @row_id, 'star',   {:invalid => :warning})
