@@ -1,12 +1,13 @@
 - up_category.children.each do |category|
-	- unit   = nil
-	- ventes = @saison.factures.select{|v| v.category_id.eql?(category.id)}
+	- factures = @saison.factures.select{|v| v.category_id.eql?(category.id)}
 	- coul 	 = "#{category.code}_head"
 	%row{:bgcolor => @coul[coul.to_sym], :fontweight => "bold", :fontsize => "12", :level => "1"}
 		%column{:content => "1"}
 		%column{:content => ""}
 		%column{:content => "#{category.name}"}
 		%column{:content => "#{@sum[:prix][category.code.to_sym].to_i}", :halign => "right", :format => "0,000"}
+		%column{:content => ""}
+		%column{:content => ""}
 		%column{:content => ""}
 		%column{:content => ""}
 		%column{:content => ""}
