@@ -20,7 +20,7 @@
 			%column{:content => ""}
 			%column{:content => "#{facture.cout.to_i} #{euro}", :halign => "right", :format => "0,000"}
 			%column{:content => "#{facture.name}"}
-			%column{:content => "#{facture.user,name}"}
+			%column{:content => "#{facture.user.name}"}
 			%column{:content => "#{facture.date}"}
 			%column{:content => "#{facture.ref_client}"}
 			%column{:content => "#{facture.ref}"}
