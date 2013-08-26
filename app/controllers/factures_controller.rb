@@ -11,6 +11,15 @@ class FacturesController < ApplicationController
     end
   end
 
+  def analytic
+    @saison = Saison.find_by_year(params[:id])
+    @sum = Facture.synthese_by_cat(@saison)
+    respond_to do |format|
+      format.html
+      format.xml
+    end
+  end
+  
   def index
     # @factures = Facture.find_by_saison(:all, :limit => 10 )
     # @factures = Facture.find_by_saison(:all, :order => "id DESC")

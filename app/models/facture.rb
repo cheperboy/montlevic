@@ -378,4 +378,31 @@ class Facture < Charge
     return file
   end
 
+  # pour action Analytic facture (calcul recursif)
+  # positionne recursivement les donnees prix, des factures d'une saison par categories
+  # sum[:prix] et sum[:quantite][:value] respectivement les sommes des prix et quantite de chaque vente de la categorie
+  def self.synthese_by_cat(saison)
+    categories_facture = Category.root_facture
+    sum                = Hash.new
+    sum[:prix]         = Hash.new
+    sum                = synthese_by_cat_recurs(saison, categories_facture, sum)
+  end
+  
+  def self.synthese_by_cat_recurs(saison, up_category, sum)
+    up_category.children.each do |category|
+    	sum[:prix][category.code.to_sym] = 0
+      factures = saison.factures.select{|v| v.category_id.eql?(category.id)}
+      factures.each do |facture|
+      	# ajoute aussi la valeur (prix) a toutes les cat parentes de la vente
+      	temp_cat = category
+        while temp_cat.depth != Category.root_facture.depth
+    		  sum[:prix][temp_cat.code.to_sym] += facture.cout
+    		  temp_cat = temp_cat.parent
+    		end
+    	end
+      sum = synthese_by_cat_recurs(saison, category, sum) if category.has_children?
+    end
+    sum
+  end
+
 end

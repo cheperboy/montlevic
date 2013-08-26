@@ -97,7 +97,6 @@ class Vente < Charge
 # sum[:prix] et sum[:quantite][:value] respectivement les sommes des prix et quantite de chaque vente de la categorie
 # sum[:prix_unitaire][:valid] est a true si tout les PU de la cat sont renseignés et valides
 # sum[:quantite][:valid] est a true si toutes les quantites de la cat sont renseignés et valides
-
   def self.synthese_by_cat(saison)
     categories_vente = Category.root_vente
     sum = Hash.new
