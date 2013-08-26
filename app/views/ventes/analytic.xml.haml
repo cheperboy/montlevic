@@ -12,7 +12,7 @@
 
 
 - headers = []
-- headers << 'Categorie' << 'Sous-Categorie' << 'Prix' << 'Nom' << 'date' << 'Prix Unitaire' << 'Quantite'
+- headers << 'Tri' << 'Categorie' << 'Sous-Categorie' << 'Prix' << 'Nom' << 'date' << 'Prix Unitaire' << 'Quantite'
 
 - categories = Category.root_vente
 - i = 0
@@ -33,6 +33,7 @@
 		- unit   = ventes[0].unit if (ventes[0] && @sum[:unit][category.code.to_sym].eql?(true))
 
 		%row{:bgcolor => @coul[:gris], :fontweight => "bold", :fontsize => "14", :level => "0"}
+			%column{:content => "0"}
 			%column{:content => "#{category.name}"}
 			%column{:content => ""}
 			%column{:content => "#{@sum[:prix][category.code.to_sym]}", :halign => "right"}
@@ -55,6 +56,7 @@
 		- ventes = @saison.ventes.select{|v| v.category_id.eql?(category.id)}.each do |vente|
 			- coul 	 = "#{vente.category.code}"
 			%row{:bgcolor => @coul[coul.to_sym], :level => "2"}
+				%column{:content => "2"}
 				%column{:content => ""}
 				%column{:content => ""}
 				%column{:content => "#{vente.prix.to_i} #{euro}", :halign => "right", :format => "0,000"}

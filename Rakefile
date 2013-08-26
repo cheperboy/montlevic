@@ -133,6 +133,14 @@ namespace :db do
     # sh %{ echo '#{command}' > #{filename} }
   end
   
+  desc "dump server comptagri_dev to local db"
+  task :dump_server => :environment do 
+    heroku_db = "montlevic"
+    local_db = "comptagri_dev"
+    command = "heroku pgbackups:capture --expire --app #{heroku_db}"
+    sh %{ #{command} }
+  end
+  
   # a supprimer, effectuer une fois en prod pour rendre les category.code uniques
   desc "rename cats code if invalid"
   task :rename_cats => :environment do 
