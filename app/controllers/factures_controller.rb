@@ -2,7 +2,7 @@ class FacturesController < ApplicationController
   before_filter :edit_access,
                 :only => [:update, :update_multiple, :destroy, :create_debit_to_reportable]
 
-  skip_before_filter :login_required, :only => :by_saison # for raw data acces
+  skip_before_filter :login_required, :only => [:by_saison, :analytic] # for raw data acces
 
   def by_saison
     @saison = Saison.find_by_year(params[:id])
