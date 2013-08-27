@@ -1,0 +1,42 @@
+- up_category.children.each do |category|
+	- factures = @saison.factures.select{|v| v.category_id.eql?(category.id)}
+	- coul 	 = "#{category.code}_head"
+	- cat_depth_2 = ""
+	- cat_depth_3 = ""
+	- color = @coul[:cat][category.depth]
+	- fontsize = @fontsize[:cat][category.depth]
+
+	%row{:bgcolor => @coul[coul.to_sym], :fontweight => "bold", :level => "1", :fontsize => "#{fontsize}", :color => color}
+		- cat_depth_2 = category.name if category.depth.eql?(2)
+		- cat_depth_3 = category.name if category.depth.eql?(3)
+		
+		%column{:content => "categorie #{category.depth}", :format => "@STRING@", :halign => "left", :color => "white", :fontsize => "6"}
+		%column{:content => ""}
+		%column{:content => "#{cat_depth_2}"}
+		%column{:content => "#{cat_depth_3}"}
+		%column{:content => "#{@sum[:prix][category.code.to_sym].to_i}", :halign => "right", :format => "#,##0"}
+		%column{:content => ""}
+		%column{:content => ""}
+		%column{:content => ""}
+		%column{:content => ""}
+		%column{:content => ""}
+		%column{:content => ""}
+	
+	- factures.each do |facture|
+		- coul = "#{facture.category.code}"
+		- cout = number_with_delimiter(facture.cout, :delimiter => "", :separator => ",")
+		
+		%row{:bgcolor => @coul[coul.to_sym], :level => "2"}
+			%column{:content => "facture", :format => "@STRING@", :halign => "left", :fontsize => "6", :color => "white"}
+			%column{:content => ""}
+			%column{:content => ""}
+			%column{:content => ""}
+			%column{:content => "#{cout}", :halign => "right", :format => "#,##0"}
+			%column{:content => "#{facture.name}"}
+			%column{:content => "#{facture.user.name}"}
+			%column{:content => "#{facture.type}", :format => "@STRING@"}
+			%column{:content => "#{facture.date}", :format => "dd/MM/yyyy"}
+			%column{:content => "#{facture.ref_client}", :halign => "right", :format => "@STRING@"}
+			%column{:content => "#{facture.ref}", :halign => "right", :format => "@STRING@"}
+			
+	= render(:partial => "factures/export_analytic/export_analytic_recurs", :locals => { :up_category => category}) if category.has_children?
