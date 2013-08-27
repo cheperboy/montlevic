@@ -35,7 +35,6 @@
 			- i = i + 1
 	
 	- categories.children.each do |category|
-		- factures = @saison.factures.select{|v| v.category_id.eql?(category.id)}
 		- sum = number_with_delimiter(@sum[:prix][category.code.to_sym], :delimiter => "", :separator => ",")
 	
 		%row{:bgcolor => @coul[:gris], :fontweight => "bold", :fontsize => "#{@fontsize[:cat][1]}", :level => "0", :color => @coul[:cat][1]}
