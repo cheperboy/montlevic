@@ -2,7 +2,8 @@
 	- factures = @saison.factures.select{|v| v.category_id.eql?(category.id)}
 	- coul 	 = "#{category.code}_head"
 	%row{:bgcolor => @coul[coul.to_sym], :fontweight => "bold", :fontsize => "12", :level => "1"}
-		%column{:content => "1"}
+		-puts category.depth
+		%column{:content => "#{category.depth}"}
 		%column{:content => ""}
 		%column{:content => "#{category.name}"}
 		%column{:content => "#{@sum[:prix][category.code.to_sym].to_i}", :halign => "right", :format => "0,000"}
@@ -15,7 +16,7 @@
 	- factures.each do |facture|
 		- coul 	 = "#{facture.category.code}"
 		%row{:bgcolor => @coul[coul.to_sym], :level => "2"}
-			%column{:content => "2"}
+			%column{:content => "6"}
 			%column{:content => ""}
 			%column{:content => ""}
 			%column{:content => "#{facture.cout.to_i} #{euro}", :halign => "right", :format => "0,000"}
