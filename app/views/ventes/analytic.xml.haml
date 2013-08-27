@@ -21,6 +21,7 @@
 		%saison{:content => "#{@saison.year}"}
 		%title{:content => "Ventes #{@saison.year}"}
 		%model{:content => "ventes"}
+		%nb_col{:content => "#{headers.size}"}
 
 	%row{:color => "white", :bgcolor => "black", :fontweight => "bold", :fontsize => "12"}
 		- headers.size.times do
