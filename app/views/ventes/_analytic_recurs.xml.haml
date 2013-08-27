@@ -17,7 +17,7 @@
 			%column{:content => ""}		
 			%column{:content => ""}
 	
-	- ventes = @saison.ventes.select{|v| v.category_id.eql?(category.id)}.each do |vente|
+	- ventes.each do |vente|
 		- coul 	 = "#{vente.category.code}"
 		%row{:bgcolor => @coul[coul.to_sym], :level => "2"}
 			%column{:content => "2"}
@@ -28,4 +28,4 @@
 			%column{:content => "#{vente.date}"}
 			%column{:content => "#{vente.prix_unitaire}#{euro}/#{vente.unit}", :halign => "right"}
 			
-		= render(:partial => "analytic_recurs", :locals => { :up_category => category}) if category.has_children?
+	= render(:partial => "analytic_recurs", :locals => { :up_category => category}) if category.has_children?

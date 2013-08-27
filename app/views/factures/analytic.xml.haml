@@ -41,20 +41,17 @@
 			%column{:content => ""}
 			%column{:content => ""}
 
-		- factures = @saison.factures.select{|v| v.category_id.eql?(category.id)}.each do |facture|
-			- coul 	 = "#{facture.category.code}"
-			%row{:bgcolor => @coul[coul.to_sym], :level => "2"}
-				%column{:content => "2"}
-				%column{:content => ""}
-				%column{:content => ""}
-				%column{:content => "#{facture.cout.to_i} #{euro}", :halign => "right", :format => "0,000"}
-				%column{:content => "#{facture.name}"}
-				%column{:content => "#{facture.user.name}"}
-				%column{:content => "#{facture.date}"}
-				%column{:content => "#{facture.ref_client}"}
-				%column{:content => "#{facture.ref}"}
-
-
-
+		/ - factures.each do |facture|
+		/ 	- coul 	 = "#{facture.category.code}"
+		/ 	%row{:bgcolor => @coul[coul.to_sym], :level => "2"}
+		/ 		%column{:content => "2"}
+		/ 		%column{:content => ""}
+		/ 		%column{:content => ""}
+		/ 		%column{:content => "#{facture.cout.to_i} #{euro}", :halign => "right", :format => "0,000"}
+		/ 		%column{:content => "#{facture.name}"}
+		/ 		%column{:content => "#{facture.user.name}"}
+		/ 		%column{:content => "#{facture.date}"}
+		/ 		%column{:content => "#{facture.ref_client}"}
+		/ 		%column{:content => "#{facture.ref}"}
 				
 		= render(:partial => "analytic_recurs", :locals => { :up_category => category}) if category.has_children?
