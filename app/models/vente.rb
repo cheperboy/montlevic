@@ -97,9 +97,11 @@ class Vente < Charge
 # sum[:prix] et sum[:quantite][:value] respectivement les sommes des prix et quantite de chaque vente de la categorie
 # sum[:prix_unitaire][:valid] est a true si tout les PU de la cat sont renseignés et valides
 # sum[:quantite][:valid] est a true si toutes les quantites de la cat sont renseignés et valides
+# sum[:total] total de toutes les ventes
   def self.synthese_by_cat(saison)
     categories_vente = Category.root_vente
     sum = Hash.new
+    sum[:total]         = 0
     sum[:unit]          = Hash.new
     sum[:prix]          = Hash.new
     sum[:quantite]      = Hash.new
@@ -124,6 +126,7 @@ class Vente < Charge
     	old_unit = nil #memoire de la valeur unit de la vente de l'iteration precedante
       ventes = saison.ventes.select{|v| v.category_id.eql?(category.id)}
       ventes.each do |vente|
+      	sum[:total] += vente.prix #summe de toutes les ventes
       	sum[:unit][category.code.to_sym] = nil unless ((vente.unit.eql?(old_unit)) && !old_unit.nil?)
       	sum[:quantite][:value][category.code.to_sym] += vente.quantite unless vente.quantite.nil?
       	sum[:quantite][:valid][category.code.to_sym] = nil if (vente.quantite.nil? || vente.quantite.blank?)

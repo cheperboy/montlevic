@@ -1,6 +1,3 @@
-!!! XML
-!!!
-
 - @coul = Hash.new
 - @coul[:gris]           = '#efefef'
 - @coul[:ble_head]       = '#ffd966'
@@ -9,7 +6,16 @@
 - @coul[:colza]          = '#d9ead3'
 - @coul[:tournesol_head] = '#9fc5e8'
 - @coul[:tournesol]      = '#cfe2f3'
+- @coul[:cat] = Hash.new
+- @coul[:cat][1] = 'black'
+- @coul[:cat][2] = '#b45f06'
+- @coul[:cat][3] = '#1155cc'
 
+- @fontsize = Hash.new
+- @fontsize[:cat] = Hash.new
+- @fontsize[:cat][1] = '14'
+- @fontsize[:cat][2] = '12'
+- @fontsize[:cat][3] = '10'
 
 - headers = []
 - headers << 'Tri' << 'Categorie' << 'Sous-Categorie' << 'Prix' << 'Nom' << 'date' << 'Prix Unitaire' << 'Quantite'
@@ -32,12 +38,15 @@
 		- unit   = nil
 		- ventes = @saison.ventes.select{|v| v.category_id.eql?(category.id)}
 		- unit   = ventes[0].unit if (ventes[0] && @sum[:unit][category.code.to_sym].eql?(true))
+		- sum = number_with_delimiter(@sum[:prix][category.code.to_sym], :delimiter => "", :separator => ",")
+		- color = @coul[:cat][1]
+		- fontsize = @fontsize[:cat][1]
 
-		%row{:bgcolor => @coul[:gris], :fontweight => "bold", :fontsize => "14", :level => "0"}
-			%column{:content => "0"}
+		%row{:bgcolor => @coul[:gris], :fontweight => "bold", :fontsize => "14", :level => "0", :fontsize => "#{fontsize}", :color => color}
+			%column{:content => "categorie 1", :format => "@STRING@", :halign => "left", :color => "white", :fontsize => "6"}
 			%column{:content => "#{category.name}"}
 			%column{:content => ""}
-			%column{:content => "#{@sum[:prix][category.code.to_sym]}", :halign => "right"}
+			%column{:content => "#{sum}", :halign => "right", :format => "#,##0"}
 			%column{:content => ""}
 			%column{:content => ""}
 			- if unit
@@ -52,17 +61,5 @@
 			- else
 				%column{:content => ""}
 				%column{:content => ""}
-
-
-		- ventes.each do |vente|
-			- coul 	 = "#{vente.category.code}"
-			%row{:bgcolor => @coul[coul.to_sym], :level => "2"}
-				%column{:content => "2"}
-				%column{:content => ""}
-				%column{:content => ""}
-				%column{:content => "#{vente.prix.to_i} #{euro}", :halign => "right", :format => "0,000"}
-				%column{:content => "#{vente.name}"}
-				%column{:content => "#{vente.date}"}
-				%column{:content => "#{vente.prix_unitaire}#{euro}/#{vente.unit}", :halign => "right"}
 				
-		= render(:partial => "analytic_recurs", :locals => { :up_category => category}) if category.has_children?
+		= render(:partial => "ventes/export_analytic/export_analytic_recurs", :locals => { :up_category => category}) if category.has_children?

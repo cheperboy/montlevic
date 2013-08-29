@@ -35,9 +35,9 @@
 			- i = i + 1
 	
 	- categories.children.each do |category|
-		- sum = number_with_delimiter(@sum[:prix][category.code.to_sym], :delimiter => "", :separator => ",")
+		- sum = number_with_delimiter(@sum_factures[:prix][category.code.to_sym], :delimiter => "", :separator => ",")
 	
-		%row{:bgcolor => @coul[:gris], :fontweight => "bold", :fontsize => "#{@fontsize[:cat][1]}", :level => "0", :color => @coul[:cat][1]}
+		%row{:fontweight => "bold", :fontsize => "#{@fontsize[:cat][1]}", :level => "0", :color => @coul[:cat][1]}
 			%column{:content => "categorie #{category.depth}", :format => "@STRING@", :halign => "left", :fontsize => "6", :color => "white"}
 			%column{:content => "#{category.name}"}
 			%column{:content => ""}
@@ -50,4 +50,6 @@
 			%column{:content => ""}
 			%column{:content => ""}
 				
-		= render(:partial => "factures/export_analytic/export_analytic_recurs", :locals => { :up_category => category}) if category.has_children?
+		= render(:partial => "factures/export_gdoc/export_factures_recurs", :locals => { :up_category => category, :cat_1 => category}) if category.has_children?
+	
+	= render(:partial => "factures/export_gdoc/export_resultat", :locals => { :sum_factures => @sum_factures, :sum_ventes => @sum_ventes})

@@ -384,6 +384,7 @@ class Facture < Charge
   def self.synthese_by_cat(saison)
     categories_facture = Category.root_facture
     sum                = Hash.new
+    sum[:total]        = 0
     sum[:prix]         = Hash.new
     sum                = synthese_by_cat_recurs(saison, categories_facture, sum)
   end
@@ -393,6 +394,7 @@ class Facture < Charge
     	sum[:prix][category.code.to_sym] = 0
       factures = saison.factures.select{|v| v.category_id.eql?(category.id)}
       factures.each do |facture|
+  		  sum[:total] += facture.cout #somme de toutes les factures
         unless facture.class.eql?(Reportable)
         	# ajoute la valeur (prix) a toutes les cat parentes de la facture
         	temp_cat = category

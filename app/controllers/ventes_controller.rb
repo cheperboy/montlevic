@@ -11,7 +11,7 @@ class VentesController < ApplicationController
     end
   end
 
-  def analytic
+  def export_analytic
     @saison = Saison.find_by_year(params[:id])
     @sum = Vente.synthese_by_cat(@saison)
     respond_to do |format|
