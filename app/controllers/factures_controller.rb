@@ -2,7 +2,7 @@ class FacturesController < ApplicationController
   before_filter :edit_access,
                 :only => [:update, :update_multiple, :destroy, :create_debit_to_reportable]
 
-  skip_before_filter :login_required, :only => [:by_saison, :gdoc_factures, :gdoc_resultat] # for raw data acces
+  skip_before_filter :login_required, :only => [:by_saison, :gdoc_factures, :gdoc_resultat, :gdoc_liste_factures] # for raw data acces
 
   def by_saison
     @saison = Saison.find_by_year(params[:id])
@@ -11,11 +11,23 @@ class FacturesController < ApplicationController
     end
   end
 
-  #pour export dans google doc
+  # pour export dans google doc
+  # totaux par cat
+  # factures
+  # resultats
   def gdoc_factures
     @saison = Saison.find_by_year(params[:id])
     @sum_factures = Facture.synthese_by_cat(@saison)
     @sum_ventes = Vente.synthese_by_cat(@saison) #pour calculer resultat
+    respond_to do |format|
+      format.html
+      format.xml
+    end
+  end
+
+  def gdoc_liste_factures
+    @saison   = Saison.find_by_year(params[:id])
+    @factures = @saison.factures.find(:all, :order => :user)
     respond_to do |format|
       format.html
       format.xml

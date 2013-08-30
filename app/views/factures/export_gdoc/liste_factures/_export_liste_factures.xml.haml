@@ -1,0 +1,43 @@
+
+%rows{:saison => @saison.year}
+	%info
+		%saison{:content => "#{@saison.year}"}
+		%title{:content  => "Liste Factures #{@saison.year}"}
+		%nb_col{:content => "13"}
+
+	%row{}
+		%column{:content => "campagne", :format => "@STRING@"}
+		%column{:content => "report", :format => "@STRING@"}
+		%column{:content => "star", :format => "@STRING@"}
+		%column{:content => "adu", :format => "@STRING@"}
+		%column{:content => "date", :format => "dd/MM/yyyy"}
+		%column{:content => "client"}
+		%column{:content => "cout ht", :halign => "right", :format => "#,##0"}
+		%column{:content => "designation"}
+		%column{:content => "type", :format => "@STRING@"}
+		%column{:content => "ref client", :halign => "right", :format => "@STRING@"}
+		%column{:content => "ref", :halign => "right", :format => "@STRING@"}
+		%column{:content => "desc", :halign => "left", :format => "@STRING@"}
+		%column{:content => "info", :halign => "left", :format => "@STRING@"}
+
+
+	- @factures.each do |facture|
+		- reportable_id = ""
+		- cout = number_with_delimiter(facture.cout, :delimiter => "", :separator => ",")
+		- reportable_id = facture.reportable_id if facture.class.eql?(Reportable)
+		- type = facture.reportable_id if facture.class.eql?(Report)
+		- type = "R" if facture.class.eql?(Reportable)
+		%row{}
+			%column{:content => "#{facture.saison.year}", :format => "@STRING@"}
+			%column{:content => "#{type}", :format => "@STRING@"}
+			%column{:content => "#{facture.star}", :format => "@STRING@"}
+			%column{:content => "#{facture.adu}", :format => "@STRING@"}
+			%column{:content => "#{facture.date}", :format => "dd/MM/yyyy"}
+			%column{:content => "#{facture.user.name}"}
+			%column{:content => "#{cout}", :halign => "right", :format => "#,##0"}
+			%column{:content => "#{facture.name}"}
+			%column{:content => "#{facture.type}", :format => "@STRING@"}
+			%column{:content => "#{facture.ref_client}", :halign => "right", :format => "@STRING@"}
+			%column{:content => "#{facture.ref}", :halign => "right", :format => "@STRING@"}
+			%column{:content => "#{facture.desc}", :halign => "left", :format => "@STRING@"}
+			%column{:content => "#{facture.info}", :halign => "left", :format => "@STRING@"}
