@@ -2,7 +2,7 @@ class FacturesController < ApplicationController
   before_filter :edit_access,
                 :only => [:update, :update_multiple, :destroy, :create_debit_to_reportable]
 
-  skip_before_filter :login_required, :only => [:by_saison, :gdoc_factures, :gdoc_resultat, :gdoc_liste_factures] # for raw data acces
+  skip_before_filter :login_required, :only => [:by_saison, :gdoc_categories, :gdoc_liste_factures, :gdoc_amort] # for raw data acces
 
   def by_saison
     @saison = Saison.find_by_year(params[:id])
@@ -15,7 +15,7 @@ class FacturesController < ApplicationController
   # totaux par cat
   # factures
   # resultats
-  def gdoc_factures
+  def gdoc_categories
     @saison = Saison.find_by_year(params[:id])
     @sum_factures = Facture.synthese_by_cat(@saison)
     @sum_ventes = Vente.synthese_by_cat(@saison) #pour calculer resultat
@@ -27,7 +27,23 @@ class FacturesController < ApplicationController
 
   def gdoc_liste_factures
     @saison   = Saison.find_by_year(params[:id])
-    @factures = @saison.factures.find(:all, :order => :user)
+    @factures = @saison.factures.find(:all, :order => :user_id)
+    respond_to do |format|
+      format.html
+      format.xml
+    end
+  end
+
+  def gdoc_amort
+    @saison   = Saison.find_by_year(params[:id])
+    @first_year = @saison.year.to_i
+    @last_year  = @first_year + 20
+    @factures = Facture.find(46, 50, 51)
+    # @factures = []
+    # Saison.find(:all, :conditions => ["year < ?", @saison]).each do |saison|  
+    #   @factures << Facture.find_invest(saison)
+    # end
+    
     respond_to do |format|
       format.html
       format.xml

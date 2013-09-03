@@ -1,0 +1,113 @@
+- @coul[:cat] = Hash.new
+- @coul[:cat][1] = 'black'
+- @coul[:cat][2] = '#b45f06'
+- @coul[:cat][3] = '#1155cc'
+
+- @fontsize = Hash.new
+- @fontsize[:cat] = Hash.new
+- @fontsize[:cat][1] = '14'
+- @fontsize[:cat][2] = '12'
+- @fontsize[:cat][3] = '10'
+
+- v_charges = sum_factures[:total]
+- v_ca = sum_ventes[:total]
+- v_res_global = v_ca - v_charges
+- v_res_ss_maison = v_ca - sum_factures[:prix][:agri] - sum_factures[:prix][:invest]
+- v_res_ss_invest = v_ca - sum_factures[:prix][:agri]
+
+- vide = []
+- resultats = []
+
+- vide 		 << '' << '' << '' << '' << '' << '' << ''  << '' << '' << ''
+- resultats  << "Resultats" 	<< "" << '' << "" << '' << '' << ''  << '' << '' << ''
+
+- i = 0
+%row{}
+	%column{:content => "resultats", :format => "@STRING@", :halign => "left", :fontsize => "6", :color => "white"}
+	- vide.size.times do
+		%column{:content => "#{vide[i]}"}
+		- i = i + 1
+
+%row{}
+	%column{:content => "resultats", :format => "@STRING@", :halign => "left", :fontsize => "6", :color => "white"}
+	%column{:content => "Total des charges", :fontweight => "bold", :fontsize => "#{@fontsize[:cat][1]}", :color => @coul[:cat][1], :halign => "left"}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => "#{number_with_delimiter(v_charges, :delimiter => "", :separator => ",")}", :format => "#,##0", :fontweight => "bold", :fontsize => "#{@fontsize[:cat][1]}", :color => @coul[:cat][1], :halign => "right"}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+
+- i = 0
+%row{}
+	%column{:content => "resultats", :format => "@STRING@", :halign => "left", :fontsize => "6", :color => "white"}
+	- vide.size.times do
+		%column{:content => "#{vide[i]}"}
+		- i = i + 1
+
+%row{}
+	%column{:content => "resultats", :format => "@STRING@", :halign => "left", :fontsize => "6", :color => "white"}
+	%column{:content => "Chiffre d'Affaire", :fontweight => "bold", :fontsize => "#{@fontsize[:cat][1]}", :color => @coul[:cat][1], :halign => "left"}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => "#{number_with_delimiter(v_ca, :delimiter => "", :separator => ",")}", :format => "#,##0", :fontweight => "bold", :fontsize => "#{@fontsize[:cat][1]}", :color => @coul[:cat][1], :halign => "right"}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+
+- i = 0
+%row{}
+	%column{:content => "resultats", :format => "@STRING@", :halign => "left", :fontsize => "6", :color => "white"}
+	- vide.size.times do
+		%column{:content => "#{vide[i]}"}
+		- i = i + 1
+
+- i = 0
+%row{:fontweight => "bold", :fontsize => "#{@fontsize[:cat][1]}", :color => @coul[:cat][1]}
+	%column{:content => "resultats", :format => "@STRING@", :halign => "left", :fontsize => "6", :color => "white"}
+	- resultats.size.times do
+		%column{:content => "#{resultats[i]}"}
+		- i = i + 1
+
+%row{}
+	%column{:content => "resultats", :format => "@STRING@", :halign => "left", :fontsize => "6", :color => "white"}
+	%column{:content => "global", :fontweight => "bold", :fontsize => "#{@fontsize[:cat][2]}", :color => "grey", :halign => "left"}
+	%column{:content => "CA - toutes les charges", :fontweight => "bold", :fontsize => "9", :color => "grey", :halign => "left"}
+	%column{:content => ""}
+	%column{:content => "#{number_with_delimiter(v_res_global, :delimiter => "", :separator => ",")}", :format => "#,##0", :fontweight => "bold", :fontsize => "#{@fontsize[:cat][2]}", :color => "grey", :halign => "right"}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+%row{}
+	%column{:content => "resultats", :format => "@STRING@", :halign => "left", :fontsize => "6", :color => "white"}
+	%column{:content => "agricole", :fontweight => "bold", :fontsize => "#{@fontsize[:cat][2]}", :color => "grey", :halign => "left"}
+	%column{:content => "CA - charges agricole - investissement", :fontweight => "bold", :fontsize => "9", :color => "grey", :halign => "left"}
+	%column{:content => ""}
+	%column{:content => "#{number_with_delimiter(v_res_ss_maison, :delimiter => "", :separator => ",")}", :format => "#,##0", :fontweight => "bold", :fontsize => "#{@fontsize[:cat][2]}", :color => "grey", :halign => "right"}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+%row{}
+	%column{:content => "resultats", :format => "@STRING@", :halign => "left", :fontsize => "6", :color => "white"}
+	%column{:content => "sans investissement", :fontweight => "bold", :fontsize => "#{@fontsize[:cat][2]}", :color => "grey", :halign => "left"}
+	%column{:content => "CA - charges agricole", :fontweight => "bold", :fontsize => "9", :color => "grey", :halign => "left"}
+	%column{:content => ""}
+	%column{:content => "#{number_with_delimiter(v_res_ss_invest, :delimiter => "", :separator => ",")}", :format => "#,##0", :fontweight => "bold", :fontsize => "#{@fontsize[:cat][2]}", :color => "grey", :halign => "right"}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}
+	%column{:content => ""}

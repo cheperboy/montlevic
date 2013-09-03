@@ -40,4 +40,4 @@
 				%column{:content => "#{facture.ref_client}", :halign => "right", :format => "@STRING@"}
 				%column{:content => "#{facture.ref}", :halign => "right", :format => "@STRING@"}
 		
-	= render(:partial => "factures/export_gdoc/export_factures_recurs", :locals => { :up_category => category, :cat_1 => cat_1 }) if category.has_children?
+	= render(:partial => "factures/export_gdoc/categories/export_categories_recurs", :locals => { :up_category => category, :cat_1 => cat_1 }) if category.has_children?

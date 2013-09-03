@@ -50,6 +50,6 @@
 			%column{:content => ""}
 			%column{:content => ""}
 				
-		= render(:partial => "factures/export_gdoc/export_factures_recurs", :locals => { :up_category => category, :cat_1 => category}) if category.has_children?
+		= render(:partial => "factures/export_gdoc/categories/export_categories_recurs", :locals => { :up_category => category, :cat_1 => category}) if category.has_children?
 	
-	= render(:partial => "factures/export_gdoc/export_resultat", :locals => { :sum_factures => @sum_factures, :sum_ventes => @sum_ventes})
+	= render(:partial => "factures/export_gdoc/categories/export_resultat", :locals => { :sum_factures => @sum_factures, :sum_ventes => @sum_ventes})

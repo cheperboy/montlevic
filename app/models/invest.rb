@@ -1,5 +1,5 @@
 # TODO Invest doit etre une STI de Facture
-class Invest < Facture
+module Invest
   EXPORT_INVEST_HEAD = 
   [
     # KEY           VALUE
@@ -12,32 +12,10 @@ class Invest < Facture
    	['taux',        'nb_month_amort']
    ]
 
-  # Invest est une STI de Facture
-  # Invest possede en plus des champs facture les champs suivants:
+  # Invest est une extension de la classe Facture
+  # Invest utilise le champ suivant :
   # - nb_month_amort
-  # 
-  set_table_name "factures"
-  
-  # a priori pas utile d'associer des parcelles a Invest 
-  # TODO: mais pt etre necessaire d'avoir l'association pour certaines fonctions logiques?
 
-  # has_many :parcelles, :through => :factoparcelles
-  # has_many :factoparcelles, :dependent => :destroy
-  # accepts_nested_attributes_for :factoparcelles, :allow_destroy => true
-
-  belongs_to :category
-
-  # A priori inutil et obsolete ?
-  belongs_to :factcat
-  
-  # factype (total, null, diff) pas utile pour invest -> mettre par defaut a la valeur TOTAL et non modifiable
-  belongs_to :factype
-
-  belongs_to :user
-
-  # renseigne la saison d'achat = annee de depart de l'amortissement
-  belongs_to :saison
-  
   # tal : Taux d'Amortissement lineaire
   # tal = 100/durée années = 100/(nb_month_amort / 12)
   
@@ -52,60 +30,6 @@ class Invest < Facture
     errors.add("Nom", "Ne doit pas etre vide") unless name != ''
     errors.add("Cout", "Ne doit pas etre vide") unless cout != ''
     errors.add("nb_month_amort", "Ne doit pas etre vide") unless nb_month_amort != ''
-  end
-
-  validates_numericality_of :cout, :message => "n'est pas un nombre"
-
-  validates_presence_of :name
-  validates_presence_of :category
-  validates_presence_of :user
-  validates_associated :factoparcelles
-  validates_presence_of :cout
-
-  # ----- Finders -----
-
-  named_scope :scope_by_saison, 
-  :conditions => {:saison_id => Saison.get_current_id}
-
-  def self.find_by_saison(*args)
-    with_scope(:find => { :conditions => ["saison_id = ?", Saison.get_current_id],
-                          :order => :adu}) do
-        find(*args)
-      end
-  end
-    
-  def category?(category_code)
-    return (self.category.code.eql?(category_code))
-  end
-  
-  # ----- Methodes d'affichage -----
-  
-  def factcat_name
-    self.category.get_factcat_from_category.name
-  end
-
-  # ----- Methodes de calcul -----
-
-  # Somme des produits assoc ET en stock
-  # def sum_produits_stock
-  #   sum = 0
-  #   self.protofactures.each { |p| sum += p.prix_unit * p.stock }
-  #   sum
-  # end
-  
-  def get_cout_ha
-    return (self.get_cout_total / self.sum_surfaces)
-  end
-  
-  # retourne le cout total de cette charge
-  def get_cout_total
-    if (self.comptable_null?)
-      return (0)
-    elsif (self.comptable_diff?)
-      return (self.cout - self.sum_charges)
-    elsif (self.comptable_total?)
-      return (self.cout)
-    end
   end
 
   # retourne valeur de l'amortissement pour la saison en parametre et pour saison courante si pas de parametre 
@@ -125,7 +49,7 @@ class Invest < Facture
 
     # cas ou l'amortissement est fini:
     amort = 0 if saison.after?(self.saison.year + self.nb_years_amort)
-  end  
+  end
   
   # a reprendre : cas + 1
   def date_end
@@ -142,13 +66,17 @@ class Invest < Facture
   end
 
   def nb_years_amort
-    return nb_month_amort / 12
+    return self.nb_month_amort / 12
   end
   
+  # cout pour une annee donnee en parametre
   def get_cout_for_year(year)
     amort = 0
-    (1..12).each do month
+    month = 1
+    while (month < 13)
+    # (1..12).each do imonth
       amort += get_cout_for_month(year, month)
+      month = month + 1
     end
     amort
   end
@@ -263,38 +191,48 @@ class Invest < Facture
 
     #Traitement de chaque facture investissement
     i = 2
-    factures = []
-    Invest.find(:all).each {|f| factures << f}
+    # factures = []
+    # factures = Facture.all(:all, 
+    #                         :conditions => ["saison_id = ?", "1"],
+    #                         :order => "id DESC"
+    #                         # :limit => 10
+    #                         )
+
+    # Invest.find(:all).each {|f| factures << f}
+    factures = Facture.find(46, 50, 51)
     factures.each do |f|
-      date        = f.date.strftime("%d/%m/%Y")
-      taux_pretty = "#{f.nb_years_amort.to_s} ans"
+      if f.category.is_invest?
+        date        = f.date.strftime("%d/%m/%Y")
+        taux_pretty = "#{f.nb_years_amort.to_s} ans"
 
-      # tab_infos   = [f.id, f.date, f.ref, f.name, f.cout, f.taux_pretty, "plage"]
-      tab_infos_i   = []
-      Invest::EXPORT_INVEST_HEAD.each do |header|
-        tab_infos_i << f.send(header[Application::HEADER_VALUE])
-      end
-
-      # fill tab_amort for the facture (line i)
-      
-      tab_amort_i  = []
-      ofset_year = 0 #premiere annee=0, 2eme annee=1, etc
-      (first_year..last_year).each do |year|
-        (1..12).each do |month|
-          # debut = numero de colonne de la premiere cellule de la plage que l'on somme
-          # +2  : +1 car colonne resultat de somme ne doit pas etre compté
-          #     : +1 car .length positionne sur la derniere case du tableau (on veut la case qui suit)
-          # *13 : 12 mois plus la case qui contient la somme
-          debut = (Invest::EXPORT_INVEST_HEAD.length + 2 + (13 * ofset_year)).to_i
-          tab_amort_i << "=SOMME(L#{i+1}C#{debut}:L#{i+1}C#{debut+11})" if month.eql?(1)
-          tab_amort_i << f.get_cout_for_month(year.to_i, month.to_i).to_f
+        # tab_infos   = [f.id, f.date, f.ref, f.name, f.cout, f.taux_pretty, "plage"]
+        tab_infos_i   = []
+        Invest::EXPORT_INVEST_HEAD.each do |header|
+          tab_infos_i << f.send(header[Application::HEADER_VALUE])
         end
-        ofset_year += 1
-      end
 
-      tab_infos_i.concat(tab_amort_i)
-      sheet.row(i).replace tab_infos_i
-      i = i + 1
+        # fill tab_amort for the facture (line i)
+      
+        tab_amort_i  = []
+        ofset_year = 0 #premiere annee=0, 2eme annee=1, etc
+        (first_year..last_year).each do |year|
+          (1..12).each do |mmonth|
+            # debut = numero de colonne de la premiere cellule de la plage que l'on somme
+            # +2  : +1 car colonne resultat de somme ne doit pas etre compté
+            #     : +1 car .length positionne sur la derniere case du tableau (on veut la case qui suit)
+            # *13 : 12 mois plus la case qui contient la somme
+            debut = (Invest::EXPORT_INVEST_HEAD.length + 2 + (13 * ofset_year)).to_i
+            tab_amort_i << "#{f.get_cout_for_year(first_year+ofset_year)}" if mmonth.eql?(1)
+            # tab_amort_i << "=SOMME(L#{i+1}C#{debut}:L#{i+1}C#{debut+11})" if mmonth.eql?(1)
+            tab_amort_i << f.get_cout_for_month(year.to_i, mmonth.to_i).to_f
+          end
+          ofset_year += 1
+        end
+
+        tab_infos_i.concat(tab_amort_i)
+        sheet.row(i).replace tab_infos_i
+        i = i + 1
+      end
     end
 
     # sheet 2 - instructions

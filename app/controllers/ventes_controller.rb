@@ -2,7 +2,7 @@ class VentesController < ApplicationController
   before_filter :edit_access,
                 :only => [:update, :destroy]
 
-  skip_before_filter :login_required, :only => [:by_saison, :analytic] # for raw data acces
+  skip_before_filter :login_required, :only => [:by_saison, :gdoc_categories, :gdoc_liste_ventes] # for raw data acces
 
   def by_saison
     @saison = Saison.find_by_year(params[:id])
@@ -11,9 +11,18 @@ class VentesController < ApplicationController
     end
   end
 
-  def export_analytic
+  def gdoc_categories
     @saison = Saison.find_by_year(params[:id])
     @sum = Vente.synthese_by_cat(@saison)
+    respond_to do |format|
+      format.html
+      format.xml
+    end
+  end
+
+  def gdoc_liste_ventes
+    @saison   = Saison.find_by_year(params[:id])
+    @ventes = @saison.ventes.find(:all, :order => :user_id)
     respond_to do |format|
       format.html
       format.xml

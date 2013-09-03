@@ -1,0 +1,44 @@
+%rows{:saison => @saison.year}
+	%info
+		%saison{:content => "#{@saison.year}"}
+		%title{:content  => "Liste Ventes #{@saison.year}"}
+		%nb_col{:content => "13"}
+
+	%row{:color => "white", :bgcolor => "black", :fontweight => "bold", :fontsize => "12"}
+		%column{:content => "id", :format => "@STRING@"}
+		%column{:content => "star", :format => "@STRING@"}
+		%column{:content => "adu", :format => "@STRING@"}
+		%column{:content => "date", :format => "dd/MM/yyyy"}
+		%column{:content => "client"}
+		%column{:content => "prix ht", :halign => "right"}
+		%column{:content => "designation"}
+		%column{:content => "quantite", :halign => "right"}
+		%column{:content => "prix unitaire", :halign => "right"}
+		%column{:content => "unité", :halign => "right"}
+		%column{:content => "ref client", :halign => "right", :format => "@STRING@"}
+		%column{:content => "ref", :halign => "right", :format => "@STRING@"}
+		%column{:content => "desc", :halign => "left", :format => "@STRING@"}
+		%column{:content => "info", :halign => "left", :format => "@STRING@"}
+
+
+	- @ventes.each do |vente|
+		- prix = number_with_delimiter(vente.prix, :delimiter => "", :separator => ",")
+		- star = ''
+		- star = 1 if vente.star?
+		- adu = ''
+		- adu = 1 if vente.adu?
+		%row{}
+			%column{:content => "#{vente.id}", :format => "@STRING@"}
+			%column{:content => "#{star}", :format => "@STRING@"}
+			%column{:content => "#{adu}", :format => "@STRING@"}
+			%column{:content => "#{vente.date}", :format => "dd/MM/yyyy"}
+			%column{:content => "#{vente.user.name}"}
+			%column{:content => "#{prix}", :halign => "right", :format => "#,##0"}
+			%column{:content => "#{vente.name}"}
+			%column{:content => "#{vente.quantite}", :halign => "right", :format => "#,##0"}
+			%column{:content => "#{vente.prix_unitaire}", :halign => "right", :format => "#,##0"}
+			%column{:content => "#{vente.unit}", :halign => "right", :format => "@STRING@"}
+			%column{:content => "#{vente.ref_client}", :halign => "right", :format => "@STRING@"}
+			%column{:content => "#{vente.ref}", :halign => "right", :format => "@STRING@"}
+			%column{:content => "#{vente.desc}", :halign => "left", :format => "@STRING@"}
+			%column{:content => "#{vente.info}", :halign => "left", :format => "@STRING@"}

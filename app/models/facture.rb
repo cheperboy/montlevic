@@ -1,4 +1,5 @@
 class Facture < Charge  
+  include Invest
   
   COLS_NAME =         {1 => 'adu',  2 => 'star', 3=>'category_id', 4=>'date', 5=>'cout', 6=>'name', 7=>'ref_client', 8=>'ref', 9=>'factype_id', 10=>'desc', 11=>'type'}
   COLS_DISPLAY_NAME = {1 => 'adu',  2 => 'star', 3=>'cat',         4=>'date', 5=>'cout', 6=>'nom',  7=>'ref client', 8=>'ref', 9=>'type',       10=>'desc', 11=>'type'}
@@ -71,9 +72,13 @@ class Facture < Charge
   end
   handle_asynchronously :ddel
 
-
-
-
+  def self.find_invest(saison)
+    invests = []
+    all_factures = self.find(:all, :conditions => ["saison_id = ?", saison])
+    all_factures.each {|f| invests << f if f.is_invest?}
+    invests
+  end
+  
   def self.find_by_saison(*args)
     with_scope(:find => { :conditions => ["saison_id = ?", Saison.get_current_id],
                           :order => :id}) do
@@ -394,8 +399,8 @@ class Facture < Charge
     	sum[:prix][category.code.to_sym] = 0
       factures = saison.factures.select{|v| v.category_id.eql?(category.id)}
       factures.each do |facture|
-  		  sum[:total] += facture.cout #somme de toutes les factures
         unless facture.class.eql?(Reportable)
+    		  sum[:total] += facture.cout #somme de toutes les factures
         	# ajoute la valeur (prix) a toutes les cat parentes de la facture
         	temp_cat = category
           while temp_cat.depth != Category.root_facture.depth

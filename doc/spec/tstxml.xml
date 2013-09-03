@@ -1,0 +1,1566 @@
+<rows saison="2011">
+<info>
+<saison content="2011"/>
+<title content="Liste Factures 2011"/>
+</info>
+<row>
+<column content="campagne" format="@STRING@"/>
+<column content="report" format="@STRING@"/>
+<column content="star" format="@STRING@"/>
+<column content="adu" format="@STRING@"/>
+<column content="date" format="dd/MM/yyyy"/>
+<column content="client"/>
+<column content="cout ht" format="#,##0" halign="right"/>
+<column content="designation"/>
+<column content="type" format="@STRING@"/>
+<column content="ref client" format="@STRING@" halign="right"/>
+<column content="ref" format="@STRING@" halign="right"/>
+<column content="desc" format="@STRING@" halign="left"/>
+<column content="info" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-21" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="3069,0" format="#,##0" halign="right"/>
+<column content="Super 45% BB"/>
+<column content="Debit" format="@STRING@"/>
+<column content="01-2010-1429" format="@STRING@" halign="right"/>
+<column content="2" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-24" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="1260,8" format="#,##0" halign="right"/>
+<column content="engrais 0-20-30"/>
+<column content="Debit" format="@STRING@"/>
+<column content="01-2011-1448" format="@STRING@" halign="right"/>
+<column content="3" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-04-30" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="5,0" format="#,##0" halign="right"/>
+<column content="Sacs B.B Adivalor"/>
+<column content="Debit" format="@STRING@"/>
+<column content="01-2010-2593" format="@STRING@" halign="right"/>
+<column content="4" format="@STRING@" halign="right"/>
+<column content="2 sac big bag" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-03-29" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="2000,0" format="#,##0" halign="right"/>
+<column content="engrais 0-20-30"/>
+<column content="Debit" format="@STRING@"/>
+<column content="01-2010-1982" format="@STRING@" halign="right"/>
+<column content="5" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="1" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-03-11" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="4402,2" format="#,##0" halign="right"/>
+<column content="produits phyto 1"/>
+<column content="Debit" format="@STRING@"/>
+<column content="01-2010-1767" format="@STRING@" halign="right"/>
+<column content="7" format="@STRING@" halign="right"/>
+<column content="pas de prix HT. Verifier la somme." format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-02-28" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="1680,0" format="#,##0" halign="right"/>
+<column content="azomag"/>
+<column content="Debit" format="@STRING@"/>
+<column content="01-2010-1737" format="@STRING@" halign="right"/>
+<column content="8" format="@STRING@" halign="right"/>
+<column content="azomag 16 BB" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-03-11" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="6314,35" format="#,##0" halign="right"/>
+<column content="produits phyto 3"/>
+<column content="Debit" format="@STRING@"/>
+<column content="01-2010-1767" format="@STRING@" halign="right"/>
+<column content="10" format="@STRING@" halign="right"/>
+<column content="avoir de 2% + 3% sauf glifonet -0,30€" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="1" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-08-31" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="9204,0" format="#,##0" halign="right"/>
+<column content="Ammonitrate"/>
+<column content="Debit" format="@STRING@"/>
+<column content="01-2010-250" format="@STRING@" halign="right"/>
+<column content="11" format="@STRING@" halign="right"/>
+<column content="voire indications manuscrites sur la facture" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="R" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-10-31" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="998,99" format="#,##0" halign="right"/>
+<column content="produits phyto 4"/>
+<column content="Reportable" format="@STRING@"/>
+<column content="01-2010-975" format="@STRING@" halign="right"/>
+<column content="12" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="12" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-10-31" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="415,5" format="#,##0" halign="right"/>
+<column content="semences ble"/>
+<column content="Report" format="@STRING@"/>
+<column content="01-2010-975" format="@STRING@" halign="right"/>
+<column content="12" format="@STRING@" halign="right"/>
+<column content="paledor:123,6=2x61,8. altigo:127,6=2x63,8. Pr:164,29=7x23,47" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="12" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-10-31" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="583,49" format="#,##0" halign="right"/>
+<column content="produits cultures 4"/>
+<column content="Report" format="@STRING@"/>
+<column content="01-2010-975" format="@STRING@" halign="right"/>
+<column content="12" format="@STRING@" halign="right"/>
+<column content="produits non associes = jachere? A DETERMINER" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="R" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-09-27" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="4907,4" format="#,##0" halign="right"/>
+<column content="produits phyto 5"/>
+<column content="Reportable" format="@STRING@"/>
+<column content="01-2010-471" format="@STRING@" halign="right"/>
+<column content="13" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="15" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-09-27" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="3152,9" format="#,##0" halign="right"/>
+<column content="produits prairies"/>
+<column content="Report" format="@STRING@"/>
+<column content="01-2010-471" format="@STRING@" halign="right"/>
+<column content="13" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="15" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-09-27" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="1754,5" format="#,##0" halign="right"/>
+<column content="produits cultures"/>
+<column content="Report" format="@STRING@"/>
+<column content="01-2010-471" format="@STRING@" halign="right"/>
+<column content="13" format="@STRING@" halign="right"/>
+<column content="produits non associes = jachere? A DETERMINER" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-09-30" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="246,0" format="#,##0" halign="right"/>
+<column content="produits phyto 6"/>
+<column content="Debit" format="@STRING@"/>
+<column content="01-2010-689" format="@STRING@" halign="right"/>
+<column content="14" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="1" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-10-20" format="dd/MM/yyyy"/>
+<column content="Renaud"/>
+<column content="746,58" format="#,##0" halign="right"/>
+<column content="vitavax + BB"/>
+<column content="Debit" format="@STRING@"/>
+<column content="22269" format="@STRING@" halign="right"/>
+<column content="15" format="@STRING@" halign="right"/>
+<column content="vitavax + Big BagsBB : 8x9,41=75,24€ à répartir" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="1" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-03-31" format="dd/MM/yyyy"/>
+<column content="Auroy"/>
+<column content="163,7" format="#,##0" halign="right"/>
+<column content="Fury 5L"/>
+<column content="Debit" format="@STRING@"/>
+<column content="FCT-1305" format="@STRING@" halign="right"/>
+<column content="16" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="1" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-02-28" format="dd/MM/yyyy"/>
+<column content="Renaud"/>
+<column content="1221,81" format="#,##0" halign="right"/>
+<column content="Picabore + Challenge"/>
+<column content="Debit" format="@STRING@"/>
+<column content="24302" format="@STRING@" halign="right"/>
+<column content="17" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="1" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-06-28" format="dd/MM/yyyy"/>
+<column content="Auroy"/>
+<column content="389,9" format="#,##0" halign="right"/>
+<column content="produits phyto 7"/>
+<column content="Debit" format="@STRING@"/>
+<column content="FCC-1629" format="@STRING@" halign="right"/>
+<column content="18" format="@STRING@" halign="right"/>
+<column content="produits + Bib Bag 1,50x1,60 : 10x10=100€ a répartir" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-07-10" format="dd/MM/yyyy"/>
+<column content="Auroy"/>
+<column content="51,26" format="#,##0" halign="right"/>
+<column content="nuvagrain"/>
+<column content="Debit" format="@STRING@"/>
+<column content="FCC-44" format="@STRING@" halign="right"/>
+<column content="19" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="1" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-02-28" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="168,0" format="#,##0" halign="right"/>
+<column content="PRODUITS MANQUANTS"/>
+<column content="Debit" format="@STRING@"/>
+<column content="0000" format="@STRING@" halign="right"/>
+<column content="28" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-04-15" format="dd/MM/yyyy"/>
+<column content="Kestoloot"/>
+<column content="12000,0" format="#,##0" halign="right"/>
+<column content="chargeur JCB"/>
+<column content="Debit" format="@STRING@"/>
+<column content="0049" format="@STRING@" halign="right"/>
+<column content="29" format="@STRING@" halign="right"/>
+<column content="num facture: 403841" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-06-25" format="dd/MM/yyyy"/>
+<column content="SIAEP Igneraie"/>
+<column content="56,0" format="#,##0" halign="right"/>
+<column content="SIAEP - compteur eau"/>
+<column content="Debit" format="@STRING@"/>
+<column content="00908" format="@STRING@" halign="right"/>
+<column content="31" format="@STRING@" halign="right"/>
+<column content="premier semestre 2011" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-11-30" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="2,5" format="#,##0" halign="right"/>
+<column content="Sacs B.B Adivalor"/>
+<column content="Debit" format="@STRING@"/>
+<column content="01-2010-1187" format="@STRING@" halign="right"/>
+<column content="1" format="@STRING@" halign="right"/>
+<column content="1 sac big bag" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-03-11" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="994,0" format="#,##0" halign="right"/>
+<column content="Tournesol Campus"/>
+<column content="Debit" format="@STRING@"/>
+<column content="01-2010-1767" format="@STRING@" halign="right"/>
+<column content="6" format="@STRING@" halign="right"/>
+<column content="avoir 2x142=284euros. Avoir du 30/04/2011. ref 2627." format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="R" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-30" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="3537,5" format="#,##0" halign="right"/>
+<column content="facture 19"/>
+<column content="Reportable" format="@STRING@"/>
+<column content="19" format="@STRING@" halign="right"/>
+<column content="21" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="R" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-30" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="3515,0" format="#,##0" halign="right"/>
+<column content="facture 18"/>
+<column content="Reportable" format="@STRING@"/>
+<column content="18" format="@STRING@" halign="right"/>
+<column content="22" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="R" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-30" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="2950,0" format="#,##0" halign="right"/>
+<column content="facture 20"/>
+<column content="Reportable" format="@STRING@"/>
+<column content="20" format="@STRING@" halign="right"/>
+<column content="23" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="R" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-07-19" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="5790,0" format="#,##0" halign="right"/>
+<column content="facture 24"/>
+<column content="Reportable" format="@STRING@"/>
+<column content="24" format="@STRING@" halign="right"/>
+<column content="24" format="@STRING@" halign="right"/>
+<column content="reste 300e pour semis tournesol 2012" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="R" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-07-19" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="226,4" format="#,##0" halign="right"/>
+<column content="facture 25"/>
+<column content="Reportable" format="@STRING@"/>
+<column content="25" format="@STRING@" halign="right"/>
+<column content="25" format="@STRING@" halign="right"/>
+<column content="Imputer sur tournesol" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-04-30" format="dd/MM/yyyy"/>
+<column content="Sotramat"/>
+<column content="324,74" format="#,##0" halign="right"/>
+<column content="transport sable"/>
+<column content="Debit" format="@STRING@"/>
+<column content="sot110400039" format="@STRING@" halign="right"/>
+<column content="37" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="25" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-30" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="955,0" format="#,##0" halign="right"/>
+<column content="Pulvérisation"/>
+<column content="Report" format="@STRING@"/>
+<column content="19" format="@STRING@" halign="right"/>
+<column content="21" format="@STRING@" halign="right"/>
+<column content="95,5Ha x 10€ = 955€" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="25" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-30" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="456,0" format="#,##0" halign="right"/>
+<column content="Broyage haies"/>
+<column content="Report" format="@STRING@"/>
+<column content="19" format="@STRING@" halign="right"/>
+<column content="21" format="@STRING@" halign="right"/>
+<column content="12h x 38€ = 456€" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="25" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-30" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="1829,0" format="#,##0" halign="right"/>
+<column content="Semis Colza et Blé"/>
+<column content="Report" format="@STRING@"/>
+<column content="19" format="@STRING@" halign="right"/>
+<column content="21" format="@STRING@" halign="right"/>
+<column content="59ha x 31€/ha = 1829€" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="30" format="@STRING@"/>
+<column content="1" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-30" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="810,0" format="#,##0" halign="right"/>
+<column content="Vibro"/>
+<column content="Report" format="@STRING@"/>
+<column content="18" format="@STRING@" halign="right"/>
+<column content="22" format="@STRING@" halign="right"/>
+<column content="81ha au lieu de 79 x 10€ = 810€" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="34" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-30" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="2830,0" format="#,##0" halign="right"/>
+<column content="Labour + Herse"/>
+<column content="Report" format="@STRING@"/>
+<column content="20" format="@STRING@" halign="right"/>
+<column content="23" format="@STRING@" halign="right"/>
+<column content="Mise en prairie (semis prairies ~19ha) Imputer sur parcelles_foin" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="34" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-30" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="120,0" format="#,##0" halign="right"/>
+<column content="Epandage chaux"/>
+<column content="Report" format="@STRING@"/>
+<column content="20" format="@STRING@" halign="right"/>
+<column content="23" format="@STRING@" halign="right"/>
+<column content="Imputer sur parcelles_foin" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="37" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-07-19" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="2520,0" format="#,##0" halign="right"/>
+<column content="Epandage engrais"/>
+<column content="Report" format="@STRING@"/>
+<column content="24" format="@STRING@" halign="right"/>
+<column content="24" format="@STRING@" halign="right"/>
+<column content="252 ha x 10€ = 2520€" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="37" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-07-19" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="2850,0" format="#,##0" halign="right"/>
+<column content="Pulvérisation cultures"/>
+<column content="Report" format="@STRING@"/>
+<column content="24" format="@STRING@" halign="right"/>
+<column content="24" format="@STRING@" halign="right"/>
+<column content="285 ha x 10€ = 2850€" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="37" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-07-19" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="120,0" format="#,##0" halign="right"/>
+<column content="tours de champs"/>
+<column content="Report" format="@STRING@"/>
+<column content="24" format="@STRING@" halign="right"/>
+<column content="24" format="@STRING@" halign="right"/>
+<column content="4h x 30€/h = 120€ (desherbage)" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="41" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-07-19" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="200,0" format="#,##0" halign="right"/>
+<column content="Vibro"/>
+<column content="Report" format="@STRING@"/>
+<column content="25" format="@STRING@" halign="right"/>
+<column content="25" format="@STRING@" halign="right"/>
+<column content="20ha x 10€ = 200€" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-10-26" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="5475,0" format="#,##0" halign="right"/>
+<column content="moisson cultures"/>
+<column content="Debit" format="@STRING@"/>
+<column content="31" format="@STRING@" halign="right"/>
+<column content="47" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="30" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-30" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="465,0" format="#,##0" halign="right"/>
+<column content="Roulage"/>
+<column content="Report" format="@STRING@"/>
+<column content="18" format="@STRING@" halign="right"/>
+<column content="22" format="@STRING@" halign="right"/>
+<column content="15h30 x 30€/h = 465€. Imputer sur Ble et Colza" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-03-31" format="dd/MM/yyyy"/>
+<column content="Sotramat"/>
+<column content="4520,2" format="#,##0" halign="right"/>
+<column content="transp sable et graville"/>
+<column content="Debit" format="@STRING@"/>
+<column content="sot110300017" format="@STRING@" halign="right"/>
+<column content="38" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-03-31" format="dd/MM/yyyy"/>
+<column content="Bastard et Fils"/>
+<column content="179,39" format="#,##0" halign="right"/>
+<column content="reparation covercrop"/>
+<column content="Debit" format="@STRING@"/>
+<column content="BA030320/D" format="@STRING@" halign="right"/>
+<column content="40" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-05-31" format="dd/MM/yyyy"/>
+<column content="AIP systems"/>
+<column content="360,0" format="#,##0" halign="right"/>
+<column content="peson pour bottes"/>
+<column content="Debit" format="@STRING@"/>
+<column content="FC7853" format="@STRING@" halign="right"/>
+<column content="42" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-04-12" format="dd/MM/yyyy"/>
+<column content="ASTM"/>
+<column content="376,25" format="#,##0" halign="right"/>
+<column content="transport chargeur JCB"/>
+<column content="Debit" format="@STRING@"/>
+<column content="4311004" format="@STRING@" halign="right"/>
+<column content="44" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-28" format="dd/MM/yyyy"/>
+<column content="Beauvais"/>
+<column content="13,15" format="#,##0" halign="right"/>
+<column content="cosses a souder"/>
+<column content="Debit" format="@STRING@"/>
+<column content="46059" format="@STRING@" halign="right"/>
+<column content="47" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-11-06" format="dd/MM/yyyy"/>
+<column content="Agro-Service"/>
+<column content="8,63" format="#,##0" halign="right"/>
+<column content="divers materiel"/>
+<column content="Debit" format="@STRING@"/>
+<column content="111107815" format="@STRING@" halign="right"/>
+<column content="52" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-09-30" format="dd/MM/yyyy"/>
+<column content="Centragri"/>
+<column content="158,83" format="#,##0" halign="right"/>
+<column content="entretien tracteur"/>
+<column content="Debit" format="@STRING@"/>
+<column content="LC090035/R" format="@STRING@" halign="right"/>
+<column content="53" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-09-30" format="dd/MM/yyyy"/>
+<column content="Bastard et Fils"/>
+<column content="261,47" format="#,##0" halign="right"/>
+<column content="reparation giro broyeur"/>
+<column content="Debit" format="@STRING@"/>
+<column content="BA090395/D" format="@STRING@" halign="right"/>
+<column content="54" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-06-24" format="dd/MM/yyyy"/>
+<column content="Seelec"/>
+<column content="1127,0" format="#,##0" halign="right"/>
+<column content="Cable electrique"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="55" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-08-31" format="dd/MM/yyyy"/>
+<column content="Pneu Europe Service"/>
+<column content="2190,59" format="#,##0" halign="right"/>
+<column content="reparation pneu tracteur"/>
+<column content="Debit" format="@STRING@"/>
+<column content="75008102" format="@STRING@" halign="right"/>
+<column content="56" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-07-31" format="dd/MM/yyyy"/>
+<column content="Pneu Europe Service"/>
+<column content="121,3" format="#,##0" halign="right"/>
+<column content="pneu tracteur"/>
+<column content="Debit" format="@STRING@"/>
+<column content="75007118" format="@STRING@" halign="right"/>
+<column content="57" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-12-10" format="dd/MM/yyyy"/>
+<column content="Pierre Auroy Sarl"/>
+<column content="249,15" format="#,##0" halign="right"/>
+<column content="tuyau pvc"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="60" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-07-31" format="dd/MM/yyyy"/>
+<column content="Centragri"/>
+<column content="556,0" format="#,##0" halign="right"/>
+<column content="reparation tracteur alternateur"/>
+<column content="Debit" format="@STRING@"/>
+<column content="LC070040/R" format="@STRING@" halign="right"/>
+<column content="61" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-04-07" format="dd/MM/yyyy"/>
+<column content="CACI36"/>
+<column content="9,79" format="#,##0" halign="right"/>
+<column content="bricolage"/>
+<column content="Debit" format="@STRING@"/>
+<column content="3022" format="@STRING@" halign="right"/>
+<column content="66" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-03-21" format="dd/MM/yyyy"/>
+<column content="EDF bleu ciel"/>
+<column content="36,34" format="#,##0" halign="right"/>
+<column content="electricite EDF"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="67" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-07-08" format="dd/MM/yyyy"/>
+<column content="Credit Agricole Assurances"/>
+<column content="552,74" format="#,##0" halign="right"/>
+<column content="Assurance voiture c4 picasso"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="68" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-11-27" format="dd/MM/yyyy"/>
+<column content="CACI36"/>
+<column content="391,0" format="#,##0" halign="right"/>
+<column content="poste a souder"/>
+<column content="Debit" format="@STRING@"/>
+<column content="FA09VC/2818" format="@STRING@" halign="right"/>
+<column content="69" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-12-21" format="dd/MM/yyyy"/>
+<column content="EBT"/>
+<column content="129,43" format="#,##0" halign="right"/>
+<column content="Batterie 12v"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="70" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-06-16" format="dd/MM/yyyy"/>
+<column content="France Telecom"/>
+<column content="26,99" format="#,##0" halign="right"/>
+<column content="telephone montlevic"/>
+<column content="Debit" format="@STRING@"/>
+<column content="83220" format="@STRING@" halign="right"/>
+<column content="71" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-06-21" format="dd/MM/yyyy"/>
+<column content="France Telecom"/>
+<column content="28,85" format="#,##0" halign="right"/>
+<column content="telephone paris"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="72" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-06-23" format="dd/MM/yyyy"/>
+<column content="C le Mobile"/>
+<column content="15,05" format="#,##0" halign="right"/>
+<column content="telephone portable"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="73" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-04-19" format="dd/MM/yyyy"/>
+<column content="C le Mobile"/>
+<column content="15,05" format="#,##0" halign="right"/>
+<column content="telephone portable"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="74" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-06-21" format="dd/MM/yyyy"/>
+<column content="France Telecom"/>
+<column content="28,59" format="#,##0" halign="right"/>
+<column content="telephone paris"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="75" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-11-27" format="dd/MM/yyyy"/>
+<column content="Bonnin"/>
+<column content="13,04" format="#,##0" halign="right"/>
+<column content="quincaillerie bonnin"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="76" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-09-24" format="dd/MM/yyyy"/>
+<column content="Lapeyre"/>
+<column content="106,61" format="#,##0" halign="right"/>
+<column content="fenetres batiments"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="78" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-08-19" format="dd/MM/yyyy"/>
+<column content="Lapeyre"/>
+<column content="14,21" format="#,##0" halign="right"/>
+<column content="fenetres batiments"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="79" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-08-19" format="dd/MM/yyyy"/>
+<column content="Lapeyre"/>
+<column content="343,06" format="#,##0" halign="right"/>
+<column content="fenetres batiments"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="80" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-08-19" format="dd/MM/yyyy"/>
+<column content="Lapeyre"/>
+<column content="321,49" format="#,##0" halign="right"/>
+<column content="fenetres batiments"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="81" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-01-01" format="dd/MM/yyyy"/>
+<column content="Bricodepot"/>
+<column content="98,03" format="#,##0" halign="right"/>
+<column content="materiel electrique"/>
+<column content="Debit" format="@STRING@"/>
+<column content="237473" format="@STRING@" halign="right"/>
+<column content="82" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-09-14" format="dd/MM/yyyy"/>
+<column content="Batiloisirs"/>
+<column content="2065,19" format="#,##0" halign="right"/>
+<column content="(terrassement hangar)"/>
+<column content="Debit" format="@STRING@"/>
+<column content="2101640" format="@STRING@" halign="right"/>
+<column content="83" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="1" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-04-30" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="1629,0" format="#,##0" halign="right"/>
+<column content="produits phyto 2"/>
+<column content="Debit" format="@STRING@"/>
+<column content="01-2010-2594" format="@STRING@" halign="right"/>
+<column content="9" format="@STRING@" halign="right"/>
+<column content="La valeur du cp151515 (0.25euros pour jardin) est deduit du prix de cette facture (1654-25=1619). avoir de 2% sous condition. Le karate a-t-il ete rendu a dauger?" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-04-13" format="dd/MM/yyyy"/>
+<column content="Communaute de communes"/>
+<column content="18,48" format="#,##0" halign="right"/>
+<column content="forfait ordures agricoles"/>
+<column content="Debit" format="@STRING@"/>
+<column content="00003141" format="@STRING@" halign="right"/>
+<column content="35" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="1" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-03-08" format="dd/MM/yyyy"/>
+<column content="CGA 36"/>
+<column content="186,0" format="#,##0" halign="right"/>
+<column content="cga36"/>
+<column content="Debit" format="@STRING@"/>
+<column content="CA005066" format="@STRING@" halign="right"/>
+<column content="39" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-01" format="dd/MM/yyyy"/>
+<column content="La France agricole"/>
+<column content="117,04" format="#,##0" halign="right"/>
+<column content="abo France agricole"/>
+<column content="Debit" format="@STRING@"/>
+<column content="GFA 212" format="@STRING@" halign="right"/>
+<column content="46" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-12-09" format="dd/MM/yyyy"/>
+<column content="Chambre Agriculture"/>
+<column content="21,0" format="#,##0" halign="right"/>
+<column content="chambre agriculture"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="50" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-10-02" format="dd/MM/yyyy"/>
+<column content="Communaute de communes"/>
+<column content="18,21" format="#,##0" halign="right"/>
+<column content="forfait ordures agricoles"/>
+<column content="Debit" format="@STRING@"/>
+<column content="00033370" format="@STRING@" halign="right"/>
+<column content="62" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-11-20" format="dd/MM/yyyy"/>
+<column content="SIAEP Igneraie"/>
+<column content="142,39" format="#,##0" halign="right"/>
+<column content="SIAEP - compteur eau"/>
+<column content="Debit" format="@STRING@"/>
+<column content="02946" format="@STRING@" halign="right"/>
+<column content="63" format="@STRING@" halign="right"/>
+<column content="compteur 00470. troisieme trimestre 2010" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-08-27" format="dd/MM/yyyy"/>
+<column content="Isagri"/>
+<column content="130,0" format="#,##0" halign="right"/>
+<column content="abonnement Terre-net"/>
+<column content="Debit" format="@STRING@"/>
+<column content="966411" format="@STRING@" halign="right"/>
+<column content="32" format="@STRING@" halign="right"/>
+<column content="moins avoir de 11.80" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-05-24" format="dd/MM/yyyy"/>
+<column content="Chirrault"/>
+<column content="57,68" format="#,##0" halign="right"/>
+<column content="reparation pneu"/>
+<column content="Debit" format="@STRING@"/>
+<column content="55087555" format="@STRING@" halign="right"/>
+<column content="43" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-11-06" format="dd/MM/yyyy"/>
+<column content="Agro-Service"/>
+<column content="164,06" format="#,##0" halign="right"/>
+<column content="divers materiel"/>
+<column content="Debit" format="@STRING@"/>
+<column content="111107814" format="@STRING@" halign="right"/>
+<column content="51" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-12-15" format="dd/MM/yyyy"/>
+<column content="MF de la Cot"/>
+<column content="8500,0" format="#,##0" halign="right"/>
+<column content="Fermage MF la cot"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="59" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-11-20" format="dd/MM/yyyy"/>
+<column content="SIAEP Igneraie"/>
+<column content="87,91" format="#,##0" halign="right"/>
+<column content="SIAEP - compteur eau"/>
+<column content="Debit" format="@STRING@"/>
+<column content="02947" format="@STRING@" halign="right"/>
+<column content="64" format="@STRING@" halign="right"/>
+<column content="compteur 00530. troisieme trimestre 2010" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-04-26" format="dd/MM/yyyy"/>
+<column content="Raffault"/>
+<column content="1083,14" format="#,##0" halign="right"/>
+<column content="Fioul"/>
+<column content="Debit" format="@STRING@"/>
+<column content="36428" format="@STRING@" halign="right"/>
+<column content="45" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-07" format="dd/MM/yyyy"/>
+<column content="Aubrun carburants"/>
+<column content="148,8" format="#,##0" halign="right"/>
+<column content="Huile 15w40"/>
+<column content="Debit" format="@STRING@"/>
+<column content="7490" format="@STRING@" halign="right"/>
+<column content="48" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-07" format="dd/MM/yyyy"/>
+<column content="Aubrun carburants"/>
+<column content="172,8" format="#,##0" halign="right"/>
+<column content="Huile transmission"/>
+<column content="Debit" format="@STRING@"/>
+<column content="7489" format="@STRING@" halign="right"/>
+<column content="49" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="41" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-07-19" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="26,4" format="#,##0" halign="right"/>
+<column content="Transport orge"/>
+<column content="Report" format="@STRING@"/>
+<column content="25" format="@STRING@" halign="right"/>
+<column content="25" format="@STRING@" halign="right"/>
+<column content="150kg x 176€/t = 26,40€ transport orge" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-07-31" format="dd/MM/yyyy"/>
+<column content="Bricopro"/>
+<column content="20,6" format="#,##0" halign="right"/>
+<column content="tendeur a souder"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="77" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-10-26" format="dd/MM/yyyy"/>
+<column content="MSA"/>
+<column content="591,2" format="#,##0" halign="right"/>
+<column content="cotisation msa"/>
+<column content="Debit" format="@STRING@"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="45" format="@STRING@" halign="right"/>
+<column content="cf dans classeur 2012..." format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-06-06" format="dd/MM/yyyy"/>
+<column content="tout pour le grain"/>
+<column content="8124,0" format="#,##0" halign="right"/>
+<column content="Silo Jamase"/>
+<column content="Debit" format="@STRING@"/>
+<column content="1105002" format="@STRING@" halign="right"/>
+<column content="33" format="@STRING@" halign="right"/>
+<column content="silo et vis a grain" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-11-06" format="dd/MM/yyyy"/>
+<column content="EARL Prinet"/>
+<column content="239,2" format="#,##0" halign="right"/>
+<column content="travaux pierres tractopelle"/>
+<column content="Debit" format="@STRING@"/>
+<column content="43" format="@STRING@" halign="right"/>
+<column content="65" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="1" format="@STRING@"/>
+<column content="2012-02-19" format="dd/MM/yyyy"/>
+<column content="Dauger"/>
+<column content="147,6" format="#,##0" halign="right"/>
+<column content="stockage tournesol"/>
+<column content="Debit" format="@STRING@"/>
+<column content="137B" format="@STRING@" halign="right"/>
+<column content="48" format="@STRING@" halign="right"/>
+<column content="bon 143 : 4.990t bon 144 : 4.850t total: 9.840t x 15euro la tonne." format="@STRING@" halign="left"/>
+<column content="imputer sur tournesol lorsque update_typecultures sera corrige." format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-12-30" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="2080,0" format="#,##0" halign="right"/>
+<column content="pressage paille ble colza"/>
+<column content="Debit" format="@STRING@"/>
+<column content="21" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="right"/>
+<column content="imputer sur ble et colza" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="25" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-30" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="297,5" format="#,##0" halign="right"/>
+<column content="Broyage horizontal"/>
+<column content="Report" format="@STRING@"/>
+<column content="19" format="@STRING@" halign="right"/>
+<column content="21" format="@STRING@" halign="right"/>
+<column content="8h50 x 35€/h = 297,5. Imputer sur le Tournesol" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="30" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-01-30" format="dd/MM/yyyy"/>
+<column content="Trochet"/>
+<column content="2240,0" format="#,##0" halign="right"/>
+<column content="Cover-crop"/>
+<column content="Report" format="@STRING@"/>
+<column content="18" format="@STRING@" halign="right"/>
+<column content="22" format="@STRING@" halign="right"/>
+<column content="64h x 35€/h = 2240€. Imputer sur Ble, Colza, Tournesol" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-05-31" format="dd/MM/yyyy"/>
+<column content="Compta Centre"/>
+<column content="615,0" format="#,##0" halign="right"/>
+<column content="compta agricole"/>
+<column content="Debit" format="@STRING@"/>
+<column content="29814" format="@STRING@" halign="right"/>
+<column content="30" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-02-22" format="dd/MM/yyyy"/>
+<column content="MSA"/>
+<column content="991,8" format="#,##0" halign="right"/>
+<column content="msa"/>
+<column content="Debit" format="@STRING@"/>
+<column content="008350" format="@STRING@" halign="right"/>
+<column content="36" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2010-10-31" format="dd/MM/yyyy"/>
+<column content="Raffault"/>
+<column content="1145,18" format="#,##0" halign="right"/>
+<column content="Fioul total premier"/>
+<column content="Debit" format="@STRING@"/>
+<column content="27916" format="@STRING@" halign="right"/>
+<column content="58" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-03-27" format="dd/MM/yyyy"/>
+<column content="Bernard Peres"/>
+<column content="260,0" format="#,##0" halign="right"/>
+<column content="semis tournesol"/>
+<column content="Debit" format="@STRING@"/>
+<column content="015-2011" format="@STRING@" halign="right"/>
+<column content="20" format="@STRING@" halign="right"/>
+<column content="20ha x 13€/ha = 260€" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-03-14" format="dd/MM/yyyy"/>
+<column content="CMD"/>
+<column content="36705,0" format="#,##0" halign="right"/>
+<column content="construction hangar"/>
+<column content="Debit" format="@STRING@"/>
+<column content="1115" format="@STRING@" halign="right"/>
+<column content="41" format="@STRING@" halign="right"/>
+<column content="" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+<row>
+<column content="2011" format="@STRING@"/>
+<column content="" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="0" format="@STRING@"/>
+<column content="2011-07-07" format="dd/MM/yyyy"/>
+<column content="tout pour le grain"/>
+<column content="9294,0" format="#,##0" halign="right"/>
+<column content="Silo Jamase"/>
+<column content="Debit" format="@STRING@"/>
+<column content="1107024" format="@STRING@" halign="right"/>
+<column content="34" format="@STRING@" halign="right"/>
+<column content="silo et vis a grain 9431 - 137 cf avoir N:111016" format="@STRING@" halign="left"/>
+<column content="" format="@STRING@" halign="left"/>
+</row>
+</rows>
