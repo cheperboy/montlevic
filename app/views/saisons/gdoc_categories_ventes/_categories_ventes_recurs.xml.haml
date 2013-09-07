@@ -1,0 +1,36 @@
+- up_category.children.each do |category|
+	- unit   = nil
+	- ventes = @saison.ventes.select{|v| v.category_id.eql?(category.id)}
+	- unit   = ventes[0].unit if (ventes[0] && @sum_ventes[:unit][category.code.to_sym].eql?(true))
+	- coul 	 = "#{category.code}_head"
+	- color = @coul[:cat][2]
+	- fontsize = @fontsize[:cat][2]
+	- prix_unitaire = number_with_delimiter(@sum_ventes[:prix_unitaire][category.code.to_sym], :delimiter => "", :separator => ",")
+	- quantite      = number_with_delimiter(@sum_ventes[:quantite][category.code.to_sym], :delimiter => "", :separator => ",")
+	- prix          = number_with_delimiter(@sum_ventes[:prix][category.code.to_sym], :delimiter => "", :separator => ",")
+
+	%row{:fontweight => "bold", :fontsize => "12", :level => "1", :fontsize => "#{fontsize}", :color => color}
+		%column{:content => ""}
+		%column{:content => "#{category.name}"}
+		%column{:content => "#{prix}", :halign => "right", :format => "#,##0"}
+		%column{:content => ""}
+		%column{:content => ""}
+		- if unit
+			%column{:content => "#{prix_unitaire} #{euro}/#{unit}", :halign => "right"}
+			%column{:content => "#{quantite} #{unit}", :halign => "right"}
+		- else
+			%column{:content => ""}		
+			%column{:content => ""}
+	
+	- ventes.each do |vente|
+		- coul = "#{vente.category.code}"
+		- prix = number_with_delimiter(vente.prix, :delimiter => "", :separator => ",")
+		%row{:level => "2"}
+			%column{:content => ""}
+			%column{:content => ""}
+			%column{:content => "#{prix}", :halign => "right", :format => "#,##0"}
+			%column{:content => "#{vente.name}"}
+			%column{:content => "#{vente.date}", :format => "dd/MM/yyyy"}}
+			%column{:content => "#{vente.prix_unitaire}#{euro}/#{vente.unit}", :halign => "right", :format => "@STRING@"}
+			
+	= render(:partial => "saisons/gdoc_categories_ventes/categories_ventes_recurs", :locals => { :up_category => category}) if category.has_children?

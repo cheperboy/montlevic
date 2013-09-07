@@ -4,6 +4,52 @@ class SaisonsController < ApplicationController
 
   skip_before_filter :login_required, :only => :index # for raw data acces
 
+  # pour export dans google doc
+  # synthese de la saison
+  def gdoc_synthese_resultat
+    @saison = Saison.find_by_year(params[:id])
+    @sum_factures = Facture.synthese_by_cat(@saison)
+    @sum_ventes = Vente.synthese_by_cat(@saison) #pour calculer resultat
+    respond_to do |format|
+      format.html
+      format.xml
+    end
+  end
+
+  def gdoc_synthese_charges
+    @saison = Saison.find_by_year(params[:id])
+    @sum_factures = Facture.synthese_by_cat(@saison)
+    respond_to do |format|
+      format.html
+      format.xml
+    end
+  end
+  def gdoc_categories_charges
+    @saison = Saison.find_by_year(params[:id])
+    @sum_factures = Facture.synthese_by_cat(@saison)
+    respond_to do |format|
+      format.html
+      format.xml
+    end
+  end
+
+  def gdoc_synthese_ventes
+    @saison = Saison.find_by_year(params[:id])
+    @sum_ventes = Vente.synthese_by_cat(@saison) #pour calculer resultat
+    respond_to do |format|
+      format.html
+      format.xml
+    end
+  end
+  def gdoc_categories_ventes
+    @saison = Saison.find_by_year(params[:id])
+    @sum_ventes = Vente.synthese_by_cat(@saison) #pour calculer resultat
+    respond_to do |format|
+      format.html
+      format.xml
+    end
+  end
+
   # GET /saisons
   # GET /saisons.xml
   def index
