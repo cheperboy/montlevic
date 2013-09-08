@@ -1,0 +1,46 @@
+- @coul = Hash.new
+- @coul[:gris]           = '#efefef'
+- @coul[:ble_head]       = '#ffd966'
+- @coul[:ble]            = '#fff2cc'
+- @coul[:colza_head]     = '#93c47d'
+- @coul[:colza]          = '#d9ead3'
+- @coul[:tournesol_head] = '#9fc5e8'
+- @coul[:tournesol]      = '#cfe2f3'
+- @coul[:cat] = Hash.new
+- @coul[:cat][1] = 'black'
+- @coul[:cat][2] = '#b45f06'
+- @coul[:cat][3] = '#1155cc'
+
+- @fontsize = Hash.new
+- @fontsize[:cat] = Hash.new
+- @fontsize[:cat][1] = '14'
+- @fontsize[:cat][2] = '12'
+- @fontsize[:cat][3] = '10'
+
+- headers = []
+- headers << 'Categorie 1'<< 'Categorie 2' << 'Categorie 3'
+- @years.each {|y| headers << y }
+
+- categories = Category.root_facture
+- i = 0
+%rows{:saison => @year}
+	%info
+		%saison{:content => "#{@saison[@year.to_s.to_sym].year}"}
+		%title{:content => "Evolution des Charges"}
+		%nb_col{:content => "#{headers.size}"}
+
+	%row{:color => "white", :bgcolor => "black", :fontweight => "bold", :fontsize => "12"}
+		- headers.size.times do
+			%column{:content => "#{headers[i]}"}
+			- i = i + 1
+	
+	- categories.children.each do |category|
+		%row{:fontweight => "bold", :fontsize => "#{@fontsize[:cat][1]}", :level => "0", :color => @coul[:cat][1]}
+			%column{:content => "#{category.name}"}
+			%column{:content => ""}
+			%column{:content => ""}
+			- @years.each do |an|
+				- sum = number_with_delimiter(@sum_factures[an.to_sym][:prix][category.code.to_sym], :delimiter => "", :separator => ",")
+				%column{:content => "#{sum}", :halign => "right", :format => "#,##0"}
+				
+		= render(:partial => "saisons/gdoc_evolution_charges/evolution_charges_recurs", :locals => { :up_category => category, :cat_1 => category}) if category.has_children?

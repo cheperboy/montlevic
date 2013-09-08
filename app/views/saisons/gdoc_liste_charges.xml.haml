@@ -1,3 +1,5 @@
+!!! XML
+!!!
 - @bgcolor = {}
 - @bgcolor[:adu] = "#ea9999"
 - @bgcolor[:star] = "#ffe599"
@@ -5,16 +7,14 @@
 %rows{:saison => @saison.year}
 	%info
 		%saison{:content => "#{@saison.year}"}
-		%title{:content  => "Liste Factures #{@saison.year}"}
+		%title{:content  => "Liste Factures par prestataire"}
 		%nb_col{:content => "13"}
-		
+
 	%row{:color => "white", :bgcolor => "black", :fontweight => "bold", :fontsize => "12"}
 		%column{:content => "id", :format => "@STRING@"}
 		%column{:content => "type", :format => "@STRING@"}
-		%column{:content => "star", :format => "@STRING@"}
-		%column{:content => "adu", :format => "@STRING@"}
 		%column{:content => "date", :format => "dd/MM/yyyy"}
-		%column{:content => "client"}
+		%column{:content => "prestataire"}
 		%column{:content => "cout ht", :halign => "right", :format => "#,##0"}
 		%column{:content => "désignation"}
 		%column{:content => "type"}
@@ -32,19 +32,12 @@
 		- type = "R" if facture.class.eql?(Reportable)
 		- star = ''
 		- adu = ''
-		- bgcolor_star = "white"
-		- bgcolor_adu = "white"
-		- if facture.star?
-			- star = 1 
-			- bgcolor_star = @bgcolor[:star]
-		- if facture.adu?
-			- adu = 1 
-			- bgcolor_adu = @bgcolor[:adu]
+		- bgcolor = "white"
+		- bgcolor = @bgcolor[:star] if facture.star?
+		- bgcolor = @bgcolor[:adu] if facture.adu?
 		%row{}
-			%column{:content => "#{facture.id}", :format => "@STRING@"}
+			%column{:content => "#{facture.id}", :format => "@STRING@", :bgcolor => bgcolor}
 			%column{:content => "#{type}", :format => "@STRING@"}
-			%column{:content => "#{star}", :format => "@STRING@", :bgcolor => bgcolor_star}
-			%column{:content => "#{adu}", :format => "@STRING@", :bgcolor => bgcolor_adu}
 			%column{:content => "#{facture.date}", :format => "dd/MM/yyyy"}
 			%column{:content => "#{facture.user.name}"}
 			%column{:content => "#{cout}", :halign => "right", :format => "#,##0"}

@@ -1,3 +1,5 @@
+!!! XML
+!!!
 - @bgcolor = {}
 - @bgcolor[:adu] = "#ea9999"
 - @bgcolor[:star] = "#ffe599"
@@ -5,13 +7,11 @@
 %rows{:saison => @saison.year}
 	%info
 		%saison{:content => "#{@saison.year}"}
-		%title{:content  => "Liste Ventes #{@saison.year}"}
+		%title{:content  => "Liste Ventes par client"}
 		%nb_col{:content => "14"}
-		
+
 	%row{:color => "white", :bgcolor => "black", :fontweight => "bold", :fontsize => "12"}
 		%column{:content => "id", :format => "@STRING@"}
-		%column{:content => "star", :format => "@STRING@"}
-		%column{:content => "adu", :format => "@STRING@"}
 		%column{:content => "date", :format => "dd/MM/yyyy"}
 		%column{:content => "client"}
 		%column{:content => "prix ht", :halign => "right"}
@@ -27,20 +27,13 @@
 
 	- @ventes.each do |vente|
 		- prix = number_with_delimiter(vente.prix, :delimiter => "", :separator => ",")
-		- star = ''
-		- adu = ''
-		- bgcolor_star = "white"
-		- bgcolor_adu = "white"
+		- bgcolor = "white"
 		- if vente.star?
-			- star = 1 
-			- bgcolor_star = @bgcolor[:star]
+			- bgcolor = @bgcolor[:star]
 		- if vente.adu?
-			- adu = 1 
-			- bgcolor_adu = @bgcolor[:adu]
+			- bgcolor = @bgcolor[:adu]
 		%row{}
-			%column{:content => "#{vente.id}", :format => "@STRING@"}
-			%column{:content => "#{star}", :format => "@STRING@", :bgcolor => bgcolor_star}
-			%column{:content => "#{adu}", :format => "@STRING@", :bgcolor => bgcolor_adu}
+			%column{:content => "#{vente.id}", :format => "@STRING@", :bgcolor => bgcolor}
 			%column{:content => "#{vente.date}", :format => "dd/MM/yyyy"}
 			%column{:content => "#{vente.user.name}"}
 			%column{:content => "#{prix}", :halign => "right", :format => "#,##0"}

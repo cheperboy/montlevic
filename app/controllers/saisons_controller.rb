@@ -32,6 +32,23 @@ class SaisonsController < ApplicationController
       format.xml
     end
   end
+  def gdoc_evolution_charges
+    @years = []
+    @year = params[:id].to_i
+    @saison = {}
+    @sum_factures = {}
+    year = params[:id]
+    while (Saison.find_by_year(year))
+      @years << year.to_s
+      @saison[year.to_sym]       = Saison.find_by_year(year)
+      @sum_factures[year.to_sym] = Facture.synthese_by_cat(@saison[year.to_sym])
+      year = (year.to_i - 1).to_s
+    end
+    respond_to do |format|
+      format.html
+      format.xml
+    end
+  end
 
   def gdoc_synthese_ventes
     @saison = Saison.find_by_year(params[:id])
@@ -44,6 +61,23 @@ class SaisonsController < ApplicationController
   def gdoc_categories_ventes
     @saison = Saison.find_by_year(params[:id])
     @sum_ventes = Vente.synthese_by_cat(@saison) #pour calculer resultat
+    respond_to do |format|
+      format.html
+      format.xml
+    end
+  end
+
+  def gdoc_liste_ventes
+    @saison = Saison.find_by_year(params[:id])
+    @ventes = @saison.ventes.find(:all, :order => :user_id)
+    respond_to do |format|
+      format.html
+      format.xml
+    end
+  end
+  def gdoc_liste_charges
+    @saison = Saison.find_by_year(params[:id])
+    @factures = @saison.factures.find(:all, :order => :user_id)
     respond_to do |format|
       format.html
       format.xml
